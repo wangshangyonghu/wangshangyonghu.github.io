@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      A {
+        text-decoration: none; /* 去除a标签的下划线（建议使用小写属性名，符合CSS规范） */
+        font-weight: bold; /* 为a标签设置粗体样式 */
+        font-size: 32px; /* 为a标签设置字体大小为32像素 */
+      }
+    </style>
+
+    <title>网上用户</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS,公平村" /><!--关键词-->
+<meta name="description" content="" />
+</head>
+<body>
+    <!-- 页面内容写在这里 -->
+<h1>网上用户一kl</h1>
+<center><!--居中-->
+<div style="text-align: justify; max-width: 90%;">
+<hr color=0066ff>
+
+<a href="../a/kl/zfbsp.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/dy.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/dycc.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/dyjsb1.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/dyjsb2.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/dyq.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/dysc.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/h1.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/hg.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/hgmfdj.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/jrtt.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/jrttjsb.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl1.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl2.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl3.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl4.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl5.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl6.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl7.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl8.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl9.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl10.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl11.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl12.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/kl13.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/ks.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/ksjsb.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/ksjsb1.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/mt.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/pdd.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/pdd1.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/tbatb.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/tbgc.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/tbmh.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/tbtm.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/xgsp.html	" target="_blank">gpczxs</a>
+<a href="../a/kl/zfb.html	" target="_blank">gpczxs</a>
+
+
+
+
+<hr color=0066ff>
+</div>
+<!--底部显示-->
+ <script src="/aaa888/a/js/tua.js"></script>
+<div id="gpczxstua"></div>
+<!--底下显示-->
+
+<!--上下页-->
+  <a href="/" target="_blank">返回</a>
+   <a href="javascript:void(0)" onclick="goToPreviousPage()">上一页</a>
+<a href="javascript:void(0)" onclick="goToNextPage()">下一页</a>
+
+<script>
+// 提取文件名中的数字部分
+function getPageNumber() {
+    var currentPage = window.location.pathname.split('/').pop();
+    // 从文件名中提取数字
+    var numbers = currentPage.match(/\d+/);
+    if (numbers && numbers.length > 0) {
+        return parseInt(numbers[0]);
+    }
+    return null;
+}
+
+// 获取文件名中的前缀部分（数字前的内容）
+function getPagePrefix() {
+    var currentPage = window.location.pathname.split('/').pop();
+    // 匹配数字前的所有字符
+    var prefixMatch = currentPage.match(/^(\D*)\d+/);
+    if (prefixMatch && prefixMatch.length > 1) {
+        return prefixMatch[1];
+    }
+    return '';
+}
+
+function goToNextPage() {
+    var pageNumber = getPageNumber();
+    if (pageNumber !== null) {
+        var prefix = getPagePrefix();
+        var nextPageNumber = pageNumber + 1;
+        var nextPage = './' + prefix + nextPageNumber + '.html';
+        window.open(nextPage, '_blank'); // 在新窗口打开下一页
+    } else {
+        alert('无法识别当前页码');
+    }
+}
+
+function goToPreviousPage() {
+    var pageNumber = getPageNumber();
+    if (pageNumber !== null && pageNumber > 1) {
+        var prefix = getPagePrefix();
+        var previousPageNumber = pageNumber - 1;
+        var previousPage = './' + prefix + previousPageNumber + '.html';
+        window.open(previousPage, '_blank'); // 在新窗口打开上一页
+    } else {
+        alert('已经是第一页或无法识别当前页码');
+    }
+}
+</script><!--上下页-->
+</body>
+</html>
