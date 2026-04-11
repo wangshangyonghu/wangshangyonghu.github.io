@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--加粗--><strong><!--加粗-->
+<!--字体大小--><span style="font-size: 18px;"><!--字体大小-->
+
+<!--无下划线开始-->
+<style type="text/css">
+A{TEXT-DECORATION: none}
+</style><!--无下划线开始-->
+
+<head>
+
+            <!--图标--><link rel="Shortcut Icon" href="./favicon.ico" type="image/x-icon" />
+            <!--大图标--><link rel="apple-touch-icon-precomposed" href="./favicon.ico"><!--图标-->
+
+            <!--手机版本代码--><meta name="viewport" content="width=device-width,  user-scalable=yes" /><!--手机版本代码-->
+
+            <!--网页乱码修复--><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--网页乱码修复-->
+
+            <!--国家地区--><meta http-equiv='content-language' content='zh-cn'>
+
+
+<!--css标题2024年7月16日-->
+<style>
+h1{ background-color: #0066FF; /*蓝色 */
+    border: none;
+    color: white;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 1px 1px;
+    cursor: pointer;
+box-shadow: 10px 10px 5px #888888;/*灰色 */
+}
+</style>
+<h1>网名张先生</h1>
+
+                                      <title>如何通过修改.htaccess 文件来加速网站的加载速度？一网名张先生的个人主页一首页一空间一中心一档案一来自公平村铆钉厂客家人艺名网民账号网络用户名网民个人档案网号</title><!--标题-->
+<!--关键词--> <meta name="keywords" content="如何通过修改.htaccess 文件来加速网站的加载速度？,网名张先生的个人主页,网名张先生的个人首页,网名张先生的个人空间,网名张先生的个人中心,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,网民张先生,网号张先生" /><!--关键词-->
+<!--描述--><meta name="description" content="如何通过修改.htaccess 文件来加速网站的加载速度？一网名张先生的个人主页,网名张先生的个人首页,网名张先生的个人空间,网名张先生的个人中心,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,网民张先生,网号张先生" />
+</head>
+<!--分界线--><hr color=0066FF> <!--分界线-->
+
+<!--内容开始-->
+
+
+
+<xmp style="background-color: cornflowerblue;">
+
+如何通过修改.htaccess 文件来加速网站的加载速度？
+通过修改 .htaccess 文件，可以采取以下一些措施来加速网站的加载速度：
+启用 Gzip 压缩
+plaintext
+复制
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>
+启用 Gzip 压缩可以减小文件传输大小，加快数据传输速度。
+浏览器缓存设置
+plaintext
+复制
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+设置合适的浏览器缓存策略，让浏览器在一定时间内使用本地缓存的资源，减少重复请求。
+图片懒加载
+plaintext
+复制
+# Lazy loading for images
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD}!POST
+    RewriteCond %{HTTP_USER_AGENT}!bingbot|Googlebot|YandexBot|AhrefsBot|SeznamBot|DataForSeoBot|Majestic-12|MJ12bot|OpenLinkProfiler|bot|crawler|spider|curl|wget [NC]
+    RewriteCond %{HTTP_REFERER}!^$
+    RewriteCond %{HTTP_REFERER}!^https?://(www\.)?yourdomain.com/.*$ [NC]
+    RewriteRule ^.*\.(jpg|jpeg|png|gif)$ /placeholder.jpg [L]
+</IfModule>
+实现图片懒加载，当用户滚动到图片位置时再加载图片，减少初始加载的数据量。
+
+</xmp>
+
+
+
+<!--居中--><center><!--居中-->
+
+
+
+
+
+
+
+<hr color=0066FF>
+<textarea cols="45%" rows="30%" id="biao1">
+如何通过修改.htaccess 文件来加速网站的加载速度？
+通过修改 .htaccess 文件，可以采取以下一些措施来加速网站的加载速度：
+启用 Gzip 压缩
+plaintext
+复制
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>
+启用 Gzip 压缩可以减小文件传输大小，加快数据传输速度。
+浏览器缓存设置
+plaintext
+复制
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+设置合适的浏览器缓存策略，让浏览器在一定时间内使用本地缓存的资源，减少重复请求。
+图片懒加载
+plaintext
+复制
+# Lazy loading for images
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD}!POST
+    RewriteCond %{HTTP_USER_AGENT}!bingbot|Googlebot|YandexBot|AhrefsBot|SeznamBot|DataForSeoBot|Majestic-12|MJ12bot|OpenLinkProfiler|bot|crawler|spider|curl|wget [NC]
+    RewriteCond %{HTTP_REFERER}!^$
+    RewriteCond %{HTTP_REFERER}!^https?://(www\.)?yourdomain.com/.*$ [NC]
+    RewriteRule ^.*\.(jpg|jpeg|png|gif)$ /placeholder.jpg [L]
+</IfModule>
+实现图片懒加载，当用户滚动到图片位置时再加载图片，减少初始加载的数据量。
+</textarea>
+
+
+
+<hr color=0066FF>
+日期:2023年5月7日
+
+<hr color=0066FF>
+<!--居中--><center> <!--居中-->
+
+<textarea cols="40%" rows="1%" id="biao1">网名张先生,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,张先生,123,234,0123456789铆钉不锈钢铆钉半空心铆钉子母钉子母铆钉铝铆钉铜铆钉铁铆钉黄铜铆钉紫铜铆钉一网名张先生的个人主页一首页一空间一中心一档案一来自公平村铆钉厂客家人艺名网民账号网络用户名网民个人档案</textarea>
+<!--内容结束-->
+<!--分界线--><hr color=0000ff> <!--分界线-->
+   <hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+
+<a href="/">下一页</a>
+&nbsp; 	<a href="	./1.html	" target="_blank">1</a>	&nbsp; 
+	<a href="	./2.html	" target="_blank">2</a>	&nbsp; 
+	<a href="	./3.html	" target="_blank">3</a>	&nbsp; 
+	<a href="	./4.html	" target="_blank">4</a>	&nbsp; 
+	<a href="	./5.html	" target="_blank">5</a>	&nbsp; 
+	<a href="	./6.html	" target="_blank">6</a>	&nbsp; 
+	<a href="	./7.html	" target="_blank">7</a>	&nbsp; 
+	<a href="	./8.html	" target="_blank">8</a>	&nbsp; 
+	<a href="	./9.html	" target="_blank">9</a>	&nbsp; 
+	<a href="	./10.html	" target="_blank">10</a>	&nbsp; 
+	<a href="	./11.html	" target="_blank">11</a>	&nbsp; 
+	<a href="	./12.html	" target="_blank">12</a>	&nbsp; 
+	<a href="	./13.html	" target="_blank">13</a>	&nbsp; 
+	<a href="	./14.html	" target="_blank">14</a>	&nbsp; 
+	<a href="	./15.html	" target="_blank">15</a>	&nbsp; 
+	<a href="	./16.html	" target="_blank">16</a>	&nbsp; 
+	<a href="	./17.html	" target="_blank">17</a>	&nbsp; 
+	<a href="	./18.html	" target="_blank">18</a>	&nbsp; 
+	<a href="	./19.html	" target="_blank">19</a>	&nbsp; 
+	<a href="	./20.html	" target="_blank">20</a>	&nbsp; 
+	<a href="	./21.html	" target="_blank">21</a>	&nbsp; 
+	<a href="	./22.html	" target="_blank">22</a>	&nbsp; 
+	<a href="	./23.html	" target="_blank">23</a>	&nbsp; 
+        <a href="	./1.html	" target="_blank">→</a>	&nbsp; 
+
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<!--居中--></center><!--居中-->
+<!--无下划线结束--><head><!--无下划线-->
+<!--加粗--></strong><!--加粗-->
+<!--字体大小--></span><!--字体大小-->
