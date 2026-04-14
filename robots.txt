@@ -1,0 +1,10 @@
+# 禁止所有爬虫抓取 /admin/ 目录
+User-agent: *
+Disallow: /admin/
+
+# 指定网站地图（XML 格式 - 集中归类，http/https 均保留）
+
+
+# 指定网站地图（TXT 格式 - 集中归类，http/https 均保留，全条目无重复）
+
+Sitemap: https://gpc888.github.io/a/txt/io.txt
