@@ -1,0 +1,179 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 -->
+<style type="text/css">A{text-decoration: none;}</style> <!-- 设置所有链接无下划线样式-->
+<style type="text/css">A{font-weight: bold; }</style> <!-- 设置所有链接为所有 a 标签添加粗体样式-->
+<!-- css样式定义部分结束 --> 
+
+
+ <title>计算器</title>
+<meta name="keywords" content="计算器,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS" /><!--关键词-->
+<meta name="description" content="计算器,搜索:网上用户" />
+</head> <!-- 文档头部结束 -->
+
+
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0;
+            background-color: #f4f4f4;
+            padding-top: 50px;
+        }
+
+        .calculator {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        #display {
+            width: 100%;
+            height: 50px;
+            font-size: 24px;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #d0d0d0;
+        }
+
+        #history {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+        }
+
+        #history::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #history::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        #history::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        #history::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <input type="text" id="display" readonly>
+        <div class="buttons">
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('÷')">÷</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('x')">x</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('00')">00</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="appendToDisplay('+')">+</button>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="clearHistory()">清空历史</button>
+            <button onclick="calculate()">=</button>
+        </div>
+        <div id="history"></div>
+    </div>
+    <script>
+        let isResult = false;
+
+        function appendToDisplay(value) {
+            const display = document.getElementById('display');
+            if (isResult) {
+                display.value = '';
+                isResult = false;
+            }
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+            isResult = false;
+        }
+
+        function calculate() {
+            const display = document.getElementById('display');
+            let expression = display.value;
+            // 将 ÷ 替换为 /，x 替换为 *
+            let calcExpression = expression.replace(/÷/g, '/').replace(/x/g, '*');
+            try {
+                let result = eval(calcExpression);
+                // 控制结果的小数位数
+                result = parseFloat(result.toFixed(10));
+                display.value = result;
+                const history = document.getElementById('history');
+                const entry = document.createElement('p');
+                // 正确显示原始表达式和结果
+                entry.textContent = `${expression} = ${result}`;
+                history.appendChild(entry);
+                isResult = true;
+            } catch (error) {
+                display.value = '错误';
+                isResult = false;
+            }
+        }
+
+        function clearHistory() {
+            const history = document.getElementById('history');
+            history.innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>    
