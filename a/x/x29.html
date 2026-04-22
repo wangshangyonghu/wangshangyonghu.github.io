@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品分享</title>
+<meta name="keywords" content="网上用户商品分享,搜索:网上用户,网上用户,上网用户,用户,公平村" /><!--关键词-->
+<center><!--居中-->
+
+
+<!-- 搜索区域 -->
+
+<style>
+    body {
+        font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+    }
+    .search-wrapper {
+        max-width: 700px;
+        margin: 20px auto;
+    }
+    .search-form {
+        display: flex;
+        height: 44px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .search-input {
+        flex: 1;
+        padding: 0 15px;
+        border: 1px solid #ff4400;
+        border-right: none;
+        outline: none;
+        font-size: 14px;
+        border-radius: 4px 0 0 4px;
+        box-sizing: border-box;
+    }
+    .search-btn {
+        min-width: 80px;
+        background-color: #ff4400;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    .search-btn:hover {
+        background-color: #f53f00;
+    }
+    .search-tip {
+        max-width: 700px;
+        margin: 10px auto;
+        font-size: 12px;
+        color: #666;
+    }
+    /* 关键词分类样式 */
+    .keyword-category {
+        margin: 25px 0;
+    }
+    .category-title {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 12px;
+        font-weight: 600;
+        border-left: 3px solid #ff4400;
+        padding-left: 8px;
+    }
+    .keyword-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .keyword-btn {
+        padding: 6px 14px;
+        background-color: #fff;
+        border: 1px solid #ff4400;
+        color: #ff4400;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .keyword-btn:hover {
+        background-color: #ff4400;
+        color: #fff;
+    }
+</style>
+</head>
+<body>
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" 
+                   class="search-input" 
+                   name="q" 
+                   placeholder="请输入搜索关键词（如：铆钉）" 
+                   required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <script>
+        // 1. 判断设备类型（手机或电脑）
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 2. 定义各端链接（手机端含APP Scheme和网页链接，电脑端用PC网页链接）
+        const urls = {
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401776821189%40213f2aef_16d5_19db2cbba19_0445%4001&q=",
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401776821189%40213f2aef_16d5_19db2cbba19_0445%4001&q=",
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401776821061%40213cade3_1731_19db2c9c7ff_0448%4001&key="
+        };
+
+        window.addEventListener('load', function() {
+            const searchInput = document.querySelector('.search-input');
+            searchInput.focus();
+
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+
+                // 3. 设备区分处理：手机端优先跳APP，电脑端直接跳PC网页
+                if (isMobile) {
+                    // 尝试通过iframe触发手机淘宝APP跳转
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+
+                    // 300毫秒后检测，若APP未打开则跳转移动端网页
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    // 电脑端直接跳转PC网页链接
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+        });
+    </script>
+
+
+<!-- 搜索区域 -->
+
+<!-- a链接店铺 -->
+<!-- 第一步：先定义统一的CSS样式类 -->
+<style>
+/* 按钮容器：实现自动换行，适配屏幕宽度 */
+.btn-container {
+  width: 100%;          /* 占满父容器宽度 */
+  display: flex;        /* 弹性布局 */
+  flex-wrap: wrap;      /* 核心：宽度不足时自动换行 */
+  gap: 10px 12px;       /* 按钮间距：上下10px，左右12px（比margin更易控） */
+  padding: 10px;        /* 容器内边距，避免贴边 */
+  box-sizing: border-box; /* 防止padding撑大宽度 */
+}
+
+/* 统一的按钮样式 */
+.app-btn {
+  display: inline-block;
+  background-color: #e6f7ff;
+  color: #1890ff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;  /* 按钮文字不换行 */
+}
+
+.app-btn:hover {
+  background-color: #bae7ff;
+  color: #096dd9;
+}
+</style>
+
+<!-- 按钮容器：所有按钮放在这里，自动换行 -->
+<div class="btn-container">
+
+<a href="https://s.click.taobao.com/t?union_lens=lensId%3AOPT%401767775705%400b51f7ce_1c57_19b97a49b30_4da6%4001%40eyJmbG9vcklkIjozODg1Mn0ie%3BeventPageId%3A20150318020016228&e=m%3D2%26s%3DPViSTzNuTPhw4vFB6t2Z2iperVdZeJviasFb3jPCdt85Rogii3YtH%2BhCZFSw9yq2W6A4gld5w29OS4pX4DGe7vnZ%2F2kQiHcP%2BXUMxN7TwYE4v9CZRT%2FQ1BL%2FmX7ARx4Sjnpta0X%2FYCKwYaRhatdffLrv%2Fl1gyhMGy0DxCSzwFgFd1le1%2FF%2FLHXyKwiqD2WK0Bmf7LSR66ahxYDtpEyeThuOxR437AHLZclNz5Cx6hNjfZwATwZMpRSfpIcsP14wkwkn3%2FLhIOAwLbn%2BIZeMoD2gFiCQX1HX6EtPT2Q5RdpwlP6ftLrc51DD8CNGWv4q%2BpwTjuhxcUsV1VXZzfN1D9OuODWg6ASP%2FI1IUNtlhrp1yhdOdHVge4E4yfRLrLbAs022l81NB8xkNxtKElQIb6vHSeuOjffnzFec0%2FQMNoKkPd2eJx%2F482MZXcK8uVm7IorPxRUMryhzKQO%2Bl%2BHVAuRCC%2FmbLytEIcX3LUTyUy3vCx6y8ZSZeonEqY%2Bakgpmw" target="_blank" class="app-btn">淘宝签到</a>
+
+<a href="https://ai.m.taobao.com/index.html?pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401767775015%4021668730_1fe0_19b979a10ae_0418%4001" target="_blank" class="app-btn">爱淘宝</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3De%2F9HzeVHffscQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMdbnw2sMu0rxlovu%2FCElQOvEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767775097%402166ba00_1330_19b979b530f_06a2%4001" target="_blank" class="app-btn">天天特卖工厂</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3De%2F9HzeVHffscQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMdbnw2sMu0rxlovu%2FCElQOvEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767775097%402166ba00_1330_19b979b530f_06a2%4001" target="_blank"class="app-btn">淘工厂</a>
+
+<a href="https://temai.m.taobao.com/index.htm?pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401767775584%400bbb5ce5_21f4_19b97a2c114_06af%4001" target="_blank" class="app-btn">淘宝特卖</a>
+
+<a href="https://s.click.taobao.com/t?union_lens=lensId%3AOPT%401767775633%4021079213_1d41_19b97a3814b_ccbb%4001%40eyJmbG9vcklkIjozODg1Mn0ie%3BeventPageId%3A20150318020023239&e=m%3D2%26s%3Dw5WeUrKHD4hw4vFB6t2Z2iperVdZeJviPI5Rhak06vZnX1vWUft3ZUzk9pluMWZtBjEN6XmLEkk4AjtXkkws4STOkhrVjKCELLm9OimQK9CcMMWeW%2FsfwTgKASTLVPdoqwgOWsQKa%2FiBN3iHUGXXBpZGXrmd%2F20Q8DNcowo52TG0GzdAMqThcEZtDKPoHWr7QBRB1XJCO2%2FV0qUZWiWhJWiXtl3eKZAZcnjQKEJbkmoyv5qZyLTEdNNdX01MWToKjTlY41AdkejC13C4s4MKnasauD0yTXqwEdnGwy5LTy4iDnp2JBSF2k7UfAW0lB164bKyvl7CjQhq26ZcGp6RfeaCcwD1bDzX2wDd2E1yL391riOb3X%2F7UQTH9Tx%2FGXSToHm%2BI5vA1d2qRh0SIKmlOQ%2Fc8HPcdYM0NrEn1%2F6rG7SYTOboyY2miwe%2BxqL%2B5Tyy1O61y7n29Bu8uC06DtIb6IYAo2804kO%2FzDnQrtZ4T%2BG63AJkdJzXDxSzhWNLp0upis6YN8jBpvhVkUgYyGprX%2B6G4I0Zm%2BCvcfNGFne1C%2BJNHCNRigHmcHDREqnifG%2BNtX%2FrKNc39MNa55fucyyW0XnWwnbNEyQPAABaKNByzXG%2BIx2ZipG7ZiyGy1xe%2B0Go6J2%2B891DIF5o%2F4xjgbf6KGetHtsdLpMtanFFTvmp7anpkWehXzidPcZJbUFPj84gIYULNg46oBA%3D" target="_blank" class="app-btn">3元3件</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DmLwBVqokivYcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMbFya8w%2BLqG0lovu%2FCElQOvEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6AJjNZvpnUkNZXXQPnMEVgRxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767775777%402166ba00_1330_19b97a5b410_06a3%4001" target="_blank" class="app-btn">天猫超市</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DpLYNGRcvgGAcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMT%2BToMWAuACE79%2FTFaMDK6TEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GTh9G%2FvhWTBHPHZ2OZt67vGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767775849%402166f819_2237_19b97a6cd0b_0420%4001" target="_blank" class="app-btn">阿里健康大药房</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DKdXhsJXQm%2BUcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMT0NOtySYhZ4xq3IhSJN6GTEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GTh9G%2FvhWTBzMNPueRDzgzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767775924%400b52261a_2250_19b97a7f056_0684%4001" target="_blank" class="app-btn">漫花旗舰店</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DueiOQ%2FSl2i8cQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMebtPiOcJ5JA1aH1Hk3GeOjEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GdknvjIaNwd9YIAF44dvW9xKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767776056%40212c2dfc_1539_19b97a9f461_0417%4001" target="_blank" class="app-btn">鸿星尔克官方旗舰店</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DD2Dm3w7fwUkcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMQiRLcc1Ql%2FFlovu%2FCElQOvEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6FfaqcG9q%2B4GbNDbny3SEc1pfNSH0D8VIKJn5AyUbPoV&union_lens=lensId%3APUB%401767776177%40212c2dfc_1539_19b97abccce_0418%4001" target="_blank" class="app-btn">官方国货甄选</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DuSuHoTAVdvscQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMQudEXOQidg5MMgx22UI05bEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6FfaqcG9q%2B4G4dqKBA6M07%2FGYRFbh6GWsqJn5AyUbPoV&union_lens=lensId%3APUB%401767776298%4021074e38_1304_19b97ada5d2_0704%4001" target="_blank" class="app-btn">回力旗舰店</a>
+
+<a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DwzcdMvPGRREcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMbLw7BTxBs3%2FMMgx22UI05bEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6LvvOOTeNMGCnYpagv0H61NxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767776378%402166ba00_1330_19b97aedcd0_06a4%4001" target="_blank" class="app-btn">特步官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DKYB9raJluKwcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMcnMTBTx%2FIxUMMgx22UI05bEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6JUehQ6eays5xPbTW5iQTy5xKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767776498%400bbb5ce5_21f4_19b97b0b1af_06b0%4001" target="_blank" class="app-btn">361度官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DPcem8%2FcniDwcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMR274KGBgSBk1aH1Hk3GeOjEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6DRNyzxv4M5JDjRa%2FEVK23RxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767776606%4021668730_1fe0_19b97b25a83_0419%4001" target="_blank" class="app-btn">乔丹官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D9s2cNNyFhe8cQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMYdhEqI6wawa79%2FTFaMDK6TEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6K%2Fln%2FB45Ub8zh1hx8SvMmIhhQs2DjqgEA%3D%3D&union_lens=lensId%3APUB%401767776709%40212ca094_13bc_19b97b3ea2d_0696%4001" target="_blank" class="app-btn">李宁官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3Dlsz5kcUE2p8cQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMdwPA4tStoRVt4hWD5k2kjPEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6PAht1r9%2BABSFUvJFbzaesBxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767776803%40210749e5_131f_19b97b55920_06b1%4001" target="_blank" class="app-btn">安踏官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3Drn7ukEA9Y%2B0cQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMaETeFDLr0iN79%2FTFaMDK6TEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NJYqLoQKdi1cQYGW0WuwiNxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767776919%402132dcb4_12d3_19b97b71f43_06bc%4001" target="_blank" class="app-btn">adidas官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DsZSAbRJty10cQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMfyKMd2wsu2vJ1gyddu7kN%2FEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6CzbGxnpaT5sQTNHfUYCT8txKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767777020%402166ba00_1330_19b97b8a9e2_06a6%4001" target="_blank" class="app-btn">澳雪旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DL5HWoQpgTDccQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMd45QW%2B2UbyTxq3IhSJN6GTEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6FfaqcG9q%2B4GLpsYIdWbr9oXEvote36jkaJn5AyUbPoV&union_lens=lensId%3APUB%401767777124%40210752c5_12da_19b97ba413a_069c%4001" target="_blank" class="app-btn">舒肤佳官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DA%2BnikIGNELEcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMdjkPZo4Lrkn79%2FTFaMDK6TEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6FfaqcG9q%2B4GwlTsBgcOzNQVJzxdrJd%2BAKJn5AyUbPoV&union_lens=lensId%3APUB%401767777229%402166f819_2237_19b97bbd910_0421%4001" target="_blank" class="app-btn">滋采旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D75DyYjmF13wcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMSeRUv0mfLAExq3IhSJN6GTEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6JSVpuaMMITxI2wILiL4MKDGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767777374%40212ca094_13bc_19b97be0f9a_0697%4001" target="_blank" class="app-btn">小米官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DguQjBCXIsYccQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMeBvy2FQW28U79%2FTFaMDK6TEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NbzarztnrlFdQIuH9Iwc0zGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767777469%40210752c5_12da_19b97bf8311_069d%4001" target="_blank" class="app-btn">华为官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DimSHe%2Bt%2BfuQcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMQJ2TEVFeKel79%2FTFaMDK6TEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6JIROA3QKotFycvaIQQGHDtxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767777529%40213cade3_207a_19b97c07087_05dc%4001" target="_blank" class="app-btn">OPPO官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3Di32pe8cbn%2BgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMYajSLQxsxy7RitN3%2FurF3zEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6FfaqcG9q%2B4GgMaQ92rwN84Wl9ma9ImPZKJn5AyUbPoV&union_lens=lensId%3APUB%401767777611%402166f819_2237_19b97c1ada5_0422%4001" target="_blank" class="app-btn">vivo手机官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3Dbmi7jlzfipocQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMdP1ytLLZfCk5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6FfaqcG9q%2B4GPtOcl1shmIfot0nscZXe%2FKJn5AyUbPoV&union_lens=lensId%3APUB%401767777775%402104e9b5_1fab_19b97c42e36_0488%4001" target="_blank" class="app-btn">Herlab她研社旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DY1Uj0C6GVC4cQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMceZos0fRS%2FP5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6PBdIpOgLlRy1URX1%2BNL8A3GDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767777805%400b11d4cc_12e0_19b97c4a36a_0681%4001" target="_blank" class="app-btn">七度空间官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3Dukul2ezTIQgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMXGouKvQObhhJ1gyddu7kN%2FEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6JSVpuaMMITxzRbxnXo7vQLGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767777860%4021048902_12eb_19b97c57b2d_0675%4001" target="_blank" class="app-btn">自由点官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DtGAktfK%2FThkcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMf1vjRivaJoK79%2FTFaMDK6TEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6MljSnQQzyZF30bPLQCNakpxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401767777889%4021048908_229d_19b97c5eceb_06a0%4001" target="_blank" class="app-btn">花王官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DtOH%2FooPo9YgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMZHoV%2FW%2BYMu679%2FTFaMDK6TEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6PBdIpOgLlRyugbUfsbkT2zGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767777929%40213d936c_1332_19b97c68989_06a6%4001" target="_blank" class="app-btn">淘淘氧棉官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DXlXdeDe4XqgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMUlfPzUMux1Clovu%2FCElQOvEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6FfaqcG9q%2B4GPlVhtWTwjxbGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401767777977%402127b2bb_1b7e_19b97c74540_041a%4001" target="_blank" class="app-btn">高洁丝官方旗舰店</a>
+
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D9FE%2FlSnT4j0cQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMVWwqRB%2BSsv5lovu%2FCElQOvEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6FfaqcG9q%2B4GpbAS%2FZM6WAqn5g3lb8qzqaJn5AyUbPoV&union_lens=lensId%3APUB%401767778007%400b11d4cc_12e0_19b97c7bba2_0682%4001" target="_blank" class="app-btn">凸凸棉旗舰店</a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+  <a href="" target="_blank" class="app-btn"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="/" target="_blank" class="app-btn"></a>
+</div>
+
+<!-- 设备判断脚本（手机端切换为taobao://协议） -->
+<script>
+// 判断是否为移动设备
+function isMobile() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod|android|ios|windows phone/.test(userAgent);
+}
+
+// 批量修改链接协议
+document.querySelectorAll('.app-btn').forEach(link => {
+  if (isMobile()) {
+    link.href = link.href.replace('https://', 'taobao://');
+  }
+});
+</script><!-- a链接店铺 -->
+
+
+
+<!-- 关键词搜索区域 -->
+<div style="text-align: justify; max-width: 700px; margin: 0 auto;">
+
+热搜:
+    <!-- 页面中需要先添加一个容器，用于存放生成的链接 -->
+<div id="linkContainer"></div>
+
+<script>
+    // 1. 设备判断函数：返回 true 为手机，false 为电脑
+    function isMobileDevice() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        // 匹配常见手机浏览器标识
+        const mobileKeywords = ["android", "iphone", "ipad", "ipod", "blackberry", "windows phone"];
+        return mobileKeywords.some(keyword => userAgent.includes(keyword));
+    }
+
+    // 2. 定义基础链接（分设备）
+    const linksConfig = {
+        // 手机端：使用淘宝APP协议，未安装时自动跳转H5页
+        mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401761008372%4021074e38_1304_19a04474a8a_0593%4001&q=",
+        // 电脑端：保留原PC链接
+        pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401761007929%402166ba00_1330_19a044087ff_056b%4001&key="
+    };
+
+    // 3. 分类关键词列表（去重、去空值，按类别整理）
+    const categoryKeywords = {
+
+
+
+
+  "日化清洁类旗舰店": [
+        "立白官方旗舰店", "蓝月亮旗舰店", "奥妙官方旗舰店", "汰渍官方旗舰店",
+        "云南白药牙膏旗舰店", "黑人牙膏官方旗舰店", "海飞丝官方旗舰店", "飘柔官方旗舰店",
+        "潘婷官方旗舰店", "力士官方旗舰店", "沙宣官方旗舰店", "清扬官方旗舰店",
+        "六神官方旗舰店", "隆力奇官方旗舰店", "舒蕾官方旗舰店", "拉芳官方旗舰店",
+        "金纺官方旗舰店", "碧浪官方旗舰店", "开米官方旗舰店", "威露士官方旗舰店",
+        "滴露官方旗舰店", "立白威王旗舰店", "洁厕灵官方旗舰店", "蓝月亮卫诺旗舰店",
+        "雷达官方旗舰店", "榄菊官方旗舰店", "枪手官方旗舰店", "超威官方旗舰店",
+        "立白洗衣凝珠旗舰店", "蓝月亮洗衣凝珠旗舰店", "奥妙洗衣凝珠旗舰店", "汰渍洗衣凝珠旗舰店",
+        "云南白药养元青旗舰店", "黑人超白牙膏旗舰店", "高露洁官方旗舰店", "中华牙膏官方旗舰店",
+        "冷酸灵官方旗舰店", "舒适达官方旗舰店", "云南白药漱口水旗舰店", "李施德林官方旗舰店",
+        "狮王牙膏官方旗舰店", "佳洁士官方旗舰店", "黑人漱口水旗舰店", "高露洁漱口水旗舰店",
+        "六神沐浴露旗舰店", "力士沐浴露旗舰店", "舒肤佳沐浴露旗舰店", "多芬沐浴露官方旗舰店",
+        "玉兰油沐浴露旗舰店", "安利沐浴露官方旗舰店", "完美沐浴露官方旗舰店", "隆力奇沐浴露旗舰店",
+        "六神花露水旗舰店", "隆力奇花露水旗舰店", "雷达蚊香液旗舰店", "榄菊蚊香液旗舰店",
+        "枪手蚊香液旗舰店", "超威蚊香液旗舰店", "立白洗洁精旗舰店", "雕牌洗洁精官方旗舰店",
+        "白猫洗洁精官方旗舰店", "开米洗洁精官方旗舰店", "蓝月亮洗洁精旗舰店", "威露士洗洁精旗舰店"
+    ],
+    "美妆护肤类旗舰店": [
+        "百雀羚官方旗舰店", "相宜本草旗舰店", "自然堂官方旗舰店", "珀莱雅官方旗舰店",
+        "美肤宝官方旗舰店", "韩束官方旗舰店", "丸美官方旗舰店", "欧诗漫官方旗舰店",
+        "片仔癀官方旗舰店", "启初官方旗舰店", "郁美净官方旗舰店", "大宝官方旗舰店",
+        "薇诺娜官方旗舰店", "雅漾官方旗舰店", "理肤泉官方旗舰店", "珂润官方旗舰店",
+        "欧莱雅官方旗舰店", "玉兰油官方旗舰店", "资生堂官方旗舰店", "悦诗风吟官方旗舰店",
+        "兰芝官方旗舰店", "雪花秀官方旗舰店", "后官方旗舰店", "黛珂官方旗舰店",
+        "植村秀官方旗舰店", "纪梵希官方旗舰店", "香奈儿美妆旗舰店", "迪奥美妆旗舰店",
+        "兰蔻官方旗舰店", "雅诗兰黛官方旗舰店", "娇韵诗官方旗舰店", "倩碧官方旗舰店",
+        "科颜氏官方旗舰店", "碧欧泉官方旗舰店", "赫莲娜官方旗舰店", "海蓝之谜官方旗舰店",
+        "圣罗兰美妆旗舰店", "阿玛尼美妆旗舰店", "MAC魅可官方旗舰店", "芭比波朗官方旗舰店",
+        "NARS官方旗舰店", "植村秀卸妆油旗舰店", "芭贝拉卸妆水旗舰店", "贝德玛卸妆水旗舰店",
+        "美宝莲官方旗舰店", "卡姿兰官方旗舰店", "玛丽黛佳官方旗舰店", "完美日记官方旗舰店",
+        "花西子官方旗舰店", "橘朵官方旗舰店", "珂拉琪官方旗舰店", "酵色官方旗舰店",
+        "稚优泉官方旗舰店", "滋色官方旗舰店", "透真官方旗舰店", "韩后官方旗舰店",
+        "一叶子官方旗舰店", "膜法世家官方旗舰店", "御泥坊官方旗舰店", "佰草集官方旗舰店",
+        "林清轩官方旗舰店", "菲洛嘉官方旗舰店", "娇兰官方旗舰店", "兰芝睡眠面膜旗舰店",
+        "悦木之源官方旗舰店", "悦诗风吟绿茶系列旗舰店", "雪花秀润燥精华旗舰店", "后天气丹官方旗舰店"
+    ],
+    "服饰鞋包类旗舰店": [
+        "森马官方旗舰店", "以纯官方旗舰店", "真维斯官方旗舰店", "唐狮官方旗舰店",
+        "优衣库官方旗舰店", "ZARA官方旗舰店", "H&M官方旗舰店", "太平鸟官方旗舰店",
+        "杰克琼斯官方旗舰店", "马克华菲官方旗舰店", "班尼路官方旗舰店", "佐丹奴官方旗舰店",
+        "匹克官方旗舰店", "鸿星尔克童装旗舰店", "回力童鞋旗舰店", "安踏儿童旗舰店",
+        "李宁儿童旗舰店", "巴拉巴拉官方旗舰店", "好孩子官方旗舰店", "abc童装官方旗舰店",
+        "骆驼官方旗舰店", "吉普官方旗舰店", "探路者官方旗舰店", "北面官方旗舰店",
+        "耐克官方旗舰店", "彪马官方旗舰店", "匡威官方旗舰店", "斯凯奇官方旗舰店",
+        "百丽官方旗舰店", "达芙妮官方旗舰店", "红蜻蜓官方旗舰店", "意尔康官方旗舰店",
+        "金利来官方旗舰店", "七匹狼官方旗舰店", "劲霸官方旗舰店", "柒牌官方旗舰店",
+        "爱华仕官方旗舰店", "外交官官方旗舰店", "新秀丽官方旗舰店", "小米箱包旗舰店",
+        "森马童装官方旗舰店", "以纯童装官方旗舰店", "真维斯童装旗舰店", "唐狮童装旗舰店",
+        "太平鸟童装旗舰店", "迷你巴拉巴拉旗舰店", "安奈儿官方旗舰店", "笛莎官方旗舰店",
+        "小猪班纳官方旗舰店", "巴布豆童装旗舰店", "迪士尼童装旗舰店", "汪汪队童装旗舰店",
+        "安踏运动鞋旗舰店", "李宁运动鞋旗舰店", "耐克运动鞋旗舰店", "阿迪达斯运动鞋旗舰店",
+        "匡威帆布鞋旗舰店", "回力帆布鞋旗舰店", "百丽女鞋旗舰店", "达芙妮女鞋旗舰店",
+        "红蜻蜓男鞋旗舰店", "意尔康男鞋旗舰店", "骆驼登山鞋旗舰店", "吉普户外鞋旗舰店",
+        "金利来皮具旗舰店", "七匹狼皮具旗舰店", "稻草人官方旗舰店", "金利来衬衫旗舰店",
+        "劲霸男装旗舰店", "柒牌男装旗舰店", "海澜之家官方旗舰店", "雅戈尔官方旗舰店",
+        "罗蒙官方旗舰店", "杉杉官方旗舰店", "波司登官方旗舰店", "雪中飞官方旗舰店",
+        "雅鹿官方旗舰店", "鸭鸭羽绒服旗舰店", "艾莱依官方旗舰店", "坦博尔官方旗舰店",
+        "恒源祥官方旗舰店", "红豆官方旗舰店", "南极人官方旗舰店", "北极绒官方旗舰店",
+        "俞兆林官方旗舰店", "浪莎官方旗舰店", "猫人官方旗舰店", "三枪官方旗舰店"
+    ],
+    "数码家电类旗舰店": [
+        "荣耀官方旗舰店", "红米官方旗舰店", "iQOO官方旗舰店", "一加手机官方旗舰店",
+        "魅族官方旗舰店", "realme官方旗舰店", "苹果官方旗舰店", "三星官方旗舰店",
+        "联想官方旗舰店", "戴尔官方旗舰店", "惠普官方旗舰店", "华硕官方旗舰店",
+        "九阳官方旗舰店", "苏泊尔官方旗舰店", "美的官方旗舰店", "小熊电器旗舰店",
+        "荣事达官方旗舰店", "老板官方旗舰店", "方太官方旗舰店", "华帝官方旗舰店",
+        "格力官方旗舰店", "海尔官方旗舰店", "海信官方旗舰店", "TCL官方旗舰店",
+        "小米家电官方旗舰店", "戴森官方旗舰店", "飞利浦官方旗舰店", "松下官方旗舰店",
+        "索尼官方旗舰店", "夏普官方旗舰店", "康佳官方旗舰店", "创维官方旗舰店",
+        "漫步者官方旗舰店", "小米耳机旗舰店", "JBL官方旗舰店", "Bose官方旗舰店",
+        "大疆官方旗舰店", "GoPro官方旗舰店", "佳能官方旗舰店", "尼康官方旗舰店",
+        "富士相机官方旗舰店", "徕卡相机官方旗舰店", "索尼相机官方旗舰店", "松下相机官方旗舰店",
+        "小米电视官方旗舰店", "海信电视官方旗舰店", "TCL电视官方旗舰店", "创维电视官方旗舰店",
+        "索尼电视官方旗舰店", "三星电视官方旗舰店", "长虹电视官方旗舰店", "康佳电视官方旗舰店",
+        "格力空调官方旗舰店", "美的空调官方旗舰店", "海尔空调官方旗舰店", "奥克斯空调官方旗舰店",
+        "志高空调官方旗舰店", "TCL空调官方旗舰店", "科龙空调官方旗舰店", "海信空调官方旗舰店",
+        "美的冰箱官方旗舰店", "海尔冰箱官方旗舰店", "容声冰箱官方旗舰店", "美菱冰箱官方旗舰店",
+        "西门子冰箱官方旗舰店", "博世冰箱官方旗舰店", "TCL冰箱官方旗舰店", "海信冰箱官方旗舰店",
+        "美的洗衣机官方旗舰店", "海尔洗衣机官方旗舰店", "小天鹅洗衣机官方旗舰店", "西门子洗衣机官方旗舰店",
+        "博世洗衣机官方旗舰店", "TCL洗衣机官方旗舰店", "海信洗衣机官方旗舰店", "荣事达洗衣机旗舰店",
+        "九阳豆浆机旗舰店", "美的豆浆机旗舰店", "苏泊尔豆浆机旗舰店", "小熊豆浆机旗舰店",
+        "九阳破壁机旗舰店", "美的破壁机旗舰店", "苏泊尔破壁机旗舰店", "小熊破壁机旗舰店",
+        "美的电饭煲旗舰店", "苏泊尔电饭煲旗舰店", "九阳电饭煲旗舰店", "小熊电饭煲旗舰店",
+        "美的微波炉旗舰店", "格兰仕微波炉旗舰店", "松下微波炉旗舰店", "美的烤箱旗舰店",
+        "长帝烤箱官方旗舰店", "海氏烤箱官方旗舰店", "柏翠烤箱官方旗舰店", "小熊烤箱旗舰店",
+        "戴森吹风机旗舰店", "飞利浦吹风机旗舰店", "松下吹风机旗舰店", "飞科吹风机旗舰店",
+        "飞利浦剃须刀旗舰店", "飞科剃须刀官方旗舰店", "博朗剃须刀官方旗舰店", "松下剃须刀旗舰店",
+        "小米手环官方旗舰店", "华为手环官方旗舰店", "苹果手表官方旗舰店", "华为手表官方旗舰店",
+        "小米路由器旗舰店", "TP-LINK官方旗舰店", "水星网络官方旗舰店", "腾达官方旗舰店"
+    ],
+    "母婴用品类旗舰店": [
+        "贝亲官方旗舰店", "好奇官方旗舰店", "帮宝适官方旗舰店", "安儿乐官方旗舰店",
+        "花王妙而舒官方旗舰店", "尤妮佳官方旗舰店", "大王官方旗舰店", "露安适官方旗舰店",
+        "美赞臣官方旗舰店", "惠氏官方旗舰店", "雅培官方旗舰店", "飞鹤官方旗舰店",
+        "伊利金领冠官方旗舰店", "合生元官方旗舰店", "小鹿蓝蓝官方旗舰店", "英氏官方旗舰店",
+        "好孩子母婴旗舰店", "贝恩施官方旗舰店", "澳贝官方旗舰店", "费雪官方旗舰店",
+        "乐高官方旗舰店", "汪汪队立大功旗舰店", "迪士尼母婴旗舰店", "巴布豆官方旗舰店",
+        "爱他美官方旗舰店", "诺优能官方旗舰店", "美素佳儿官方旗舰店", "牛栏官方旗舰店",
+        "雅士利官方旗舰店", "贝因美官方旗舰店", "君乐宝官方旗舰店", "完达山官方旗舰店",
+        "启赋官方旗舰店", "蓝臻官方旗舰店", "菁挚官方旗舰店", "超启能恩官方旗舰店",
+        "帮宝适纸尿裤旗舰店", "好奇纸尿裤旗舰店", "花王纸尿裤旗舰店", "尤妮佳纸尿裤旗舰店",
+        "大王纸尿裤旗舰店", "露安适纸尿裤旗舰店", "安儿乐纸尿裤旗舰店", "贝亲纸尿裤旗舰店",
+        "贝亲奶瓶官方旗舰店", "新安怡官方旗舰店", "飞利浦奶瓶旗舰店", "可么多么官方旗舰店",
+        "布朗博士官方旗舰店", "NUK官方旗舰店", "爱得利官方旗舰店", "日康官方旗舰店",
+        "贝亲湿巾旗舰店", "好奇湿巾旗舰店", "好孩子湿巾旗舰店", "维达婴儿湿巾旗舰店",
+        "心相印婴儿湿巾旗舰店", "全棉时代官方旗舰店", "洁柔婴儿湿巾旗舰店", "花王婴儿湿巾旗舰店",
+        "小鹿蓝蓝米饼旗舰店", "英氏米饼旗舰店", "嘉宝官方旗舰店", "亨氏官方旗舰店",
+        "贝因美辅食旗舰店", "伊威官方旗舰店", "方广官方旗舰店", "每伴官方旗舰店",
+        "好孩子推车旗舰店", "小龙哈彼官方旗舰店", "宝宝好官方旗舰店", "ibelieve官方旗舰店",
+        "爱音儿童餐椅旗舰店", "好孩子儿童餐椅旗舰店", "贝恩施儿童餐椅旗舰店", "小龙哈彼儿童餐椅旗舰店",
+        "费雪玩具旗舰店", "澳贝玩具旗舰店", "贝恩施玩具旗舰店", "汇乐玩具官方旗舰店",
+        "乐高积木旗舰店", "汪汪队玩具旗舰店", "迪士尼玩具旗舰店", "奥特曼官方旗舰店"
+    ],
+    "家居百货类旗舰店": [
+        "维达官方旗舰店", "心相印官方旗舰店", "清风官方旗舰店", "洁柔官方旗舰店",
+        "妙洁官方旗舰店", "茶花官方旗舰店", "苏诺官方旗舰店", "美丽雅官方旗舰店",
+        "无印良品官方旗舰店", "名创优品官方旗舰店", "宜家官方旗舰店", "全友家居官方旗舰店",
+        "顾家家居官方旗舰店", "林氏木业官方旗舰店", "水星家纺官方旗舰店", "罗莱家纺官方旗舰店",
+        "富安娜官方旗舰店", "梦洁家纺官方旗舰店", "南极人家纺旗舰店", "北极绒官方旗舰店",
+        "九阳小家电旗舰店", "美的小家电旗舰店", "小熊辅食机旗舰店", "摩飞官方旗舰店",
+        "九阳破壁机旗舰店", "苏泊尔电饭煲旗舰店", "美的微波炉旗舰店", "格兰仕官方旗舰店",
+        "维达抽纸旗舰店", "心相印抽纸旗舰店", "清风抽纸旗舰店", "洁柔抽纸旗舰店",
+        "维达卷纸旗舰店", "心相印卷纸旗舰店", "清风卷纸旗舰店", "洁柔卷纸旗舰店",
+        "妙洁保鲜膜旗舰店", "妙洁保鲜袋旗舰店", "茶花保鲜盒旗舰店", "乐扣乐扣官方旗舰店",
+        "特百惠官方旗舰店", "膳魔师官方旗舰店", "象印官方旗舰店", "虎牌官方旗舰店",
+        "苏泊尔保温杯旗舰店", "九阳保温杯旗舰店", "美的保温杯旗舰店", "富光官方旗舰店",
+        "哈尔斯官方旗舰店", "希诺官方旗舰店", "万象官方旗舰店", "思宝官方旗舰店",
+        "水星家纺四件套旗舰店", "罗莱家纺四件套旗舰店", "富安娜四件套旗舰店", "梦洁四件套旗舰店",
+        "南极人四件套旗舰店", "北极绒四件套旗舰店", "红豆家纺旗舰店", "恒源祥家纺旗舰店",
+        "全友沙发官方旗舰店", "顾家沙发官方旗舰店", "林氏木业沙发旗舰店", "芝华仕官方旗舰店",
+        "慕思官方旗舰店", "席梦思官方旗舰店", "喜临门官方旗舰店", "穗宝官方旗舰店",
+        "九阳电水壶旗舰店", "美的电水壶旗舰店", "苏泊尔电水壶旗舰店", "小熊电水壶旗舰店",
+        "美的电磁炉旗舰店", "苏泊尔电磁炉旗舰店", "九阳电磁炉旗舰店", "小熊电磁炉旗舰店"
+    ],
+    "食品饮料类旗舰店": [
+        "雀巢官方旗舰店", "立顿官方旗舰店", "统一官方旗舰店", "康师傅官方旗舰店",
+        "百事可乐官方旗舰店", "可口可乐官方旗舰店", "农夫山泉官方旗舰店", "怡宝官方旗舰店",
+        "三只松鼠官方旗舰店", "良品铺子官方旗舰店", "百草味官方旗舰店", "恰恰食品旗舰店",
+        "徐福记官方旗舰店", "奥利奥官方旗舰店", "乐事官方旗舰店", "旺旺官方旗舰店",
+        "伊利官方旗舰店", "蒙牛官方旗舰店", "光明乳业旗舰店", "君乐宝官方旗舰店",
+        "茅台官方旗舰店", "五粮液官方旗舰店", "洋河官方旗舰店", "泸州老窖官方旗舰店",
+        "青岛啤酒官方旗舰店", "雪花啤酒官方旗舰店", "燕京啤酒官方旗舰店", "百威啤酒官方旗舰店",
+        "哈尔滨啤酒官方旗舰店", "珠江啤酒官方旗舰店", "金星啤酒官方旗舰店", "崂山啤酒官方旗舰店",
+        "娃哈哈官方旗舰店", "王老吉官方旗舰店", "加多宝官方旗舰店", "和其正官方旗舰店",
+        "六个核桃官方旗舰店", "露露官方旗舰店", "银鹭官方旗舰店", "养元饮品旗舰店",
+        "达利园官方旗舰店", "盼盼食品官方旗舰店", "旺旺雪饼旗舰店", "徐福记酥心糖旗舰店",
+        "奥利奥饼干旗舰店", "趣多多官方旗舰店", "太平苏打饼干旗舰店", "嘉顿官方旗舰店",
+        "乐事薯片旗舰店", "可比克官方旗舰店", "好丽友官方旗舰店", "好丽友派旗舰店",
+        "德芙官方旗舰店", "费列罗官方旗舰店", "士力架官方旗舰店", "玛氏官方旗舰店",
+        "雀巢咖啡官方旗舰店", "麦斯威尔官方旗舰店", "星巴克官方旗舰店", "瑞幸咖啡官方旗舰店",
+        "立顿红茶旗舰店", "大益普洱茶旗舰店", "西湖龙井官方旗舰店", "安溪铁观音旗舰店",
+        "伊利纯牛奶旗舰店", "蒙牛纯牛奶旗舰店", "光明纯牛奶旗舰店", "三元官方旗舰店",
+        "安慕希官方旗舰店", "纯甄官方旗舰店", "莫斯利安官方旗舰店", "君乐宝简醇旗舰店"
+    ],
+    "运动户外类旗舰店": [
+        "迪卡侬官方旗舰店", "凯乐石官方旗舰店", "北面官方旗舰店", "哥伦比亚官方旗舰店",
+        "始祖鸟官方旗舰店", "萨洛蒙官方旗舰店", "颂拓官方旗舰店", "佳明官方旗舰店",
+        "李宁运动旗舰店", "安踏运动旗舰店", "耐克运动旗舰店", "阿迪达斯运动旗舰店",
+        "红双喜官方旗舰店", "双鱼体育旗舰店", "尤尼克斯官方旗舰店", "威克多官方旗舰店",
+        "胜利羽毛球旗舰店", "李宁羽毛球旗舰店", "尤尼克斯羽毛球拍旗舰店", "红双喜乒乓球拍旗舰店",
+        "双鱼乒乓球拍旗舰店", "斯伯丁篮球官方旗舰店", "威尔胜篮球旗舰店", "摩腾篮球官方旗舰店",
+        "迪卡侬户外旗舰店", "凯乐石冲锋衣旗舰店", "北面冲锋衣旗舰店", "哥伦比亚冲锋衣旗舰店",
+        "始祖鸟冲锋衣旗舰店", "萨洛蒙跑鞋旗舰店", "耐克跑鞋旗舰店", "阿迪达斯跑鞋旗舰店",
+        "颂拓运动手表旗舰店", "佳明运动手表旗舰店", "华为运动手表旗舰店", "小米运动手表旗舰店"
+    ],
+    "汽车用品类旗舰店": [
+        "米其林官方旗舰店", "普利司通官方旗舰店", "固特异官方旗舰店", "马牌轮胎旗舰店",
+        "嘉实多官方旗舰店", "壳牌官方旗舰店", "美孚官方旗舰店", "长城润滑油旗舰店",
+        "3M汽车用品旗舰店", "龟牌官方旗舰店", "车仆官方旗舰店", "固特异车品旗舰店",
+        "博世汽车配件旗舰店", "曼牌滤清器官方旗舰店", "马勒滤清器官方旗舰店", "索菲玛官方旗舰店",
+        "瓦尔塔蓄电池官方旗舰店", "风帆蓄电池官方旗舰店", "骆驼蓄电池官方旗舰店", "博世火花塞旗舰店",
+        "3M汽车贴膜旗舰店", "龙膜官方旗舰店", "威固官方旗舰店", "量子膜官方旗舰店",
+        "龟牌车蜡旗舰店", "车仆车蜡旗舰店", "3M车蜡旗舰店", "固特异车蜡旗舰店",
+        "博世雨刮器旗舰店", "3M雨刮器旗舰店", "龟牌雨刮器旗舰店", "法雷奥雨刮器旗舰店",
+        "汽车坐垫官方旗舰店", "汽车座套官方旗舰店", "汽车方向盘套旗舰店", "汽车香水官方旗舰店",
+        "车载充电器官方旗舰店", "车载吸尘器官方旗舰店", "车载充气泵官方旗舰店", "汽车应急启动电源旗舰店"
+    ],
+    "图书文具类旗舰店": [
+        "当当网官方旗舰店", "京东图书旗舰店", "新华书店官方旗舰店", "博库网官方旗舰店",
+        "晨光文具官方旗舰店", "得力文具官方旗舰店", "齐心文具官方旗舰店", "真彩文具旗舰店",
+        "斑马文具官方旗舰店", "百乐文具官方旗舰店", "三菱铅笔官方旗舰店", "施耐德官方旗舰店",
+        "派克钢笔官方旗舰店", "英雄钢笔官方旗舰店", "毕加索钢笔官方旗舰店", "凌美钢笔官方旗舰店",
+        "晨光中性笔旗舰店", "得力中性笔旗舰店", "真彩中性笔旗舰店", "斑马中性笔旗舰店",
+        "百乐中性笔旗舰店", "三菱中性笔旗舰店", "晨光笔记本旗舰店", "得力笔记本旗舰店",
+        "齐心笔记本旗舰店", "国誉笔记本官方旗舰店", "晨光文件夹旗舰店", "得力文件夹旗舰店",
+        "齐心文件夹旗舰店", "晨光订书机旗舰店", "得力订书机旗舰店", "齐心订书机旗舰店",
+        "晨光打印机旗舰店", "得力打印机旗舰店", "惠普打印机官方旗舰店", "佳能打印机官方旗舰店",
+        "爱普生打印机官方旗舰店", "兄弟打印机官方旗舰店", "晨光打印纸旗舰店", "得力打印纸旗舰店"
+    ],
+    "宠物用品类旗舰店": [
+        "皇家宠物食品官方旗舰店", "冠能官方旗舰店", "渴望官方旗舰店", "爱肯拿官方旗舰店",
+        "伯纳天纯官方旗舰店", "麦富迪官方旗舰店", "卫仕官方旗舰店", "红狗官方旗舰店",
+        "猫乐适官方旗舰店", "伟嘉官方旗舰店", "妙多乐官方旗舰店", "喜跃官方旗舰店",
+        "福来恩官方旗舰店", "大宠爱官方旗舰店", "拜宠清官方旗舰店", "犬心保官方旗舰店",
+        "猫砂官方旗舰店", "膨润土猫砂旗舰店", "豆腐猫砂旗舰店", "水晶猫砂旗舰店",
+        "宠物笼子官方旗舰店", "宠物窝垫官方旗舰店", "宠物玩具官方旗舰店", "宠物牵引绳旗舰店"
+    ],
+    "保健品滋补类旗舰店": [
+        "汤臣倍健官方旗舰店", "纽崔莱官方旗舰店", "完美官方旗舰店", "无限极官方旗舰店",
+        "东阿阿胶官方旗舰店", "同仁堂官方旗舰店", "九芝堂官方旗舰店", "云南白药保健品旗舰店",
+        "钙尔奇官方旗舰店", "迪巧官方旗舰店", "朗迪官方旗舰店", "汤臣倍健蛋白粉旗舰店",
+        "纽崔莱蛋白粉旗舰店", "东阿阿胶糕旗舰店", "同仁堂阿胶糕旗舰店", "固本堂官方旗舰店",
+        "燕之屋官方旗舰店", "小仙炖官方旗舰店", "同仁堂燕窝旗舰店", "康师傅燕窝旗舰店"
+    ],
+    "酒类专区旗舰店": [
+        "洋河蓝色经典旗舰店", "泸州老窖特曲旗舰店", "剑南春官方旗舰店", "水井坊官方旗舰店",
+        "郎酒官方旗舰店", "习酒官方旗舰店", "汾酒官方旗舰店", "古井贡酒官方旗舰店",
+        "董酒官方旗舰店", "西凤酒官方旗舰店", "口子窖官方旗舰店", "酒鬼酒官方旗舰店",
+        "张裕葡萄酒官方旗舰店", "长城葡萄酒官方旗舰店", "王朝葡萄酒官方旗舰店", "奔富官方旗舰店",
+        "黄尾袋鼠官方旗舰店", "杰卡斯官方旗舰店", "百威啤酒官方旗舰店", "科罗娜啤酒官方旗舰店"
+    ],
+    "综合类店铺": [
+        "天猫超市", "阿里健康大药房", "漫花旗舰店", "鸿星尔克官方旗舰店",
+        "官方国货甄选", "回力旗舰店", "特步官方旗舰店", "361度官方旗舰店",
+        "乔丹官方旗舰店", "李宁官方旗舰店", "安踏官方旗舰店", "adidas官方旗舰店",
+        "澳雪旗舰店", "舒肤佳官方旗舰店", "滋采旗舰店", "小米官方旗舰店",
+        "华为官方旗舰店", "OPPO官方旗舰店", "vivo手机官方旗舰店", "Herlab她研社旗舰店",
+        "七度空间官方旗舰店", "自由点官方旗舰店", "花王官方旗舰店", "淘淘氧棉官方旗舰店",
+        "高洁丝官方旗舰店", "凸凸棉旗舰店", "天天特卖工厂", "淘工厂"
+    ],
+        "日用百货": [
+            "纸巾", "抽纸", "卷纸", "厨房纸巾", "湿厕纸", "洗脸巾", "棉柔巾", "手帕纸",
+            "毛巾", "浴巾", "方巾", "毛巾纯棉", "毛巾吸水", "一次性毛巾", "压缩毛巾",
+            "牙刷", "电动牙刷", "牙刷软毛", "牙刷成人", "儿童牙刷", "牙杯", "牙膏",
+            "牙膏美白", "牙膏去黄", "儿童牙膏", "小苏打牙膏", "漱口水", "牙线", "牙贴",
+            "沐浴露", "沐浴露持久留香", "沐浴露美白", "儿童沐浴露", "沐浴球", "搓澡巾",
+            "洗发水", "洗发水去屑", "洗发水控油", "洗发水柔顺", "儿童洗发水", "护发素",
+            "发膜", "精油护发", "沐浴露家庭装", "洗发水大容量", "女用品", "湿巾纸", "卫生棉",
+            "护垫", "一次性内裤", "棉签棒", "棉球", "指甲刀", "掏耳勺", "剃须刀", "电动剃须刀",
+            "剃须泡沫", "脱毛刀", "化妆镜", "梳子套装", "洗衣刷", "鞋刷", "马桶清洁剂", "管道疏通器",
+            "玻璃擦", "鸡毛掸子"
+        ],
+        "清洁护理": [
+            "洗衣液", "洗衣液香味持久", "洗衣液机洗", "洗衣液手洗", "洗衣凝珠", "洗衣粉",
+            "留香珠", "柔顺剂", "消毒液", "衣物除菌液", "洗洁精", "洗洁精食品级", "洗碗布",
+            "钢丝球", "百洁布", "厨房清洁剂", "油污净", "洁厕灵", "洁厕宝", "马桶刷",
+            "垃圾袋", "垃圾袋加厚", "垃圾袋背心式", "保鲜袋", "保鲜膜", "一次性手套",
+            "一次性纸杯", "一次性筷子", "洗碗海绵", "地板清洁剂", "玻璃清洁剂", "厕所除臭剂",
+            "管道疏通剂", "除螨喷雾", "消毒喷雾", "湿巾", "婴儿湿巾", "酒精湿巾", "洗衣皂",
+            "肥皂", "香皂", "洗手液", "消毒凝胶", "厨房湿巾", "厕所湿巾", "地板蜡", "家具清洁剂",
+            "皮革清洁剂", "空调清洁剂", "洗衣机槽清洁剂", "除垢剂", "水垢清洁剂", "防霉剂",
+            "除湿袋", "除湿盒", "樟脑丸", "香薰", "空气清新剂"
+        ],
+        "美妆个护": [
+            "洗面奶", "洗面奶控油", "洗面奶温和", "氨基酸洗面奶", "卸妆油", "卸妆水",
+            "卸妆膏", "面膜", "补水面膜", "美白面膜", "清洁面膜", "泥膜", "爽肤水",
+            "精华水", "乳液", "面霜", "保湿面霜", "美白面霜", "防晒霜", "防晒喷雾",
+            "隔离霜", "粉底液", "气垫", "BB霜", "散粉", "定妆粉", "口红", "唇釉",
+            "眉笔", "眼影", "腮红", "睫毛膏", "卸妆棉", "化妆棉", "棉签", "护手霜",
+            "身体乳", "身体乳美白", "润唇膏", "香水小样", "止汗露", "脱毛膏", "化妆刷",
+            "双眼皮贴", "假睫毛", "去角质膏", "磨砂膏", "化妆水", "精华液", "眼霜", "眼膜",
+            "唇膜", "隔离乳", "妆前乳", "遮瑕膏", "修容粉", "高光粉", "眼线笔", "眼线液",
+            "睫毛夹", "卸妆湿巾", "美容仪", "蒸脸器", "卷发棒", "直发器"
+        ],
+        "家居生活": [
+            "拖鞋", "棉拖鞋", "凉拖鞋", "防滑拖鞋", "床上四件套", "被套", "床单", "枕套",
+            "枕头", "乳胶枕", "抱枕", "靠垫", "毛毯", "空调被", "毛巾被", "热水袋",
+            "暖手宝", "电热毯", "雨伞", "太阳伞", "遮阳帽", "口罩", "一次性口罩",
+            "KN95口罩", "手套", "棉手套", "洗衣篮", "收纳盒", "整理箱", "衣架",
+            "晾衣架", "粘毛器", "马桶垫", "浴室防滑垫", "门垫", "地毯", "桌布",
+            "纸巾盒", "肥皂盒", "牙具架", "吹风机", "梳子", "镜子", "床垫", "床笠",
+            "蚊帐", "凉席", "枕头套", "靠枕", "坐垫", "地毯垫", "窗帘", "窗帘杆",
+            "挂钩", "粘钩", "衣架收纳", "晾衣绳", "洗衣篓", "垃圾桶", "分类垃圾桶",
+            "垃圾袋抽绳式", "马桶盖", "浴室置物架"
+        ],
+        "食品零食": [
+            "方便面", "螺蛳粉", "自热火锅", "薯片", "饼干", "巧克力", "糖果", "坚果",
+            "瓜子", "牛肉干", "猪肉脯", "果冻", "海苔", "辣条", "面包", "蛋糕",
+            "牛奶", "酸奶", "果汁", "咖啡", "茶叶", "蜂蜜", "麦片", "藕粉", "黑芝麻糊",
+            "火腿肠", "速冻饺子", "速冻包子", "番茄酱", "酱油", "醋", "盐", "鸡精",
+            "火锅底料", "食用油", "大米", "面粉", "挂面", "粉丝", "海带", "木耳",
+            "面包糠", "淀粉", "小苏打", "酵母粉", "沙拉酱", "花生酱", "果酱", "腐乳",
+            "豆瓣酱", "辣椒酱", "火锅蘸料", "方便面调料", "味精", "十三香", "桂皮", "八角",
+            "香叶", "干辣椒"
+        ],
+        "服饰配件": [
+            "袜子", "棉袜", "丝袜", "船袜", "内裤", "内衣", "睡衣", "家居服", "T恤",
+            "衬衫", "牛仔裤", "休闲裤", "运动鞋", "帆布鞋", "拖鞋外穿", "帽子", "围巾",
+            "手套", "墨镜", "手表", "腰带", "背包", "手提包", "口罩时尚", "发圈", "发夹",
+            "秋裤", "保暖内衣", "毛衣", "外套", "羽绒服", "冲锋衣", "短裤", "裙子", "连衣裙",
+            "背心", "长袜", "短袜", "隐形袜", "皮鞋"
+        ],
+        "数码配件": [
+            "手机壳", "手机膜", "充电器", "数据线", "充电宝", "耳机", "蓝牙耳机", "音箱",
+            "鼠标", "键盘", "U盘", "移动硬盘", "路由器", "网线", "电池", "充电器头",
+            "耳机套", "手机支架", "电脑支架", "自拍杆"
+        ],
+        "铆钉及紧固件": [
+            "铆钉", "实心铆钉", "空心铆钉", "半空心铆钉", "抽芯铆钉", "盲铆钉", "拉铆钉",
+            "铝铆钉", "不锈钢铆钉", "铜铆钉", "铁铆钉", "圆头铆钉", "沉头铆钉", "扁头铆钉",
+            "大扁头铆钉", "防松铆钉", "防水铆钉", "自冲铆钉", "铆钉枪", "铆钉机", "旋铆机",
+            "自动铆钉机", "铆接工艺", "铆钉连接", "航空铆钉", "汽车铆钉", "建筑铆钉",
+            "家具铆钉", "钣金铆钉", "船舶铆钉", "电子设备铆钉", "装饰铆钉", "铆钉紧固件",
+            "铆钉螺母", "铆钉垫片", "铆钉冲针", "紫铜铆钉", "黄铜铆钉", "螺丝", "平垫",
+            "垫片", "车件", "销轴", "铜鸡眼", "翻边铆钉", "铆钉厂", "铆钉直径", "铆钉长度",
+            "标准铆钉", "非标铆钉", "工业铆钉"
+        ],
+        "其他用品": [
+            "手俾机", "小冲床", "手动铆钉机", "手啤机", "大宝", "sod", "避孕套", "胸罩",
+            "奶罩", "乳罩", "体温计", "酒精", "奥司他韦", "深度水解奶粉", "电视机", "耳温枪", "纸巾", "阳台护栏防护网", "路由器", "智能门锁", "袜子男童", "奶粉", "", "", "", "", "", "", ""
+        ],
+
+};
+
+
+
+    // 4. 生成分类关键词按钮
+    function generateLinks() {
+        const container = document.getElementById("linkContainer");
+        if (!container) return;
+
+        // 根据设备选择基础链接
+        const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+
+        // 遍历所有分类
+        Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+            // 创建分类容器
+            const categoryDiv = document.createElement("div");
+            categoryDiv.className = "keyword-category";
+
+            // 创建分类标题
+            const titleElement = document.createElement("div");
+            titleElement.className = "category-title";
+            titleElement.textContent = category;
+            categoryDiv.appendChild(titleElement);
+
+            // 创建关键词按钮容器
+            const buttonsDiv = document.createElement("div");
+            buttonsDiv.className = "keyword-buttons";
+
+            // 去重处理并生成按钮（双重去重确保无重复）
+            const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+            
+            // 生成关键词按钮
+            uniqueKeywords.forEach(keyword => {
+                const link = document.createElement("a");
+                const encodedKeyword = encodeURIComponent(keyword);
+                link.href = baseUrl + encodedKeyword;
+                link.target = "_blank";
+                link.textContent = keyword;
+                link.className = "keyword-btn";
+                buttonsDiv.appendChild(link);
+            });
+
+            categoryDiv.appendChild(buttonsDiv);
+            container.appendChild(categoryDiv);
+        });
+    }
+
+    // 5. 页面加载完成后执行链接生成
+    window.onload = function() {
+        // 先执行原有的搜索框聚焦逻辑
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) searchInput.focus();
+        // 再生成关键词链接
+        generateLinks();
+    };
+</script>
+<!-- 关键词搜索区域 -->
+
+
+
+</div>
+</body>
+</html>
