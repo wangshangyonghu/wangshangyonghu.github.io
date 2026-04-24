@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间计算小工具</title>
+<meta name="keywords" content=",搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+    <style>
+        body {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin: 5px 0;
+        }
+        input, select, button {
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        input {
+            flex: 2;
+        }
+        select {
+            flex: 1;
+        }
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>时间计算工具</h2>
+    <div>
+        <label>当前时间：</label>
+        <input type="datetime-local" id="currentTime" step="1">
+    </div>
+    <div>
+        <label>增加的时长：</label>
+        <div class="input-group">
+            <input type="number" id="addValue" value="2" min="1">
+            <select id="timeUnit">
+                <option value="second">秒</option>
+                <option value="minute">分钟</option>
+                <option value="hour">小时</option>
+                <option value="day">天</option>
+            </select>
+        </div>
+    </div>
+    <!-- 保留按钮作为备选方式 -->
+    <button onclick="calculateTime()">计算结果时间</button>
+
+    <table>
+        <tr>
+            <th>项目</th>
+            <th>内容</th>
+        </tr>
+        <tr>
+            <td>现在时间</td>
+            <td id="nowTime">2025年12月6日11:44:17</td>
+        </tr>
+        <tr>
+            <td>增加的时长</td>
+            <td id="addTime">2秒</td>
+        </tr>
+        <tr>
+            <td>结果时间</td>
+            <td id="resultTime">2025年12月6日11:44:19</td>
+        </tr>
+    </table>
+
+    <script>
+        // 获取所有输入元素
+        const currentTimeInput = document.getElementById('currentTime');
+        const addValueInput = document.getElementById('addValue');
+        const timeUnitSelect = document.getElementById('timeUnit');
+        
+        // 页面加载时设置当前时间为默认值
+        window.onload = function() {
+            const now = new Date();
+            // 格式化时间为datetime-local所需的格式 (YYYY-MM-DDThh:mm:ss)
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const formattedTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+            currentTimeInput.value = formattedTime;
+            
+            // 为所有输入元素添加事件监听器
+            currentTimeInput.addEventListener('change', calculateTime);
+            addValueInput.addEventListener('input', calculateTime);
+            timeUnitSelect.addEventListener('change', calculateTime);
+            
+            // 初始化表格显示当前时间
+            calculateTime();
+        };
+
+        function calculateTime() {
+            // 获取输入值
+            const currentInput = currentTimeInput.value;
+            const addValue = parseInt(addValueInput.value) || 0;
+            const timeUnit = timeUnitSelect.value;
+            
+            // 转换为总秒数
+            let totalSeconds;
+            switch(timeUnit) {
+                case 'minute':
+                    totalSeconds = addValue * 60;
+                    break;
+                case 'hour':
+                    totalSeconds = addValue * 60 * 60;
+                    break;
+                case 'day':
+                    totalSeconds = addValue * 24 * 60 * 60;
+                    break;
+                default: // second
+                    totalSeconds = addValue;
+            }
+            
+            // 处理时间格式
+            const currentDate = new Date(currentInput);
+            currentDate.setSeconds(currentDate.getSeconds() + totalSeconds);
+            
+            // 格式化显示
+            const formatDate = (date) => {
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                const hour = date.getHours().toString().padStart(2, '0');
+                const minute = date.getMinutes().toString().padStart(2, '0');
+                const second = date.getSeconds().toString().padStart(2, '0');
+                return `${year}年${month}月${day}日${hour}:${minute}:${second}`;
+            };
+
+            // 获取单位文本
+            const unitText = {
+                'second': '秒',
+                'minute': '分钟',
+                'hour': '小时',
+                'day': '天'
+            }[timeUnit];
+
+            // 更新表格内容
+            document.getElementById('nowTime').textContent = formatDate(new Date(currentInput));
+            document.getElementById('addTime').textContent = `${addValue}${unitText}`;
+            document.getElementById('resultTime').textContent = formatDate(currentDate);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>网上用户：含税不含税互算计算器</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,wangshangyonghu,上网用户,用户,公平村,客家人" /><!--关键词-->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;padding:15px}
+.main{max-width:480px;margin:0 auto;background:#fff;padding:20px;border-radius:12px}
+h1{font-size:20px;text-align:center;margin-bottom:20px}
+.item{margin-bottom:15px}
+label{display:block;margin-bottom:5px;font-weight:bold}
+input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:16px}
+.btns{display:flex;gap:10px;margin:20px 0}
+button{flex:1;padding:12px 0;border:none;border-radius:8px;background:#2563eb;color:#fff;font-size:16px}
+.result{background:#f8f9fa;padding:15px;border-radius:8px;margin-top:10px;line-height:2;font-family: monospace; font-size:15px}
+</style>
+</head>
+<body>
+<div class="main">
+  <h1>网上用户：含税不含税互算计算器</h1>
+
+  <div class="item">
+    <label>税率（%）</label>
+    <input type="number" id="rate" value="13" placeholder="请输入税率">
+  </div>
+
+  <div class="item">
+    <label>金额</label>
+    <input type="number" id="money" placeholder="请输入金额">
+  </div>
+
+  <div class="btns">
+    <button onclick="calcHanToBu()">含税 → 不含税</button>
+    <button onclick="calcBuToHan()">不含税 → 含税</button>
+  </div>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+function getRate() {
+  let r = parseFloat(document.getElementById('rate').value);
+  return isNaN(r) ? 13 : r;
+}
+
+function formatRaw(num) {
+  if (isNaN(num)) return '0';
+  return num.toPrecision(15).replace(/0+$/, '').replace(/\.$/, '');
+}
+
+// 含税 → 不含税
+// 1 含税价
+// 2 税率
+// 3 税额
+// 4 不含税价
+function calcHanToBu() {
+  let han = parseFloat(document.getElementById('money').value);
+  let r = getRate();
+  if (isNaN(han)) { alert('请输入金额'); return; }
+
+  let s = 1 + r / 100;
+  let bu = han / s;
+  let shui = han - bu;
+
+  document.getElementById('result').innerHTML = 
+    `含税价：${formatRaw(han)}<br>
+     税　率：${r}%<br>
+     税　额：${formatRaw(shui)}<br>
+     不含税价：${formatRaw(bu)}`;
+}
+
+// 不含税 → 含税
+// 1 不含税价
+// 2 税率
+// 3 税额
+// 4 含税价
+function calcBuToHan() {
+  let bu = parseFloat(document.getElementById('money').value);
+  let r = getRate();
+  if (isNaN(bu)) { alert('请输入金额'); return; }
+
+  let s = 1 + r / 100;
+  let han = bu * s;
+  let shui = han - bu;
+
+  document.getElementById('result').innerHTML = 
+    `不含税价：${formatRaw(bu)}<br>
+     税　率：${r}%<br>
+     税　额：${formatRaw(shui)}<br>
+     含税价：${formatRaw(han)}`;
+}
+</script>
+</body>
+</html>
+<!--底部显示-->
+<a href="/" target="_blank" style="color: #999; font-size: 12px;">下一页</a>
+ <script src="/a/js/tua.js"></script>
+<div id="gpczxstua"></div>
+<!--底下显示-->

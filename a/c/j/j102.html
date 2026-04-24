@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>土地亩数计算器</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5;padding:15px;line-height:1.6}
+.container{max-width:420px;margin:0 auto;background:#fff;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+h1{text-align:center;font-size:22px;margin-bottom:20px;color:#333}
+.section{margin-bottom:18px}
+h2{font-size:16px;margin-bottom:8px;color:#222}
+input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;margin-bottom:8px;font-size:16px}
+button{width:100%;padding:12px;background:#2d7d2a;color:#fff;border:none;border-radius:6px;font-size:16px;margin-top:5px;cursor:pointer}
+.res{margin-top:8px;padding:10px;background:#f8fff8;border-radius:6px;font-weight:bold;color:#2d7d2a}
+.formula-list{margin-top:30px;padding-top:20px;border-top:1px solid #eee}
+.formula-list h3{font-size:18px;margin-bottom:15px;color:#333}
+.formula-item{margin-bottom:15px}
+.formula-item p{margin:4px 0;font-size:15px;color:#333}
+.convert-table{margin-top:20px;padding:12px;background:#f0f8f0;border-radius:6px;border:1px solid #d0e8d0}
+.convert-table h3{font-size:16px;margin-bottom:8px;color:#2d7d2a}
+.convert-table p{font-size:14px;margin:4px 0;color:#333}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>土地亩数计算器</h1>
+
+<div class="section">
+<h2>长方形/正方形</h2>
+<input type="number" id="rectW" placeholder="长(米)">
+<input type="number" id="rectH" placeholder="宽(米)">
+<button onclick="calcRect()">计算</button>
+<div id="rectRes" class="res"></div>
+</div>
+
+<div class="section">
+<h2>三角形</h2>
+<input type="number" id="triB" placeholder="底(米)">
+<input type="number" id="triH" placeholder="高(米)">
+<button onclick="calcTri()">计算</button>
+<div id="triRes" class="res"></div>
+</div>
+
+<div class="section">
+<h2>梯形</h2>
+<input type="number" id="trapA" placeholder="上底(米)">
+<input type="number" id="trapB" placeholder="下底(米)">
+<input type="number" id="trapH" placeholder="高(米)">
+<button onclick="calcTrap()">计算</button>
+<div id="trapRes" class="res"></div>
+</div>
+
+<div class="section">
+<h2>圆形</h2>
+<input type="number" id="circleR" placeholder="半径(米)">
+<button onclick="calcCircle()">计算</button>
+<div id="circleRes" class="res"></div>
+</div>
+
+<div class="section">
+<h2>扇形</h2>
+<input type="number" id="sectorL" placeholder="弧长(米)">
+<input type="number" id="sectorR" placeholder="半径(米)">
+<button onclick="calcSector()">计算</button>
+<div id="sectorRes" class="res"></div>
+</div>
+
+<div class="formula-list">
+<h3>土地亩数计算公式大全</h3>
+
+<div class="formula-item">
+<p><strong>1. 长方形地块</strong></p>
+<p>适用场景：规整的农田、宅基地、菜地</p>
+<p>计算公式：</p>
+<p>亩数 = 长 × 宽 ÷ 666.67</p>
+<p>示例：长60米、宽20米</p>
+<p>60×20÷666.67≈1.8亩</p>
+</div>
+
+<div class="formula-item">
+<p><strong>2. 正方形地块</strong></p>
+<p>适用场景：规整的正方形农田、晒场、宅基地</p>
+<p>计算公式：</p>
+<p>亩数 = 边长×边长÷666.67</p>
+<p>示例：边长25米</p>
+<p>25×25÷666.67≈0.94亩</p>
+</div>
+
+<div class="formula-item">
+<p><strong>3. 三角形地块</strong></p>
+<p>适用场景：边角地、坡地、不规则地块拆分区域</p>
+<p>计算公式：</p>
+<p>亩数 = 底×高÷2÷666.67</p>
+<p>示例：底30米、高20米</p>
+<p>30×20÷2÷666.67≈0.45亩</p>
+</div>
+
+<div class="formula-item">
+<p><strong>4. 梯形地块</strong></p>
+<p>适用场景：路边梯形田、河边梯形地块</p>
+<p>计算公式：</p>
+<p>亩数 =（上底+下底）×高÷2÷666.67</p>
+<p>示例：上底10米、下底20米、高15米</p>
+<p>(10+20)×15÷2÷666.67≈0.34亩</p>
+</div>
+
+<div class="formula-item">
+<p><strong>5. 圆形地块</strong></p>
+<p>适用场景：圆形鱼塘、圆形晒场、圆形林地</p>
+<p>计算公式：</p>
+<p>亩数 = 半径×半径×3.14÷666.67</p>
+<p>示例：半径15米</p>
+<p>15×15×3.14÷666.67≈1.06亩</p>
+</div>
+
+<div class="formula-item">
+<p><strong>6. 扇形地块</strong></p>
+<p>适用场景：河边弧形地、扇形林地</p>
+<p>计算公式：</p>
+<p>亩数 = 弧长×半径÷2÷666.67</p>
+<p>示例：弧长20米、半径60米</p>
+<p>20×60÷2÷666.67≈0.9亩</p>
+</div>
+</div>
+
+<div class="convert-table">
+<h3>土地面积简单换算表</h3>
+<p>1 顷 = 100 亩</p>
+<p>1 亩 = 10 分 = 100 厘</p>
+<p>1 公顷 = 15 亩</p>
+<p>1 亩 ≈ 666.67 平方米</p>
+</div>
+
+</div>
+
+<script>
+// 将总亩数拆分为 顷、亩、分、厘
+function formatMu(muTotal) {
+  let qing = Math.floor(muTotal / 100);
+  let mu = Math.floor(muTotal % 100);
+  let fen = Math.floor((muTotal % 1) * 10);
+  let li = Math.round(((muTotal % 1) * 100) % 10);
+  return `${qing}顷${mu}亩${fen}分${li}厘`;
+}
+
+function calcRect(){
+  let w=+document.getElementById("rectW").value,h=+document.getElementById("rectH").value;
+  if(!w||!h){document.getElementById("rectRes").textContent="请输入有效数字";return}
+  let m=w*h,mu=m/666.67;
+  let str = formatMu(mu);
+  document.getElementById("rectRes").textContent=`面积：${m}㎡  亩数：${mu.toFixed(3)}亩  ${str}`;
+}
+function calcTri(){
+  let b=+document.getElementById("triB").value,h=+document.getElementById("triH").value;
+  if(!b||!h){document.getElementById("triRes").textContent="请输入有效数字";return}
+  let m=b*h/2,mu=m/666.67;
+  let str = formatMu(mu);
+  document.getElementById("triRes").textContent=`面积：${m}㎡  亩数：${mu.toFixed(3)}亩  ${str}`;
+}
+function calcTrap(){
+  let a=+document.getElementById("trapA").value,b=+document.getElementById("trapB").value,h=+document.getElementById("trapH").value;
+  if(!a||!b||!h){document.getElementById("trapRes").textContent="请输入有效数字";return}
+  let m=(a+b)*h/2,mu=m/666.67;
+  let str = formatMu(mu);
+  document.getElementById("trapRes").textContent=`面积：${m}㎡  亩数：${mu.toFixed(3)}亩  ${str}`;
+}
+function calcCircle(){
+  let r=+document.getElementById("circleR").value;
+  if(!r){document.getElementById("circleRes").textContent="请输入有效数字";return}
+  let m=3.14*r*r,mu=m/666.67;
+  let str = formatMu(mu);
+  document.getElementById("circleRes").textContent=`面积：${m}㎡  亩数：${mu.toFixed(3)}亩  ${str}`;
+}
+function calcSector(){
+  let l=+document.getElementById("sectorL").value,r=+document.getElementById("sectorR").value;
+  if(!l||!r){document.getElementById("sectorRes").textContent="请输入有效数字";return}
+  let m=l*r/2,mu=m/666.67;
+  let str = formatMu(mu);
+  document.getElementById("sectorRes").textContent=`面积：${m}㎡  亩数：${mu.toFixed(3)}亩  ${str}`;
+}
+</script>
+</body>
+</html>
