@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>纯净打印（按钮在上方）</title>
+    <style>
+        /* 页面样式 */
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        #myInput {
+            width: 100%;
+            height: 200px;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* 打印样式优化（隐藏网址等信息） */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-content, .print-content * {
+                visibility: visible;
+            }
+            
+            @page {
+                margin: 0.5cm;
+                size: auto;
+            }
+            
+            .print-content {
+                position: absolute;
+                left: 1cm;
+                top: 1cm;
+                right: 1cm;
+                font-size: 20px;
+                white-space: pre-wrap;
+            }
+            
+            .print-content pre {
+                border: none;
+                background: none;
+                margin: 0;
+                padding: 0;
+                font-family: inherit;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 按钮移至输入框上方 -->
+    <button onclick="printInputText()">打印输入的文本（无网址）</button>
+    <textarea rows="100%" id="myInput" oninput="resizeInput()" placeholder="请输入内容（可换行）" style="font-size: 50px;"></textarea>
+
+    <script>
+        // 输入框自适应高度
+        function resizeInput() {
+            const input = document.getElementById('myInput');
+            input.style.height = 'auto';
+            input.style.height = (input.scrollHeight) + 'px';
+        }
+
+        // 打印函数（保留换行 + 无网址）
+        function printInputText() {
+            const input = document.getElementById('myInput');
+            const textToPrint = input.value;
+
+            const printContainer = document.createElement('div');
+            printContainer.className = 'print-content';
+            
+            const preTag = document.createElement('pre');
+            preTag.textContent = textToPrint;
+            printContainer.appendChild(preTag);
+
+            document.body.appendChild(printContainer);
+            window.print();
+            document.body.removeChild(printContainer);
+        }
+    </script>
+</body>
+</html>

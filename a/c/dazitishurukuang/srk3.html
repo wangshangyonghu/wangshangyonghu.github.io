@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>打印输入框内容</title>
+    <script>
+        // 调整输入框高度的函数
+        function resizeInput() {
+            const input = document.getElementById('myInput');
+            input.style.height = 'auto'; // 先重置高度
+            input.style.height = (input.scrollHeight) + 'px'; // 根据内容调整高度
+        }
+
+        // 打印输入框内容的函数
+        function printInputText() {
+            const input = document.getElementById('myInput');
+            const textToPrint = input.value; // 获取输入的文本
+
+            // 如果没有输入内容，提示用户
+            if (!textToPrint.trim()) {
+                alert('请先输入要打印的内容');
+                return;
+            }
+
+            // 创建临时打印区域
+            const printDiv = document.createElement('div');
+            printDiv.style.position = 'absolute';
+            printDiv.style.left = '-9999px'; // 隐藏在可视区域外
+            printDiv.style.whiteSpace = 'pre-wrap'; // 保留换行和空格
+            printDiv.style.fontSize = '16px'; // 设置打印字体大小
+            printDiv.innerHTML = textToPrint; // 将文本放入临时区域
+
+            // 将临时区域添加到页面
+            document.body.appendChild(printDiv);
+
+            // 调用打印功能
+            window.print();
+
+            // 打印完成后移除临时区域
+            setTimeout(() => {
+                document.body.removeChild(printDiv);
+            }, 100);
+        }
+    </script>
+</head>
+<body>
+    <!-- 输入框 -->
+    <textarea 
+        rows="1" 
+        id="myInput" 
+        oninput="resizeInput()" 
+        placeholder="请输入内容"
+        style="font-size: 50px; width: 100%;"
+    ></textarea>
+
+    <!-- 打印按钮 -->
+    <button onclick="printInputText()" style="font-size: 20px; margin-top: 20px; padding: 10px 20px;">
+        打印输入的内容
+    </button>
+</body>
+</html>
