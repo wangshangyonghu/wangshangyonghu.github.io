@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=yes" />
+    <meta http-equiv='content-language' content='zh-cn'>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        A {
+            TEXT-DECORATION: none;
+            font-weight: bold;
+            font-size: 32px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #timer {
+            font-size: 3em;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1em;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+    <title>秒表一搜索:网上用户</title>
+    <meta name="keywords" content="秒表,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS,上网用户," />
+    <meta name="description" content="" />
+</head>
+<body>
+    <span style="font-size: 18px;"><strong>
+    <hr color=0066FF>
+    <center>
+        <!-- 数量计算区域 -->
+        <table>
+            <tr>
+                <th>名称</th>
+                <th>输入后自动计算</th>
+            </tr>
+            <tr>
+                <td>开始数量</td>
+                <!-- 新增自动开始秒表的事件 -->
+                <td><input type="number" id="startQty" oninput="calculate();autoStartTimer()"></td>
+            </tr>
+            <tr>
+                <td>结束后的数量</td>
+                <!-- 新增自动暂停秒表的事件 -->
+                <td><input type="number" id="endQty" oninput="calculate();autoPauseTimer()"></td>
+            </tr>
+            <tr>
+                <td>累计数量</td>
+                <td id="totalQty">0</td>
+            </tr>
+        </table>
+
+        <hr color=0066FF>
+
+        <!-- 秒表区域 -->
+        <div id="timer">00:00.000</div>
+        <button id="startBtn">开始</button>&nbsp; &nbsp;&nbsp;
+        <button id="countBtn">计次</button>&nbsp;&nbsp;&nbsp;
+        <br/>
+        <button id="pauseBtn">暂停一停止</button>&nbsp;&nbsp;&nbsp;
+        <button id="resetBtn">重置一秒表从0开始</button>
+        <ul id="countList"></ul>
+    </center>
+    </strong></span>
+
+    <script>
+        // 数量计算函数
+        function calculate() {
+            let start = parseInt(document.getElementById('startQty').value) || 0;
+            let end = parseInt(document.getElementById('endQty').value) || 0;
+            document.getElementById('totalQty').innerText = end - start;
+        }
+
+        // 秒表相关变量
+        let startTime;
+        let timerInterval;
+        let isPaused = false;
+        let pausedTime = 0;
+        let count = 1;
+        const timerElement = document.getElementById('timer');
+        const startBtn = document.getElementById('startBtn');
+        const countBtn = document.getElementById('countBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const countList = document.getElementById('countList');
+
+        // 格式化时间函数
+        function formatTime(time) {
+            const totalSeconds = time / 1000;
+            const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+            const seconds = Math.floor(totalSeconds % 60).toString().padStart(2, '0');
+            const milliseconds = (time % 1000).toString().padStart(3, '0');
+            return `${minutes}:${seconds}.${milliseconds}`;
+        }
+
+        // 开始秒表函数
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                if (!isPaused) {
+                    const currentTime = Date.now();
+                    const elapsedTime = currentTime - startTime + pausedTime;
+                    timerElement.textContent = formatTime(elapsedTime);
+                }
+            }, 10);
+            startBtn.disabled = true;
+            countBtn.disabled = false;
+            pauseBtn.disabled = false;
+            resetBtn.disabled = false;
+        }
+
+        // 计次函数
+        function countTime() {
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - startTime + pausedTime;
+            const countItem = document.createElement('li');
+            countItem.textContent = `计次${count}  ${formatTime(elapsedTime)}`;
+            countList.appendChild(countItem);
+            count++;
+        }
+
+        // 暂停秒表函数
+        function pauseTimer() {
+            if (!isPaused) { // 只有未暂停时才执行暂停逻辑
+                isPaused = true;
+                pausedTime = (Date.now() - startTime) + pausedTime;
+                clearInterval(timerInterval);
+                pauseBtn.textContent = '继续';
+                pauseBtn.removeEventListener('click', resumeTimer);
+                pauseBtn.addEventListener('click', resumeTimer);
+            }
+        }
+
+        // 继续秒表函数
+        function resumeTimer() {
+            isPaused = false;
+            startTime = Date.now() - pausedTime;
+            timerInterval = setInterval(() => {
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - startTime + pausedTime;
+                timerElement.textContent = formatTime(elapsedTime);
+            }, 10);
+            pauseBtn.textContent = '暂停一停止';
+            pauseBtn.removeEventListener('click', resumeTimer);
+        }
+
+        // 重置秒表函数
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerElement.textContent = '00:00.000';
+            countList.innerHTML = '';
+            count = 1;
+            isPaused = false;
+            pausedTime = 0;
+            startBtn.disabled = false;
+            countBtn.disabled = true;
+            pauseBtn.disabled = true;
+            resetBtn.disabled = true;
+            pauseBtn.textContent = '暂停一停止';
+        }
+
+        // 自动开始秒表函数（新增）
+        function autoStartTimer() {
+            const startQtyValue = document.getElementById('startQty').value.trim();
+            // 只有输入了有效值且秒表未启动时才自动开始
+            if (startQtyValue && !timerInterval) {
+                startTimer();
+            }
+        }
+
+        // 自动暂停秒表函数（新增）
+        function autoPauseTimer() {
+            const endQtyValue = document.getElementById('endQty').value.trim();
+            // 只有输入了有效值且秒表处于运行状态时才自动暂停
+            if (endQtyValue && timerInterval && !isPaused) {
+                pauseTimer();
+            }
+        }
+
+        // 绑定按钮事件
+        startBtn.addEventListener('click', startTimer);
+        countBtn.addEventListener('click', countTime);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        // 初始化禁用按钮
+        countBtn.disabled = true;
+        pauseBtn.disabled = true;
+        resetBtn.disabled = true;
+    </script>
+</body>
+</html>

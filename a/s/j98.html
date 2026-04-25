@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间相隔计算器</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .calculator-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5f6368;
+            font-weight: 500;
+        }
+        
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        input[type="datetime-local"]:focus {
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #1557b0;
+        }
+        
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .result h2 {
+            color: #202124;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .result p {
+            color: #3c4043;
+            font-size: 1.1rem;
+            margin: 8px 0;
+        }
+        
+        .error {
+            color: #d93025;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>时间相隔计算器</h1>
+        
+        <div class="input-group">
+            <label for="start-time">开始时间</label>
+            <input type="datetime-local" id="start-time" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="end-time">结束时间</label>
+            <input type="datetime-local" id="end-time" required>
+        </div>
+        
+        <button onclick="calculateDifference()">计算时间差</button>
+        
+        <div class="error" id="error-message">请选择有效的开始时间和结束时间，且结束时间需晚于开始时间</div>
+        
+        <div class="result" id="result">
+            <h2>时间差结果</h2>
+            <p>相差 <span id="days"></span> 天 <span id="hours"></span> 小时 <span id="minutes"></span> 分钟 <span id="seconds"></span> 秒</p>
+            <p>总计：<span id="total-days"></span> 天（含小数）</p>
+            <p>总计：<span id="total-hours"></span> 小时（含小数）</p>
+            <p>总计：<span id="total-minutes"></span> 分钟（含小数）</p>
+            <p>总计：<span id="total-seconds"></span> 秒</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateDifference() {
+            // 获取输入的时间
+            const startTimeInput = document.getElementById('start-time');
+            const endTimeInput = document.getElementById('end-time');
+            
+            const startTime = new Date(startTimeInput.value);
+            const endTime = new Date(endTimeInput.value);
+            
+            // 获取结果显示元素
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error-message');
+            const daysSpan = document.getElementById('days');
+            const hoursSpan = document.getElementById('hours');
+            const minutesSpan = document.getElementById('minutes');
+            const secondsSpan = document.getElementById('seconds');
+            const totalDaysSpan = document.getElementById('total-days');
+            const totalHoursSpan = document.getElementById('total-hours');
+            const totalMinutesSpan = document.getElementById('total-minutes');
+            const totalSecondsSpan = document.getElementById('total-seconds');
+            
+            // 验证时间有效性
+            if (isNaN(startTime.getTime()) || isNaN(endTime.getTime()) || endTime <= startTime) {
+                resultDiv.style.display = 'none';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // 隐藏错误信息
+            errorDiv.style.display = 'none';
+            
+            // 计算时间差（毫秒）
+            const timeDiff = endTime - startTime;
+            
+            // 转换为各种单位
+            const totalSeconds = Math.round(timeDiff / 1000);
+            const totalMinutes = (totalSeconds / 60).toFixed(2);
+            const totalHours = (totalSeconds / 3600).toFixed(2);
+            const totalDays = (totalSeconds / 86400).toFixed(2);
+            
+            // 分解为天、时、分、秒
+            const days = Math.floor(totalSeconds / 86400);
+            const remainingSecondsAfterDays = totalSeconds % 86400;
+            
+            const hours = Math.floor(remainingSecondsAfterDays / 3600);
+            const remainingSecondsAfterHours = remainingSecondsAfterDays % 3600;
+            
+            const minutes = Math.floor(remainingSecondsAfterHours / 60);
+            const seconds = remainingSecondsAfterHours % 60;
+            
+            // 显示结果
+            daysSpan.textContent = days;
+            hoursSpan.textContent = hours;
+            minutesSpan.textContent = minutes;
+            secondsSpan.textContent = seconds;
+            totalDaysSpan.textContent = totalDays;
+            totalHoursSpan.textContent = totalHours;
+            totalMinutesSpan.textContent = totalMinutes;
+            totalSecondsSpan.textContent = totalSeconds;
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // 设置默认时间（当前时间和一小时后）
+        window.onload = function() {
+            const now = new Date();
+            const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
+            
+            // 格式化时间为datetime-local所需格式
+            function formatDate(date) {
+                return date.toISOString().slice(0, 16);
+            }
+            
+            document.getElementById('start-time').value = formatDate(now);
+            document.getElementById('end-time').value = formatDate(oneHourLater);
+        };
+    </script>
+</body>
+</html>

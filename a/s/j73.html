@@ -1,0 +1,160 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- css样式定义部分开始 -->
+    <style type="text/css">
+        /* 为所有的 a 标签设置样式 */
+        A {
+            /* 去除 a 标签的下划线 */
+            TEXT-DECORATION: none;
+            /* 为 a 标签设置粗体样式 */
+            font-weight: bold;
+            font-size: 32px;    /* 为 a 标签设置字体大小 */
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 300px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #000;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: center;
+        }
+        
+        input[type="number"] {
+            width: 100px;
+            text-align: center;
+        }
+        
+        input[type="text"] {
+            width: 100px;
+            text-align: center;
+        }
+    </style>
+    <!-- css样式定义部分结束 --> 
+    <title>包数计算一搜索:网上用户</title>
+    <meta name="keywords" content="搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+    <meta name="description" content="" />
+</head> <!-- 文档头部结束 -->
+<body>
+    <center><!--居中-->
+        <table>
+            <tr>
+                <th>打包数量</th>
+                <td><input type="number" id="perPackage" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <th>订单数量</th>
+                <td><input type="number" id="orderQty" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <th>总包数</th>
+                <td><input type="text" id="totalPackages" readonly></td>
+            </tr>
+            <tr>
+                <th>尾包数</th>
+                <td><input type="text" id="remainderPackages" readonly></td>
+            </tr>
+            <tr>
+                <th>每包数量</th>
+                <td><input type="text" readonly></td>
+            </tr>
+            <tr>
+                <th>尾包数</th>
+                <td><input type="text" readonly></td>
+            </tr>
+
+        </table>
+<p>按回车键切换输入</p>
+    </center>
+
+
+    <script>
+        // 获取输入框和结果框元素
+        const perPackageInput = document.getElementById('perPackage');
+        const orderQtyInput = document.getElementById('orderQty');
+        const totalPackagesInput = document.getElementById('totalPackages');
+        const remainderPackagesInput = document.getElementById('remainderPackages');
+        const perPackageDisplay = document.querySelector('tr:nth-child(5) td input');
+        const remainderDisplay = document.querySelector('tr:nth-child(6) td input');
+
+        // 定义计算函数
+        function calculate() {
+            const perPackage = parseInt(perPackageInput.value);
+            const orderQty = parseInt(orderQtyInput.value);
+            if (!isNaN(perPackage) && !isNaN(orderQty) && perPackage > 0) {
+                const totalPackages = Math.ceil(orderQty / perPackage);
+                const remainderQty = orderQty % perPackage;
+                const fullPackages = totalPackages - (remainderQty === 0 ? 0 : 1);
+                
+                // 计算实际尾包数量（如果没有余数则等于标准打包数量）
+                const actualRemainder = remainderQty === 0 ? perPackage : remainderQty;
+                // 判断是否显示"无"（当尾包数量等于标准打包数量时）
+                const showRemainder = actualRemainder === perPackage ? "无" : actualRemainder;
+                
+                totalPackagesInput.value = totalPackages;
+                remainderPackagesInput.value = showRemainder;
+                perPackageDisplay.value = `${perPackage}x${fullPackages}`;
+                remainderDisplay.value = actualRemainder === perPackage ? "无" : `${actualRemainder}x1`;
+            } else {
+                totalPackagesInput.value = '';
+                remainderPackagesInput.value = '';
+                perPackageDisplay.value = '';
+                remainderDisplay.value = '';
+            }
+        }
+
+        // 监听输入框变化事件，触发计算
+        perPackageInput.addEventListener('input', calculate);
+        orderQtyInput.addEventListener('input', calculate);
+
+        // 回车键切换输入框焦点的逻辑
+        perPackageInput.addEventListener('keydown', function(e) {
+            // 监听回车键（keyCode 13）
+            if (e.keyCode === 13) {
+                e.preventDefault(); // 阻止默认的回车提交行为
+                orderQtyInput.focus(); // 将焦点切换到订单数量输入框
+                orderQtyInput.select(); // 选中输入框内容，方便直接输入
+            }
+        });
+
+        orderQtyInput.addEventListener('keydown', function(e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                calculate(); // 按回车时主动触发计算
+                perPackageInput.focus(); // 可以切换回打包数量，也可以注释掉这行让焦点留在当前位置
+                perPackageInput.select();
+            }
+        });
+
+        // 页面加载时先计算一次初始值
+        calculate();
+        // 页面加载后默认聚焦到打包数量输入框
+        perPackageInput.focus();
+    </script>
+</body>
+</html>
