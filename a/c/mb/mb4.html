@@ -1,0 +1,140 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+ 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ <title>秒表：开始一暂停一重置一网上用户一搜索:网上用户</title>
+<meta name="keywords" content="秒表：开始一暂停一重置一网上用户,搜索:网上用户,网上用户,公平村,张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生" /><!--关键词-->
+<meta name="description" content="秒表：开始一暂停一重置一网上用户" />
+
+    <style> 
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f4f4f4; 
+        } 
+ 
+        #stopwatch { 
+            font-size: 48px; 
+            margin-bottom: 20px; 
+        } 
+ 
+        button { 
+            font-size: 18px; 
+            padding: 10px 20px; 
+            margin: 5px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            background-color: #007BFF; 
+            color: white; 
+        } 
+ 
+        button:hover { 
+            background-color: #0056b3; 
+        } 
+    </style> 
+</head> 
+
+<!--左上角-->&nbsp; &nbsp; <a href="../jpg/h1.jpg" target="_blank">
+<img src="../jpg/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../y/h1.html" target="_blank"><img src="../jpg/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+ 
+<body> 
+    <!-- 显示秒表时间 --> 
+    <div id="stopwatch">00:00:00</div> 
+    <!-- 开始按钮 --> 
+    <button id="start">开始</button> 
+    <!-- 暂停按钮 --> 
+    <button id="pause" disabled>暂停</button> 
+    <!-- 继续按钮 --> 
+    <button id="continue" disabled>继续</button> 
+    <!-- 重置按钮 --> 
+    <button id="reset" disabled>重置</button> 
+ 
+    <script> 
+        // 获取页面元素 
+        const stopwatch = document.getElementById('stopwatch');  
+        const startBtn = document.getElementById('start');  
+        const pauseBtn = document.getElementById('pause');  
+        const continueBtn = document.getElementById('continue');  
+        const resetBtn = document.getElementById('reset');  
+ 
+        // 初始化变量 
+        let startTime; 
+        let elapsedTime = 0; 
+        let timerInterval; 
+ 
+        // 格式化时间 
+        function formatTime(time) { 
+            const hours = Math.floor(time  / 3600000); 
+            const minutes = Math.floor((time  % 3600000) / 60000); 
+            const seconds = Math.floor((time  % 60000) / 1000); 
+            const milliseconds = time % 1000; 
+ 
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`; 
+        } 
+ 
+        // 更新秒表显示 
+        function updateStopwatch() { 
+            const currentTime = Date.now();  
+            elapsedTime += currentTime - startTime; 
+            startTime = currentTime; 
+            stopwatch.textContent  = formatTime(elapsedTime); 
+        } 
+ 
+        // 开始秒表 
+        function startStopwatch() { 
+            startTime = Date.now();  
+            timerInterval = setInterval(updateStopwatch, 10); 
+            startBtn.disabled  = true; 
+            pauseBtn.disabled  = false; 
+            continueBtn.disabled  = true; 
+            resetBtn.disabled  = false; 
+        } 
+ 
+        // 暂停秒表 
+        function pauseStopwatch() { 
+            clearInterval(timerInterval); 
+            startBtn.disabled  = true; 
+            pauseBtn.disabled  = true; 
+            continueBtn.disabled  = false; 
+            resetBtn.disabled  = false; 
+        } 
+ 
+        // 继续秒表 
+        function continueStopwatch() { 
+            startTime = Date.now();  
+            timerInterval = setInterval(updateStopwatch, 10); 
+            startBtn.disabled  = true; 
+            pauseBtn.disabled  = false; 
+            continueBtn.disabled  = true; 
+            resetBtn.disabled  = false; 
+        } 
+ 
+        // 重置秒表 
+        function resetStopwatch() { 
+            clearInterval(timerInterval); 
+            elapsedTime = 0; 
+            stopwatch.textContent  = '00:00:00'; 
+            startBtn.disabled  = false; 
+            pauseBtn.disabled  = true; 
+            continueBtn.disabled  = true; 
+            resetBtn.disabled  = true; 
+        } 
+ 
+        // 绑定按钮事件 
+        startBtn.addEventListener('click',  startStopwatch); 
+        pauseBtn.addEventListener('click',  pauseStopwatch); 
+        continueBtn.addEventListener('click',  continueStopwatch); 
+        resetBtn.addEventListener('click',  resetStopwatch); 
+    </script> 
+</body> 
+ 
+</html> 

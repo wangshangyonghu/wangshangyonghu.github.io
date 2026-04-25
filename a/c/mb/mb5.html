@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>秒表：开始一暂停一重置一网上用户一搜索:网上用户</title>
+<meta name="keywords" content="秒表：开始一暂停一重置一网上用户,搜索:网上用户,网上用户,公平村,张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生" /><!--关键词-->
+<meta name="description" content="秒表：开始一暂停一重置一网上用户" />
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+ 
+        #timer {
+            font-size: 4em;
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+ 
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+ 
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+ 
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+ 
+        #start { background-color: #4CAF50; color: white; }
+        #pause { background-color: #2196F3; color: white; }
+        #resume { background-color: #FFC107; color: black; }
+        #reset { background-color: #F44336; color: white; }
+    </style>
+</head>
+
+<!--左上角-->&nbsp; &nbsp; <a href="../jpg/h1.jpg" target="_blank">
+<img src="../jpg/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../y/h1.html" target="_blank"><img src="../jpg/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+
+<body>
+    <div id="timer">00:00:00</div>
+    <div class="buttons">
+        <button id="start">开始</button>
+        <button id="pause">暂停</button>
+        <button id="resume">继续</button>
+        <button id="reset">重置</button>
+    </div>
+ 
+    <script>
+        let timerId = null;
+        let startTime = null;
+        let elapsedTime = 0;
+        let isRunning = false;
+        const timerDisplay = document.getElementById('timer');
+ 
+        function updateDisplay() {
+            const minutes = Math.floor(elapsedTime / 60000);
+            const seconds = Math.floor((elapsedTime % 60000) / 1000);
+            const milliseconds = elapsedTime % 1000;
+            
+            timerDisplay.textContent = 
+                `${minutes.toString().padStart(2, '0')}:${
+                seconds.toString().padStart(2, '0')}:${
+                milliseconds.toString().padStart(3, '0')}`;
+        }
+ 
+        function startTimer() {
+            if (!isRunning) {
+                startTime = Date.now() - elapsedTime;
+                timerId = setInterval(() => {
+                    elapsedTime = Date.now() - startTime;
+                    updateDisplay();
+                }, 10);
+                isRunning = true;
+            }
+        }
+ 
+        function pauseTimer() {
+            clearInterval(timerId);
+            isRunning = false;
+        }
+ 
+        function resetTimer() {
+            clearInterval(timerId);
+            elapsedTime = 0;
+            updateDisplay();
+            isRunning = false;
+        }
+ 
+        document.getElementById('start').addEventListener('click', startTimer);
+        document.getElementById('pause').addEventListener('click', pauseTimer);
+        document.getElementById('resume').addEventListener('click', startTimer);
+        document.getElementById('reset').addEventListener('click', resetTimer);
+    </script>
+</body>
+</html>

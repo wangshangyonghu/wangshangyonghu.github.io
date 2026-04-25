@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>秒表：开始一暂停一重置一网上用户一搜索:网上用户</title>
+<meta name="keywords" content="秒表：开始一暂停一重置一网上用户,搜索:网上用户,网上用户,公平村,张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生" /><!--关键词-->
+<meta name="description" content="秒表：开始一暂停一重置一网上用户" />
+
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        #display {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<!--左上角-->&nbsp; &nbsp; <a href="../jpg/h1.jpg" target="_blank">
+<img src="../jpg/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../y/h1.html" target="_blank"><img src="../jpg/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+
+
+
+
+
+<body>
+    <div id="display">00:00:00</div>
+    <button id="start">开始</button>
+    <button id="pause" disabled>暂停</button>
+    <button id="continue" disabled>继续</button>
+    <button id="reset" disabled>重置</button>
+
+    <script>
+        const display = document.getElementById('display');
+        const startBtn = document.getElementById('start');
+        const pauseBtn = document.getElementById('pause');
+        const continueBtn = document.getElementById('continue');
+        const resetBtn = document.getElementById('reset');
+
+        let startTime;
+        let elapsedTime = 0;
+        let timerInterval;
+
+        function formatTime(time) {
+            const hours = Math.floor(time / 3600000);
+            const minutes = Math.floor((time % 3600000) / 60000);
+            const seconds = Math.floor((time % 60000) / 1000);
+            const milliseconds = time % 1000;
+
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(3, '0')}`;
+        }
+
+        function startTimer() {
+            startTime = Date.now() - elapsedTime;
+            timerInterval = setInterval(() => {
+                elapsedTime = Date.now() - startTime;
+                display.textContent = formatTime(elapsedTime);
+            }, 10);
+
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            continueBtn.disabled = true;
+            resetBtn.disabled = false;
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            startBtn.disabled = true;
+            pauseBtn.disabled = true;
+            continueBtn.disabled = false;
+            resetBtn.disabled = false;
+        }
+
+        function continueTimer() {
+            startTime = Date.now() - elapsedTime;
+            timerInterval = setInterval(() => {
+                elapsedTime = Date.now() - startTime;
+                display.textContent = formatTime(elapsedTime);
+            }, 10);
+
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            continueBtn.disabled = true;
+            resetBtn.disabled = false;
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            elapsedTime = 0;
+            display.textContent = '00:00:00.000';
+
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            continueBtn.disabled = true;
+            resetBtn.disabled = true;
+        }
+
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        continueBtn.addEventListener('click', continueTimer);
+        resetBtn.addEventListener('click', resetTimer);
+    </script>
+</body>
+
+</html>
+    
