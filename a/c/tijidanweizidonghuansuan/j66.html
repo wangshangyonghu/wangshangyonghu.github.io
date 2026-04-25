@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>体积单位自动换算</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input {
+            width: 90%;
+            padding: 8px;
+            text-align: right;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .error {
+            border-color: #ff0000;
+            background-color: #ffebee;
+        }
+    </style>
+</head>
+<body>
+    <h1>体积单位自动换算</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>单位</th>
+                <th>符号</th>
+                <th>输入值</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 公制单位 -->
+            <tr>
+                <td>立方米</td>
+                <td>m³</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="cubicMeter"></td>
+            </tr>
+            <tr>
+                <td>立方分米(升)</td>
+                <td>dm³(L)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="liter"></td>
+            </tr>
+            <tr>
+                <td>立方厘米(毫升)</td>
+                <td>cm³(ml)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="milliliter"></td>
+            </tr>
+            <tr>
+                <td>立方毫米</td>
+                <td>mm³</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="cubicMillimeter"></td>
+            </tr>
+            <!-- 英制单位 -->
+            <tr>
+                <td>立方英尺</td>
+                <td>ft³</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="cubicFoot"></td>
+            </tr>
+            <tr>
+                <td>立方英寸</td>
+                <td>in³</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="cubicInch"></td>
+            </tr>
+            <tr>
+                <td>英制加仑</td>
+                <td>gal(imp)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="imperialGallon"></td>
+            </tr>
+            <tr>
+                <td>英制夸脱</td>
+                <td>qt(imp)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="imperialQuart"></td>
+            </tr>
+            <tr>
+                <td>英制品脱</td>
+                <td>pt(imp)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="imperialPint"></td>
+            </tr>
+            <!-- 美制单位 -->
+            <tr>
+                <td>美制液体加仑</td>
+                <td>gal(us)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="usLiquidGallon"></td>
+            </tr>
+            <tr>
+                <td>美制液体夸脱</td>
+                <td>qt(us)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="usLiquidQuart"></td>
+            </tr>
+            <tr>
+                <td>美制液体品脱</td>
+                <td>pt(us)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="usLiquidPint"></td>
+            </tr>
+            <tr>
+                <td>美制杯</td>
+                <td>cup(us)</td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="usCup"></td>
+            </tr>
+            <!-- 中国传统单位 -->
+            <tr>
+                <td>升(市制)</td>
+                <td></td>
+                <td><input type="text" oninput="convertVolume(this)" data-unit="traditionalLiter"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // 体积单位换算关系（以立方米为基准）
+        const UNIT_CONVERSIONS = {
+            cubicMeter: 1,
+            liter: 0.001,
+            milliliter: 0.000001,
+            cubicMillimeter: 0.000000001,
+            cubicFoot: 0.0283168466,
+            cubicInch: 0.000016387064,
+            imperialGallon: 0.00454609,
+            imperialQuart: 0.0011365225,
+            imperialPint: 0.00056826125,
+            usLiquidGallon: 0.003785411784,
+            usLiquidQuart: 0.000946352946,
+            usLiquidPint: 0.000473176473,
+            usCup: 0.0002365882365,
+            traditionalLiter: 0.001 // 市制升 = 公制升
+        };
+
+        function convertVolume(inputElem) {
+            const unit = inputElem.getAttribute('data-unit');
+            let inputVal = inputElem.value.trim();
+            
+            // 重置错误样式
+            document.querySelectorAll('input[data-unit]').forEach(input => {
+                input.classList.remove('error');
+            });
+            
+            // 处理空输入
+            if (inputVal === "") {
+                clearAllInputs();
+                return;
+            }
+            
+            // 允许临时输入状态
+            if (inputVal === '.' || inputVal === '-' || inputVal === '-.') {
+                return;
+            }
+            
+            // 验证输入
+            const num = parseFloat(inputVal);
+            if (isNaN(num) || !isValidNumber(inputVal)) {
+                inputElem.classList.add('error');
+                return;
+            }
+            
+            // 转换为立方米（基准单位）
+            const cubicMeters = num * UNIT_CONVERSIONS[unit];
+            
+            // 更新所有单位
+            Object.keys(UNIT_CONVERSIONS).forEach(targetUnit => {
+                const targetValue = cubicMeters / UNIT_CONVERSIONS[targetUnit];
+                updateInput(targetUnit, targetValue);
+            });
+        }
+        
+        function isValidNumber(str) {
+            // 允许整数、小数、科学计数法
+            return /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/.test(str);
+        }
+        
+        function updateInput(unit, value) {
+            const input = document.querySelector(`input[data-unit="${unit}"]`);
+            
+            // 格式化显示（保留6位有效数字，自动处理科学计数法）
+            let formattedValue;
+            if (Math.abs(value) < 1e-6 || Math.abs(value) >= 1e21) {
+                formattedValue = value.toExponential(6);
+            } else {
+                formattedValue = value.toFixed(6).replace(/\.?0+$/, '');
+            }
+            
+            input.value = formattedValue;
+        }
+        
+        function clearAllInputs() {
+            document.querySelectorAll('input[data-unit]').forEach(input => {
+                input.value = "";
+            });
+        }
+    </script>
+</body>
+</html>
