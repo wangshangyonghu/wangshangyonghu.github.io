@@ -1,0 +1,654 @@
+<!doctype html> <!-- 声明文档类型为 HTML5，这是 HTML5 标准的文档声明方式 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档的根元素，lang 属性指定页面主要语言为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据、样式、脚本等不直接显示在页面中的内容 -->
+    <!-- 设置视口参数，使页面在移动设备上正确显示
+         width=device-width: 视口宽度等于设备宽度
+         user-scalable=yes: 允许用户缩放页面（默认值，可省略）
+         建议添加 initial-scale=1.0 确保初始缩放比例正确 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+    <!-- 设置文档的语言编码，虽然 HTML5 中推荐使用 lang 属性，但保留此标签兼容旧浏览器 -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    
+    <!-- 网站图标设置区域 -->
+    <!-- 标准浏览器图标 -->
+    <link rel="icon" href="./ico.jpg" type="image/x-icon" alt="网上用户一网站图标">
+    <!-- 快捷方式图标（IE 兼容） -->
+    <link rel="shortcut icon" href="./ico.jpg" type="image/x-icon" alt="网上用户一网站快捷图标"/>
+    <!-- 苹果设备触摸图标（添加到主屏幕时使用） -->
+    <link rel="apple-touch-icon" href="./ico.jpg" alt="网上用户一苹果设备图标"/>
+    <!-- 苹果设备启动画面图标（应用启动时显示） -->
+    <link rel="apple-touch-startup-image" href="./ico.jpg" alt="网上用户一苹果设备启动画面"/>
+    <!-- 高分辨率设备图标（如 Android 高dpi设备） -->
+    <link rel="icon" sizes="192x192" href="./ico.jpg" alt="网上用户一高分辨率设备图标"/>
+    <!-- 定义图标遮罩（主要用于 Safari 等浏览器） -->
+    <link rel="icon" sizes="any" mask href="./ico.jpg" alt="网上用户一图标遮罩" />
+    <!-- 苹果设备预合成图标（不添加系统默认光泽效果） -->
+    <link rel="apple-touch-icon-precomposed" href="./ico.jpg" alt="网上用户一苹果设备预合成图标">
+
+        <!-- 告知浏览器该页面适合作为移动端Web应用运行
+         添加到主屏幕后，会隐藏浏览器地址栏，更接近原生应用体验 -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    
+    <!-- DNS预解析，提前解析指定域名的IP地址，加快后续资源加载速度 -->
+      <link rel="dns-prefetch" href="http://gpc234.66ghz.com"/>    
+    
+    <!-- 设置文档的字符编码为UTF-8，确保页面文字正确显示，防止乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <!-- CSS样式定义部分开始 -->
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      A {
+        text-decoration: none; /* 去除a标签的下划线（建议使用小写属性名，符合CSS规范） */
+            }
+    </style>
+    <!-- CSS样式定义部分结束 -->
+
+ <title>浏览器主页</title><!--标题-->
+<!--关键词--> <meta name="keywords" content="网上用户,公平村浏览器主页手机版,浏览器主页,网上用户浏览器主页,公平村浏览器主页,公平村网址导航,平村网站导航,gpc234浏览器首页,网上用户浏览器首页,公平村,GPC234,GPCZXS,公平村浏览器首页,浏览器首页" /><!--关键词-->
+<!--描述--><meta name="description" content="公平村浏览器主页手机版，这是一个提供各种网站链接和搜索引擎的浏览器主页，包括百度、必应、搜狗、360、抖音等热门平台。你可以快速访问你想要的网站，也可以使用不同的搜索工具找到...网上用户,浏览器主页,网上用户浏览器主页,公平村浏览器主页,gpc234浏览器首页,网上用户浏览器首页,公平村,公平村浏览器首页,浏览器首页" />
+
+<style>
+/* 控制链接 */
+:root {
+    --primary-color: #0066FF;
+    --secondary-color: #CCFFFF;
+    --text-color: #333;
+    --light-text: #D6D6D6;
+    --border-color: #ccc;
+    --btn-hover: #0055DD;
+    --container-width: 1200px;
+}
+
+
+
+.category-title {
+    display: inline-block;
+    background: linear-gradient(to bottom, var(--primary-color), #0099ff);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.link-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 25px;
+}
+
+.link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 500;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.link-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}}/* 控制链接 */
+    </style>
+
+</head>
+<!--控制-->
+
+<body><!--内容开始-->
+<!--内容开始-->
+   
+<!--居中--><center><!--居中-->
+<!--内容开始-->
+
+   <style>
+:root {
+    --primary-color: #0066FF;
+    --secondary-color: #CCFFFF;
+    --text-color: #333;
+    --light-text: #D6D6D6;
+    --border-color: #ccc;
+    --btn-hover: #0055DD;
+    --container-width: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+}
+
+body {
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px 15px;
+    /* 移除左侧锚点导航的左侧边距 */
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+header h1 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 28px;
+}
+
+.top-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.top-nav a {
+    color: var(--light-text);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    transition: color 0.3s;
+}
+
+.top-nav a:hover {
+    color: var(--primary-color);
+}
+
+.search-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#searchInput {
+    width: 60%;
+    min-width: 30%;
+    height: 100px;
+    padding: 0 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px 0 0 8px;
+    font-size: 18px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchInput:focus {
+    border-color: var(--btn-hover);
+}
+
+.search-btn {
+    height: 60px;
+    padding: 0 25px;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+#result {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.category-nav {
+    margin-bottom: 40px;
+}
+
+.category-title {
+    display: inline-block;
+    background: linear-gradient(to bottom, var(--primary-color), #0099ff);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.link-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 25px;
+}
+
+.link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.link-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.datetime {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+}
+
+footer {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 2px solid var(--primary-color);
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
+}
+
+.footer-links {
+    margin: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.3s;
+    display: none;
+}
+
+#backToTop:hover {
+    background-color: var(--btn-hover);
+}
+
+.upgrade-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.upgrade-summary {
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.upgrade-content {
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-left: 15px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    #searchInput {
+        width: 75%;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .search-btn {
+        height: 50px;
+        padding: 0 18px;
+        font-size: 16px;
+    }
+
+    .link-container {
+        justify-content: center;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+<!--时间--><div class="datetime" id="dateTime"></div>
+    <div class="container">
+        <!-- 头部区域 -->
+        <header>
+            <h1>    <a href="zy.html" target="_blank">公平村浏览器主页</a> </h1>
+                 </header>
+
+        <!-- 日期时间显示 -->
+
+<center><!--居中-->
+<p style="font-size: 18px;">中文大写: ¥<br/>壹 贰 叁 肆 伍 陆 柒 捌 玖 拾<br/> 佰 仟 万 亿 兆 圆 角 分 零 整</p>
+</center><!--居中-->
+
+        <!-- 搜索区域 -->
+
+
+
+    <style>
+#searchInput, .search-btn {
+  /* 统一垂直对齐基线 */
+  vertical-align: middle;
+  height: 80px;
+  box-sizing: border-box;
+}
+
+/* 移除默认间距（input和button之间可能有默认空格） */
+.search-section {
+  font-size: 0; /* 消除inline元素间的空格间距 */
+}
+
+#searchInput, .search-btn {
+  font-size: 22px; /* 恢复字体大小 */
+}
+    </style>
+
+    <style>
+/* 针对所有浏览器的 placeholder 样式设置 */
+#searchInput::placeholder {
+    font-size: 12px; /* 调整为你需要的小字体大小 */
+}
+
+/* 针对不同浏览器的兼容性处理（可选） */
+#searchInput::-webkit-input-placeholder { /* Chrome, Safari, Edge */
+    font-size: 12px;
+}
+#searchInput:-moz-placeholder { /* Firefox 4-18 */
+    font-size: 12px;
+}
+#searchInput::-moz-placeholder { /* Firefox 19+ */
+    font-size: 12px;
+}
+#searchInput:-ms-input-placeholder { /* IE 10+ */
+    font-size: 12px;
+}
+
+    </style>
+        <!-- 搜索区域 -->
+        <section id="搜索" class="search-section">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）"
+                onkeyup="handleKeyUp(event)"
+            >
+            <button class="search-btn" id="mainSearchBtn">搜索</button>
+            <div id="result"></div>
+
+
+            <!-- 多搜索引擎 -->
+            <div class="link-container" style="margin-top: 15px;">
+搜索:
+                <button class="link-btn" data-engine="baidu">百度搜索</button>
+                <button class="link-btn" data-engine="bing">必应搜索</button>
+                <button class="link-btn" data-engine="toutiao">今日头条搜索</button>
+                <button class="link-btn" data-engine="weixin">搜狗微信搜索</button>
+                <button class="link-btn" data-engine="360">360搜索</button>
+                <button class="link-btn" data-engine="douyin">抖音搜索</button>
+                <button class="link-btn" data-engine="sogou">搜狗搜索</button>
+                <button class="link-btn" data-engine="yandex">Yandex</button>
+                <button class="link-btn" data-engine="3dsource">3DSource零件库</button>
+                <button class="link-btn" data-engine="baidu-mp3">音乐</button>
+                <button class="link-btn" data-engine="baidu-video">视频</button>
+                <button class="link-btn" data-engine="baidu-news">百度新闻</button>
+                      <button class="link-btn" data-engine="taobao">爱淘宝</button>
+            </div>
+
+            <!-- 图片搜索 -->
+ 
+            <div class="link-container">
+图片搜索:
+                <button class="link-btn" data-engine="bing-image">必应图片</button>
+                <button class="link-btn" data-engine="baidu-image">百度图片</button>
+                <button class="link-btn" data-engine="sogou-image">搜狗图片</button>
+                <button class="link-btn" data-engine="360-image">360图片</button>
+                <button class="link-btn" data-engine="taobao-image">淘宝图片</button>
+           
+            </div>
+
+            <!-- 翻译工具 -->
+     
+            <div class="link-container">
+翻译工具:
+                <button class="link-btn" data-engine="baidu-trans">百度翻译</button>
+                <button class="link-btn" data-engine="sogou-trans">搜狗翻译</button>
+                <button class="link-btn" data-engine="bing-trans">必应翻译</button>
+
+            </div>
+        </section>
+
+
+
+   <script>
+        // 日期时间显示
+        function updateDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const dayOfWeek = days[now.getDay()];
+            document.getElementById('dateTime').innerHTML = 
+                `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds} ${dayOfWeek}`;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // 数字转中文大写
+        const chineseNumber = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+        const chineseUnit = ["", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"];
+
+        function convertToChinese(num) {
+            let numStr = num.toString();
+            let result = "";
+            for (let i = 0; i < numStr.length; i++) {
+                let digit = parseInt(numStr[i]);
+                if (digit!== 0) {
+                    result += chineseNumber[digit] + chineseUnit[numStr.length - 1 - i];
+                } else {
+                    if (i > 0 && parseInt(numStr[i - 1])!== 0) {
+                        result += chineseNumber[digit];
+                    }
+                }
+            }
+            return result || "零";
+        }
+
+        function handleKeyUp(event) {
+            const inputValue = document.getElementById("searchInput").value;
+            if (!isNaN(inputValue) && inputValue!== "") {
+                const convertedValue = convertToChinese(inputValue);
+                document.getElementById("result").innerHTML = convertedValue + "元整";
+            } else {
+                document.getElementById("result").innerHTML = "";
+            }
+            // 回车键触发搜索
+            if (event.keyCode === 13) {
+                document.getElementById("mainSearchBtn").click();
+            }
+        }
+
+        // 搜索引擎配置（补充完整）
+        const searchEngines = {
+            baidu: "https://www.baidu.com/s?wd=",
+            bing: "https://www.bing.com/search?q=",
+            toutiao: "https://so.toutiao.com/search?keyword=",
+            weixin: "https://weixin.sogou.com/weixinwap?type=2&ie=utf8&_sug_=n&_sug_type_=-1&s_from=input&query=",
+            360: "https://www.so.com/s?q=",
+            douyin: "https://www.douyin.com/search/",
+            sogou: "https://www.sogou.com/web?query=",
+            yandex: "https://yandex.com/search/?text=",
+            "3dsource": "http://lib.3dsource.cn/#/searchResult?searchKeyword=",
+            "baidu-mp3": "https://music.163.com/#/search/m/?s=",
+            "baidu-video": "https://m.baidu.com/sf/vsearch?pd=video&tn=vsearch&sa=vs_tab&lid=7194865086898977692&ms=1&atn=index&word=",
+            "baidu-news": "https://m.baidu.com/sf/vsearch?pd=realtime&tn=vsearch&sa=vs_tab&lid=7292861491581609769&ms=1&atn=index&word=",
+                 "taobao": "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747217%400b8f386d_1236_199f4b661e8_057f%4001&q=",
+     
+            "bing-image": "https://cn.bing.com/images/search?q=",
+            "baidu-image": "https://www.baidu.com/sf/vsearch?pd=image_content&tn=vsearch&sa=vs_tab&lid=6551618409030760268&ms=1&from=844b&atn=page&fr=tab&word=",
+            "sogou-image": "https://pic.sogou.com/pic/searchList.jsp?uID=&v=5&statref=index_form_1&spver=0&rcer=&keyword=",
+            "360-image": "https://image.so.com/i?q=",
+            "taobao-image": "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747217%400b8f386d_1236_199f4b661e8_057f%4001&q=",
+            "pinterest": "/",
+            "baidu-trans": " https://fanyi.baidu.com/m/trans?from=zh&to=en&query=",
+            "sogou-trans": "https://fanyi.sogou.com/text?keyword=",
+            "bing-trans": "https://cn.bing.com/translator/?ref&text=",
+            "google-trans": "https://translate.google.cn/?sl=auto&tl=zh-CN&text=",
+            "youdao-trans": "https://fanyi.youdao.com/?keyfrom=dict2.top&q=",
+            "caiyun-trans": "https://fanyi.caiyunapp.com/#/translator?source=",
+      
+            "deepl-trans": "https://www.deepl.com/translator#auto/zh/"
+        };
+
+        // 搜索按钮点击事件
+        document.getElementById("mainSearchBtn").addEventListener("click", () => {
+            const keyword = document.getElementById("searchInput").value;
+            if (keyword) {
+                window.open(searchEngines.bing + encodeURIComponent(keyword), "_blank");
+            }
+        });
+
+        // 引擎按钮点击事件
+        document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const engine = btn.getAttribute("data-engine");
+                const keyword = document.getElementById("searchInput").value;
+                const url = searchEngines[engine] + encodeURIComponent(keyword || "");
+                window.open(url, "_blank");
+            });
+        });
+
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+
+
+
+<!--内容结束-->
+
+
+
+
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<a href="./zy2.html">浏览器首页首页手机版</a>
+&nbsp; &nbsp; 
+<a href="./zy1.html">浏览器首页电脑版</a>
+&nbsp; &nbsp; 
+<a href="https://cn.bing.com/search?q=公平村浏览器主页">收藏本页</a>
+
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+
+
+
+
+
+
+            <a href="https://cn.bing.com/search?q=%e7%bd%91%e4%b8%8a%e7%94%a8%e6%88%b7" target="_blank">网上用户</a>
+                <a href="https://cn.bing.com/search?q=gpc234" target="_blank">gpc234</a>
+
+
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<a href="https://cn.bing.com/search?q=%E5%85%AC%E5%B9%B3%E6%9D%91%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E9%A1%B5&form=QBLH&sp=-1&lq=0&pq=%E5%85%AC%E5%B9%B3%E6%9D%91%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E9%A1%B5&sc=12-8&qs=n&sk=&cvid=8AF3D0B2E50640AE98169AE0DB785404&ghsh=0&ghacc=0&ghpl=" target="_blank"style="color: #D6D6D6;">公平村浏览器主页</a>
+<a href="https://cn.bing.com/search?q=%E5%85%AC%E5%B9%B3%E6%9D%91%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E9%A1%B5&form=QBLH&sp=-1&lq=0&pq=%E5%85%AC%E5%B9%B3%E6%9D%91%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E9%A1%B5&sc=12-8&qs=n&sk=&cvid=8AF3D0B2E50640AE98169AE0DB785404&ghsh=0&ghacc=0&ghpl=" target="_blank"style="color: #D6D6D6;">公平村浏览器主页</a>
+<a href="https://cn.bing.com/search?q=公平村浏览器主页手机版" target="_blank"style="color: #D6D6D6;">手机版</a>
+<a href="zy.html" target="_blank">刷新</a>
+<br/>
+版本号:2025年10月18日09:29:25
+
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+
+</body><!--内容结束-->
+</center><!--居中-->
+<head><!--无下划线-->
+</strong><!--加粗-->
+</span><!--字体大小-->
+</html><!--结束-->

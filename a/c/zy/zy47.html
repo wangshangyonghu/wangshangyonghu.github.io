@@ -1,0 +1,1619 @@
+<!doctype html> <!-- 声明文档类型为 HTML5，这是 HTML5 标准的文档声明方式 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档的根元素，lang 属性指定页面主要语言为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据、样式、脚本等不直接显示在页面中的内容 -->
+    <!-- 设置视口参数，使页面在移动设备上正确显示
+         width=device-width: 视口宽度等于设备宽度
+         user-scalable=yes: 允许用户缩放页面（默认值，可省略）
+         建议添加 initial-scale=1.0 确保初始缩放比例正确 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+    <!-- 设置文档的语言编码，虽然 HTML5 中推荐使用 lang 属性，但保留此标签兼容旧浏览器 -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    
+    <!-- 网站图标设置区域 -->
+    <!-- 标准浏览器图标 -->
+    <link rel="icon" href="https://gpc234.github.io/gpc234/wangshangyonghu/gongpingcunliulanqizhuye/ico.jpg" type="image/x-icon" alt="网上用户一网站图标">
+    <!-- 快捷方式图标（IE 兼容） -->
+    <link rel="shortcut icon" href="https://gpc234.github.io/gpc234/wangshangyonghu/gongpingcunliulanqizhuye/ico.jpg" type="image/x-icon" alt="网上用户一网站快捷图标"/>
+    <!-- 苹果设备触摸图标（添加到主屏幕时使用） -->
+    <link rel="apple-touch-icon" href="https://gpc234.github.io/gpc234/wangshangyonghu/gongpingcunliulanqizhuye/ico.jpg" alt="网上用户一苹果设备图标"/>
+    <!-- 苹果设备启动画面图标（应用启动时显示） -->
+    <link rel="apple-touch-startup-image" href="https://gpc234.github.io/gpc234/wangshangyonghu/gongpingcunliulanqizhuye/ico.jpg" alt="网上用户一苹果设备启动画面"/>
+    <!-- 高分辨率设备图标（如 Android 高dpi设备） -->
+    <link rel="icon" sizes="192x192" href="https://gpc234.github.io/gpc234/wangshangyonghu/gongpingcunliulanqizhuye/ico.jpg" alt="网上用户一高分辨率设备图标"/>
+    <!-- 定义图标遮罩（主要用于 Safari 等浏览器） -->
+    <link rel="icon" sizes="any" mask href="https://gpc234.github.io/gpc234/wangshangyonghu/gongpingcunliulanqizhuye/ico.jpg" alt="网上用户一图标遮罩" />
+    <!-- 苹果设备预合成图标（不添加系统默认光泽效果） -->
+    <link rel="apple-touch-icon-precomposed" href="https://gpc234.github.io/gpc234/wangshangyonghu/gongpingcunliulanqizhuye/ico.jpg" alt="网上用户一苹果设备预合成图标">
+
+        <!-- 告知浏览器该页面适合作为移动端Web应用运行
+         添加到主屏幕后，会隐藏浏览器地址栏，更接近原生应用体验 -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    
+    <!-- DNS预解析，提前解析指定域名的IP地址，加快后续资源加载速度 -->
+      <link rel="dns-prefetch" href="http://gpc234.66ghz.com"/>    
+    
+    <!-- 设置文档的字符编码为UTF-8，确保页面文字正确显示，防止乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <!-- CSS样式定义部分开始 -->
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      A {
+        text-decoration: none; /* 去除a标签的下划线（建议使用小写属性名，符合CSS规范） */
+            }
+    </style>
+    <!-- CSS样式定义部分结束 -->
+<!--移动端调转代码-->
+<SCRIPT LANGUAGE = "JavaScript" >
+function mobile_device_detect(url) {
+var thisOS = navigator.platform;
+var os = new Array("iPhone", "iPod", "iPad", "android", "Nokia", "SymbianOS", "Symbian", "Windows Phone", "Phone", "Linux armv71", "MAUI", "UNTRUSTED/1.0", "Windows CE", "BlackBerry", "IEMobile");
+for (var i = 0; i < os.length; i++) {
+if (thisOS.match(os[i])) {
+window.location = url;
+}
+}
+if (navigator.platform.indexOf('iPad') != -1) {
+window.location = url;
+}
+var check = navigator.appVersion;
+if (check.match(/linux/i)) {
+if (check.match(/mobile/i) || check.match(/X11/i)) {
+window.location = url;
+}
+}
+//类in_array函数
+Array.prototype.in_array = function(e) {
+for (i = 0; i < this.length; i++) {
+if (this[i] == e) return true;
+}
+return false;
+}
+}
+mobile_device_detect("zy2.html");
+</SCRIPT>
+<!--移动端调转代码-->
+
+
+<!-- 返回顶部 -->
+<button id="gpcfhdb">↑</button>
+
+<!-- CSS部分 (可放在style标签或CSS文件中) -->
+<style>
+#gpcfhdb {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: #0066FF; /* 主色调 */
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.3s;
+    display: none; /* 默认隐藏 */
+    z-index: 9999; /* 确保在最上层 */
+}
+
+#gpcfhdb:hover {
+    background-color: #0055DD; /* hover时颜色 */
+}
+</style>
+
+<!-- JavaScript部分 (可放在script标签或JS文件中) -->
+<script>
+// 获取按钮元素
+const gpcfhdbBtn = document.getElementById('gpcfhdb');
+
+// 监听页面滚动事件
+window.addEventListener('scroll', () => {
+    // 当滚动距离超过300px时显示按钮，否则隐藏
+    if (window.pageYOffset > 300) {
+        gpcfhdbBtn.style.display = 'block';
+    } else {
+        gpcfhdbBtn.style.display = 'none';
+    }
+});
+
+// 点击按钮返回顶部
+gpcfhdbBtn.addEventListener('click', () => {
+    // 平滑滚动到顶部
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+</script>
+<!-- 返回顶部 -->
+
+
+
+ <title>浏浏览器主页</title><!--标题-->
+<!--关键词--> <meta name="keywords" content="网上用户,公平村浏览器主页电脑版,浏览器主页,网上用户浏览器主页,公平村浏览器主页,公平村网址导航,平村网站导航,gpc234浏览器首页,网上用户浏览器首页,公平村,GPC234,GPCZXS,公平村浏览器首页,浏览器首页" /><!--关键词-->
+<!--描述--><meta name="description" content="公平村浏览器主页电脑版，这是一个提供各种网站链接和搜索引擎的浏览器主页，包括百度、必应、搜狗、360、抖音等热门平台。你可以快速访问你想要的网站，也可以使用不同的搜索工具找到...网上用户,浏览器主页,网上用户浏览器主页,公平村浏览器主页,gpc234浏览器首页,网上用户浏览器首页,公平村,公平村浏览器首页,浏览器首页" />
+</head>
+
+   <style>
+/* 定义全局CSS变量，方便统一管理颜色、宽度等样式属性 */
+:root {
+    --primary-color: #0066FF; /* 主色调：蓝色 */
+    --secondary-color: #CCFFFF; /* 辅助色：浅青色 */
+    --text-color: #333; /* 主要文本颜色：深灰色 */
+    --light-text: #D6D6D6; /* 次要文本颜色：浅灰色 */
+    --border-color: #ccc; /* 边框颜色：灰色 */
+    --btn-hover: #0055DD; /* 按钮 hover 状态颜色：深蓝色 */
+    --container-width: 1200px; /* 容器最大宽度 */
+}
+
+/* 全局样式重置：清除默认内外边距，设置盒模型为 border-box，统一字体 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 盒模型：宽度包含边框和内边距 */
+    font-family: "Microsoft YaHei", Arial, sans-serif; /* 优先使用微软雅黑字体 */
+}
+
+/* 页面主体样式：设置文本颜色、行高、内边距（左侧预留导航宽度） */
+body {
+    color: var(--text-color); /* 使用文本颜色变量 */
+    line-height: 1.6; /* 行高：提升可读性 */
+    padding: 20px 15px; /* 上下内边距20px，左右15px */
+    padding-left: 120px; /* 左侧预留120px给固定导航，避免内容被遮挡 */
+}
+
+/* 容器样式：限制最大宽度并居中显示 */
+.container {
+    max-width: var(--container-width); /* 使用容器宽度变量 */
+    margin: 0 auto; /* 水平居中 */
+}
+
+/* 页头样式：居中对齐，底部边框分隔 */
+header {
+    text-align: center; /* 内容居中 */
+    margin-bottom: 30px; /* 底部外边距30px */
+    padding-bottom: 15px; /* 底部内边距15px */
+    border-bottom: 2px solid var(--primary-color); /* 底部边框：2px实线主色调 */
+}
+
+/* 页头标题样式：设置颜色、大小和底部间距 */
+header h1 {
+    color: var(--primary-color); /* 标题颜色使用主色调 */
+    margin-bottom: 15px; /* 底部外边距15px */
+    font-size: 28px; /* 字体大小28px */
+}
+
+/* 顶部导航样式：弹性布局，支持换行，居中对齐 */
+.top-nav {
+    display: flex; /* 弹性布局 */
+    flex-wrap: wrap; /* 超出换行 */
+    justify-content: center; /* 水平居中 */
+    gap: 15px; /* 子元素间距15px */
+    margin-bottom: 10px; /* 底部外边距10px */
+}
+
+/* 顶部导航链接样式：设置颜色、文本装饰、大小和过渡效果 */
+.top-nav a {
+    color: var(--light-text); /* 链接颜色使用次要文本色 */
+    text-decoration: none; /* 去除下划线 */
+    font-size: 14px; /* 字体大小14px */
+    padding: 3px 8px; /* 内边距：上下3px，左右8px */
+    border-radius: 4px; /* 圆角4px */
+    transition: color 0.3s; /* 颜色过渡效果0.3s */
+}
+
+/* 顶部导航链接 hover 状态：改变颜色 */
+.top-nav a:hover {
+    color: var(--primary-color); /* hover时颜色变为主色调 */
+}
+
+/* 搜索区域样式：居中对齐，底部间距 */
+.search-section {
+    text-align: center; /* 内容居中 */
+    margin-bottom: 30px; /* 底部外边距30px */
+}
+
+/* 搜索输入框样式：设置宽度、高度、边框等 */
+#searchInput {
+    width: 60%; /* 宽度占60% */
+    min-width: 30%; /* 最小宽度30% */
+    height: 100px; /* 高度100px */
+    padding: 0 15px; /* 左右内边距15px */
+    border: 2px solid var(--primary-color); /* 边框：2px实线主色调 */
+    border-radius: 8px 0 0 8px; /* 左上和左下圆角8px */
+    font-size: 18px; /* 字体大小18px */
+    color: #333; /* 文本颜色深灰色 */
+    outline: none; /* 去除默认焦点轮廓 */
+    transition: border-color 0.3s; /* 边框颜色过渡效果0.3s */
+}
+
+/* 搜索输入框焦点状态：改变边框颜色 */
+#searchInput:focus {
+    border-color: var(--btn-hover); /* 焦点时边框颜色变为按钮hover色 */
+}
+
+/* 搜索按钮样式：设置高度、内边距、背景色等 */
+.search-btn {
+    height: 60px; /* 高度60px */
+    padding: 0 25px; /* 左右内边距25px */
+    border: none; /* 去除边框 */
+    border-radius: 0 8px 8px 0; /* 右上和右下圆角8px */
+    background-color: var(--primary-color); /* 背景色使用主色调 */
+    color: #fff; /* 文本颜色白色 */
+    font-size: 18px; /* 字体大小18px */
+    font-weight: bold; /* 字体加粗 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    transition: background-color 0.3s; /* 背景色过渡效果0.3s */
+}
+
+/* 搜索按钮 hover 状态：改变背景色 */
+.search-btn:hover {
+    background-color: var(--btn-hover); /* hover时背景色变为按钮hover色 */
+}
+
+/* 搜索结果文本样式：设置大小、颜色和粗细 */
+#result {
+    margin-top: 10px; /* 顶部外边距10px */
+    font-size: 16px; /* 字体大小16px */
+    color: var(--primary-color); /* 颜色使用主色调 */
+    font-weight: bold; /* 字体加粗 */
+}
+
+/* 分类导航区域样式：底部间距 */
+.category-nav {
+    margin-bottom: 40px; /* 底部外边距40px */
+}
+
+/* 分类标题样式：设置背景渐变、颜色、内边距等 */
+.category-title {
+    display: inline-block; /* 行内块级元素 */
+    background: linear-gradient(to bottom, var(--primary-color), #0099ff); /* 背景渐变：主色调到亮蓝色 */
+    color: #fff; /* 文本颜色白色 */
+    font-size: 18px; /* 字体大小18px */
+    font-weight: bold; /* 字体加粗 */
+    padding: 8px 20px; /* 内边距：上下8px，左右20px */
+    border-radius: 8px; /* 圆角8px */
+    margin-bottom: 15px; /* 底部外边距15px */
+}
+
+/* 链接容器样式：弹性布局，支持换行，设置内边距和背景色 */
+.link-container {
+    display: flex; /* 弹性布局 */
+    flex-wrap: wrap; /* 超出换行 */
+    gap: 12px; /* 子元素间距12px */
+    justify-content: flex-start; /* 左对齐 */
+    padding: 15px; /* 内边距15px */
+    border: 1px solid var(--border-color); /* 边框：1px实线边框色 */
+    border-radius: 8px; /* 圆角8px */
+    background-color: #f9f9f9; /* 背景色浅灰色 */
+    margin-bottom: 25px; /* 底部外边距25px */
+}
+
+/* 链接按钮样式：设置内边距、背景色、边框等 */
+.link-btn {
+    display: inline-flex; /* 行内弹性布局 */
+    align-items: center; /* 垂直居中 */
+    padding: 8px 15px; /* 内边距：上下8px，左右15px */
+    background-color: var(--secondary-color); /* 背景色使用辅助色 */
+    border: 1px solid var(--border-color); /* 边框：1px实线边框色 */
+    border-radius: 6px; /* 圆角6px */
+    color: var(--primary-color); /* 文本颜色使用主色调 */
+    text-decoration: none; /* 去除下划线 */
+    font-size: 15px; /* 字体大小15px */
+    font-weight: 500; /* 字体中等加粗 */
+    transition: all 0.3s; /* 所有属性过渡效果0.3s */
+    cursor: pointer; /* 鼠标指针变为手型 */
+}
+
+/* 链接按钮 hover 状态：改变背景色、文本色和边框色 */
+.link-btn:hover {
+    background-color: var(--primary-color); /* 背景色变为主色调 */
+    color: #fff; /* 文本颜色变为白色 */
+    border-color: var(--primary-color); /* 边框色变为主色调 */
+}
+
+/* 锚点导航样式：固定定位在左侧，设置背景、阴影和边框圆角 */
+.anchor-nav {
+    position: fixed; /* 固定定位 */
+    top: 20px; /* 距离顶部20px */
+    left: 0; /* 距离左侧0 */
+    background-color: #fff; /* 背景色白色 */
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1); /* 右侧阴影效果 */
+    padding: 2px 0; /* 上下内边距2px（减少整体高度） */
+    margin: 0; /* 去除外边距 */
+    border-radius: 0 8px 8px 0; /* 右上和右下圆角8px */
+    z-index: 999; /* 层级999，确保在其他元素上方 */
+    width: 110px; /* 宽度110px */
+    height: auto; /* 高度自适应 */
+}
+
+/* 锚点导航容器样式：垂直排列，设置间距和内边距 */
+.anchor-nav .container {
+    display: flex; /* 弹性布局 */
+    flex-direction: column; /* 垂直排列 */
+    gap: 2px; /* 子元素间距2px（缩小链接间距） */
+    align-items: center; /* 水平居中 */
+    padding: 0 8px; /* 左右内边距8px */
+}
+
+/* 锚点导航链接样式：设置内边距、颜色和过渡效果 */
+.anchor-nav a {
+    padding: 2px 5px; /* 内边距：上下2px，左右5px（减少高度） */
+    color: var(--primary-color); /* 文本颜色使用主色调 */
+    text-decoration: none; /* 去除下划线 */
+    font-size: 14px; /* 字体大小14px */
+    border-radius: 4px; /* 圆角4px */
+    transition: background-color 0.3s; /* 背景色过渡效果0.3s */
+    width: 100%; /* 宽度100% */
+    text-align: center; /* 文本居中 */
+}
+
+/* 锚点导航链接 hover 状态：改变背景色 */
+.anchor-nav a:hover {
+    background-color: var(--secondary-color); /* hover时背景色变为辅助色 */
+}
+
+/* 日期时间区域样式：居中对齐，设置背景和内边距 */
+.datetime {
+    text-align: center; /* 文本居中 */
+    font-size: 16px; /* 字体大小16px */
+    color: #666; /* 文本颜色灰色 */
+    margin-bottom: 25px; /* 底部外边距25px */
+    padding: 10px; /* 内边距10px */
+    border-radius: 8px; /* 圆角8px */
+    background-color: #f5f5f5; /* 背景色浅灰色 */
+}
+
+/* 页脚样式：居中对齐，顶部边框分隔 */
+footer {
+    text-align: center; /* 文本居中 */
+    padding-top: 20px; /* 顶部内边距20px */
+    border-top: 2px solid var(--primary-color); /* 顶部边框：2px实线主色调 */
+    margin-top: 30px; /* 顶部外边距30px */
+    font-size: 14px; /* 字体大小14px */
+    color: #666; /* 文本颜色灰色 */
+}
+
+/* 页脚链接容器样式：弹性布局，支持换行，居中对齐 */
+.footer-links {
+    margin: 15px 0; /* 上下外边距15px */
+    display: flex; /* 弹性布局 */
+    flex-wrap: wrap; /* 超出换行 */
+    justify-content: center; /* 水平居中 */
+    gap: 15px; /* 子元素间距15px */
+}
+
+/* 页脚链接样式：设置颜色和文本装饰 */
+.footer-links a {
+    color: var(--primary-color); /* 文本颜色使用主色调 */
+    text-decoration: none; /* 去除下划线 */
+}
+
+/* 页脚链接 hover 状态：添加下划线 */
+.footer-links a:hover {
+    text-decoration: underline; /* hover时显示下划线 */
+}
+
+/* 返回顶部按钮样式：固定定位在右下角，圆形设计 */
+#backToTop {
+    position: fixed; /* 固定定位 */
+    bottom: 30px; /* 距离底部30px */
+    right: 30px; /* 距离右侧30px */
+    width: 50px; /* 宽度50px */
+    height: 50px; /* 高度50px */
+    border: none; /* 去除边框 */
+    border-radius: 50%; /* 圆形按钮 */
+    background-color: var(--primary-color); /* 背景色使用主色调 */
+    color: #fff; /* 文本颜色白色 */
+    font-size: 24px; /* 字体大小24px */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2); /* 底部阴影效果 */
+    transition: background-color 0.3s; /* 背景色过渡效果0.3s */
+    display: none; /* 默认隐藏 */
+}
+
+/* 返回顶部按钮 hover 状态：改变背景色 */
+#backToTop:hover {
+    background-color: var(--btn-hover); /* hover时背景色变为按钮hover色 */
+}
+
+/* 升级信息区域样式：居中对齐，上下间距 */
+.upgrade-section {
+    margin: 20px 0; /* 上下外边距20px */
+    text-align: center; /* 文本居中 */
+}
+
+/* 升级信息摘要样式：设置颜色、大小和光标样式 */
+.upgrade-summary {
+    color: var(--primary-color); /* 文本颜色使用主色调 */
+    font-size: 16px; /* 字体大小16px */
+    font-weight: bold; /* 字体加粗 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    padding: 8px 0; /* 上下内边距8px */
+}
+
+/* 升级信息内容样式：设置内边距、边框和背景色 */
+.upgrade-content {
+    margin-top: 10px; /* 顶部外边距10px */
+    padding: 15px; /* 内边距15px */
+    border: 1px solid var(--border-color); /* 边框：1px实线边框色 */
+    border-radius: 8px; /* 圆角8px */
+    background-color: #f9f9f9; /* 背景色浅灰色 */
+    font-size: 14px; /* 字体大小14px */
+    color: #666; /* 文本颜色灰色 */
+}
+
+/* 响应式布局：屏幕宽度小于768px时的样式调整 */
+@media (max-width: 768px) {
+    /* 页面主体：取消左侧预留导航宽度 */
+    body {
+        padding-left: 15px;
+    }
+
+    /* 页头标题：缩小字体大小 */
+    header h1 {
+        font-size: 24px;
+    }
+
+    /* 搜索输入框：调整宽度、高度和字体大小 */
+    #searchInput {
+        width: 75%; /* 宽度占75% */
+        height: 50px; /* 高度50px */
+        font-size: 16px; /* 字体大小16px */
+    }
+
+    /* 搜索按钮：调整高度、内边距和字体大小 */
+    .search-btn {
+        height: 50px; /* 高度50px */
+        padding: 0 18px; /* 左右内边距18px */
+        font-size: 16px; /* 字体大小16px */
+    }
+
+    /* 链接容器：改为居中对齐 */
+    .link-container {
+        justify-content: center;
+    }
+
+    /* 锚点导航：改为粘性定位在顶部，横向排列 */
+    .anchor-nav {
+        position: sticky; /* 粘性定位 */
+        top: 0; /* 顶部对齐 */
+        left: 0; /* 左侧对齐 */
+        width: 100%; /* 宽度100% */
+        border-radius: 8px; /* 四角圆角8px */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 底部阴影 */
+        padding: 8px 0; /* 上下内边距8px */
+        margin-bottom: 25px; /* 底部外边距25px */
+    }
+
+    /* 锚点导航容器：改为横向排列，支持换行 */
+    .anchor-nav .container {
+        flex-direction: row; /* 水平排列 */
+        flex-wrap: wrap; /* 超出换行 */
+        gap: 8px; /* 子元素间距8px */
+        justify-content: center; /* 水平居中 */
+    }
+
+    /* 锚点导航链接：调整宽度、大小和内边距 */
+    .anchor-nav a {
+        width: auto; /* 宽度自适应 */
+        font-size: 13px; /* 字体大小13px */
+        padding: 5px 8px; /* 内边距：上下5px，左右8px */
+    }
+}
+</style>
+</head>
+ <!-- 锚点导航 -->
+        <div class="anchor-nav">
+            <div class="container">
+        <a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+            </div>
+        </div>
+
+
+
+
+<body>
+    <div class="container">
+        <!-- 头部区域 -->
+        <header>
+            <h1> <a href="zy.html" target="_blank">公平村浏览器主页</a> </h1>
+            <div class="top-nav">
+                <a href="https://cn.bing.com/search?q=%E5%85%AC%E5%B9%B3%E6%9D%91%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E9%A1%B5" target="_blank">公平村浏览器主页</a>
+                <a href="https://cn.bing.com/search?q=%E5%85%AC%E5%B9%B3%E6%9D%91%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E9%A1%B5%E7%94%B5%E8%84%91%E7%89%88" target="_blank">电脑版</a>
+                <a href="zy.html" target="_blank">刷新</a>
+                <a href="https://10000.gd.cn" target="_blank">测网速</a>
+                <a href="https://filehelper.weixin.qq.com" target="_blank">微信文件传输助手</a>
+                <a href="https://wx.qq.com" target="_blank">网页版微信</a>
+                <a href="https://cn.bing.com/search?q=%E8%BF%9C%E7%A8%8B" target="_blank">远程</a>
+                <a href="https://cli.im" target="_blank">二维码</a>
+            </div>
+        </header>
+
+        <!-- 日期时间显示 -->
+        <div class="datetime" id="dateTime"></div>
+<center><!--居中-->
+<p style="font-size: 32px;">中文大写:¥ 壹 贰 叁 肆 伍 陆 柒 捌 玖 拾 佰 仟 万 亿 兆 圆 角 分 零 整</p>
+</center><!--居中-->
+
+
+
+
+    <style>
+#searchInput, .search-btn {
+  /* 统一垂直对齐基线 */
+  vertical-align: middle;
+  height: 80px;
+  box-sizing: border-box;
+}
+
+/* 移除默认间距（input和button之间可能有默认空格） */
+.search-section {
+  font-size: 0; /* 消除inline元素间的空格间距 */
+}
+
+#searchInput, .search-btn {
+  font-size: 22px; /* 恢复字体大小 */
+}
+    </style>
+
+
+
+<!-- 搜索区域 -->
+<section id="搜索" class="search-section">
+    <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)"
+        onkeyup="handleKeyUp(event)"
+    >
+    <button class="search-btn" id="mainSearchBtn">搜索</button>
+
+
+
+<p style="font-size: 12px;">🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)</p>
+
+
+    <div id="result"></div>
+
+
+
+
+
+    <!-- 多搜索引擎 -->
+    <div class="link-container" style="margin-top: 15px;">
+搜索:
+        <button class="link-btn" data-engine="baidu">百度搜索</button>
+        <button class="link-btn" data-engine="bing">必应搜索</button>
+        <button class="link-btn" data-engine="toutiao">今日头条搜索</button>
+        <button class="link-btn" data-engine="weixin">搜狗微信搜索</button>
+        <button class="link-btn" data-engine="360">360搜索</button>
+        <button class="link-btn" data-engine="douyin">抖音搜索</button>
+        <button class="link-btn" data-engine="sogou">搜狗搜索</button>
+        <button class="link-btn" data-engine="yandex">Yandex</button>
+        <button class="link-btn" data-engine="3dsource">3DSource零件库</button>
+        <button class="link-btn" data-engine="baidu-mp3">音乐</button>
+        <button class="link-btn" data-engine="baidu-video">视频</button>
+        <button class="link-btn" data-engine="baidu-news">百度新闻</button>
+        <button class="link-btn" data-engine="taobao">爱淘宝</button>
+    </div>
+
+    <!-- 图片搜索 -->
+    <div class="link-container">
+图片搜索:
+        <button class="link-btn" data-engine="bing-image">必应图片</button>
+        <button class="link-btn" data-engine="baidu-image">百度图片</button>
+        <button class="link-btn" data-engine="sogou-image">搜狗图片</button>
+        <button class="link-btn" data-engine="360-image">360图片</button>
+        <button class="link-btn" data-engine="taobao-image">淘宝图片</button>
+    </div>
+
+    <!-- 翻译工具 -->
+    <div class="link-container">
+翻译工具:
+        <button class="link-btn" data-engine="baidu-trans">百度翻译</button>
+        <button class="link-btn" data-engine="sogou-trans">搜狗翻译</button>
+        <button class="link-btn" data-engine="bing-trans">必应翻译</button>
+    </div>
+</section>
+
+<script>
+    // 日期时间显示
+    function updateDateTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        const day = now.getDate();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+        const dayOfWeek = days[now.getDay()];
+        document.getElementById('dateTime').innerHTML = 
+            `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds} ${dayOfWeek}`;
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // 数字转中文大写
+    const chineseNumber = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+    const chineseUnit = ["", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"];
+
+    function convertToChinese(num) {
+        let numStr = num.toString();
+        let result = "";
+        for (let i = 0; i < numStr.length; i++) {
+            let digit = parseInt(numStr[i]);
+            if (digit!== 0) {
+                result += chineseNumber[digit] + chineseUnit[numStr.length - 1 - i];
+            } else {
+                if (i > 0 && parseInt(numStr[i - 1])!== 0) {
+                    result += chineseNumber[digit];
+                }
+            }
+        }
+        return result || "零";
+    }
+
+    // 处理百分号并转换为小数
+    function processPercentage(expr) {
+        // 匹配数字+%的模式，例如 40% 转换为 0.4
+        return expr.replace(/(\d+(\.\d+)?)%/g, (match, num) => {
+            return (parseFloat(num) / 100).toString();
+        });
+    }
+
+    // 安全计算数学表达式（支持百分号）
+    function calculateExpression(expr) {
+        // 仅允许数字、小数点、四则运算符、括号、空格和百分号
+        const validPattern = /^[\d+\-*/.()\s%]+$/;
+        if (!validPattern.test(expr)) {
+            return null;
+        }
+        
+        try {
+            // 第一步：处理百分号，转换为小数
+            const processedExpr = processPercentage(expr);
+            // 第二步：使用Function替代eval执行计算
+            const func = new Function(`return ${processedExpr};`);
+            const result = func();
+            
+            // 处理计算结果为NaN/Infinity的情况
+            if (isNaN(result) || !isFinite(result)) {
+                return null;
+            }
+            return result;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function handleKeyUp(event) {
+        const inputValue = document.getElementById("searchInput").value.trim();
+        const resultElement = document.getElementById("result");
+        resultElement.innerHTML = "";
+
+        if (inputValue === "") {
+            return;
+        }
+
+        // 第一步：尝试计算数学表达式（支持百分号）
+        const calculationResult = calculateExpression(inputValue);
+        if (calculationResult!== null && !isNaN(calculationResult)) {
+            // 格式化表达式（去除多余空格）
+            const formattedExpr = inputValue.replace(/\s+/g, '');
+            // 显示完整公式和结果（保留两位小数，避免浮点精度问题）
+            const fixedResult = Number.isInteger(calculationResult) 
+                ? calculationResult 
+                 : calculationResult.toFixed(2);
+            let resultText = `${formattedExpr} = ${fixedResult}`;
+            
+            // 如果计算结果是整数，补充显示中文大写
+            if (Number.isInteger(calculationResult)) {
+                const convertedValue = convertToChinese(Math.abs(calculationResult));
+                resultText += ` (中文大写: ${convertedValue}元整)`;
+            }
+            
+            resultElement.innerHTML = resultText;
+        } 
+        // 第二步：如果不是表达式，尝试纯数字转中文大写
+        else if (!isNaN(inputValue.replace(/%/g, '')) && inputValue!== "") {
+            // 处理纯百分号数字，例如 "50%" 转换为 0.5
+            let numValue = inputValue;
+            if (numValue.includes('%')) {
+                numValue = processPercentage(numValue);
+            }
+            const convertedValue = convertToChinese(Math.abs(parseInt(numValue)));
+            resultElement.innerHTML = `${inputValue} = ${convertedValue}元整`;
+        }
+
+        // 回车键触发搜索
+        if (event.keyCode === 13) {
+            document.getElementById("mainSearchBtn").click();
+        }
+    }
+
+    // 搜索引擎配置（补充完整）
+    const searchEngines = {
+        baidu: "https://www.baidu.com/s?wd=",
+        bing: "https://www.bing.com/search?q=",
+        toutiao: "https://so.toutiao.com/search?dvpf=pc&source=input&keyword=",
+        weixin: "https://weixin.sogou.com/weixin?type=2&s_from=input&query=",
+        360: "https://www.so.com/s?q=",
+        douyin: "https://www.douyin.com/search/",
+        sogou: "https://www.sogou.com/web?query=",
+        yandex: "https://yandex.com/search/?text=",
+        "3dsource": "http://lib.3dsource.cn/#/searchResult?searchKeyword=",
+        "baidu-mp3": "https://music.163.com/#/search/m/?s=",
+        "baidu-video": "https://www.baidu.com/sf/vsearch?pd=video&tn=vsearch&ie=utf-8&wd=",
+        "baidu-news": "https://news.baidu.com/ns?word=",
+        "bing-image": "https://cn.bing.com/images/search?q=",
+        "baidu-image": "https://image.baidu.com/search/index?word=",
+        "sogou-image": "https://pic.sogou.com/pics?query=",
+        "360-image": "https://image.so.com/i?q=",
+        "taobao-image": "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=",
+        "pinterest": "/",
+        "baidu-trans": "https://fanyi.baidu.com/mtpe-individual/multimodal?query=",
+        "sogou-trans": "https://fanyi.sogou.com/text?keyword=",
+        "bing-trans": "https://cn.bing.com/translator/?ref&text=",
+        "google-trans": "https://translate.google.cn/?sl=auto&tl=zh-CN&text=",
+        "youdao-trans": "https://fanyi.youdao.com/?keyfrom=dict2.top&q=",
+        "caiyun-trans": "https://fanyi.caiyunapp.com/#/translator?source=",
+        "taobao": "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=",
+        "deepl-trans": "https://www.deepl.com/translator#auto/zh/"
+    };
+
+    // 搜索按钮点击事件
+    document.getElementById("mainSearchBtn").addEventListener("click", () => {
+        const keyword = document.getElementById("searchInput").value;
+        if (keyword) {
+            window.open(searchEngines.bing + encodeURIComponent(keyword), "_blank");
+        }
+    });
+
+    // 引擎按钮点击事件
+    document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const engine = btn.getAttribute("data-engine");
+            const keyword = document.getElementById("searchInput").value;
+            const url = searchEngines[engine] + encodeURIComponent(keyword || "");
+            window.open(url, "_blank");
+        });
+    });
+
+    // 返回顶部按钮
+    const backToTopBtn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+    // 显示当前URL
+    document.getElementById("currentUrl").textContent = window.location.href;
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+
+
+
+
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+        <!-- 搜索 -->
+                  <div class="category-title">搜索</div>
+            <div class="link-container">
+<a href="https://www.baidu.com/s?wd=" target="_blank" class="link-btn">百度搜索</a>
+<a href="https://www.bing.com/search?q=" target="_blank" class="link-btn">必应搜索</a>
+<a href="https://so.toutiao.com/search?dvpf=pc&source=input&keyword=" target="_blank" class="link-btn">头条搜索</a>
+<a href="https://weixin.sogou.com/weixin?type=2&s_from=input&query=" target="_blank" class="link-btn">微信搜索</a>
+<a href="https://www.so.com/s?q=" target="_blank" class="link-btn">360搜索</a>
+<a href="https://www.douyin.com/search/" target="_blank" class="link-btn">抖音搜索</a>
+<a href="https://www.sogou.com/web?query=" target="_blank" class="link-btn">搜狗搜索</a>
+<a href="https://yandex.com/search/?text=" target="_blank" class="link-btn">Yandex搜索</a>
+<a href="http://lib.3dsource.cn/#/searchResult?searchKeyword=" target="_blank" class="link-btn">3dsource搜索</a>
+<a href="https://music.163.com/#/search/m/?s=" target="_blank" class="link-btn">网易云音乐）</a>
+<a href="https://www.baidu.com/sf/vsearch?pd=video&tn=vsearch&ie=utf-8&wd=" target="_blank" class="link-btn">百度视频</a>
+<a href="https://news.baidu.com/ns?word=" target="_blank" class="link-btn">百度新闻</a>
+<a href="https://cn.bing.com/images/search?q=" target="_blank" class="link-btn">必应图片</a>
+<a href="https://image.baidu.com/search/index?word=" target="_blank" class="link-btn">百度图片</a>
+<a href="https://pic.sogou.com/pics?query=" target="_blank" class="link-btn">搜狗图片</a>
+<a href="https://image.so.com/i?q=" target="_blank" class="link-btn">360图片</a>
+<a href="https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=" target="_blank" class="link-btn">淘宝图片</a>
+<a href="/" target="_blank" class="link-btn">Pinterest</a>
+<a href="https://fanyi.baidu.com/mtpe-individual/multimodal?query=" target="_blank" class="link-btn">百度翻译</a>
+<a href="https://fanyi.sogou.com/text?keyword=" target="_blank" class="link-btn">搜狗翻译</a>
+<a href="https://cn.bing.com/translator/?ref&text=" target="_blank" class="link-btn">必应翻译</a>
+<a href="https://translate.google.cn/?sl=auto&tl=zh-CN&text=" target="_blank" class="link-btn">谷歌翻译</a>
+<a href="https://fanyi.youdao.com/?keyfrom=dict2.top&q=" target="_blank" class="link-btn">有道翻译</a>
+<a href="https://fanyi.caiyunapp.com/#/translator?source=" target="_blank" class="link-btn">彩云翻译</a>
+<a href="https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=" target="_blank" class="link-btn">淘宝搜索</a>
+<a href="https://www.164580.com" target="_blank" class="link-btn">164580搜索</a>
+<a href="https://www.164580.com" target="_blank" class="link-btn">GB铆钉搜索</a>
+<a href="https://www.164580.com" target="_blank" class="link-btn">GB螺丝搜索</a>
+<a href="https://www.164580.com" target="_blank" class="link-btn">紧固件标准搜索</a>
+<a href="https://www.deepl.com/translator#auto/zh/" target="_blank" class="link-btn">DeepL翻译</a>
+<a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760667563%400b10dcc6_12ad_199eff6f722_055f%4001" target="_blank" class="link-btn">爱淘宝(电脑版)</a>
+<a href="https://s.click.1688.com/t?e=E8FA7FF2F7DF95454E1F4FDB40EFBC240CAA80D1CD478E29D920A558D1D5758C796E05FBA2F4EF2AB4495A67B5147075F72F2793620489D8E03BCF364CDA73EF1455176268C6A00FBEFBDA96A9B252F6C3F99DF019CD6D6D11E350B207C9D88D208AEA6665A9BADC3EE72C6E754956EC23DE95978F62EE1856CCA7B9C617E913A2F09545400D1C6D6A30A3B5370BDF77746B5E7B45863B217021FE817B2B3E85" target="_blank" class="link-btn">1688精选货源</a>     
+
+   </div>
+        </section>
+
+
+<br/>
+
+
+
+
+
+        <!-- AI工具导航 -->
+<section id="AI工具" class="category-nav">
+            <div class="category-title">AI工具平台</div>
+            <div class="link-container">
+                <a href="https://yuanbao.tencent.com" target="_blank" class="link-btn">腾讯元宝</a>
+                <a href="https://www.doubao.com" target="_blank" class="link-btn">豆包AI</a>
+                <a href="https://n.cn" target="_blank" class="link-btn">纳米Ai搜索</a>
+                <a href="https://bao.360.com" target="_blank" class="link-btn">AI爆款视频</a>
+                <a href="https://www.sou.com/?src=360so_index" target="_blank" class="link-btn">360AI搜索</a>
+                <a href="https://so.csdn.net/chat" target="_blank" class="link-btn">C知道</a>
+                <a href="https://yiyan.baidu.com/" target="_blank" class="link-btn">文心一言</a>
+                <a href="https://www.qianwen.com" target="_blank" class="link-btn">千问</a>
+                <a href="https://kimi.moonshot.cn/" target="_blank" class="link-btn">Kimi</a>
+                <a href="https://chat.deepseek.com/sign_in" target="_blank" class="link-btn">DeepSeek</a>
+                <a href="https://zhida.zhihu.com/" target="_blank" class="link-btn">知乎直答</a>
+                <a href="https://chatglm.cn/main/guest?lang=zh" target="_blank" class="link-btn">智谱清言</a>
+                <a href="https://www.ainav.cn/" target="_blank" class="link-btn">Ai导航</a>
+                <a href="https://hot.browser.miui.com/light/ai-tool-collection.html" target="_blank" class="link-btn">ai空间</a>
+                <a href="https://cn.bing.com/search?q=ai%E5%AF%BC%E8%88%AA" target="_blank" class="link-btn">搜索:ai导航</a>
+                <a href="https://cn.bing.com/search?q=ai大全" target="_blank" class="link-btn">ai大全</a>
+                <a href="https://cn.bing.com/search?q=ai工具" target="_blank" class="link-btn">ai工具</a>
+                <a href="https://chat.baidu.com" target="_blank" class="link-btn">百度ai</a>
+                <a href="https://fanyi.youdao.com" target="_blank" class="link-btn">有道云ai</a>
+                <a href="https://ai.dangbei.com" target="_blank" class="link-btn">当贝AI</a>
+                <a href="https://cloud.baidu.com/product-s/miaoda_home" target="_blank" class="link-btn">秒哒</a>
+                <a href="https://metaso.cn" target="_blank" class="link-btn">秘塔AI</a>
+                <a href="https://ai.quark.cn/" target="_blank" class="link-btn">夸克AI</a>
+                <a href="https://www.lingguang.com" target="_blank" class="link-btn">灵光</a>
+
+
+            </div>
+        </section>
+
+
+
+
+
+
+
+        <!-- 购物平台 -->
+<section id="购物" class="category-nav">
+           
+
+            <div class="category-title">购物平台</div>
+            <div class="link-container">
+                <a href="https://cn.bing.com/search?q=%E8%B4%AD%E7%89%A9" target="_blank" class="link-btn">购物搜索（必应）</a>
+                <a href="https://www.taobao.com/" target="_blank" class="link-btn">淘宝</a>
+                <a href="https://www.tmall.com" target="_blank" class="link-btn">天猫</a>
+                <a href="https://www.1688.com" target="_blank" class="link-btn">1688</a>
+                <a href="https://www.xiaomiyoupin.com" target="_blank" class="link-btn">小米有品</a>
+                <a href="https://www.dangdang.com/" target="_blank" class="link-btn">当当</a>
+                <a href="https://www.suning.com/" target="_blank" class="link-btn">苏宁易购</a>
+                <a href="https://www.mi.com/shop" target="_blank" class="link-btn">小米商城</a>
+                <a href="https://www.vmall.com/index.html" target="_blank" class="link-btn">华为商城</a>
+                <a href="https://www.vip.com/" target="_blank" class="link-btn">唯品会</a>
+                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DToeSffRMvSccQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMW7VdsN6mBHxRitN3%2FurF3zEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6AJjNZvpnUkNZXXQPnMEVgRxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401749699081%40212ca094_0ed9_19762313543_054e%4001" target="_blank" class="link-btn">天猫超市</a>
+                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DdcwuDpunQkscQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMWrcZAqtI%2Fg85x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GTh9G%2FvhWTBzMNPueRDzgzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401749699015%40210752c5_0e74_1976230325a_0561%4001" target="_blank" class="link-btn">漫花旗舰店</a>
+                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D78HcyfeG2WYcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMZNtuO5iGdZE5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401749698975%402132dcb4_0e33_197622f98db_056a%4001" target="_blank" class="link-btn">天天特卖工厂</a>
+                <a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_115896750188&union_lens=lensId%3APUB%401749698940%40212ca094_0ed9_197622f0ed0_054d%4001" target="_blank" class="link-btn">爱淘宝</a>
+                <a href="https://mobile.yangkeduo.com/duo_collection.html?__page=djbis&pid=9419863_268967929&cpsSign=CIP_250208_9419863_268967929_8826120d408f16155cb601f3fac6f486&_x_ddjb_act=%7B%22st%22%3A%2217%22%7D&duoduo_type=2" target="_blank" class="link-btn">拼多多内购清单</a>
+<a href="https://s.click.1688.com/t?e=E8FA7FF2F7DF95454E1F4FDB40EFBC240CAA80D1CD478E29D920A558D1D5758C796E05FBA2F4EF2AB4495A67B5147075F72F2793620489D8E03BCF364CDA73EF1455176268C6A00FBEFBDA96A9B252F6C3F99DF019CD6D6D11E350B207C9D88D208AEA6665A9BADC3EE72C6E754956EC23DE95978F62EE1856CCA7B9C617E913A2F09545400D1C6D6A30A3B5370BDF77746B5E7B45863B217021FE817B2B3E85" target="_blank" class="link-btn">1688精选货源</a>     
+            </div>
+        </section>
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+        <!-- 网页导航 -->
+<section id="网页导航" class="category-nav">
+            <div class="category-title">网页导航</div>
+            <div class="link-container">
+                <a href="https://www.hao123.com" target="_blank" class="link-btn">好123导航</a>
+                <a href="https://hao.360.cn/?src=lm&ls=n1d36d26f94" target="_blank" class="link-btn">360导航</a>
+                <a href="https://www.uc123.com/" target="_blank" class="link-btn">uc导航</a>
+                <a href="http://hao.uc.cn/" target="_blank" class="link-btn">手机版uc导航</a>
+                <a href="https://123.sogou.com/" target="_blank" class="link-btn">搜狗导航</a>
+                <a href="https://hao.qq.com/" target="_blank" class="link-btn">QQ导航</a>
+                <a href="http://hao.rising.cn/" target="_blank" class="link-btn">瑞星安全网址导航</a>
+                <a href="https://www.duba.com" target="_blank" class="link-btn">毒霸导航</a>
+                <a href="http://hao.sm.cn/" target="_blank" class="link-btn">网址导航-神马</a>
+                <a href="https://www.2345.com/?kcn91" target="_blank" class="link-btn">2345网址导航</a>
+                <a href="https://young.hao.360.com/" target="_blank" class="link-btn">360导航少年版</a>
+                <a href="https://cn.bing.com/search?q=%E7%BD%91%E5%9D%80%E5%AF%BC%E8%88%AA" target="_blank" class="link-btn">网址导航 - 国内版 Bing</a>
+            </div>
+        </section>
+
+        <!-- 百科平台 -->
+<section id="百科" class="category-nav">
+            <div class="category-title">百科平台</div>
+            <div class="link-container">
+                <a href="https://www.baike.com" target="_blank" class="link-btn">快懂百科</a>
+                <a href="https://baike.baidu.com" target="_blank" class="link-btn">百度百科</a>
+                <a href="https://baike.so.com" target="_blank" class="link-btn">360百科</a>
+                <a href="https://baike.sogou.com" target="_blank" class="link-btn">搜狗百科</a>
+                <a href="https://baike.weixin.qq.com" target="_blank" class="link-btn">微信百科</a>
+            </div>
+        </section>
+
+        <!-- 问答平台 -->
+<section id="问答" class="category-nav">
+            <div class="category-title">问答平台</div>
+            <div class="link-container">
+                <a href="https://www.zhihu.com/" target="_blank" class="link-btn">知乎</a>
+                <a href="https://wukong.toutiao.com/" target="_blank" class="link-btn">头条问答</a>
+                <a href="https://zhidao.baidu.com/" target="_blank" class="link-btn">百度知道</a>
+                <a href="https://wenda.so.com/?src=tab_web" target="_blank" class="link-btn">360问答</a>
+                <a href="https://wenwen.sogou.com/" target="_blank" class="link-btn">搜狗问问</a>
+                <a href="http://wenda.tianya.cn" target="_blank" class="link-btn">天涯问答</a>
+                <a href="https://ask.zol.com.cn/" target="_blank" class="link-btn">ZOL问答</a>
+            </div>
+        </section>
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+
+        <!-- 自媒体平台 -->
+<section id="自媒体" class="category-nav">
+            <div class="category-title">自媒体平台</div>
+            <div class="link-container">
+                <a href="https://creator.douyin.com/" target="_blank" class="link-btn">抖音创作服务平台</a>
+                <a href="https://www.douyinec.com/" target="_blank" class="link-btn">抖音电商官网</a>
+                <a href="https://mp.toutiao.com/" target="_blank" class="link-btn">头条号</a>
+                <a href="https://mp.weixin.qq.com/" target="_blank" class="link-btn">公众号</a>
+                <a href="https://baijiahao.baidu.com/" target="_blank" class="link-btn">百家号</a>
+                <a href="https://om.qq.com" target="_blank" class="link-btn">企鹅号（腾讯内容开放平台）</a>
+                <a href="https://mp.163.com/" target="_blank" class="link-btn">网易号</a>
+                <a href="https://mp.iqiyi.com/" target="_blank" class="link-btn">爱奇艺iQ号</a>
+                <a href="https://studio.ixigua.com/" target="_blank" class="link-btn">西瓜创作平台</a>
+                <a href="https://member.bilibili.com/" target="_blank" class="link-btn">哔哩哔哩创作中心</a>
+                <a href="https://mp.youku.com/new/video" target="_blank" class="link-btn">优酷创作中心官网</a>
+                <a href="https://media.weishi.qq.com/" target="_blank" class="link-btn">腾讯微视·视频上传</a>
+                <a href="https://cp.kuaishou.com" target="_blank" class="link-btn">快手创作者服务平台</a>
+                <a href="https://creator.xiaohongshu.com/login" target="_blank" class="link-btn">小红书创作服务平台</a>
+                <a href="https://channels.weixin.qq.com" target="_blank" class="link-btn">视频号助手</a>
+                <a href="https://buyin.jinritemai.com/dashboard?new_enter_from=" target="_blank" class="link-btn">巨量百应Buyin</a>
+                <a href="https://buyin.jinritemai.com/dashboard/short-video-diagnosis" target="_blank" class="link-btn">巨量百应Buyin:视频管理</a>
+            </div>
+        </section>
+
+        <!-- 视频平台 -->
+<section id="视频" class="category-nav">
+            <div class="category-title">视频平台</div>
+            <div class="link-container">
+
+                <a href="https://www.douyin.com/" target="_blank" class="link-btn">抖音</a>
+                <a href="https://kuaishou.cn/" target="_blank" class="link-btn">快手</a>
+                <a href="https://kuaishou.cn/" target="_blank" class="link-btn">小红书</a>
+                <a href="https://www.bilibili.com/" target="_blank" class="link-btn">哔哩哔哩</a>
+                <a href="https://haokan.baidu.com/" target="_blank" class="link-btn">好看视频</a>
+                <a href="https://tv.sohu.com" target="_blank" class="link-btn">搜狐视频</a>
+                
+                <a href="https://tv.cctv.com/live/" target="_blank" class="link-btn">CCTV节目官网_央视网</a>
+                <a href="http://www.aikantv.org/" target="_blank" class="link-btn">爱看TV</a>
+                <a href="https://www.ixigua.com/" target="_blank" class="link-btn">西瓜视频</a>
+                <a href="https://www.youku.com/" target="_blank" class="link-btn">优酷</a>
+                <a href="https://www.iqiyi.com/" target="_blank" class="link-btn">爱奇艺</a>
+                <a href="https://v.qq.com/" target="_blank" class="link-btn">腾讯视频</a>
+                <a href="https://www.bilibili.com/" target="_blank" class="link-btn">哔哩哔哩</a>
+                <a href="https://www.mgtv.com/" target="_blank" class="link-btn">芒果TV</a>
+                <a href="https://tv.sohu.com/" target="_blank" class="link-btn">搜狐视频</a>
+                <a href="https://new.tudou.com/" target="_blank" class="link-btn">土豆视频</a>
+                <a href="https://www.56.com/" target="_blank" class="link-btn">56视频</a>
+                <a href="https://v.ifeng.com/" target="_blank" class="link-btn">凤凰视频</a>
+                <a href="http://www.zjstv.com/" target="_blank" class="link-btn">蓝天下 蓝莓视频</a>
+                <a href="https://www.pptv.com/" target="_blank" class="link-btn">pptv</a>
+                <a href="https://maoyan.com/" target="_blank" class="link-btn">猫眼电影</a>
+                <a href="http://www.fun.tv/" target="_blank" class="link-btn">风行</a>
+                <a href="http://movie.le.com/" target="_blank" class="link-btn">乐视电影</a>
+                <a href="https://tv.cctv.com/cctv6/" target="_blank" class="link-btn">CCTV6</a>
+                <a href="https://www.migu.cn/" target="_blank" class="link-btn">咪咕视频</a>
+                <a href="https://haokan.baidu.com/?sfrom=baidu-top" target="_blank" class="link-btn">好看视频</a>
+                <a href="https://video.360kan.com/?src=tab_web" target="_blank" class="link-btn">360影视</a>
+                <a href="https://v.sogou.com/" target="_blank" class="link-btn">搜狗视频</a>
+                <a href="https://cn.bing.com/videos/trending?form=HDRSC3" target="_blank" class="link-btn">国内版 Bing video</a>
+                <a href="https://www.1905.com/" target="_blank" class="link-btn">电影网_1905.com</a>
+                <a href="https://young.hao.360.com/channel/MdfUPUPlZK3BPj" target="_blank" class="link-btn">少年放映厅</a>
+            </div>
+        </section>
+
+        <!-- 邮箱平台 -->
+
+<section id="邮箱" class="category-nav">
+            <div class="link-container">
+                <a href="https://mail.163.com/" target="_blank" class="link-btn">163网易邮箱</a>
+                <a href="https://exmail.qq.com/" target="_blank" class="link-btn">腾讯企业邮箱</a>
+                <a href="https://mail.qq.com/" target="_blank" class="link-btn">QQ邮箱</a>
+                <a href="https://mail.126.com/" target="_blank" class="link-btn">126网易邮箱</a>
+                <a href="https://mail.10086.cn/" target="_blank" class="link-btn">139邮箱</a>
+                <a href="https://webmail30.189.cn/w2/" target="_blank" class="link-btn">189邮箱</a>
+                <a href="https://mail.aliyun.com/" target="_blank" class="link-btn">阿里邮箱</a>
+                <a href="https://mail.21cn.com/w2/" target="_blank" class="link-btn">21cn邮箱</a>
+                <a href="https://mail.sohu.com/fe/#/login" target="_blank" class="link-btn">搜狐闪电邮箱</a>
+                <a href="https://mail.tom.com/" target="_blank" class="link-btn">TOM免费邮箱</a>
+                <a href="https://mail.sina.com.cn" target="_blank" class="link-btn">新浪邮箱</a>
+            </div>
+        </section>
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+
+        <!-- 翻译工具 -->
+<section id="翻译" class="category-nav">
+            <div class="category-title">翻译工具</div>
+            <div class="link-container">
+                <a href="https://cn.bing.com/translator/?ref" target="_blank" class="link-btn">Bing翻译</a>
+                <a href="https://fanyi.sogou.com/text" target="_blank" class="link-btn">搜狗翻译</a>
+                <a href="https://fanyi.baidu.com/" target="_blank" class="link-btn">百度翻译</a>
+                <a href="https://cn.bing.com/search?q=翻译" target="_blank" class="link-btn">必应翻译</a>
+                <a href="https://hanyu.baidu.com/hanyu-page/zici/s?wd=%E4%BD%A0&ptype=zici&tn=sug_click" target="_blank" class="link-btn">怎么读,怎么写,笔顺</a>
+                <a href="https://hanyu.baidu.com/zici/" target="_blank" class="link-btn">百度汉语</a>
+                <a href="https://translate.google.cn/" target="_blank" class="link-btn">Google 翻译</a>
+                <a href="https://fanyi.youdao.com/" target="_blank" class="link-btn">在线翻译_有道</a>
+                <a href="https://fanyi.qq.com/" target="_blank" class="link-btn">腾讯翻译</a>
+                <a href="https://dict.cnki.net/index" target="_blank" class="link-btn">CNKI翻译助手</a>
+                <a href="http://fanyi.dict.cn/" target="_blank" class="link-btn">fanyi_英文在线翻译</a>
+                <a href="https://www.dreye.com.cn/trans/" target="_blank" class="link-btn">Dr.eye 译典通 | 翻译</a>
+                <a href="https://www.mydict.com/" target="_blank" class="link-btn">www.mydict.com</a>
+                <a href="https://fanyi.caiyunapp.com/#/" target="_blank" class="link-btn">彩云小译 - 在线翻译</a>
+                <a href="https://www.iamwawa.cn/pinyin.html" target="_blank" class="link-btn">中文换拼音</a>
+                <a href="http://xh.5156edu.com" target="_blank" class="link-btn">在线新华字典</a>
+                <a href="http://du.hanyupinyin.cn/" target="_blank" class="link-btn">在线读拼音</a>
+                <a href="https://dz.wubidz.cn/dzlx.php" target="_blank" class="link-btn">在线打字练习模式</a>
+                <a href="https://www.deepl.com" target="_blank" class="link-btn">DeepL翻译</a>
+                <a href="https://www.chazidian.com/" target="_blank" class="link-btn">查字典</a>
+                <a href="https://www.dazima.cn/" target="_blank" class="link-btn">打字练习</a>
+                <a href="http://cy.5156edu.com/" target="_blank" class="link-btn">成语字典</a>
+            </div>
+        </section>
+
+        <!-- 企业信息 -->
+<section id="企业信息" class="category-nav">
+            <div class="category-title">企业信息</div>
+            <div class="link-container">
+                <a href="https://www.gsxt.gov.cn" target="_blank" class="link-btn">国家企业信用信息公示系统</a>
+                <a href="https://aiqicha.baidu.com/" target="_blank" class="link-btn">爱企查</a>
+                <a href="https://www.tianyancha.com/" target="_blank" class="link-btn">天眼查</a>
+                <a href="https://www.qcc.com/" target="_blank" class="link-btn">企查查</a>
+                <a href="https://www.qichamao.com/" target="_blank" class="link-btn">企查猫</a>
+                <a href="https://www.qixin.com/" target="_blank" class="link-btn">启信宝</a>
+                <a href="https://www.riskbird.com" target="_blank" class="link-btn">风鸟</a>
+                <a href="https://shuidi.cn/" target="_blank" class="link-btn">水滴信用</a>
+                <a href="https://88cha.com/" target="_blank" class="link-btn">88查</a>
+            </div>
+        </section>
+
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+        <!-- 案件查询 -->
+        <section id="case-inquiry" class="category-nav">
+            <div class="category-title">案件查询</div>
+            <div class="link-container">
+                <a href="https://splcgk.court.gov.cn/gzfwww/" target="_blank" class="link-btn">首页 - 中国审判流程信息公开网</a>
+                <a href="https://wenshu.court.gov.cn/" target="_blank" class="link-btn">中国裁判文书网</a>
+                <a href="https://zxgk.court.gov.cn/" target="_blank" class="link-btn">中国执行信息公开网</a>
+                <a href="https://ssfw.court.gov.cn/ssfww/" target="_blank" class="link-btn">最高人民法院诉讼服务网</a>
+                <a href="https://www.12309.gov.cn/" target="_blank" class="link-btn">12309中国检察网</a>
+                <a href="https://www.12309.gov.cn/12309/ajxxgk/index.shtml" target="_blank" class="link-btn">案件信息公开</a>
+                <a href="https://www.court.gov.cn/index.html" target="_blank" class="link-btn">首页 - 中华人民共和国最高人民法院</a>
+                <a href="https://jubao.court.gov.cn/home" target="_blank" class="link-btn">人民法院违纪违法举报中心</a>
+                <a href="https://rmfygg.court.gov.cn/" target="_blank" class="link-btn">首页 - 人民法院公告网</a>
+                <a href="http://tingshen.court.gov.cn/" target="_blank" class="link-btn">中国庭审公开网</a>
+                <a href="https://zxgk.court.gov.cn/shixin/" target="_blank" class="link-btn">全国法院失信被执行人名单信息公布与查询</a>
+            </div>
+        </section>
+
+        <!-- 地图平台 -->
+ <section id="地图" class="category-nav">
+            <div class="category-title">地图平台</div>
+            <div class="link-container">
+                <a href="http://bzdt.ch.mnr.gov.cn/index.html" target="_blank" class="link-btn">标准地图服务系统</a>
+                <a href="http://bzdt.ch.mnr.gov.cn/browse.html?picId=%224o28b0625501ad13015501ad2bfc0667%22" target="_blank" class="link-btn">地图预览</a>
+                <a href="https://sbsm-test-1253499193.cos.ap-chengdu.myqcloud.com/prototype/%E5%AF%B9%E5%BC%80/4o28b0625501ad13015501ad2bfc0667.jpg" target="_blank" class="link-btn">地图预览</a>
+                <a href="https://www.amap.com/" target="_blank" class="link-btn">高德地图</a>
+                <a href="https://map.baidu.com/" target="_blank" class="link-btn">百度地图</a>
+                <a href="https://map.qq.com/" target="_blank" class="link-btn">腾讯地图</a>
+                <a href="https://map.sogou.com" target="_blank" class="link-btn">搜狗地图</a>
+                <a href="https://ditu.so.com/" target="_blank" class="link-btn">360地图</a>
+                <a href="https://map.careland.com.cn/" target="_blank" class="link-btn">凯立德地图</a>
+                <a href="https://cn.bing.com/maps" target="_blank" class="link-btn">Bing 地图</a>
+            </div>
+        </section>
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+        <!-- 手机品牌 -->
+<section id="手机品牌" class="category-nav">
+            <div class="category-title">手机品牌</div>
+            <div class="link-container">
+                <a href="https://www.vmall.com" target="_blank" class="link-btn">华为</a>
+                <a href="https://www.mi.com" target="_blank" class="link-btn">小米</a>
+                <a href="https://www.oppo.com" target="_blank" class="link-btn">oppo</a>
+                <a href="https://www.vivo.com.cn" target="_blank" class="link-btn">vivo</a>
+                <a href="https://www.oneplus.com" target="_blank" class="link-btn">一加</a>
+                <a href="https://www.realme.com" target="_blank" class="link-btn">真我</a>
+                <a href="https://www.meizu.com" target="_blank" class="link-btn">魅族</a>
+                <a href="https://www.nokia.com" target="_blank" class="link-btn">诺基亚</a>
+                <a href="https://www.apple.com.cn" target="_blank" class="link-btn">苹果</a>
+                <a href="https://shop.samsung.com.cn" target="_blank" class="link-btn">三星</a>
+            </div>
+        </section>
+
+        <!-- 浏览器主页 -->
+<section id="浏览器主页" class="category-nav">
+            <div class="category-title">浏览器主页</div>
+            <div class="link-container">
+                <a href="https://go.itab.link/" target="_blank" class="link-btn">新标签页</a>
+                <a href="https://limestart.cn/" target="_blank" class="link-btn">青柠起始页</a>
+                <a href="https://start.firefoxchina.cn/" target="_blank" class="link-btn">火狐起始页</a>
+                <a href="https://www.jianfast.com/" target="_blank" class="link-btn">简法主页</a>
+                <a href="https://browser.qq.com/home" target="_blank" class="link-btn">QQ浏览器主页</a>
+                <a href="https://go.mtab.cc/" target="_blank" class="link-btn">mTab书签-新标签页</a>
+                <a href="https://inftab.com/" target="_blank" class="link-btn">Infinity 主页</a>
+                <a href="http://www.oojzy.cn/" target="_blank" class="link-btn">简主页</a>
+                <a href="https://6-u.com/" target="_blank" class="link-btn">乐游导航</a>
+                <a href="https://www.51kim.com/" target="_blank" class="link-btn">氪主页</a>
+            </div>
+        </section>
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+        <!-- 图床工具 -->
+    <section id="图床" class="category-nav">
+            <div class="category-title">图床工具</div>
+            <div class="link-container">
+                <a href="https://tutu.to" target="_blank" class="link-btn">兔兔</a>
+                <a href="https://cn.bing.com/search?q=%E5%9B%BE%E5%BA%8A%E5%AF%BC%E8%88%AA&qs=n&form=QBRE&=%25e%E7%AE%A1%E7%90%86%E6%90%9C%E7%B4%A2%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%25E&sp=-1&lq=0&pq=%E5%9B%BE%E5%BA%8A%E5%AF%BC%E8%88%AA&sc=1-4&sk=&cvid=66959893314E40A78FC91438944B9BB9" target="_blank" class="link-btn">图床导航</a>
+                <a href="https://cn.bing.com/search?q=%E5%9B%BE%E5%BA%8A&form=QBLH&sp=-1&lq=0&pq=%E5%9B%BE%E5%BA%8A&sc=12-2&qs=n&sk=&cvid=BA8E6CE4F218410A8F8753DFF232DEA7" target="_blank" class="link-btn">图床</a>
+                <a href="https://www.imageoss.com/gpc234" target="_blank" class="link-btn">imageoss</a>
+                <a href="https://www.imagehub.cc/" target="_blank" class="link-btn">imagehub</a>
+            </div>
+        </section>
+
+        <!-- 网盘工具 -->
+<section id="网盘" class="category-nav">
+            <div class="category-title">网盘工具</div>
+            <div class="link-container">
+                <a href="https://www.123pan.com/" target="_blank" class="link-btn">123云盘</a>
+                <a href="https://www.aliyundrive.com/sign/in" target="_blank" class="link-btn">阿里云盘</a>
+                <a href="https://pan.baidu.com/" target="_blank" class="link-btn">百度网盘</a>
+                <a href="https://www.weiyun.com/" target="_blank" class="link-btn">腾讯微云</a>
+                <a href="https://pan.quark.cn/list#/list/all" target="_blank" class="link-btn">夸克网盘</a>
+                <a href="https://yun.139.com/w/#/" target="_blank" class="link-btn">中国移动云盘</a>
+                <a href="https://cn.bing.com/search?q=%E7%BD%91%E7%9B%98" target="_blank" class="link-btn">更多网盘</a>
+            </div>
+        </section>
+
+        <!-- 日历工具 -->
+<section id="实用工具" class="category-nav">
+            <div class="category-title">日历工具</div>
+            <div class="link-container">
+                <a href="https://tools.2345.com/rili.htm" target="_blank" class="link-btn">2345日历</a>
+                <a href="https://www.wnl.cc" target="_blank" class="link-btn">万年日历</a>
+                <a href="https://cn.bing.com/search?q=%E6%97%A5%E5%8E%86&form=QBLH&sp=-1&lq=0&pq=ril&sc=12-3&qs=n&sk=&cvid=1DBE7C27B2C048B5B1A152695DF3E2FC" target="_blank" class="link-btn">必应搜索:日历</a>
+                <a href="https://www.baidu.com/s?wd=%E6%97%A5%E5%8E%86" target="_blank" class="link-btn">百度搜索:日历</a>
+                <a href="https://sapp.788v.com/calendar/pages/main/huangli" target="_blank" class="link-btn">老黄历</a>
+                <a href="https://sapp.788v.com/calendar/pages/main/calendar" target="_blank" class="link-btn">轻简万年历</a>
+            </div>
+        </section>
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+        <!-- 字体工具 -->
+        <section id="fonts" class="category-nav">
+            <div class="category-title">字体工具</div>
+            <div class="link-container">
+                <a href="https://alibabafont.taobao.com/wow/alibabafont/act/alifont?spm" target="_blank" class="link-btn">阿里巴巴普惠体</a>
+            </div>
+        </section>
+
+        <!-- 输入法工具 -->
+        <section id="input-method" class="category-nav">
+            <div class="category-title">输入法工具</div>
+            <div class="link-container">
+                <a href="https://shurufa.sogou.com" target="_blank" class="link-btn">搜狗输入法</a>
+                <a href="https://z.weixin.qq.com" target="_blank" class="link-btn">微信输入法</a>
+                <a href="https://srf.baidu.com" target="_blank" class="link-btn">百度输入法</a>
+            </div>
+        </section>
+
+        <!-- 常用软件 -->
+        <section id="software" class="category-nav">
+            <div class="category-title">常用软件</div>
+            <div class="link-container">
+                <a href="https://weixin.qq.com/" target="_blank" class="link-btn">微信</a>
+                <a href="https://im.qq.com" target="_blank" class="link-btn">QQ</a>
+                <a href="https://www.wps.cn/" target="_blank" class="link-btn">WPS</a>
+                <a href="https://yasuo.360.cn/" target="_blank" class="link-btn">360压缩</a>
+            </div>
+        </section>
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+        <!-- 浏览器工具 -->
+        <section id="browsers" class="category-nav">
+            <div class="category-title">浏览器工具</div>
+            <div class="link-container">
+                <a href="https://www.google.cn/chrome/index.html" target="_blank" class="link-btn">Google Chrome 网络浏览器</a>
+                <a href="https://www.microsoft.com/zh-cn/edge/download?form=MA13FJ" target="_blank" class="link-btn">Microsoft Edge 浏览器</a>
+                <a href="http://browser.360.cn/" target="_blank" class="link-btn">360浏览器</a>
+                <a href="https://browser.yandex.com/" target="_blank" class="link-btn">Yandex浏览器</a>
+            </div>
+        </section>
+
+        <!-- 网络运营商 -->
+        <section id="isp" class="category-nav">
+            <div class="category-title">网络运营商</div>
+            <div class="link-container">
+                <a href="https://www.10086.cn" target="_blank" class="link-btn">移动</a>
+                <a href="https://www.189.cn" target="_blank" class="link-btn">电信</a>
+                <a href="https://www.10010.com" target="_blank" class="link-btn">联通</a>
+                <a href="https://www.10099.com.cn" target="_blank" class="link-btn">广电</a>
+                <a href="https://10046.mi.com/" target="_blank" class="link-btn">小米</a>
+            </div>
+        </section>
+
+
+      
+
+
+        <!-- 升级详情 -->
+<section id="升级" class="upgrade-section">
+            <details>
+                <summary class="upgrade-summary">升级详情</summary>
+                <div class="upgrade-content">
+                    <p>本页网址: <span id="currentUrl"></span></p>
+                    <p>版本号: 2025年10月10日补充完整版</p>
+                    <p>更新内容：完整保留所有网页链接，新增音乐、教育、新闻等分类，补充更多实用工具</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- 下载区域 -->
+        <section class="category-nav">
+            <div class="category-title">下载浏览器主页</div>
+            <div class="link-container">
+                <a href="./zy.zip" download="浏览器主页.zip" class="link-btn">下载:浏览器主页.zip</a>
+                <a href="./zy1.html" download="浏览器主页.html" class="link-btn">下载:浏览器主页.html</a>
+                <a href="./zy7.html" target="_blank" class="link-btn">公平村浏览器主页网盘下载</a>
+                <a href="https://gpc234.github.io/gpc234/wangshangyonghu/" target="_blank" class="link-btn">网上用户资源汇总</a>
+            </div>
+        </section>
+
+  <div style="font-size: 23px;">
+<a href="#搜索">搜索</a>
+        <a href="#AI工具">AI工具</a>
+        <a href="#购物">购物</a>
+        <a href="#网页导航">网页导航</a>
+        <a href="#百科">百科</a>
+        <a href="#问答">问答</a>
+        <a href="#自媒体">自媒体</a>
+        <a href="#视频">视频</a>
+        <a href="#邮箱">邮箱</a>
+        <a href="#翻译">翻译</a>
+        <a href="#企业信息">企业信息</a>
+        <a href="#地图">地图</a>
+        <a href="#手机品牌">手机品牌</a>
+        <a href="#图床">图床</a>
+        <a href="#网盘">网盘</a>
+        <a href="#升级">升级</a>
+        <a href="#友情链接">友情链接</a>
+</div>
+<hr color=0066ff><br/>
+
+        <!-- 友情链接 -->
+<section id="友情链接" class="upgrade-section">
+            <div class="category-title">友情链接</div>
+            <div class="link-container">
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DIWwyXXEVzGQcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMY6Tik17Ed1u1aH1Hk3GeOjEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BtNQsgGpX2VyJDv7AW50WH2%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401736729526%402103cabb_1511_1945d257f9f_058c%4001"target="_blank" class="link-btn">淘工厂</a>
+    <a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_115604700063&union_lens=lensId%3APUB%401736732023%40213e6898_1518_1945d4b9c3c_0577%4001"target="_blank" class="link-btn">淘宝优惠券</a>
+	<a href="https://cn.bing.com/search?q=年龄计算器"target="_blank" class="link-btn">年龄计算器</a>
+	<a href="https://cn.bing.com/search?q=岁数属相对照表一网上用户"target="_blank" class="link-btn">岁数属相对照表</a>
+	<a href="https://cn.bing.com/search?q=AI"target="_blank" class="link-btn">AI</a>
+<a href="https://cn.bing.com/search?q=网盘"target="_blank" class="link-btn">网盘</a>
+<a href="https://cn.bing.com/search?q=时间"target="_blank" class="link-btn">时间</a>
+<a href="https://cn.bing.com/search?q=日历"target="_blank" class="link-btn">日历</a>
+<a href="https://cn.bing.com/search?q=购物"target="_blank" class="link-btn">购物</a>
+<a href="https://cn.bing.com/search?q=输入法"target="_blank" class="link-btn">输入法</a>
+<a href="https://cn.bing.com/search?q=二维码"target="_blank" class="link-btn">二维码</a>
+<a href="https://www.wps.cn/learning/"target="_blank" class="link-btn">wps教程</a>
+<a href="https://www.douyin.com"target="_blank" class="link-btn">抖音</a>
+<a href="https://www.kuaishou.cn"target="_blank" class="link-btn">快手</a>
+<a href="https://www.xiaohongshu.com"target="_blank" class="link-btn">小红书</a>
+<a href="https://www.bilibili.com"target="_blank" class="link-btn">哔哩哔哩</a>
+	<a href="/"target="_blank" class="link-btn">下一页</a>	
+	<a href="https://cn.bing.com/search?q=公平村浏览器电脑版"target="_blank" class="link-btn">电脑版</a>	
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DIWwyXXEVzGQcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMY6Tik17Ed1u1aH1Hk3GeOjEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BtNQsgGpX2VyJDv7AW50WH2%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401736729526%402103cabb_1511_1945d257f9f_058c%4001"target="_blank" class="link-btn">淘工厂</a>
+	 <a href="https://ai.m.taobao.com/index.html?pid=mm_5518923388_3058500304_115604700063&union_lens=lensId%3APUB%401705836367%40213d5e9b_1018_18d2bc54f06_04b8%4001"target="_blank" class="link-btn">爱淘宝</a>	
+	<a href="https://10000.gd.cn/#/"target="_blank" class="link-btn">测网速</a>	
+	<a href="https://gpc234.github.io/gpc234/wangshangyonghu/jc/jc1.html"target="_blank" class="link-btn">屏幕检测</a>
+	<a href="../jc/jc1.html"target="_blank" class="link-btn">屏幕检测</a>
+	<a href="https://mobile.yangkeduo.com/duo_cms_mall.html?pid=9419863_268968161&cpsSign=CM_230602_9419863_268968161_2c7a1635f027387fd9d20e32cae89bec&_x_ddjb_act=%7B%22st%22%3A%223%22%7D&duoduo_type=2"target="_blank" class="link-btn">拼多多</a>
+	<a href="https://www.toolhelper.cn/Date/Age"target="_blank" class="link-btn">年龄计算器</a>
+	<a href="https://gpc234.github.io/gpc234/wangshangyonghu/sx/sx1.html"target="_blank" class="link-btn">岁数属相对照表</a>
+ 	<a href="https://cn.bing.com/search?q=时间"target="_blank" class="link-btn">时间</a>
+ 	<a href="https://cn.bing.com/search?q=日历"target="_blank" class="link-btn">日历</a>
+ 	<a href="https://gpc234.github.io/gpc234/wangshangyonghu/dazitishurukuang/srk1.html"target="_blank" class="link-btn">大字输入框</a>
+ 	<a href="https://gpc234.github.io/gpc234/wangshangyonghu/j/j14.html"target="_blank" class="link-btn">含税计算器</a>
+ 	<a href="https://gpc234.github.io/gpc234/wangshangyonghu/tjdsgz/tjdsgz1.html"target="_blank" class="link-btn">统计多少个字</a>
+ 	<a href="https://pub.alimama.com/?forward=http%3A%2F%2Fpub.alimama.com%2Ffourth%2Fpromo%2Factivity.htm%3Fspm%3Da219t.11816995.c601d1c8f.1.40646a156Y7zcj%26tab%3Dtbtm"target="_blank" class="link-btn">淘宝联盟</a>
+ 	<a href="https://github.com/"target="_blank" class="link-btn">github</a>
+ 	<a href="https://console.hsk.oray.com/forward"target="_blank" class="link-btn">花生壳内网穿透</a>
+ 	<a href="https://sunlogin.oray.com/"target="_blank" class="link-btn">向日葵远程</a>
+ 	<a href="https://gpc234.github.io/gpc234/wangshangyonghu/j/j13.html"target="_blank" class="link-btn">打折计算器</a>
+ 	<a href="https://www.gov.cn/banshi/gm/flfg.htm"target="_blank" class="link-btn">法律法规</a>
+ 	<a href="https://sapp.788v.com/calendar/pages/main/calendar"target="_blank" class="link-btn">轻简万年历</a>
+ 	<a href="https://tools.2345.com/m/rili.htm"target="_blank" class="link-btn">2345万年历</a>
+ 	<a href="./zy8.html"target="_blank" class="link-btn">搜索提交</a>
+ 	<a href="https://cn.bing.com/search?q=%E8%AF%BB%E6%8B%BC%E9%9F%B3"target="_blank" class="link-btn">读拼音</a>
+ 	<a href="https://cli.im"target="_blank" class="link-btn">草料二维码</a>
+ 	<a href="https://getsimnum.caict.ac.cn/#/"target="_blank" class="link-btn">一证通查</a>
+ 	<a href="http://www.ngrok.cc/user"target="_blank" class="link-btn">Sunny-Ngrok内网穿透服务</a>
+ 	<a href="https://jwxk.miit.gov.cn"target="_blank" class="link-btn">电信设备进网许可</a>
+ 	<a href="https://www.cqc.com.cn/www/chinese/zscx/"target="_blank" class="link-btn">CCC证书查询</a>
+ 	<a href="http://qszt.cn"target="_blank" class="link-btn">生产许可证查询网</a>
+ 	<a href="https://www.gov.cn/zhengce/zhengceku/202411/content_6986383.htm"target="_blank" class="link-btn">国务院办公厅关于2025年部分节假日安排的通知</a>
+ 	<a href="https://www.boc.cn/fimarkets/lilv/fd32/201310/t20131031_2591219.html"target="_blank" class="link-btn">贷款市场报价利率（LPR）</a>
+ 	<a href="../zj/zj1.html"target="_blank" class="link-btn">主机</a>
+ 	<a href="../sy/sy1.html" target="_blank" class="link-btn">网上用户</a>
+ 	<a href="http://12321.cn/"target="_blank" class="link-btn">12321网络不良与垃圾信息举报受理中心</a>
+ 	<a href="https://www.12377.cn/" target="_blank" class="link-btn">违法和不良信息举报中心</a>
+ 	<a href="http://www.piyao.org.cn/yybgt/index.htm" target="_blank" class="link-btn">网络谣言曝光台</a>
+ 	<a href="https://www.shdf.gov.cn/" target="_blank" class="link-btn">中国扫黄打非网</a>
+ 	<a href="https://cyberpolice.mps.gov.cn/" target="_blank" class="link-btn">网络违法犯罪信息举报网站</a>
+ 	<a href="https://getsimnum.caict.ac.cn/#/"target="_blank" class="link-btn">全国移动电话卡“一证通查”</a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+ 	<a href=""target="_blank" class="link-btn"></a>
+
+            </div>
+        </section>
+
+
+
+
+
+
+        <!-- 底部 -->
+        <footer id="footer">
+            <div class="footer-links">
+                <a href="https://cn.bing.com/search?q=%E5%85%AC%E5%B9%B3%E6%9D%91%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E9%A1%B5" target="_blank">公平村浏览器主页</a>
+                <a href="https://cn.bing.com/search?q=%E5%85%AC%E5%B9%B3%E6%9D%91%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%BB%E9%A1%B5%E7%94%B5%E8%84%91%E7%89%88" target="_blank">电脑版</a>
+                <a href="https://cn.bing.com/search?q=%e7%bd%91%e4%b8%8a%e7%94%a8%e6%88%b7" target="_blank">网上用户</a>
+                <a href="https://cn.bing.com/search?q=gpc234" target="_blank">gpc234</a>
+                <a href="https://beian.miit.gov.cn" target="_blank">ICP备案查询</a>
+                <a href="https://www.mps.gov.cn" target="_blank">公安部官网</a>
+            </div>
+            <p>公平村浏览器主页 - 高效上网入口  更新日期:2025年10月13日08:25:28</p>
+            <p>中文大写: 壹 贰 叁 肆 伍 陆 柒 捌 玖 拾 佰 仟 万 亿 兆 圆 角 分 零 整</p>
+        </footer>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" title="返回顶部">↑</button>
+
+ 
+</body>
+</html>
+

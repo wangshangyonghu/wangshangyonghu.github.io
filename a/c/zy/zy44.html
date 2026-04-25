@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能自动计算与大写转换工具</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* 仅使用系统默认无版权字体，按优先级排序 */
+            font-family: sans-serif, serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        #inputValue {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        #inputValue:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+        
+        .button-group {
+            margin-bottom: 25px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+        }
+        
+        button:hover {
+            background: #edf2f7;
+            transform: translateY(-2px);
+        }
+        
+        .result-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4299e1;
+        }
+        
+        #resultTitle {
+            color: #2d3748;
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        #resultContent {
+            color: #4a5568;
+            font-size: 18px;
+            line-height: 1.6;
+            word-break: break-all;
+        }
+        
+        .tip {
+            margin-top: 15px;
+            color: #718096;
+            font-size: 14px;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            #resultContent {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>智能自动计算与大写转换工具</h1>
+        
+        <div class="input-group">
+            <label for="inputValue">请输入内容（支持数学运算或纯数字，实时自动处理）：</label>
+            <input type="text" id="inputValue" placeholder="例如：3.14*2+5 或 12345.67" autocomplete="off">
+        </div>
+        
+        <div class="button-group">
+            <button id="resetBtn">清空内容</button>
+        </div>
+        
+        <div class="result-group">
+            <div id="resultTitle">结果：</div>
+            <div id="resultContent">请输入数学表达式或纯数字</div>
+        </div>
+        
+        <div class="tip">
+            支持运算：+、-、*、/、()（实时自动计算）<br>
+            支持纯数字：整数、小数（实时自动转换为中文大写）<br>
+            输入过程中实时响应，无需额外操作
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const inputValue = document.getElementById('inputValue');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultContent = document.getElementById('resultContent');
+        const resultTitle = document.getElementById('resultTitle');
+
+        // 运算符号正则表达式
+        const operatorReg = /[+\-*/()]/;
+        // 纯数字正则表达式（支持整数、小数）
+        const numberReg = /^-?\d+(\.\d+)?$/;
+        // 有效数学表达式的基础正则（用于过滤明显无效的输入）
+        const validExprReg = /^[0-9+\-*/().\s]*$/;
+
+        // 中文大写转换核心函数
+        function numberToChinese(num) {
+            // 处理0的情况
+            if (num === 0) return '零';
+            
+            // 中文数字映射
+            const digitMap = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+            const unitMap = ['', '拾', '佰', '仟', '万', '拾', '佰', '仟', '亿', '拾', '佰', '仟'];
+            const decimalUnit = ['角', '分', '厘', '毫'];
+            
+            // 分割整数和小数部分
+            const [integerPart, decimalPart] = num.toString().split('.');
+            let result = '';
+            
+            // 处理负数
+            let isNegative = false;
+            let intNum = integerPart;
+            if (intNum.startsWith('-')) {
+                isNegative = true;
+                intNum = intNum.slice(1);
+            }
+            
+            // 处理整数部分
+            if (intNum.length > 0) {
+                // 补零到合适的长度（4的倍数）
+                const padLength = Math.ceil(intNum.length / 4) * 4;
+                const paddedInt = intNum.padStart(padLength, '0');
+                
+                // 按万、亿分组处理
+                for (let i = 0; i < paddedInt.length; i += 4) {
+                    const group = paddedInt.slice(i, i + 4);
+                    const groupValue = parseInt(group, 10);
+                    const groupUnit = unitMap[paddedInt.length - i - 1];
+                    
+                    if (groupValue === 0) {
+                        // 连续的零只保留一个
+                        if (result.slice(-1) !== '零') {
+                            result += '零';
+                        }
+                        continue;
+                    }
+                    
+                    // 处理每一位数字
+                    let groupStr = '';
+                    for (let j = 0; j < 4; j++) {
+                        const digit = parseInt(group[j], 10);
+                        const unit = unitMap[3 - j];
+                        
+                        if (digit === 0) {
+                            // 中间的零保留一个
+                            if (groupStr.slice(-1) !== '零') {
+                                groupStr += '零';
+                            }
+                        } else {
+                            groupStr += digitMap[digit] + unit;
+                        }
+                    }
+                    
+                    // 去除末尾的零
+                    groupStr = groupStr.replace(/零$/, '');
+                    if (groupStr) {
+                        result += groupStr + groupUnit;
+                    }
+                }
+                
+                // 去除末尾的零
+                result = result.replace(/零$/, '');
+                // 添加单位
+                result += '元';
+                
+                // 处理负数
+                if (isNegative) {
+                    result = '负' + result;
+                }
+            }
+            
+            // 处理小数部分（最多保留4位）
+            if (decimalPart && decimalPart.length > 0) {
+                let decimalStr = '';
+                const maxDecimalLength = 4;
+                const validDecimal = decimalPart.slice(0, maxDecimalLength);
+                
+                for (let i = 0; i < validDecimal.length; i++) {
+                    const digit = parseInt(validDecimal[i], 10);
+                    if (digit === 0) {
+                        // 末尾的零不显示
+                        if (i < validDecimal.length - 1 && parseInt(validDecimal[i + 1], 10) !== 0) {
+                            decimalStr += '零';
+                        }
+                        continue;
+                    }
+                    decimalStr += digitMap[digit] + decimalUnit[i];
+                }
+                
+                // 去除末尾的零
+                decimalStr = decimalStr.replace(/零$/, '');
+                
+                if (decimalStr) {
+                    result += decimalStr;
+                } else {
+                    // 小数部分全为零，添加"整"
+                    result += '整';
+                }
+            } else {
+                // 无小数部分，添加"整"
+                result += '整';
+            }
+            
+            return result;
+        }
+
+        // 执行计算或转换（核心逻辑）
+        function executeOperation() {
+            const input = inputValue.value.trim();
+            
+            if (!input) {
+                resultTitle.textContent = '结果：';
+                resultContent.textContent = '请输入数学表达式或纯数字';
+                resultContent.style.color = '#4a5568';
+                return;
+            }
+            
+            try {
+                // 先过滤非法字符
+                if (!validExprReg.test(input)) {
+                    throw new Error('包含非法字符，仅支持数字和运算符号(+、-、*、/、())');
+                }
+                
+                // 检查是否包含运算符号
+                if (operatorReg.test(input)) {
+                    // 数学计算处理
+                    const sanitizedInput = input.replace(/\s+/g, ''); // 去除空格
+                    
+                    // 检查括号匹配
+                    const bracketCount = (sanitizedInput.match(/\(/g) || []).length - 
+                                       (sanitizedInput.match(/\)/g) || []).length;
+                    if (bracketCount !== 0) {
+                        throw new Error('括号不匹配，请检查输入');
+                    }
+                    
+                    // 简单检查表达式有效性（避免直接执行不完整的表达式）
+                    const invalidEndReg = /[+\-*/().]$/;
+                    const invalidStartReg = /^[+\-*/]/;
+                    if (invalidEndReg.test(sanitizedInput) || invalidStartReg.test(sanitizedInput)) {
+                        throw new Error('表达式不完整，请补充完整');
+                    }
+                    
+                    // 执行计算（使用Function替代eval，相对更安全）
+                    const calculate = new Function(`return ${sanitizedInput}`);
+                    const result = calculate();
+                    
+                    // 处理特殊结果
+                    if (isNaN(result) || !isFinite(result)) {
+                        throw new Error('计算结果无效，请检查表达式');
+                    }
+                    
+                    // 格式化结果（去除末尾多余的零和小数点）
+                    const formattedResult = result.toFixed(10).replace(/\.?0*$/, '');
+                    
+                    resultTitle.textContent = '计算结果：';
+                    resultContent.textContent = `${sanitizedInput} = ${formattedResult}`;
+                    resultContent.style.color = '#2d3748';
+                } 
+                // 检查是否为纯数字
+                else if (numberReg.test(input)) {
+                    const num = parseFloat(input);
+                    // 检查数值范围
+                    if (num < -999999999999.9999 || num > 999999999999.9999) {
+                        throw new Error('数值超出范围（支持-999999999999.9999 到 999999999999.9999）');
+                    }
+                    
+                    const chinese = numberToChinese(num);
+                    resultTitle.textContent = '中文大写：';
+                    resultContent.textContent = chinese;
+                    resultContent.style.color = '#2d3748';
+                } else {
+                    throw new Error('输入格式无效，请输入有效的数学表达式或纯数字');
+                }
+            } catch (error) {
+                resultTitle.textContent = '提示：';
+                resultContent.textContent = error.message;
+                resultContent.style.color = '#e53e3e';
+            }
+        }
+
+        // 清空内容
+        function resetContent() {
+            inputValue.value = '';
+            resultTitle.textContent = '结果：';
+            resultContent.textContent = '请输入数学表达式或纯数字';
+            resultContent.style.color = '#4a5568';
+            inputValue.focus();
+        }
+
+        // 实时监听输入变化（实现自动处理）
+        inputValue.addEventListener('input', executeOperation);
+        
+        // 回车触发清空（可选，提升体验）
+        inputValue.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                resetContent();
+            }
+        });
+
+        // 清空按钮事件
+        resetBtn.addEventListener('click', resetContent);
+
+        // 页面加载时聚焦输入框
+        window.addEventListener('load', () => {
+            inputValue.focus();
+        });
+    </script>
+</body>
+</html>
