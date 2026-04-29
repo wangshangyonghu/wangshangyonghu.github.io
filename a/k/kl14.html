@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付宝红包口令复制一网上用户</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,上网用户,用户,公平村,wangshangyonghu,客家人" /><!--关键词-->
+    <style>
+        /* 本地样式，无远程资源依赖 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #f5f7fa;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            color: #ff3f34; /* 支付宝品牌相近色 */
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .password-box {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background-color: #f9fafb;
+            font-size: 1rem;
+            color: #333333;
+            margin-bottom: 1rem;
+            white-space: pre-wrap; /* 保留口令原有格式，自动换行 */
+            word-break: break-all; /* 防止超长文本溢出 */
+            min-height: 120px;
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: #ff3f34;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #e63930;
+        }
+
+        .tip {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+            opacity: 0; /* 初始隐藏提示 */
+            transition: opacity 0.3s ease;
+        }
+
+        .tip.show {
+            opacity: 1; /* 显示复制成功提示 */
+            color: #10b981;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div class="container">
+        <h1 class="title">一键复制口令打开支付宝领红包</h1>
+        <!-- 口令展示区域 -->
+        <div class="password-box" id="passwordText">
+T:/C1HMVZe99An 或.fu.制此消息打开支怤保，天降大鸿包  C:/q ZH2472 $147
+        </div>
+        <!-- 一键复制按钮 -->
+        <button class="copy-btn" id="copyBtn">一键复制口令</button>
+        <!-- 复制成功提示 -->
+        <p class="tip" id="copyTip">口令复制成功！可直接打开支付宝粘贴使用</p>
+    </div>
+
+    <script>
+        // 获取页面元素（本地操作，无远程数据请求）
+        const passwordText = document.getElementById('passwordText');
+        const copyBtn = document.getElementById('copyBtn');
+        const copyTip = document.getElementById('copyTip');
+
+        // 一键复制功能实现
+        copyBtn.addEventListener('click', async () => {
+            try {
+                // 方案1：复制文本内容（兼容大部分浏览器）
+                const text = passwordText.textContent.trim();
+                await navigator.clipboard.writeText(text);
+
+                // 显示复制成功提示
+                copyTip.classList.add('show');
+
+                // 3秒后隐藏提示
+                setTimeout(() => {
+                    copyTip.classList.remove('show');
+                }, 3000);
+            } catch (error) {
+                // 兼容低版本浏览器的备选方案（手动选中+复制）
+                const range = document.createRange();
+                range.selectNodeContents(passwordText);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand('copy');
+                selection.removeAllRanges();
+
+                // 显示复制成功提示
+                copyTip.classList.add('show');
+                setTimeout(() => {
+                    copyTip.classList.remove('show');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+<!--底部显示-->
+<a href="/" target="_blank" style="color: #999; font-size: 12px;">下一页</a>
+ <script src="/a/js/tua.js"></script>
+<div id="gpczxstua"></div>
+<!--底下显示-->
+</html>
