@@ -1,0 +1,53 @@
+# 禁止所有爬虫抓取/admin/目录下的内容
+User-Agent: *
+Disallow: /admin/
+
+#指定网站地图
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt10.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt11.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt12.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt12.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+
+
+
+
+
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt1.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt1.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt2.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt3.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt4.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt5.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt6.txt
+Sitemap: http://gpc234.w1.luyouxia.net/a/txt/txt8.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt9.txt
+
+
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt1.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt2.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt3.txt
+Sitemap: http://gpc234.w1.luyouxia.net/a/txt/txt8.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt9.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt10.txt
+
+
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: http://gpc234.w1.luyouxia.net/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+
+
+
