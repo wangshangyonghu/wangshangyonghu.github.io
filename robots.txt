@@ -3,8 +3,65 @@ User-agent: *
 Disallow: /admin/
 
 # 指定网站地图（XML 格式 - 集中归类，http/https 均保留）
+Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt1.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt2.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt3.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt4.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt5.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt6.xml
+
+Sitemap: http://wangshangyonghu.github.io/a/txt/sitemap.xml
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt1.xml
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt2.xml
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt3.xml
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt4.xml
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt5.xml
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt6.xml
 
 
 # 指定网站地图（TXT 格式 - 集中归类，http/https 均保留，全条目无重复）
 
-Sitemap: https://gpc888.github.io/a/txt/io.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/robots.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt1.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt2.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt3.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt4.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt5.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt6.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt7.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt8.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt9.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt10.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt11.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt12.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt13.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt14.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt15.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt16.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt17.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt18.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt19.txt
+Sitemap: https://wangshangyonghu.github.io/a/txt/txt20.txt
+
+Sitemap: http://wangshangyonghu.github.io/a/txt/robots.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt1.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt2.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt3.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt4.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt5.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt6.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt7.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt8.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt9.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt10.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt11.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt12.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt13.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt14.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt15.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt16.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt17.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt18.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt19.txt
+Sitemap: http://wangshangyonghu.github.io/a/txt/txt20.txt
