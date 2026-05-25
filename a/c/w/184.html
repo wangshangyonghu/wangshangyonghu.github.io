@@ -1,0 +1,151 @@
+<!--加粗--><strong><!--加粗-->
+<!--字体大小--><span style="font-size: 18px;"><!--字体大小-->
+
+<!--无下划线开始--><head>
+<style type="text/css">
+A{TEXT-DECORATION: none}
+</style><!--无下划线开始-->
+
+            <!--图标--><link rel="Shortcut Icon" href="./favicon.ico" type="image/x-icon" />
+            <!--大图标--><link rel="apple-touch-icon-precomposed" href="./favicon.ico"><!--图标-->
+
+            <!--手机版本代码--><meta name="viewport" content="width=device-width,  user-scalable=yes" /><!--手机版本代码-->
+
+            <!--网页乱码修复--><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--网页乱码修复-->
+
+            <!--国家地区--><meta http-equiv='content-language' content='zh-cn'>
+
+
+<!--主题-->                              <h1>使用GitLab Pages托管静态网站</h1>
+                                      <title>使用GitLab Pages托管静态网站网名张先生一铆钉厂家公平村客家人艺名网民</title><!--标题-->
+<!--关键词--> <meta name="keywords" content="使用GitLab Pages托管静态网站网名张先生,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,网民张先生,123,234,0123456789" /><!--关键词-->
+<!--描述--><meta name="description" content="使用GitLab Pages托管静态网站网名张先生铆钉厂家铁黄铜紫铜不锈钢304316铝合金网名公平村客家人0123456789" />
+
+<!--分界线--><hr color=0000ff> <!--分界线-->
+
+<!--内容开始-->
+
+
+
+
+
+<!--居中--><center><!--居中-->
+
+<a href="https://blog.csdn.net/tongshuyang/article/details/125338130#:~:text=%E4%B8%80%E3%80%81GitLab%20Pages%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%201%20%E7%94%A8%E4%BA%8E%E4%BB%BB%E4%BD%95%E4%B8%AA%E4%BA%BA%E6%88%96%E5%95%86%E4%B8%9A%E7%BD%91%E7%AB%99%E3%80%82%202%20%E4%BD%BF%E7%94%A8%E4%BB%BB%E4%BD%95%E9%9D%99%E6%80%81%E7%AB%99%E7%82%B9%E7%94%9F%E6%88%90%E5%99%A8%20%28SSG%29%20%E6%88%96%E7%BA%AF,%E8%AF%81%E4%B9%A6%E3%80%82%206%20%E5%B0%86%E4%BB%BB%E4%BD%95%E8%AE%B8%E5%8F%AF%E5%BD%92%E4%BA%8E%E6%82%A8%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82%207%20Pages%20%E6%94%AF%E6%8C%81%E7%9A%84%20SSG%20%E7%A4%BA%E4%BE%8B" target="_blank">网页</a>
+
+
+
+
+<hr/>
+
+
+
+
+
+
+
+
+<textarea cols="45%" rows="80%" id="biao1">
+
+文章目录
+前言
+一、GitLab Pages是什么？
+二、使用步骤
+1.开通账号，创建Git仓库同步项目
+2.添加.gitlab-ci.yml文件，开启GitLab Pages
+3.部署成功之后访问项目
+总结
+前言
+在我们日常的程序员养成过程中，会产生一些产物，自己做的一些小网站，小页面之类，一般都是在本地调试访问，一旦我们想让其他朋友也可以随时访问，就需要单独在公有云上买一个服务器去部署，一是需要付费，二是我们调试页面访问量不多，单独搞个服务器部署有点浪费。这样看来，使用Git网站的Pages服务进行静态网页托管就是一个不错的选择。
+
+一、GitLab Pages是什么？
+使用 GitLab Pages，可以直接从 GitLab 的存储库中发布静态网站。
+
+用于任何个人或商业网站。
+使用任何静态站点生成器 (SSG) 或纯 HTML。
+为您的项目、组或用户帐户创建网站。
+在您自己的 GitLab 实例或 GitLab.com 上免费托管您的网站。
+连接您的自定义域和 TLS 证书。
+将任何许可归于您的内容。
+Pages 支持的 SSG 示例
+要使用 Pages 发布网站，您可以使用任何静态网站生成器，例如 Gatsby、Jekyll、Hugo、Middleman、Harp、Hexo 或 Brunch。您还可以发布任何直接用纯 HTML、CSS 和 JavaScript 编写的网站。
+Pages 不支持动态服务器端处理，例如，根据.php需要.asp。与动态网站相比，了解更多关于 静态网站的信息。
+
+二、使用步骤
+1.开通账号，创建Git仓库同步项目
+首先注册一个GitLab账号，登录首页之后新建项目，项目标识串可以命名为：[注册账户名].gitlab.io，这样后续就可以直接通过这个地址访问到项目了。
+
+接下来使用打开刚刚创建好的项目，拿到仓库的地址，在电脑本地使用Git将项目Clone本地，这里是使用的Visual Studio Code中的的Git克隆功能，需要先配置好你的Git环境和账号，之后在本地进行项目的修改和提交。
+
+
+2.添加.gitlab-ci.yml文件，开启GitLab Pages
+启用之前需要在项目中添加.gitlab-ci.yml文件，来配置项目的所在位置目录，在项目设置的CI/CD中编辑器下添加对应脚本代码，根据项目类型不同，添加的脚本也不同，主要是设置编译方式和输出目录，可以点击浏览模板查找对应示例。
+
+纯html项目的脚本示例：
+
+pages:
+  stage: deploy
+  script:
+    - mkdir .public
+    - cp -r ./* .public
+    - rm -rf public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+3.部署成功之后访问项目
+在添加.gitlab-ci.yml文件之后，GitLab识别之后会依据脚本自动执行，在每次更新项目时都会重新执行脚本，在流水线下可以查看详细部署情况，部署成功之后，就可以通过我们设置的项目路径：[注册账户名].gitlab.io来进行访问了。
+
+总结
+以上就是使用GitLab Pages托管静态网站的全部内容了，本文仅仅简单介绍了GitLab Pages的使用，对于在过程中使用到的Git相关的操作没有做过多讲解，不了解Git使用方法的同学可以查找Git使用相关教程进行学习。
+————————————————
+
+                            版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
+                        
+原文链接：https://blog.csdn.net/tongshuyang/article/details/125338130
+</textarea>
+
+
+
+<hr/>
+
+日期:2023年5月7日
+
+<hr/>
+<a href="#top" target="_self">返回顶部</a>
+<hr/>
+<!--居中--><center> <!--居中-->
+<hr/><textarea cols="40%" rows="1%" id="biao1">网名张先生,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,123,234,0123456789</textarea>
+<!--内容结束-->
+<!--分界线--><hr color=0000ff> <!--分界线-->
+   <hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<a href="./101.html">1</a>&nbsp; &nbsp;
+<a href="./102.html">2</a>&nbsp; &nbsp;
+<a href="./103.html">3</a>&nbsp; &nbsp;
+<a href="./104.html">4</a>&nbsp; &nbsp;
+<a href="./105.html">5</a>&nbsp; &nbsp;
+<a href="./106.html">6</a>&nbsp; &nbsp;
+<a href="./107.html">7</a>&nbsp; &nbsp;
+<a href="./108.html">8</a>&nbsp; &nbsp;
+<a href="/">下一页</a>
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<!--居中--></center><!--居中-->
+<!--无下划线结束--><head><!--无下划线-->
+<!--加粗--></strong><!--加粗-->
+<!--字体大小--></span><!--字体大小-->

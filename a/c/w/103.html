@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何禁止Windows 11更新</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: #0078d7;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .windows-icon {
+            font-size: 2.5rem;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        /* 主要内容样式 */
+        .intro {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .intro p {
+            margin-bottom: 15px;
+        }
+        
+        .methods {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+        
+        @media (min-width: 768px) {
+            .methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .method-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .method-header {
+            background-color: #f0f7ff;
+            padding: 18px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .method-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #0078d7;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .method-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0078d7;
+        }
+        
+        .method-content {
+            padding: 20px;
+        }
+        
+        .method-content ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .method-content li {
+            margin-bottom: 10px;
+        }
+        
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 12px 15px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+        
+        /* 按钮样式 */
+        .copy-btn {
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+        
+        .copy-btn:hover {
+            background-color: #005a9e;
+        }
+        
+        /* 代码块样式 */
+        .code-block {
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="windows-icon">🖥️</div>
+            <h1>如何禁止Windows 11自动更新</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <p>Windows 11的自动更新有时会在不合适的时间进行，可能导致工作中断或其他问题。以下是几种可靠的方法来禁止或暂停Windows 11的自动更新，你可以根据自己的需求选择合适的方法。</p>
+            <p>注意：禁用系统更新可能会导致安全漏洞和功能无法更新，建议仅在必要时使用这些方法，并定期手动检查更新。</p>
+        </section>
+        
+        <section class="methods">
+            <!-- 方法1：使用Windows设置暂停更新 -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">1</div>
+                    <h2 class="method-title">使用Windows设置暂停更新</h2>
+                </div>
+                <div class="method-content">
+                    <ol>
+                        <li>按下 <strong>Win + I</strong> 快捷键打开Windows设置</li>
+                        <li>选择 <strong>更新和安全</strong> > <strong>Windows更新</strong></li>
+                        <li>点击 <strong>高级选项</strong></li>
+                        <li>在"暂停更新"部分选择一个日期，可将更新暂停到该日期</li>
+                    </ol>
+                    <div class="note">
+                        这只是暂时的解决方案，最多可暂停35天，到期后系统会自动恢复更新。
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 方法2：禁用Windows更新服务 -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">2</div>
+                    <h2 class="method-title">禁用Windows更新服务</h2>
+                </div>
+                <div class="method-content">
+                    <ol>
+                        <li>按下 <strong>Win + R</strong> 键打开"运行"窗口</li>
+                        <li>输入以下命令并回车：
+                            <div class="code-block">services.msc</div>
+                            <button class="copy-btn" onclick="copyToClipboard('services.msc')">复制命令</button>
+                        </li>
+                        <li>在服务列表中找到"Windows Update"</li>
+                        <li>双击进入其属性页面，将"启动类型"设置为"禁用"</li>
+                        <li>点击"停止"按钮停止当前服务</li>
+                        <li>在"恢复"选项卡中，将所有失败操作设为"无操作"</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- 方法3：利用组策略编辑器关闭更新 -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">3</div>
+                    <h2 class="method-title">利用组策略编辑器关闭更新</h2>
+                </div>
+                <div class="method-content">
+                    <p><strong>注意：此方法仅适用于Windows 11专业版/企业版</strong></p>
+                    <ol>
+                        <li>按下 <strong>Win + R</strong> 键打开"运行"窗口</li>
+                        <li>输入以下命令并回车：
+                            <div class="code-block">gpedit.msc</div>
+                            <button class="copy-btn" onclick="copyToClipboard('gpedit.msc')">复制命令</button>
+                        </li>
+                        <li>依次展开：计算机配置 > 管理模板 > Windows组件 > Windows更新</li>
+                        <li>双击"配置自动更新"</li>
+                        <li>选择"已禁用"并点击"应用"和"确定"</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- 方法4：使用注册表编辑器禁用更新 -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">4</div>
+                    <h2 class="method-title">使用注册表编辑器禁用更新</h2>
+                </div>
+                <div class="method-content">
+                    <ol>
+                        <li>按下 <strong>Win + R</strong> 键打开"运行"窗口</li>
+                        <li>输入以下命令并回车：
+                            <div class="code-block">regedit</div>
+                            <button class="copy-btn" onclick="copyToClipboard('regedit')">复制命令</button>
+                        </li>
+                        <li>导航到以下路径：
+                            <div class="code-block">HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows</div>
+                        </li>
+                        <li>右键点击"Windows"文件夹，选择"新建" > "项"，命名为"WindowsUpdate"</li>
+                        <li>在"WindowsUpdate"下，再新建一个项命名为"AU"</li>
+                        <li>在"AU"下新建一个DWORD（32位）值，命名为"NoAutoUpdate"</li>
+                        <li>将其数值数据设置为1</li>
+                        <li>重启计算机后，更新将被禁用</li>
+                    </ol>
+                    <div class="note">
+                        编辑注册表有风险，请谨慎操作。建议在修改前备份注册表。
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 方法5：通过任务计划程序禁用 -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">5</div>
+                    <h2 class="method-title">通过任务计划程序禁用</h2>
+                </div>
+                <div class="method-content">
+                    <ol>
+                        <li>按下 <strong>Win + R</strong> 键打开"运行"窗口</li>
+                        <li>输入以下命令并回车：
+                            <div class="code-block">taskschd.msc</div>
+                            <button class="copy-btn" onclick="copyToClipboard('taskschd.msc')">复制命令</button>
+                        </li>
+                        <li>依次展开：任务计划程序库 > Microsoft > Windows > WindowsUpdate</li>
+                        <li>右键点击"Scheduled Start"任务，选择"禁用"</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>注意：定期更新系统有助于保护你的电脑安全，除非必要，否则不建议长期禁用Windows更新。</p>
+            <p>&copy; 2023 Windows 11 更新指南</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 复制命令到剪贴板的功能
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // 显示复制成功的反馈
+                const buttons = document.querySelectorAll('.copy-btn');
+                buttons.forEach(button => {
+                    if (button.textContent.includes('复制命令')) {
+                        const originalText = button.textContent;
+                        button.textContent = '已复制!';
+                        button.style.backgroundColor = '#28a745';
+                        
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.style.backgroundColor = '#0078d7';
+                        }, 2000);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!--底下显示-->
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+ <script src="/gpc234/wangshangyonghu/js/tua.js"></script>
+<div id="gpczxstua"></div>
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<!--底下显示-->
