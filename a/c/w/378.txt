@@ -1,0 +1,10 @@
+setInterval(function() {
+var a = $('.op-btn--lDoCH');
+for (var b = 0; b < a['length']; b++) {
+var html = a[b]['innerHTML']
+if (html.includes('删除作品')){
+$('.op-btn--lDoCH')[b]['click']();
+$('.primary--1AMXd')[0]['click']()
+}
+}
+}, 800)

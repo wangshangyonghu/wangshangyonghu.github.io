@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 访问异常？修改 HOSTS 临时解决教程</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,wangshangyonghu,上网用户,用户,公平村,客家人" /><!--关键词-->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            color: #333;
+            line-height: 1.7;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        h1 {
+            color: #2d3748;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #2b6cb0;
+            font-size: 19px;
+            margin: 20px 0 10px;
+            border-left: 4px solid #2b6cb0;
+            padding-left: 10px;
+        }
+        h3 {
+            font-size: 17px;
+            margin: 15px 0 8px;
+            color: #444;
+        }
+        p {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .code-block {
+            background: #f1f5f9;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-family: monospace;
+            color: #2d3748;
+            white-space: pre-wrap;
+        }
+        .tip {
+            background: #fff7e6;
+            border-left: 4px #ffab00 solid;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 14px;
+        }
+        .warn {
+            background: #fff1f0;
+            border-left: 4px #ff4d4f solid;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 14px;
+        }
+        .path {
+            color: #2b6cb0;
+            font-weight: bold;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>GitHub 访问异常？修改 HOSTS 临时解决教程</h1>
+    <p style="text-align:center; color:#666; font-size:14px;">简单、免费、无需软件 | 临时应急使用</p>
+</div>
+
+<div class="card">
+    <h2>一、这个方法有用吗？</h2>
+    <p>✅ 能<strong>轻度改善</strong> GitHub 打开速度、网页加载失败问题</p>
+    <p>⚠️ 不能<strong>彻底解决</strong>克隆慢、大文件下载慢</p>
+    <p>🔄 IP 会过期，失效后重新换 IP 即可</p>
+</div>
+
+<div class="card">
+    <h2>二、最新可用 GitHub HOSTS 配置</h2>
+    <p>直接复制下面内容，添加到你的 hosts 文件最底部：</p>
+    <div class="code-block">
+# GitHub Hosts（2026可用）
+140.82.116.3 github.com
+140.82.116.4 github.com
+20.205.243.166 github.com
+185.199.108.133 raw.githubusercontent.com
+185.199.109.133 raw.githubusercontent.com
+    </div>
+
+    <div class="tip">
+        <strong>小提示：</strong> 如果失效，请到 <a href="https://ip33.com/dns.html" target="_blank">ip33.com/dns.html</a> 重新查询最新 IP。
+    </div>
+</div>
+
+<div class="card">
+    <h2>三、如何查询最新可用IP（详细教程）</h2>
+    <h3>1. 打开查询网站</h3>
+    <p>点击进入：<a href="https://ip33.com/dns.html" target="_blank">ip33.com/dns.html</a>（新窗口打开）</p>
+    
+    <h3>2. 输入需要查询的域名</h3>
+    <p>在页面输入框中分别输入以下两个域名：</p>
+    <p><code>github.com</code></p>
+    <p><code>raw.githubusercontent.com</code></p>
+    
+    <h3>3. 点击查询按钮</h3>
+    <p>页面会显示多个 A 记录 IP 地址</p>
+    
+    <h3>4. 复制可用的 IP</h3>
+    <p>挑选 2–3 个响应速度快的 IP，复制下来替换 hosts 文件里旧的 IP 即可</p>
+</div>
+
+<div class="card">
+    <h2>四、Windows 系统修改教程</h2>
+
+    <h3>1. 打开 hosts 文件所在目录</h3>
+    <p>复制下面路径，粘贴到文件夹地址栏 → 回车：</p>
+    <p class="path">C:\Windows\System32\drivers\etc</p>
+
+    <h3>2. 用记事本打开 hosts</h3>
+    <p>找到 <code>hosts</code> 文件 → 右键 → 打开方式 → 记事本</p>
+
+    <h3>3. 在文件最底部粘贴配置</h3>
+    <p>把上面的 HOSTS 代码粘贴到最后一行</p>
+
+    <h3>4. 保存文件</h3>
+    <p>文件 → 保存</p>
+
+    <div class="warn">
+        <strong>权限不足？</strong><br>
+        右键记事本 → <strong>以管理员身份运行</strong> → 再打开 hosts 保存即可。
+    </div>
+</div>
+
+<div class="card">
+    <h2>五、立即生效方法</h2>
+    <p>修改完后，刷新网页或重启浏览器即可生效。</p>
+    <p>如果不生效：</p>
+    <p>1. 按下 <code>Win + R</code></p>
+    <p>2. 输入 <code>ipconfig /flushdns</code> 回车</p>
+</div>
+
+<div class="card">
+    <h2>六、重要说明（必看）</h2>
+    <p>🔹 本方法<strong>仅应急使用</strong></p>
+    <p>🔹 GitHub 图片、资源、加速无法靠 hosts 完全解决</p>
+    <p>🔹 本教程仅用于学习交流，请勿用于非法用途</p>
+</div>
+
+<div style="text-align:center; margin:30px 0; color:#999; font-size:14px;">
+    网页版教程 · 可收藏随时使用
+</div>
+
+</body>
+</html>
+
+<!--底部显示-->
+<a href="/" target="_blank" style="color: #999; font-size: 12px;">下一页</a>
+ <script src="/a/js/tua.js"></script>
+<div id="gpczxstua"></div>
+<!--底下显示-->
