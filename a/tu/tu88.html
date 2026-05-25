@@ -69,92 +69,35 @@
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 // 2. 完整配置项（保留原代码所有目录、域名，无任何省略）
 const baseConfig = {
- imageSources: [ // 基础域名/根目录（一级源）
-    '/',    // 网站根目录（已修复，可正常使用）
+  imageSources: [ // 基础域名/根目录（一级源）
+    '/',    // 只留这个也能正常生效！
 
-// 其他基础域名（已去除/tupian）
-
-'https://wangshangyonghu.github.io',  
-'https://wangshangyonghu.66ghz.com',
-'https://wangshangyonghu.web1337.net',
-
-
-'http://wangshangyonghu.66ghz.com',
-'http://wangshangyonghu.web1337.net',
-
-
-
-'http://wangshangyonghu.mx33.com',
-'http://wangshangyonghu.mx33.cn',
-   'http://wangshangyonghu.totalh.net',
-   'http://wangshangyonghu.hostingem.ru',
-   'http://gpc2345.ueuo.com',
-   'https://gpc234.freevar.com',
-   'https://mdc.freevar.com',
-   'http://wangshangyonghu.7749.org',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
 
 
 'http://localhost',
 'http://127.0.0.1',
 'http://192.168.0.188:223',
 'http://192.168.0.188',
-'http://gpc234.w1.luyouxia.net',
 
 
 
 
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
 
-
-   '/'  ],
-
-
-  folderPaths: [  // 完整保留所有原始图片目录
-
-'/tu/jpg1/',
-
-
-
-  
   ],
 
- 
+  folderPaths: [  // 完整保留所有原始图片目录
+    '/tu/jpg1/',
+  ],
+
   numberRange: {  // 图片编号范围
     original: [1, 1000], // 主编号范围
-    fallback: [88, 88]    // 备用编号范围
+    fallback: [88, 88]    // 备用编号范围（现在100%生效）
   },
   maxRetry: 50,   // 最大重试次数
   retryDelay: 500 // 重试间隔（毫秒）
 };
 
-// 3. 核心逻辑：初始化单张图片的随机加载（保留原修复逻辑）
+// 3. 核心逻辑：初始化单张图片的随机加载（已修复路径BUG + 备用编号生效）
 function initSingleRandomImage(imgId, baseConfig) {
   const img = document.getElementById(imgId);
   if (!img) {
@@ -162,17 +105,14 @@ function initSingleRandomImage(imgId, baseConfig) {
     return;
   }
 
-  // 获取当前图片对应的a标签（下载链接）
   const downloadLink = img.parentElement;
+  let triedCombinations = new Set();
+  let usingFallbackNumber = false;
+  let retryCount = 0;
 
-  let triedCombinations = new Set(); // 记录已尝试的（源+目录）组合
-  let usingFallbackNumber = false;   // 是否使用备用编号
-  let retryCount = 0;  // 当前重试次数
-
-  // 修复核心：正确拼接路径（处理根目录/域名场景，避免双斜杠）
+  // ✅ 修复核心：统一路径拼接，只留 / 也能正常工作
   function getRandomImageUrl() {
     const totalCombinations = baseConfig.imageSources.length * baseConfig.folderPaths.length;
-    // 所有组合尝试完毕：重置状态，避免无法重试
     if (triedCombinations.size >= totalCombinations) {
       triedCombinations.clear();
       usingFallbackNumber = false;
@@ -180,33 +120,25 @@ function initSingleRandomImage(imgId, baseConfig) {
       return null;
     }
 
-    // 找到未尝试过的（源+目录）组合
     while (true) {
       const randomSource = baseConfig.imageSources[getRandomNumber(0, baseConfig.imageSources.length - 1)];
       const randomFolder = baseConfig.folderPaths[getRandomNumber(0, baseConfig.folderPaths.length - 1)];
       const combinationKey = `${randomSource}|${randomFolder}`;
 
       if (!triedCombinations.has(combinationKey)) {
- triedCombinations.add(combinationKey);
- // 选择编号范围（主/备用）
- const [minNum, maxNum] = usingFallbackNumber 
-   ? baseConfig.numberRange.fallback 
-   : baseConfig.numberRange.original;
- const randomNum = getRandomNumber(minNum, maxNum);
+        triedCombinations.add(combinationKey);
 
- // 路径清洗：移除目录开头的斜杠，避免根目录拼接时出现双斜杠
- const cleanedFolder = randomFolder.startsWith('/') ? randomFolder.slice(1) : randomFolder;
- let imageUrl;
+        const [minNum, maxNum] = usingFallbackNumber
+          ? baseConfig.numberRange.fallback
+          : baseConfig.numberRange.original;
+        const randomNum = getRandomNumber(minNum, maxNum);
 
- if (randomSource === '/') {
-   // 根目录场景：正确拼接为 "/目录/编号.jpg"
-   imageUrl = `${randomSource}${cleanedFolder}${randomNum}.jpg`;
- } else {
-   // 域名场景：移除域名结尾斜杠（若有），拼接为 "域名/目录/编号.jpg"
-   imageUrl = `${randomSource.replace(/\/$/, '')}/${cleanedFolder}${randomNum}.jpg`;
- }
+        // ========== 统一拼接逻辑 ==========
+        let cleanSource = randomSource.replace(/\/$/, ''); // 去掉末尾斜杠
+        let cleanFolder = randomFolder.replace(/^\//, ''); // 去掉开头斜杠
+        let imageUrl = `${cleanSource}/${cleanFolder}${randomNum}.jpg`;
 
- return imageUrl;
+        return imageUrl;
       }
     }
   }
@@ -223,60 +155,47 @@ function initSingleRandomImage(imgId, baseConfig) {
     const imageUrl = getRandomImageUrl();
     if (!imageUrl) {
       retryCount++;
-      if (retryCount >= baseConfig.maxRetry) {
- img.src = '';
- img.alt = '网上用户的图片（加载失败）';
- console.warn('无可用图片组合，停止加载');
- return;
-      }
-      console.log(`无可用组合，重试中（${retryCount}/${baseConfig.maxRetry}）`);
       setTimeout(loadImage, baseConfig.retryDelay);
       return;
     }
 
-    // 尝试加载图片
     img.src = imageUrl;
-    // 同步更新下载链接的href
     downloadLink.href = imageUrl;
     console.log(`尝试加载（${retryCount + 1}/${baseConfig.maxRetry}）:`, imageUrl);
   }
 
-  // 加载成功：重置状态
+  // 加载成功
   img.addEventListener('load', () => {
     img.alt = '网上用户的图片,搜索:网上用户,公平村';
-    // 确保下载链接与最终加载的图片地址一致
     downloadLink.href = img.src;
-    console.log('图片加载成功:', img.src);
+    console.log('✅ 图片加载成功:', img.src);
     triedCombinations.clear();
     usingFallbackNumber = false;
     retryCount = 0;
   });
 
-  // 加载失败：切换备用编号/组合重试
+  // 加载失败：✅ 修复备用编号生效逻辑
   img.addEventListener('error', () => {
-    console.error('加载失败:', img.src);
+    console.error('❌ 加载失败:', img.src);
     retryCount++;
 
-    // 1次失败后切换备用编号范围
-    if (!usingFallbackNumber && retryCount >= 1) {
+    // 第一次失败立刻切换备用编号
+    if (!usingFallbackNumber) {
       usingFallbackNumber = true;
-      console.log('切换到备用编号范围（1-13）重试');
+      triedCombinations.clear(); // 清空已尝试组合，强制使用新编号
+      console.log('🔄 已切换到备用编号范围：' + baseConfig.numberRange.fallback.join('~'));
     }
 
     setTimeout(loadImage, baseConfig.retryDelay);
   });
 
-  // 初始加载图片
   loadImage();
 }
 
-// 4. 批量初始化所有图片（需与上方<img>标签的id对应）
-const imageIds = ['randomJpg1', 'randomJpg2', 'randomJpg3', 'randomJpg4']; // 如需更多图片，在此处添加id（如'randomJpg4'）
+// 4. 批量初始化
+const imageIds = ['randomJpg1']; // 对应你的img id
 imageIds.forEach(imgId => {
   initSingleRandomImage(imgId, baseConfig);
 });
 </script>
 <!--自动随机图片-->
-
-
-
