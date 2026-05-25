@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>产品询价信息提报单</title>
+    <style>
+        /* 简单美化，让表单更整洁易读且紧凑 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            /* 大幅减少页面上下内边距，仅保留少量左右留白 */
+            padding: 8px 10px;
+            background-color: #f5f5f5;
+            width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .inquiry-form {
+            background-color: #ffffff;
+            /* 减少表单内部上下内边距，让内容更紧凑 */
+            padding: 15px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            min-width: 300px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-size: 18px; /* 进一步缩小标题字体，节省空间 */
+            font-weight: bold;
+            text-align: center;
+            /* 减少标题下方间距 */
+            margin-bottom: 12px;
+            color: #333333;
+        }
+
+        .form-subtitle {
+            font-size: 15px;
+            font-weight: 600;
+            /* 减少子标题下方间距 */
+            margin-bottom: 10px;
+            color: #555555;
+        }
+
+        .form-item {
+            /* 大幅减少表单项之间的上下间距，核心解决截图溢出问题 */
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px; /* 减少标签和输入框之间的间距 */
+        }
+
+        .form-label {
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .form-input, .form-textarea {
+            flex: 1;
+            width: 100%;
+            /* 减少内边距，缩小元素高度，节省空间 */
+            padding: 8px 10px;
+            border: 1px solid #dddddd;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333333;
+            resize: none; /* 禁止textarea手动调整大小，保持布局整齐 */
+        }
+
+        /* 地址文本域专属样式，字体调小，适配两行显示 */
+        .address-textarea {
+            font-size: 12px; /* 小号字体，容纳更多文字 */
+            height: auto; /* 高度自适应，保持两行紧凑显示 */
+        }
+
+        .form-radio {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 12px; /* 减少单选框之间的间距 */
+            flex: 1;
+            width: 100%;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: nowrap;
+            font-size: 14px; /* 缩小单选框文字大小 */
+        }
+
+        .tips {
+            /* 减少提示栏上方间距和内部内边距 */
+            margin-top: 15px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            color: #e63946;
+            padding: 8px;
+            background-color: #fff6f7;
+            border-radius: 4px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="inquiry-form">
+        <div class="form-title">产品询价信息提报单</div>
+        <div class="form-subtitle">核心必填信息</div>
+
+        <!-- 1. 产品材质 -->
+        <div class="form-item">
+            <label class="form-label">产品材质：</label>
+            <input type="text" class="form-input" placeholder="请填写产品材质">
+        </div>
+
+        <!-- 2. 产品规格 -->
+        <div class="form-item">
+            <label class="form-label">产品规格：</label>
+            <input type="text" class="form-input" placeholder="请填写产品规格">
+        </div>
+
+        <!-- 3. 采购数量 -->
+        <div class="form-item">
+            <label class="form-label">采购数量：</label>
+            <input type="text" class="form-input" placeholder="请填写采购数量">
+        </div>
+
+        <!-- 4. 头部类型 -->
+        <div class="form-item">
+            <label class="form-label">头部类型：</label>
+            <div class="form-radio">
+                <div class="radio-item">
+                    <input type="radio" name="headType" id="roundHead">
+                    <label for="roundHead">圆头</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" name="headType" id="flatHead">
+                    <label for="flatHead">平头</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" name="headType" id="otherHead">
+                    <label for="otherHead">其他</label>
+                    <input type="text" class="form-input" style="width: 100px; padding: 6px;" placeholder="请补充">
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 结构类型 -->
+        <div class="form-item">
+            <label class="form-label">结构类型：</label>
+            <div class="form-radio">
+                <div class="radio-item">
+                    <input type="radio" name="structureType" id="solid">
+                    <label for="solid">实心</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" name="structureType" id="halfHollow">
+                    <label for="halfHollow">半空心</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" name="structureType" id="otherStructure">
+                    <label for="otherStructure">其他</label>
+                    <input type="text" class="form-input" style="width: 100px; padding: 6px;" placeholder="请补充">
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. 表面处理 -->
+        <div class="form-item">
+            <label class="form-label">表面处理：</label>
+            <input type="text" class="form-input" placeholder="请填写表面处理要求">
+        </div>
+
+        <!-- 7. 尺寸图纸 -->
+        <div class="form-item">
+            <label class="form-label">尺寸图纸：</label>
+            <div class="form-radio">
+                <div class="radio-item">
+                    <input type="radio" name="drawing" id="provideDrawing">
+                    <label for="provideDrawing">提供（附后）</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" name="drawing" id="noDrawing">
+                    <label for="noDrawing">无，需供方按规格适配</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. 配送与开票：改为2行textarea，适配长地址 -->
+        <div class="form-item">
+            <label class="form-label">配送与开票：</label>
+            <textarea class="form-textarea address-textarea" rows="2" cols="30" placeholder="含税含运费至（详细地址）"></textarea>
+        </div>
+
+        <!-- 9. 其他要求 -->
+        <div class="form-item">
+            <label class="form-label">其他要求：</label>
+            <input type="text" class="form-input" placeholder="请填写其他特殊要求">
+        </div>
+
+        <!-- 提示信息 -->
+        <div class="tips">输入后截图给我</div>
+    </div>
+</body>
+</html>
