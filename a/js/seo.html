@@ -1,0 +1,39 @@
+<!--
+全站SEO统一核心配置
+核心主词：网上用户
+后期修改说明：仅需编辑本文件即可全局更换网站主关键词
+运行模式：固定核心主词 + 单页手动自定义补充拼接
+<script src="/a/js/seo.js"></script>
+<meta name="add_title" content="页面专属标题后缀">
+<meta name="add_key" content="页面长尾关键词">
+<meta name="add_desc" content="页面专属内容介绍">
+-->
+
+
+
+<script>
+// 全局统一核心基础内容 仅在此处修改即可全站生效
+const baseTitle = "网上用户 - ";
+const baseKeys = "网上用户,";
+const baseDesc = "网上用户专属内容站点：";
+
+// 获取当前页面手动自定义补充内容
+let addTitle = document.querySelector('meta[name="add_title"]')?.content || '';
+let addKey = document.querySelector('meta[name="add_key"]')?.content || '';
+let addDesc = document.querySelector('meta[name="add_desc"]')?.content || '';
+
+// 自动拼接合成完整SEO信息
+document.title = baseTitle + addTitle;
+
+let metaK = document.createElement('meta');
+metaK.name = 'keywords';
+metaK.content = baseKeys + addKey;
+
+let metaD = document.createElement('meta');
+metaD.name = 'description';
+metaD.content = baseDesc + addDesc;
+
+// 注入网页头部完成配置
+document.head.appendChild(metaK);
+document.head.appendChild(metaD);
+</script>
