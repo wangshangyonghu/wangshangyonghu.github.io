@@ -80,65 +80,12 @@
 
 
 
-
-<hr color=0066ff>
-</div>
-<!--底部显示-->
- <script src="/a/js/tua.js"></script>
-<div id="gpczxstua"></div>
-<!--底下显示-->
-
-<!--上下页-->
-  <a href="/" target="_blank">返回</a>
-   <a href="javascript:void(0)" onclick="goToPreviousPage()">上一页</a>
-<a href="javascript:void(0)" onclick="goToNextPage()">下一页</a>
-
-<script>
-// 提取文件名中的数字部分
-function getPageNumber() {
-    var currentPage = window.location.pathname.split('/').pop();
-    // 从文件名中提取数字
-    var numbers = currentPage.match(/\d+/);
-    if (numbers && numbers.length > 0) {
-        return parseInt(numbers[0]);
-    }
-    return null;
-}
-
-// 获取文件名中的前缀部分（数字前的内容）
-function getPagePrefix() {
-    var currentPage = window.location.pathname.split('/').pop();
-    // 匹配数字前的所有字符
-    var prefixMatch = currentPage.match(/^(\D*)\d+/);
-    if (prefixMatch && prefixMatch.length > 1) {
-        return prefixMatch[1];
-    }
-    return '';
-}
-
-function goToNextPage() {
-    var pageNumber = getPageNumber();
-    if (pageNumber !== null) {
-        var prefix = getPagePrefix();
-        var nextPageNumber = pageNumber + 1;
-        var nextPage = './' + prefix + nextPageNumber + '.html';
-        window.open(nextPage, '_blank'); // 在新窗口打开下一页
-    } else {
-        alert('无法识别当前页码');
-    }
-}
-
-function goToPreviousPage() {
-    var pageNumber = getPageNumber();
-    if (pageNumber !== null && pageNumber > 1) {
-        var prefix = getPagePrefix();
-        var previousPageNumber = pageNumber - 1;
-        var previousPage = './' + prefix + previousPageNumber + '.html';
-        window.open(previousPage, '_blank'); // 在新窗口打开上一页
-    } else {
-        alert('已经是第一页或无法识别当前页码');
-    }
-}
-</script><!--上下页-->
+<link rel="stylesheet" href="/a/js/bj.css"><!--全局页面样式-->
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/ico.js"></script>
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
+<script src="/a/js/sxy.js"></script><!-- 上下页 -->
 </body>
 </html>
