@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义位数加法练习</title>
+    <meta name="keywords" content="网上用户">
+    <!-- 页面描述 -->
+    <meta name="description" content="网上用户专属内容介绍">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            max-width: 540px;
+            margin: 30px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .select-box {
+            margin-bottom: 35px;
+        }
+        #digitSelect {
+            font-size: 20px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 2px solid #444;
+        }
+        .question-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-size: 48px;
+            margin-bottom: 40px;
+        }
+        #answerInput {
+            width: 160px;
+            height: 60px;
+            font-size: 48px;
+            text-align: center;
+            border: 2px solid #333;
+        }
+        .tip-text {
+            font-size: 22px;
+            height: 30px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .right {
+            color: #09b83e;
+        }
+        .wrong {
+            color: #f53f3f;
+        }
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 360px;
+            margin: 0 auto;
+        }
+        .key-btn {
+            height: 72px;
+            font-size: 32px;
+            border: 2px solid #666;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .key-btn:active {
+            background: #e8e8e8;
+        }
+    </style>
+</head>
+<body>
+    <h1>自定义位数加法练习</h1>
+
+    <div class="select-box">
+        <select id="digitSelect">
+            <option value="1">1位加法练习</option>
+            <option value="2">2位加法练习</option>
+            <option value="3">3位加法练习</option>
+            <option value="4">4位加法练习</option>
+        </select>
+    </div>
+
+    <div class="question-box">
+        <span id="num1">8</span>
+        <span>+</span>
+        <span id="num2">5</span>
+        <span>=</span>
+        <input type="text" id="answerInput" readonly>
+    </div>
+
+    <div class="tip-text" id="tip"></div>
+
+    <div class="keyboard">
+        <button class="key-btn" data-val="1">1</button>
+        <button class="key-btn" data-val="2">2</button>
+        <button class="key-btn" data-val="3">3</button>
+        <button class="key-btn" data-val="4">4</button>
+        <button class="key-btn" data-val="5">5</button>
+        <button class="key-btn" data-val="6">6</button>
+        <button class="key-btn" data-val="7">7</button>
+        <button class="key-btn" data-val="8">8</button>
+        <button class="key-btn" data-val="9">9</button>
+        <button class="key-btn" data-val="">清空</button>
+        <button class="key-btn" data-val="">确认</button>
+        <button class="key-btn" data-val="0">0</button>
+    </div>
+
+    <script>
+        const num1El = document.getElementById('num1');
+        const num2El = document.getElementById('num2');
+        const answerInput = document.getElementById('answerInput');
+        const tipEl = document.getElementById('tip');
+        const keyBtns = document.querySelectorAll('.key-btn');
+        const digitSelect = document.getElementById('digitSelect');
+
+        let n1, n2, correctAns;
+        let nowDigit = 1;
+
+        // 获取N位数数字（首位不能为0）
+        function getNDigitNum(digit) {
+            const min = 10 ** (digit - 1);
+            const max = (10 ** digit) - 1;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // 生成对应位数题目
+        function createNewQuestion() {
+            tipEl.textContent = '';
+            answerInput.value = '';
+            nowDigit = Number(digitSelect.value);
+
+            if (nowDigit === 1) {
+                // 1位：1~9 + 1~9
+                n1 = getNDigitNum(1);
+                n2 = getNDigitNum(1);
+            } else if (nowDigit === 2) {
+                // 2位模式：禁止1位+1位，三种题型随机
+                const type = Math.floor(Math.random() * 3);
+                if (type === 0) {
+                    n1 = getNDigitNum(2);
+                    n2 = getNDigitNum(1);
+                } else if (type === 1) {
+                    n1 = getNDigitNum(1);
+                    n2 = getNDigitNum(2);
+                } else {
+                    n1 = getNDigitNum(2);
+                    n2 = getNDigitNum(2);
+                }
+            } else {
+                // 3位 / 4位：两个数字都是对应位数
+                n1 = getNDigitNum(nowDigit);
+                n2 = getNDigitNum(nowDigit);
+            }
+
+            correctAns = n1 + n2;
+            num1El.textContent = n1;
+            num2El.textContent = n2;
+        }
+
+        // 数字键盘点击事件
+        keyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const val = btn.dataset.val;
+                const text = btn.textContent;
+                if (text === '清空') {
+                    answerInput.value = '';
+                } else if (text === '确认') {
+                    checkAnswer();
+                } else {
+                    // 限制最大输入位数：4位+4位最大9999+9999=19998 5位
+                    if (answerInput.value.length < 5) {
+                        answerInput.value += val;
+                    }
+                }
+            })
+        })
+
+        // 核对答案
+        function checkAnswer() {
+            const userAns = Number(answerInput.value);
+            if (isNaN(userAns)) {
+                tipEl.textContent = '请输入数字！';
+                tipEl.className = 'tip-text wrong';
+                return;
+            }
+            if (userAns === correctAns) {
+                tipEl.textContent = '回答正确！';
+                tipEl.className = 'tip-text right';
+                setTimeout(createNewQuestion, 1000);
+            } else {
+                tipEl.textContent = '答案错误，请重试';
+                tipEl.className = 'tip-text wrong';
+            }
+        }
+
+        // 切换下拉框立刻换题型
+        digitSelect.addEventListener('change', createNewQuestion);
+
+        // 初始化加载题目
+        createNewQuestion();
+    </script>
+</body>
+</html>

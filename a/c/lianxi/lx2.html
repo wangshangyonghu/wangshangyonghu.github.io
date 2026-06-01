@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2位数加法练习</title>
+    <meta name="keywords" content="网上用户">
+    <!-- 页面描述 -->
+    <meta name="description" content="网上用户专属内容介绍">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            max-width: 520px;
+            margin: 30px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .question-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-size: 48px;
+            margin-bottom: 40px;
+        }
+        #answerInput {
+            width: 140px;
+            height: 60px;
+            font-size: 48px;
+            text-align: center;
+            border: 2px solid #333;
+        }
+        .tip-text {
+            font-size: 22px;
+            height: 30px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .right {
+            color: #09b83e;
+        }
+        .wrong {
+            color: #f53f3f;
+        }
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 340px;
+            margin: 0 auto;
+        }
+        .key-btn {
+            height: 70px;
+            font-size: 32px;
+            border: 2px solid #666;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        .key-btn:active {
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>2位数加法练习</h1>
+
+    <div class="question-box">
+        <span id="num1">12</span>
+        <span>+</span>
+        <span id="num2">5</span>
+        <span>=</span>
+        <input type="text" id="answerInput" readonly>
+    </div>
+
+    <div class="tip-text" id="tip"></div>
+
+    <div class="keyboard">
+        <button class="key-btn" data-val="1">1</button>
+        <button class="key-btn" data-val="2">2</button>
+        <button class="key-btn" data-val="3">3</button>
+        <button class="key-btn" data-val="4">4</button>
+        <button class="key-btn" data-val="5">5</button>
+        <button class="key-btn" data-val="6">6</button>
+        <button class="key-btn" data-val="7">7</button>
+        <button class="key-btn" data-val="8">8</button>
+        <button class="key-btn" data-val="9">9</button>
+        <button class="key-btn" data-val="">清空</button>
+        <button class="key-btn" data-val="">确认</button>
+        <button class="key-btn" data-val="0">0</button>
+    </div>
+
+    <script>
+        const num1El = document.getElementById('num1');
+        const num2El = document.getElementById('num2');
+        const answerInput = document.getElementById('answerInput');
+        const tipEl = document.getElementById('tip');
+        const keyBtns = document.querySelectorAll('.key-btn');
+
+        let n1, n2, correctAns;
+
+        // 获取一位数 1-9
+        function getOneNum() {
+            return Math.floor(Math.random() * 9) + 1;
+        }
+        // 获取两位数 10-99
+        function getTwoNum() {
+            return Math.floor(Math.random() * 90) + 10;
+        }
+
+        // 生成题目：固定3种类型，绝对不会出现一位+一位
+        function createNewQuestion() {
+            tipEl.textContent = '';
+            answerInput.value = '';
+            // 三种类型随机切换
+            const type = Math.floor(Math.random() * 3);
+            switch(type){
+                case 0:
+                    // 两位 + 一位
+                    n1 = getTwoNum();
+                    n2 = getOneNum();
+                    break;
+                case 1:
+                    // 一位 + 两位
+                    n1 = getOneNum();
+                    n2 = getTwoNum();
+                    break;
+                case 2:
+                    // 两位 + 两位
+                    n1 = getTwoNum();
+                    n2 = getTwoNum();
+                    break;
+            }
+            correctAns = n1 + n2;
+            num1El.textContent = n1;
+            num2El.textContent = n2;
+        }
+
+        // 数字键盘点击
+        keyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const val = btn.dataset.val;
+                const text = btn.textContent;
+                if (text === '清空') {
+                    answerInput.value = '';
+                } else if (text === '确认') {
+                    checkAnswer();
+                } else {
+                    // 最多输入3位（最大99+99=198）
+                    if (answerInput.value.length < 3) {
+                        answerInput.value += val;
+                    }
+                }
+            })
+        })
+
+        // 核对答案
+        function checkAnswer() {
+            const userAns = Number(answerInput.value);
+            if (isNaN(userAns)) {
+                tipEl.textContent = '请输入数字！';
+                tipEl.className = 'tip-text wrong';
+                return;
+            }
+            if (userAns === correctAns) {
+                tipEl.textContent = '回答正确！';
+                tipEl.className = 'tip-text right';
+                setTimeout(createNewQuestion, 1000);
+            } else {
+                tipEl.textContent = '答案错误，请重试';
+                tipEl.className = 'tip-text wrong';
+            }
+        }
+
+        createNewQuestion();
+    </script>
+</body>
+</html>
