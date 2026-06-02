@@ -1,0 +1,49 @@
+
+
+<body>
+  <script>
+    function detectDevice() {
+      const userAgent = navigator.userAgent;
+      // 手机设备正则
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+
+      if (isMobile) {
+        // 手机淘宝App协议链接（对应你的推广参数）
+        const taobaoAppUrl = 'taobao://s.click.taobao.com/t?union_lens=lensId%3AOPT%401780366622%4021076f20_0d4d_19e861ec00d_6f46%4001%40eyJmbG9vcklkIjozODg1Mn0ie%3BeventPageId%3A20150318020016228&e=m%3D2%26s%3Do0LvxpmXMuNw4vFB6t2Z2iperVdZeJviasFb3jPCdt85Rogii3YtH430ZFekjizvURZ2Y4RTZldOS4pX4DGe7vnZ%2F2kQiHcP%2BXUMxN7TwYE4v9CZRT%2FQ1BL%2FmX7ARx4Sjnpta0X%2FYCKwYaRhatdffLrv%2Fl1gyhMGy0DxCSzwFgFd1le1%2FF%2FLHXyKwiqD2WK0Bmf7LSR66ahxYDtpEyeThuOxR437AHLZclNz5Cx6hNjfZwATwZMpRSfpIcsP14wkwkn3%2FLhIOAwLbn%2BIZeMoD2gFiCQX1HX6EtPT2Q5RdpwlP6ftLrc51DD8CNGWv4q%2BpwTjuhxcUsV1VXZzfN1D9OuODWg6ASP%2FI1IUNtlhrp1yhdOdHVge4E4yfRLrLbAs022l81NB8xkNxtKElQIb6vHSeuOjffnzFec0%2FQMNoKl11OifcBkyMCQ8QXZwmPz%2F5oIufFEcklNGisopsElkahCC%2FmbLytEIcX3LUTyUy3vCx6y8ZSZeonEqY%2Bakgpmw';
+        // 无App时备用H5页面
+        const taobaoH5Url = 'https://s.click.taobao.com/t?union_lens=lensId%3AOPT%401780366622%4021076f20_0d4d_19e861ec00d_6f46%4001%40eyJmbG9vcklkIjozODg1Mn0ie%3BeventPageId%3A20150318020016228&e=m%3D2%26s%3Do0LvxpmXMuNw4vFB6t2Z2iperVdZeJviasFb3jPCdt85Rogii3YtH430ZFekjizvURZ2Y4RTZldOS4pX4DGe7vnZ%2F2kQiHcP%2BXUMxN7TwYE4v9CZRT%2FQ1BL%2FmX7ARx4Sjnpta0X%2FYCKwYaRhatdffLrv%2Fl1gyhMGy0DxCSzwFgFd1le1%2FF%2FLHXyKwiqD2WK0Bmf7LSR66ahxYDtpEyeThuOxR437AHLZclNz5Cx6hNjfZwATwZMpRSfpIcsP14wkwkn3%2FLhIOAwLbn%2BIZeMoD2gFiCQX1HX6EtPT2Q5RdpwlP6ftLrc51DD8CNGWv4q%2BpwTjuhxcUsV1VXZzfN1D9OuODWg6ASP%2FI1IUNtlhrp1yhdOdHVge4E4yfRLrLbAs022l81NB8xkNxtKElQIb6vHSeuOjffnzFec0%2FQMNoKl11OifcBkyMCQ8QXZwmPz%2F5oIufFEcklNGisopsElkahCC%2FmbLytEIcX3LUTyUy3vCx6y8ZSZeonEqY%2Bakgpmw';
+
+        // 尝试唤起淘宝App
+        window.location.href = taobaoAppUrl;
+        // 300ms后如果没跳转App，说明没安装，打开H5网页
+        setTimeout(function () {
+          window.location.href = taobaoH5Url;
+        }, 300);
+      } else {
+        // 电脑端跳转PC淘宝页面
+        const pcTaobaoUrl = 'https://s.click.taobao.com/t?union_lens=lensId%3AOPT%401780366622%4021076f20_0d4d_19e861ec00d_6f46%4001%40eyJmbG9vcklkIjozODg1Mn0ie%3BeventPageId%3A20150318020016228&e=m%3D2%26s%3Do0LvxpmXMuNw4vFB6t2Z2iperVdZeJviasFb3jPCdt85Rogii3YtH430ZFekjizvURZ2Y4RTZldOS4pX4DGe7vnZ%2F2kQiHcP%2BXUMxN7TwYE4v9CZRT%2FQ1BL%2FmX7ARx4Sjnpta0X%2FYCKwYaRhatdffLrv%2Fl1gyhMGy0DxCSzwFgFd1le1%2FF%2FLHXyKwiqD2WK0Bmf7LSR66ahxYDtpEyeThuOxR437AHLZclNz5Cx6hNjfZwATwZMpRSfpIcsP14wkwkn3%2FLhIOAwLbn%2BIZeMoD2gFiCQX1HX6EtPT2Q5RdpwlP6ftLrc51DD8CNGWv4q%2BpwTjuhxcUsV1VXZzfN1D9OuODWg6ASP%2FI1IUNtlhrp1yhdOdHVge4E4yfRLrLbAs022l81NB8xkNxtKElQIb6vHSeuOjffnzFec0%2FQMNoKl11OifcBkyMCQ8QXZwmPz%2F5oIufFEcklNGisopsElkahCC%2FmbLytEIcX3LUTyUy3vCx6y8ZSZeonEqY%2Bakgpmw';
+        window.location.href = pcTaobaoUrl;
+      }
+    }
+    detectDevice();
+  </script>
+</body>
+
+    <!-- 页面标题（浏览器标签显示） -->
+    <title>网上用户签到</title>
+    <!-- 页面关键词 -->
+    <meta name="keywords" content="网上用户,网上用户签到">
+    <!-- 页面描述 -->
+    <meta name="description" content="网上用户专属内容介绍:网上用户签到">
+
+
+
+<link rel="stylesheet" href="/a/js/bj.css"><!--全局页面样式-->
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/ico.js"></script>
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
+<script src="/a/js/sxy.js"></script><!-- 上下页 -->
+</body>
+</html>
