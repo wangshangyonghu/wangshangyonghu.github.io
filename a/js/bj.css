@@ -1,12 +1,16 @@
-/* ========== 全局页面样式 ==========<link rel="stylesheet" href="bj.css"><!--全局页面样式--> */
-/* 页面主体居中，限制最大宽度，预留边距 */
+/* ========== 全局页面样式 ==========
+<link rel="stylesheet" href="bj.css"><!--全局页面样式-->
+说明：本行是HTML引入外部样式标签，仅备注，不生效，实际全局样式由bj.css外部文件引入
+*/
+
+/* body页面主体布局样式：控制整页内容宽度、居中、内外留白 */
 body {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: 1200px; /* 页面内容最大宽度锁定800px，宽屏页面不会无限延展变宽 */
+    margin: 20px auto; /* 上下外边距10px，左右auto自动居中，实现整体页面水平居中 */
+    padding: 30px; /* 页面内部留白30px，文字内容不紧贴浏览器边框 */
 }
 
-/* 所有超链接默认去除下划线 */
+/* 全局a链接通用样式：统一所有超链接基础样式 */
 a {
-    text-decoration: none;
+    text-decoration: none; /* 移除链接默认自带下划线 */
 }
