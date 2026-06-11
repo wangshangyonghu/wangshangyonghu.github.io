@@ -9,7 +9,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-       
         }
         body {
             padding: 12px;
@@ -126,7 +125,7 @@
 
 <!-- 底部技术免责小字 -->
 <div style="font-size:12px;color:#f56c6c;text-align:center;margin-top:10px;">
-本工具仅调用设备本地资源，不存储、不传播任何字体与图片文件。
+本工具仅调用设备本地资源，不存储、不传播任何字体与图片文件。默认导出JPG，可手动切换PNG透明格式
 </div>
 <hr/>
 
@@ -134,16 +133,26 @@
             <div class="item">
                 <label>水印类型：</label>
                 <input type="radio" name="waterType" id="imgWater" checked>
-                <label for="imgWater">图片水印</label>
+                <label for="imgWater">图片水印（默认加载3.jpg）</label>
                 <input type="radio" name="waterType" id="textWater">
                 <label for="textWater">文字水印</label>
+            </div>
+
+            <!-- 新增导出格式选择，默认JPG -->
+            <div class="item">
+                <label>保存格式：</label>
+                <input type="radio" name="saveFormat" id="saveJpg" checked>
+                <label for="saveJpg">JPG（默认，体积小）</label>
+                <input type="radio" name="saveFormat" id="savePng">
+                <label for="savePng">PNG（支持透明）</label>
             </div>
 
             <!-- 图片水印区域 -->
             <div id="imgWaterBox" class="img-item">
                 <div class="item">
-                    <label>添加水印图：</label>
+                    <label>替换水印图：</label>
                     <input type="file" id="watermarkImg" accept="image/*">
+                    <span style="color:#666;font-size:12px;">不上传则使用默认3.jpg</span>
                 </div>
                 <div class="item">
                     <label>水印缩放(倍数)：</label>
@@ -196,6 +205,7 @@
 
     <script>
         const waterTypeRadio = document.querySelectorAll('input[name="waterType"]');
+        const saveFormatRadio = document.querySelectorAll('input[name="saveFormat"]');
         const imgWaterBox = document.getElementById('imgWaterBox');
         const textWaterBox = document.getElementById('textWaterBox');
 
@@ -217,6 +227,29 @@
 
         let waterImg = null;
         let resultImgArr = [];
+        let mainImage = null;
+
+        // 预加载默认水印 3.jpg
+        const defaultWater = new Image();
+        defaultWater.src = "3.jpg";
+        defaultWater.onload = function(){
+            waterImg = defaultWater;
+            // 如果已经上传过底图，自动刷新预览
+            if(mainImage) updatePreview();
+        }
+        defaultWater.onerror = function(){
+            console.log("默认水印3.jpg未找到，请确认文件或手动上传水印图");
+        }
+
+        // 获取当前选择的导出格式信息
+        function getSaveFormat(){
+            const isPng = document.getElementById('savePng').checked;
+            if(isPng){
+                return {mime:'image/png',ext:'png',quality:1};
+            }else{
+                return {mime:'image/jpeg',ext:'jpg',quality:0.9};
+            }
+        }
 
         // 切换水印类型显示
         waterTypeRadio.forEach(radio => {
@@ -228,10 +261,18 @@
                     imgWaterBox.classList.add('hide');
                     textWaterBox.classList.remove('hide');
                 }
+                if (mainImage) updatePreview();
             })
         })
 
-        // 加载图片水印
+        // 切换导出格式刷新预览
+        saveFormatRadio.forEach(radio=>{
+            radio.addEventListener('change',()=>{
+                if(mainImage) updatePreview();
+            })
+        })
+
+        // 上传替换水印图，覆盖默认3.jpg
         watermarkFile.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -239,16 +280,98 @@
             reader.onload = function(ev) {
                 waterImg = new Image();
                 waterImg.src = ev.target.result;
+                waterImg.onload = function() {
+                    if (mainImage) updatePreview();
+                }
             }
             reader.readAsDataURL(file);
         });
 
+        // 加载主图片并设置实时预览
+        imgFileList.addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (files.length === 0) return;
+            const firstFile = files[0];
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                mainImage = new Image();
+                mainImage.src = ev.target.result;
+                mainImage.onload = function() {
+                    updatePreview();
+                }
+            }
+            reader.readAsDataURL(firstFile);
+        });
+
+        // 所有控制参数变更刷新预览
+        scaleNum.addEventListener('input', updatePreview);
+        textSize.addEventListener('input', updatePreview);
+        textColor.addEventListener('input', updatePreview);
+        posX.addEventListener('input', updatePreview);
+        posY.addEventListener('input', updatePreview);
+        opacity.addEventListener('input', updatePreview);
+        waterText.addEventListener('input', updatePreview);
+
+        // 实时更新预览函数
+        function updatePreview() {
+            if (!mainImage) return;
+            const fmt = getSaveFormat();
+            const isImgWater = document.getElementById('imgWater').checked;
+
+            if (isImgWater && !waterImg) return;
+            if (!isImgWater && !waterText.value.trim()) return;
+
+            canvas.width = mainImage.width;
+            canvas.height = mainImage.height;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // JPG无透明通道，填充白色背景防止水印透明变黑
+            if(fmt.ext === 'jpg'){
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0,0,canvas.width,canvas.height);
+            }
+            ctx.drawImage(mainImage, 0, 0);
+            ctx.globalAlpha = Number(opacity.value);
+
+            const xBase = canvas.width * Number(posX.value) / 100;
+            const yBase = canvas.height * Number(posY.value) / 100;
+
+            if (isImgWater) {
+                const scale = Number(scaleNum.value);
+                const w = waterImg.width * scale;
+                const h = waterImg.height * scale;
+                const x = xBase - w / 2;
+                const y = yBase - h / 2;
+                ctx.drawImage(waterImg, x, y, w, h);
+            } else {
+                const size = Number(textSize.value);
+                ctx.font = `${size}px sans-serif`;
+                ctx.fillStyle = textColor.value;
+                const text = waterText.value;
+                const textW = ctx.measureText(text).width;
+                const x = xBase - textW / 2;
+                const y = yBase + size / 3;
+                ctx.fillText(text, x, y);
+            }
+            ctx.globalAlpha = 1;
+
+            const imgUrl = canvas.toDataURL(fmt.mime, fmt.quality);
+            previewBox.innerHTML = '';
+            const div = document.createElement('div');
+            div.className = 'preview-item';
+            div.innerHTML = `
+                <img src="${imgUrl}">
+                <div class="tip-text">实时预览（${fmt.ext}格式）</div>
+            `;
+            previewBox.appendChild(div);
+        }
+
         // 开始处理水印
         startBtn.addEventListener('click', function() {
+            const fmt = getSaveFormat();
             const isImgWater = document.getElementById('imgWater').checked;
-            // 校验参数
             if (isImgWater && !waterImg) {
-                alert('请先上传水印图片');
+                alert('未检测到水印图片，请确认目录存在3.jpg或手动上传水印图');
                 return;
             }
             if (!isImgWater && waterText.value.trim() === '') {
@@ -272,6 +395,12 @@
                         canvas.width = mainImg.width;
                         canvas.height = mainImg.height;
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        // JPG填充白底
+                        if(fmt.ext === 'jpg'){
+                            ctx.fillStyle = '#ffffff';
+                            ctx.fillRect(0,0,canvas.width,canvas.height);
+                        }
                         ctx.drawImage(mainImg, 0, 0);
                         ctx.globalAlpha = Number(opacity.value);
 
@@ -279,7 +408,6 @@
                         const yBase = canvas.height * Number(posY.value) / 100;
 
                         if (isImgWater) {
-                            // 绘制图片水印
                             const scale = Number(scaleNum.value);
                             const w = waterImg.width * scale;
                             const h = waterImg.height * scale;
@@ -287,9 +415,8 @@
                             const y = yBase - h / 2;
                             ctx.drawImage(waterImg, x, y, w, h);
                         } else {
-                            // 绘制文字水印：只设置字号，不指定任何字体，完全使用设备默认字体
                             const size = Number(textSize.value);
-                            ctx.font = `${size}px`;
+                            ctx.font = `${size}px sans-serif`;
                             ctx.fillStyle = textColor.value;
                             const text = waterText.value;
                             const textW = ctx.measureText(text).width;
@@ -299,15 +426,14 @@
                         }
                         ctx.globalAlpha = 1;
 
-                        const imgUrl = canvas.toDataURL('image/png');
+                        const imgUrl = canvas.toDataURL(fmt.mime, fmt.quality);
                         resultImgArr.push(imgUrl);
 
-                        // 预览卡片
                         const div = document.createElement('div');
                         div.className = 'preview-item';
                         div.innerHTML = `
                             <img src="${imgUrl}">
-                            <div class="tip-text">长按图片保存</div>
+                            <div class="tip-text">长按图片保存.${fmt.ext}</div>
                         `;
                         previewBox.appendChild(div);
                     }
@@ -318,6 +444,7 @@
 
         // 电脑批量下载
         downloadAll.addEventListener('click', function() {
+            const fmt = getSaveFormat();
             if (resultImgArr.length === 0) {
                 alert('暂无处理完成的图片');
                 return;
@@ -326,7 +453,7 @@
                 setTimeout(() => {
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `网上用户一${index + 1}.jpg`;
+                    a.download = `网上用户一${index + 1}.${fmt.ext}`;
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);

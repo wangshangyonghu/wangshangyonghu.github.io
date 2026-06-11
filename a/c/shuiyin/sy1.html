@@ -125,7 +125,7 @@
 
 <!-- 底部技术免责小字 -->
 <div style="font-size:12px;color:#f56c6c;text-align:center;margin-top:10px;">
-本工具仅调用设备本地资源，不存储、不传播任何字体与图片文件。
+本工具仅调用设备本地资源，不存储、不传播任何字体与图片文件。默认导出JPG，可手动切换PNG透明格式
 </div>
 <hr/>
 
@@ -136,6 +136,15 @@
                 <label for="imgWater">图片水印</label>
                 <input type="radio" name="waterType" id="textWater">
                 <label for="textWater">文字水印</label>
+            </div>
+
+            <!-- 新增导出格式选择，默认JPG -->
+            <div class="item">
+                <label>保存格式：</label>
+                <input type="radio" name="saveFormat" id="saveJpg" checked>
+                <label for="saveJpg">JPG（默认，体积小）</label>
+                <input type="radio" name="saveFormat" id="savePng">
+                <label for="savePng">PNG（支持透明）</label>
             </div>
 
             <!-- 图片水印区域 -->
@@ -195,6 +204,7 @@
 
     <script>
         const waterTypeRadio = document.querySelectorAll('input[name="waterType"]');
+        const saveFormatRadio = document.querySelectorAll('input[name="saveFormat"]');
         const imgWaterBox = document.getElementById('imgWaterBox');
         const textWaterBox = document.getElementById('textWaterBox');
 
@@ -216,7 +226,17 @@
 
         let waterImg = null;
         let resultImgArr = [];
-        let mainImage = null; // 用于实时预览的主图
+        let mainImage = null;
+
+        // 获取当前选择的导出格式信息
+        function getSaveFormat(){
+            const isPng = document.getElementById('savePng').checked;
+            if(isPng){
+                return {mime:'image/png',ext:'png',quality:1};
+            }else{
+                return {mime:'image/jpeg',ext:'jpg',quality:0.9};
+            }
+        }
 
         // 切换水印类型显示
         waterTypeRadio.forEach(radio => {
@@ -228,8 +248,14 @@
                     imgWaterBox.classList.add('hide');
                     textWaterBox.classList.remove('hide');
                 }
-                // 切换时也更新预览
                 if (mainImage) updatePreview();
+            })
+        })
+
+        // 切换导出格式刷新预览
+        saveFormatRadio.forEach(radio=>{
+            radio.addEventListener('change',()=>{
+                if(mainImage) updatePreview();
             })
         })
 
@@ -242,7 +268,6 @@
                 waterImg = new Image();
                 waterImg.src = ev.target.result;
                 waterImg.onload = function() {
-                    // 水印图加载完成后更新预览
                     if (mainImage) updatePreview();
                 }
             }
@@ -253,22 +278,19 @@
         imgFileList.addEventListener('change', function(e) {
             const files = e.target.files;
             if (files.length === 0) return;
-
-            // 取第一张图作为实时预览的样本
             const firstFile = files[0];
             const reader = new FileReader();
             reader.onload = function(ev) {
                 mainImage = new Image();
                 mainImage.src = ev.target.result;
                 mainImage.onload = function() {
-                    // 图片加载完成后立即更新预览
                     updatePreview();
                 }
             }
             reader.readAsDataURL(firstFile);
         });
 
-        // 为所有控制参数添加事件监听器，实现实时预览
+        // 所有控制参数变更刷新预览
         scaleNum.addEventListener('input', updatePreview);
         textSize.addEventListener('input', updatePreview);
         textColor.addEventListener('input', updatePreview);
@@ -279,31 +301,29 @@
 
         // 实时更新预览函数
         function updatePreview() {
-            if (!mainImage) return; // 如果没有选择主图，则不更新
-
+            if (!mainImage) return;
+            const fmt = getSaveFormat();
             const isImgWater = document.getElementById('imgWater').checked;
 
-            // 校验预览所需的最小参数
-            if (isImgWater && !waterImg) return; // 图片水印需要先选择水印图
-            if (!isImgWater && !waterText.value.trim()) return; // 文字水印需要先输入文字
+            if (isImgWater && !waterImg) return;
+            if (!isImgWater && !waterText.value.trim()) return;
 
-            // 设置画布尺寸
             canvas.width = mainImage.width;
             canvas.height = mainImage.height;
-
-            // 清空画布并绘制主图
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(mainImage, 0, 0);
 
-            // 设置水印透明度
+            // JPG无透明通道，填充白色背景防止水印透明变黑
+            if(fmt.ext === 'jpg'){
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0,0,canvas.width,canvas.height);
+            }
+            ctx.drawImage(mainImage, 0, 0);
             ctx.globalAlpha = Number(opacity.value);
 
-            // 计算水印位置
             const xBase = canvas.width * Number(posX.value) / 100;
             const yBase = canvas.height * Number(posY.value) / 100;
 
             if (isImgWater) {
-                // 绘制图片水印
                 const scale = Number(scaleNum.value);
                 const w = waterImg.width * scale;
                 const h = waterImg.height * scale;
@@ -311,37 +331,32 @@
                 const y = yBase - h / 2;
                 ctx.drawImage(waterImg, x, y, w, h);
             } else {
-                // 绘制文字水印
                 const size = Number(textSize.value);
-                ctx.font = `${size}px`;
+                ctx.font = `${size}px sans-serif`;
                 ctx.fillStyle = textColor.value;
                 const text = waterText.value;
                 const textW = ctx.measureText(text).width;
                 const x = xBase - textW / 2;
-                const y = yBase + size / 3; // 垂直居中的近似计算
+                const y = yBase + size / 3;
                 ctx.fillText(text, x, y);
             }
-
-            // 恢复透明度
             ctx.globalAlpha = 1;
 
-            // 将画布内容转换为URL并更新预览区域
-            const imgUrl = canvas.toDataURL('image/png');
-            previewBox.innerHTML = ''; // 清空旧预览
-
+            const imgUrl = canvas.toDataURL(fmt.mime, fmt.quality);
+            previewBox.innerHTML = '';
             const div = document.createElement('div');
             div.className = 'preview-item';
             div.innerHTML = `
                 <img src="${imgUrl}">
-                <div class="tip-text">实时预览</div>
+                <div class="tip-text">实时预览（${fmt.ext}格式）</div>
             `;
             previewBox.appendChild(div);
         }
 
-        // 开始处理水印（原功能不变）
+        // 开始处理水印
         startBtn.addEventListener('click', function() {
+            const fmt = getSaveFormat();
             const isImgWater = document.getElementById('imgWater').checked;
-            // 校验参数
             if (isImgWater && !waterImg) {
                 alert('请先上传水印图片');
                 return;
@@ -367,6 +382,12 @@
                         canvas.width = mainImg.width;
                         canvas.height = mainImg.height;
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        // JPG填充白底
+                        if(fmt.ext === 'jpg'){
+                            ctx.fillStyle = '#ffffff';
+                            ctx.fillRect(0,0,canvas.width,canvas.height);
+                        }
                         ctx.drawImage(mainImg, 0, 0);
                         ctx.globalAlpha = Number(opacity.value);
 
@@ -374,7 +395,6 @@
                         const yBase = canvas.height * Number(posY.value) / 100;
 
                         if (isImgWater) {
-                            // 绘制图片水印
                             const scale = Number(scaleNum.value);
                             const w = waterImg.width * scale;
                             const h = waterImg.height * scale;
@@ -382,9 +402,8 @@
                             const y = yBase - h / 2;
                             ctx.drawImage(waterImg, x, y, w, h);
                         } else {
-                            // 绘制文字水印：只设置字号，不指定任何字体，完全使用设备默认字体
                             const size = Number(textSize.value);
-                            ctx.font = `${size}px`;
+                            ctx.font = `${size}px sans-serif`;
                             ctx.fillStyle = textColor.value;
                             const text = waterText.value;
                             const textW = ctx.measureText(text).width;
@@ -394,15 +413,14 @@
                         }
                         ctx.globalAlpha = 1;
 
-                        const imgUrl = canvas.toDataURL('image/png');
+                        const imgUrl = canvas.toDataURL(fmt.mime, fmt.quality);
                         resultImgArr.push(imgUrl);
 
-                        // 预览卡片
                         const div = document.createElement('div');
                         div.className = 'preview-item';
                         div.innerHTML = `
                             <img src="${imgUrl}">
-                            <div class="tip-text">长按图片保存</div>
+                            <div class="tip-text">长按图片保存.${fmt.ext}</div>
                         `;
                         previewBox.appendChild(div);
                     }
@@ -411,8 +429,9 @@
             }
         });
 
-        // 电脑批量下载（原功能不变）
+        // 电脑批量下载
         downloadAll.addEventListener('click', function() {
+            const fmt = getSaveFormat();
             if (resultImgArr.length === 0) {
                 alert('暂无处理完成的图片');
                 return;
@@ -421,7 +440,7 @@
                 setTimeout(() => {
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `网上用户一${index + 1}.png`;
+                    a.download = `网上用户一${index + 1}.${fmt.ext}`;
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
