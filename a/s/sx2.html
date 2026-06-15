@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv='content-language' content='zh-cn'>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" sizes="any" mask href="/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/favicon.ico">
+<title>十二生肖岁数对照表-网上用户</title>
+<meta name="keywords" content="网上用户,生肖对照表,12生肖岁数表,虚岁属相查询,每年自动更新生肖表,属相年份查询,鼠牛虎兔龙蛇马羊猴鸡狗猪" />
+<meta name="description" content="十二生肖虚岁对照表，自动获取当前年份，可手动切换年份查询1-132虚岁，适配手机浏览。" />
+<style type="text/css">
+A{TEXT-DECORATION: none}
+body {
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 15px;
+    font-size: 14px;
+}
+h3 {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 22px;
+}
+.year-input-area {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#inputYear {
+    width: 80px;
+    padding: 4px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+button {
+    padding: 4px 12px;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+}
+table {
+    border-collapse: collapse;
+    width:100%;
+    text-align: center;
+}
+th, td {
+    padding: 4px 2px;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+}
+th {
+    background-color: #f0f0f0;
+    font-size: 18px;
+}
+td {
+    font-size: 17px;
+}
+.target-zodiac {
+    color: red;
+    font-weight: bold;
+}
+.target-age {
+    color: red;
+    font-weight: bold;
+}
+.age-cell {
+    color: #0000ff;
+}
+hr {
+    margin:12px 0;
+}
+.info-text {
+    font-size: 16px;
+    line-height: 1.8;
+}
+</style>
+</head>
+<body>
+    <h3>
+        <span id="currentYear"></span>年十二生肖虚岁对照表(手机版)
+        <a href="/" target="_blank">网上用户</a>
+    </h3>
+    
+    <div class="year-input-area">
+        <label for="inputYear">手动切换查询年份：</label>
+        <input type="number" id="inputYear" placeholder="输入年份">
+        <button onclick="updateYear()">一键更新表格</button>
+    </div>
+
+    <table>
+        <tr id="zodiacHeader"></tr>
+        <tbody id="tableContent">
+        </tbody>
+    </table>
+
+    <h3>
+        <span id="currentYearFooter"></span>年生肖虚岁对照表
+        <a href="/" target="_blank">网上用户</a>
+    </h3>
+
+    <hr color="#0066FF"/>
+
+
+<script>
+// 十二生肖固定顺序
+const zodiacList = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+
+// 根据公历年获取生肖，基准2026马年校准
+function getYearZodiac(y) {
+    const baseYear = 2026;
+    const baseIdx = 6; // 2026马，数组下标6
+    let diff = (y - baseYear) % 12;
+    if(diff < 0) diff += 12;
+    return zodiacList[(baseIdx + diff) % 12];
+}
+
+// 按目标年份排序生肖：当年生肖放第一列，往前倒推12年
+function getSortZodiac(targetY) {
+    let arr = [];
+    let tempY = targetY;
+    for(let i=0; i<12; i++){
+        arr.push(getYearZodiac(tempY));
+        tempY--;
+    }
+    return arr;
+}
+
+// 刷新表头生肖（无首列，直接12个生肖表头）
+function renderHeader(targetY) {
+    const headerTr = document.getElementById('zodiacHeader');
+    headerTr.innerHTML = '';
+    const sortZod = getSortZodiac(targetY);
+    const nowZod = getYearZodiac(targetY);
+    sortZod.forEach(zod=>{
+        let th = document.createElement('th');
+        th.innerText = zod;
+        if(zod === nowZod) th.className = 'target-zodiac';
+        headerTr.appendChild(th);
+    })
+}
+
+// 渲染对照表，仅12列虚岁，无任何首列，虚岁1~132（11行）
+function buildTable(targetY) {
+    renderHeader(targetY);
+    const tbBody = document.getElementById('tableContent');
+    tbBody.innerHTML = '';
+    const sortZod = getSortZodiac(targetY);
+
+    // 11行，每行12个虚岁，合计132岁
+    for(let group=0; group<11; group++){
+        let ageTr = document.createElement('tr');
+        sortZod.forEach((zod, idx)=>{
+            const ageNum = (idx+1) + group*12;
+            const birthY = targetY - ageNum + 1;
+
+            let aTd = document.createElement('td');
+            aTd.innerText = ageNum;
+            aTd.className = 'age-cell';
+            // 当前年份出生对应虚岁标红
+            if(birthY === targetY) aTd.classList.add('target-age');
+            ageTr.appendChild(aTd);
+        })
+        tbBody.appendChild(ageTr);
+    }
+
+    document.getElementById('currentYear').innerText = targetY;
+    document.getElementById('currentYearFooter').innerText = targetY;
+    document.getElementById('inputYear').value = targetY;
+}
+
+// 更新年份按钮事件
+function updateYear() {
+    let val = document.getElementById('inputYear').value.trim();
+    let y = parseInt(val);
+    if(isNaN(y) || y <= 0){
+        alert('请输入合法正整数年份');
+        const autoY = new Date().getFullYear();
+        document.getElementById('inputYear').value = autoY;
+        buildTable(autoY);
+        return;
+    }
+    buildTable(y);
+}
+
+// 页面加载自动读取系统当前年份（2026）
+window.onload = function(){
+    const autoCurrentYear = new Date().getFullYear();
+    buildTable(autoCurrentYear);
+    console.log("2026生肖校验：", getYearZodiac(2026)); // 输出马
+    console.log("1988生肖校验：", getYearZodiac(1988)); // 输出龙
+}
+</script>
+</body>
+</html>
