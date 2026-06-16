@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户橡皮筋分享</title>
+    <meta name="keywords" content="网上用户橡皮筋分享，高弹力橡皮筋，不伤发头绳，黑色发圈，儿童扎头发皮筋，简约发绳，加粗耐用皮筋，网红发圈，一次性橡皮筋，高弹力发圈" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：不伤发橡皮筋）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 橡皮筋关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 100个橡皮筋皮筋关键词
+        const categoryKeywords = {
+            "橡皮筋发圈全品类": [
+                "橡皮筋", "皮筋", "发圈", "头绳", "发绳", "扎头发皮筋", "黑色橡皮筋", "高弹力发圈", "不伤发头绳", "简约细发绳",
+                "加粗橡皮筋", "耐用不松皮筋", "高弹力橡皮筋", "儿童橡皮筋", "女童扎头皮筋", "宝宝不伤发圈", "婴儿软皮筋", "小学生发绳", "彩色儿童皮筋", "卡通儿童发圈",
+                "一次性橡皮筋", "黑色一次性皮筋", "小号迷你橡皮筋", "影楼盘发皮筋", "扎小揪皮筋", "细款一次性发圈", "黑色盘发橡皮筋", "袋装一次性皮筋", "化妆师专用皮筋", "高弹一次性发绳",
+                "网红橡皮筋", "ins简约发圈", "奶油色头绳", "纯色基础皮筋", "莫兰迪发绳", "无痕高弹发圈", "不勒头皮头绳", "百搭通勤皮筋", "哑光黑色发绳", "温柔浅色系发圈",
+                "粗款宽发圈", "加宽橡皮筋", "加厚宽头绳", "扎高马尾皮筋", "不勒头发宽发圈", "加粗宽边发绳", "高马尾专用皮筋", "防滑宽发圈", "大弹力宽橡皮筋", "日常粗款头绳",
+                "细款隐形发绳", "超细橡皮筋", "细款黑色头绳", "扎碎发皮筋", "隐形细发圈", "迷你细发绳", "学生简约细皮筋", "低马尾细头绳", "哑光细橡皮筋", "不显眼细发圈",
+                "不伤发橡皮筋", "无接缝发圈", "柔软棉芯皮筋", "不扯头发头绳", "防掉发橡皮筋", "低弹力柔和发绳", "女童不伤头皮皮筋", "日常护发丝发圈", "高弹不伤发头绳", "柔软布艺橡皮筋",
+                "布艺发圈", "布艺橡皮筋", "布艺头绳", "针织布艺发绳", "褶皱布艺发圈", "纯色布艺皮筋", "温柔布艺头绳", "加厚布艺橡皮筋", "不勒布艺发绳", "百搭布艺发圈",
+                "成人扎发皮筋", "女生日常头绳", "通勤简约发圈", "职场低调皮筋", "黑色哑光发绳", "多根组合橡皮筋", "中号标准发圈", "大号加粗头绳", "扎丸子头皮筋", "半扎发专用发绳",
+                "盒装收纳橡皮筋", "大容量袋装皮筋", "独立分装发圈", "学生囤货头绳", "量贩装橡皮筋", "一百根盒装皮筋", "家用大容量发绳", "便携分装小皮筋", "开学囤货发圈", "平价组合橡皮筋",
+                "彩色橡皮筋", "马卡龙色发圈", "彩色细头绳", "多色混搭皮筋", "浅色系彩色发绳", "少女彩色橡皮筋", "低饱和彩色发圈", "儿童多彩皮筋", "糖果色头绳", "清新彩色发绳"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            generateLinks();
+
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

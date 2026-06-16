@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户纸巾分享</title>
+    <meta name="keywords" content="网上用户纸巾分享,抽纸,卷纸,卫生纸,厨房纸,洗脸巾,湿厕纸,湿巾,餐巾纸,擦手纸" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：原木抽纸）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 纸巾关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 200个纸巾全品类关键词
+        const categoryKeywords = {
+            "纸巾纸品全品类": [
+                "纸巾", "抽纸", "卷纸", "卫生纸", "餐巾纸", "面巾纸", "擦手纸", "厨房纸", "洗脸巾", "湿巾",
+                "湿厕纸", "平板纸", "草纸", "挂抽纸", "悬挂式抽纸", "小包纸巾", "便携抽纸", "大包抽纸", "加大抽纸", "巨量抽纸",
+                "原木抽纸", "竹浆纸巾", "本色纸", "白色纸巾", "纯木浆纸巾", "无荧光纸巾", "无香抽纸", "有香餐巾纸", "可湿水纸巾", "不易破抽纸",
+                "三层抽纸", "四层纸巾", "五层加厚抽纸", "双层薄款纸巾", "原生木浆卷纸", "竹纤维卷纸", "有芯卷纸", "无芯卷纸", "大粗卷卫生纸", "小卷厕纸",
+                "家用纸巾整箱", "实惠装抽纸", "批发纸巾", "工厂散装纸巾", "酒店专用纸巾", "饭店餐巾纸", "餐饮小包纸巾", "ktv擦手纸", "办公室抽纸", "宿舍囤货纸巾",
+                "婴儿专用纸巾", "宝宝柔纸巾", "新生儿保湿纸巾", "婴幼儿湿巾", "儿童便携湿巾", "母婴棉柔巾", "敏感肌洗脸巾", "一次性洗脸巾", "加厚棉柔巾", "卷筒洗脸巾",
+                "厨房吸油纸", "厨房专用纸巾", "吸油吸水厨房纸", "油炸吸油纸", "去油污纸巾", "一次性擦油纸", "食品级厨房纸", "厨房懒人抹布", "干湿两用抹布", "无纺布抹布",
+                "独立包装湿巾", "单片便携湿巾", "大包家用湿巾", "杀菌消毒湿巾", "75酒精湿巾", "免洗洗手湿巾", "去油擦脸湿巾", "车载清洁湿巾", "宠物专用湿巾", "马桶清洁湿巾",
+                "湿厕纸家庭装", "私处清洁湿厕巾", "男士湿厕纸", "女士抑菌湿厕纸", "可冲散湿厕纸", "便携装湿厕纸", "孕妇专用湿厕巾", "成人洁厕湿巾", "经期护理湿巾", "除臭湿厕纸",
+                "壁挂抽纸大包", "免打孔挂抽纸巾", "厕所悬挂纸巾", "卫生间专用抽纸", "大号擦手纸", "商用干手纸", "酒店擦手纸整箱", "加厚吸水擦手纸", "厨房挂式抽纸", "壁挂餐巾纸",
+                "印花纸巾", "彩色印花抽纸", "油画系列纸巾", "卡通儿童纸巾", "简约白色纸巾", "原木本色卷纸", "竹浆本色抽纸", "彩色包装纸巾", "高颜值抽纸", "网红悬挂纸巾",
+                "大尺寸抽纸", "加宽加长纸巾", "迷你随身纸巾", "口袋小包纸巾", "旅行装纸巾", "出差便携纸巾", "车载备用抽纸", "外卖配送纸巾", "餐饮定制纸巾", "广告定做纸巾",
+                "柔软亲肤纸巾", "不掉屑抽纸", "无尘不掉渣纸巾", "强韧湿水纸巾", "超柔母婴纸巾", "加厚加大卷纸", "加长厕纸卷", "加宽餐巾纸", "无屑洗脸巾", "珍珠纹棉柔巾",
+                "平纹洗脸巾", "网格纹棉柔巾", "一次性卸妆棉巾", "擦脸洁面纸巾", "美容院专用洗脸巾", "压缩洗脸巾", "一次性浴巾纸巾", "一次性毛巾", "无纺布毛巾", "旅行一次性面巾",
+                "抑菌纸巾", "艾草抑菌抽纸", "弱酸亲肤纸巾", "护肤保湿柔纸巾", "护肤洗脸巾", "无酒精湿巾", "无刺激婴儿湿巾", "食品接触纸巾", "可降解卫生纸", "环保竹浆纸品",
+                "整箱30包抽纸", "24包家用纸巾", "10提卷纸", "5提大卷纸", "混合纸品套装", "纸巾组合大礼包", "囤货实惠纸品", "超市同款纸巾", "电商专供纸巾", "工厂直销纸品",
+                "平板卫生纸厕纸", "老式平板草纸", "医院平板擦手纸", "公共卫生间平板纸", "加厚平板厕纸", "产妇专用卫生纸", "月子产房纸巾", "排恶露柔纸巾", "产后护理棉柔巾", "孕妇待产纸巾套装",
+                "车载纸巾盒配套抽纸", "汽车专用小包纸巾", "车用悬挂纸巾", "后备箱囤货卷纸", "车内清洁湿巾", "车内擦内饰纸巾", "玻璃清洁纸巾", "除油除尘湿巾", "内饰护理湿巾", "车载一次性抹布",
+                "宠物清洁纸巾", "狗狗擦脚湿巾", "猫咪去污湿巾", "宠物泪痕湿巾", "宠物除臭纸巾", "宠物擦身湿巾", "养宠专用干纸巾", "宠物吸水纸巾", "笼子清洁湿巾", "宠物餐具消毒湿巾",
+                "烧烤吸油纸", "烘焙厨房纸巾", "油炸食品吸油纸", "餐桌一次性餐巾纸", "火锅专用纸巾", "聚餐大包抽纸", "宴席餐饮纸巾", "奶茶店小包纸巾", "小吃店餐巾纸", "快餐店专用纸巾",
+                "加厚厨房懒人巾", "可重复清洗抹布", "一次性家务抹布", "擦灶台去油纸巾", "擦碗筷吸水纸巾", "擦玻璃无尘纸巾", "擦桌子除尘纸巾", "卫浴清洁湿巾", "地板去污湿巾", "家具保养湿巾",
+                "无芯粗卷卫生纸", "大盘商用卷纸", "商场卫生间大盘纸", "写字楼大盘擦手纸", "学校宿舍专用纸巾", "工地实惠卷纸", "出租房平价纸巾", "小户型囤货纸巾", "大容量家用纸品", "多用途通用纸巾",
+                "卸妆专用棉柔巾", "化妆一次性纸巾", "湿敷洗脸巾", "干湿两用棉柔纸", "卸妆湿巾单片装", "眼唇卸妆湿巾", "温和卸妆纸巾", "护肤清洁湿巾", "补水柔纸巾", "护肤专用抽纸"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

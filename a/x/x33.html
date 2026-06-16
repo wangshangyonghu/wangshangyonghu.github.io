@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户螺丝分享</title>
+    <meta name="keywords" content="网上用户螺丝分享,不锈钢螺丝,自攻螺丝,机牙螺丝,膨胀螺丝,螺栓螺母,五金紧固件" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：不锈钢螺丝）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 螺丝关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 200个螺丝紧固件关键词
+        const categoryKeywords = {
+            "螺丝紧固件全品类": [
+                "螺丝", "螺栓", "螺母", "垫圈", "紧固件", "自攻螺丝", "机牙螺丝", "不锈钢螺丝", "碳钢螺丝", "镀锌螺丝",
+                "304螺丝", "316螺丝", "镀镍螺丝", "发黑螺丝", "彩锌螺丝", "达克罗螺栓", "防锈螺丝", "高强度螺栓", "8.8级螺丝", "10.9级螺栓",
+                "12.9级螺丝", "圆头螺丝", "盘头螺丝", "沉头螺丝", "平头螺丝", "大扁头螺丝", "伞头螺丝", "半圆头螺栓", "外六角螺栓", "内六角螺丝",
+                "梅花槽螺丝", "十字螺丝", "一字螺丝", "内梅花螺丝", "防盗螺丝", "带垫螺丝", "组合螺丝", "三合一螺丝", "家具螺丝", "墙板钉",
+                "干壁钉", "纤维板钉", "木工螺丝", "木螺丝", "水泥螺丝", "膨胀螺丝", "塑料膨胀管", "不锈钢膨胀螺栓", "外膨胀螺丝", "内膨胀螺栓",
+                "拉爆螺丝", "吊顶膨胀螺丝", "外六角螺母", "圆螺母", "法兰螺母", "防松螺母", "自锁螺母", "尼龙防松螺母", "薄螺母", "厚螺母",
+                "平垫圈", "弹簧垫圈", "齿形垫圈", "外齿垫圈", "内齿垫圈", "不锈钢垫片", "铜垫片", "铝垫片", "橡胶垫圈", "防滑垫片",
+                "微型螺丝", "迷你小螺丝", "精密螺丝", "仪器螺丝", "眼镜螺丝", "电子螺丝", "笔记本螺丝", "电脑机箱螺丝", "手机螺丝", "数码螺丝",
+                "M1螺丝", "M1.2螺丝", "M1.4螺丝", "M1.6螺丝", "M2螺丝", "M2.5螺丝", "M3螺丝", "M4螺丝", "M5螺丝", "M6螺丝",
+                "M8螺栓", "M10螺栓", "M12螺栓", "M14螺栓", "M16螺栓", "加长螺丝", "短螺丝", "细牙螺丝", "粗牙螺丝", "全牙螺栓",
+                "半牙螺栓", "三角牙自攻钉", "钻尾螺丝", "彩钢瓦钻尾钉", "不锈钢钻尾螺丝", "外六角钻尾钉", "圆头钻尾螺丝", "屋面自钻螺丝", "铁皮螺丝", "铝板螺丝",
+                "铜螺丝", "铝螺丝", "钛螺丝", "无磁螺丝", "耐高温螺丝", "耐腐蚀螺丝", "户外专用螺丝", "光伏螺栓", "太阳能螺丝", "幕墙螺丝",
+                "门窗螺丝", "塑钢螺丝", "铝合金门窗螺丝", "汽车螺丝", "电动车螺栓", "摩托车螺丝", "机械螺丝", "设备固定螺栓", "机床螺丝", "电机螺丝",
+                "标牌螺丝", "广告钉", "镜钉", "装饰螺丝", "彩色螺丝", "黑色螺丝", "金色螺丝", "银色螺丝", "彩色自攻钉", "皮质固定螺丝",
+                "国标螺丝", "非标螺丝", "定制螺丝", "散装螺丝", "盒装螺丝套装", "混合螺丝包", "螺丝收纳盒", "螺丝分类盒", "螺丝托盘", "螺丝盒配件",
+                "紧定螺丝", "无头紧定钉", "机米螺丝", "止付螺丝", "定位螺丝", "堵头螺丝", "油塞螺丝", "法兰面螺丝", "压铆螺丝", "压铆螺母柱",
+                "焊接螺丝", "点焊螺栓", "抽芯铆钉螺丝", "牙条", "全螺纹丝杆", "双头螺栓", "地脚螺栓", "预埋螺栓", "U型螺栓", "U型卡螺丝",
+                "骑马卡螺丝", "管卡螺丝", "水管固定螺丝", "风管螺丝", "桥架螺丝", "配电柜螺丝", "机柜螺栓", "服务器螺丝", "家电螺丝", "空调固定螺丝",
+                "洗衣机螺丝", "冰箱配件螺丝", "电视挂架螺丝", "热水器膨胀螺丝", "卫浴螺丝", "橱柜螺丝", "衣柜连接件螺丝", "床架螺栓", "桌椅螺丝", "货架螺丝",
+                "手拧螺丝", "旋钮螺丝", "快拆螺丝", "卡扣螺丝", "固定卡扣螺钉", "弹簧螺丝", "弹性垫片螺丝", "加厚垫圈螺丝", "薄款垫片螺丝", "密封垫圈螺丝"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

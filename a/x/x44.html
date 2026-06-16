@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户雨伞分享</title>
+    <meta name="keywords" content="网上用户雨伞分享,全自动折叠伞,防晒黑胶遮阳伞,便携五折伞,超大双人雨伞,学生自动伞,晴雨两用伞,男士商务长柄伞,儿童卡通雨伞" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：黑胶防晒伞）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 雨伞关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 150个雨伞全品类关键词
+        const categoryKeywords = {
+            "雨伞遮阳伞全品类": [
+                "雨伞", "遮阳伞", "晴雨伞", "折叠伞", "长柄伞", "自动伞", "手动伞", "五折伞", "三折伞", "迷你口袋伞",
+                "全自动雨伞", "一键开收自动伞", "男士商务自动伞", "学生全自动折叠伞", "反向自动伞", "防风加固自动伞", "小型便携自动伞", "大号双人自动伞", "纯色简约自动伞", "网红高颜值自动伞",
+                "黑胶防晒遮阳伞", "UPF50+防晒伞", "防紫外线太阳伞", "加厚黑胶涂层伞", "不透光遮阳伞", "女士便携防晒伞", "夏天降温遮阳伞", "户外防晒小伞", "冰感涂层遮阳伞", "轻巧防晒晴雨伞",
+                "五折迷你雨伞", "口袋便携五折伞", "手机大小小雨伞", "随身胶囊伞", "女生包包伞", "超轻迷你晴雨伞", "旅行便携五折伞", "轻薄无负担小雨伞", "纯色迷你遮阳伞", "网红胶囊五折伞",
+                "超大双人雨伞", "双人加大折叠伞", "三人特大号雨伞", "家庭多人晴雨伞", "暴雨专用大伞", "加宽伞面雨伞", "防风加固大伞", "情侣双人伞", "家用超大长柄伞", "户外多人遮阳伞",
+                "儿童卡通雨伞", "小学生上学雨伞", "宝宝圆角安全伞", "女童公主雨伞", "男童动漫卡通伞", "防戳伤儿童伞", "幼儿园便携小雨伞", "带防水套儿童伞", "反光条儿童雨伞", "轻便小孩晴雨伞",
+                "男士商务长柄伞", "黑色直杆商务伞", "高尔夫超大长柄伞", "复古木柄雨伞", "高档商务礼品伞", "防风直杆伞", "纯色简约长柄伞", "暴雨专用长柄伞", "公司定制商务伞", "稳重通勤长柄伞",
+                "反向不湿雨伞", "反向折叠晴雨伞", "收伞不沾水雨伞", "车内专用反向伞", "车门不沾水雨伞", "家用反向折叠伞", "全自动反向雨伞", "女士便捷反向伞", "防水内层反向伞", "暴雨反向加固伞",
+                "防风加固雨伞", "抗强风骨架雨伞", "八骨加固折叠伞", "十二骨加厚雨伞", "抗台风暴雨伞", "不易翻折晴雨伞", "户外防风长柄伞", "耐用加固骨架伞", "海边防风遮阳伞", "通勤抗风折叠伞",
+                "超轻便携雨伞", "碳纤维轻量伞", "女生超轻遮阳伞", "无负重随身雨伞", "出差轻便折叠伞", "旅行超薄小雨伞", "轻量化五折胶囊伞", "小巧不压包晴雨伞", "纯色轻便太阳伞", "通勤超轻小伞",
+                "复古文艺雨伞", "日系和风遮阳伞", "碎花文艺折叠伞", "法式蕾丝遮阳伞", "水墨画古风雨伞", "莫兰迪纯色雨伞", "复古木柄长柄伞", "拍照氛围感雨伞", "温柔浅色系遮阳伞", "小众设计复古伞",
+                "广告定制雨伞", "公司logo定制伞", "活动礼品折叠伞", "门店宣传遮阳伞", "企业商务长柄伞", "批量定做雨伞", "开业赠品晴雨伞", "印字定制广告伞", "展会礼品遮阳伞", "团购定制双人伞",
+                "暴雨专用雨伞", "加厚防水伞布", "高密度防雨雨伞", "特大暴雨长柄伞", "不透水折叠晴雨伞", "户外暴雨专用伞", "骑行防水雨伞", "加厚涂层防雨伞", "通勤抗暴雨雨伞", "户外徒步防水伞",
+                "骑行专用雨伞", "电动车遮阳雨伞", "电瓶车防晒雨棚伞", "骑行防风小雨伞", "摩托车加长遮阳伞", "可拆卸骑行伞", "夏季电动车防晒伞", "雨天骑行防雨伞", "加固支架骑行伞", "轻便电动车晴雨伞",
+                "户外露营遮阳伞", "沙滩大号遮阳伞", "庭院落地太阳伞", "野餐便携遮阳伞", "钓鱼专用大伞", "户外摆摊遮阳伞", "庭院防雨长柄伞", "露营便携折叠伞", "沙滩防晒大伞", "夜市商用遮阳伞",
+                "情侣双人雨伞", "ins网红情侣伞", "一对简约情侣晴雨伞", "印花情侣遮阳伞", "纪念日送礼雨伞", "双人加大情侣伞", "温柔配色情侣伞", "小众设计情侣伞", "通勤成对折叠伞", "旅行情侣便携伞",
+                "ins网红高颜值伞", "马卡龙纯色雨伞", "奶油风遮阳伞", "渐变涂层晴雨伞", "小众高级感雨伞", "简约极简折叠伞", "网红胶囊便携伞", "温柔奶白遮阳伞", "撞色潮流雨伞", "小红书爆款遮阳伞",
+                "老年人轻便雨伞", "大手柄防滑长柄伞", "一键自动老年伞", "加大伞面老人伞", "轻便省力晴雨伞", "防滑弯柄老年伞", "不易折断加固伞", "大视野加宽雨伞", "简单操作自动伞", "轻便不重老年伞",
+                "学生上学雨伞", "初中生折叠晴雨伞", "高中生简约遮阳伞", "轻便书包小雨伞", "防戳伤学生伞", "平价耐用学生伞", "纯色简约校园伞", "小巧书包便携伞", "防雨防晒两用伞", "宿舍常备折叠伞",
+                "涂层功能雨伞", "银胶反光遮阳伞", "黑胶全遮光雨伞", "钛银降温防晒伞", "加厚防晒涂层伞", "不透光全遮光伞", "隔热降温晴雨伞", "多层防晒涂层伞", "冰丝降温遮阳伞", "双重涂层两用伞",
+                "防水收纳雨伞", "自带防水套折叠伞", "可收纳便携晴雨伞", "不滴水收纳雨伞", "随身防水袋雨伞", "车内收纳小伞", "出差防水收纳伞", "旅行便携收纳伞", "口袋收纳胶囊伞", "不滴水通勤雨伞",
+                "四季通用晴雨伞", "春秋轻薄遮阳伞", "夏季防晒小伞", "冬季抗风大雨伞", "全年两用折叠伞", "通勤四季常备伞", "家用四季晴雨伞", "户外通用遮阳伞", "轻便四季便携伞", "全家通用双人伞",
+                "纯色基础雨伞", "黑色百搭折叠伞", "白色简约遮阳伞", "灰色通勤晴雨伞", "藏青商务长柄伞", "奶白温柔小伞", "浅粉少女遮阳伞", "纯色无图案雨伞", "耐脏深色大雨伞", "清新浅色系小伞",
+                "八骨结实雨伞", "十骨加固折叠伞", "十二骨加厚长柄伞", "十六骨特大双人伞", "加粗金属骨架伞", "不易断耐用雨伞", "高韧性骨架晴雨伞", "暴雨抗风骨架伞", "轻量化坚固五折伞", "家用耐用加固伞",
+                "送礼礼盒雨伞", "高档礼盒遮阳伞", "生日礼品晴雨伞", "商务送礼长柄伞", "精致包装胶囊伞", "节日礼物双人伞", "体面伴手礼雨伞", "轻奢礼盒防晒伞", "客户礼品定制伞", "情侣礼盒套装伞",
+                "低噪静音自动伞", "无声开收折叠伞", "车内静音自动伞", "轻柔开合晴雨伞", "无噪音便携伞", "女士安静自动伞", "通勤不刺耳雨伞", "顺滑静音骨架伞", "居家静音反向伞", "小巧静音胶囊伞",
+                "防回弹安全雨伞", "缓冲自动开收伞", "防夹手折叠晴雨伞", "儿童安全缓冲伞", "车内防回弹雨伞", "柔和开合自动伞", "家用防夹手雨伞", "老人安全缓冲伞", "学生防回弹小伞", "便携缓冲胶囊伞"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

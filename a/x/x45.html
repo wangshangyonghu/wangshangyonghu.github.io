@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户发育期用品分享</title>
+    <meta name="keywords" content="网上用户发育期用品分享,少女发育期内衣,青春期学生文胸,女童发育小背心,初中生长胸内衣,少女纯棉抹胸,青春期护理,发育防护内衣,无钢圈少女背心" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：少女发育期小背心）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 发育期关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 150个发育期少女用品关键词
+        const categoryKeywords = {
+            "少女发育期全品类": [
+                "发育期内衣", "少女发育期背心", "青春期发育文胸", "女童发育小背心", "学生发育期抹胸", "初中发育内衣", "高中生发育期胸罩", "少女第一阶段发育背心", "第二阶段发育内衣", "第三阶段定型文胸",
+                "纯棉发育小背心", "莫代尔少女发育内衣", "透气发育期抹胸", "无钢圈少女文胸", "薄垫发育期内衣", "可拆卸棉垫发育背心", "固定薄垫少女内衣", "无海绵发育期小背心", "软支撑发育胸罩", "无痕少女发育内衣",
+                "小学生发育背心", "10岁女童发育期内衣", "11岁少女发育抹胸", "12岁初中发育背心", "13岁青春期文胸", "14岁学生定型内衣", "15岁少女胸罩", "9岁初期发育小背心", "儿童萌芽期发育内衣", "大童发育期打底背心",
+                "防凸点发育内衣", "隐形防凸点少女背心", "透气防走光发育抹胸", "一体式少女发育内衣", "吊带款发育期小背心", "宽肩带发育内衣", "防滑肩少女发育胸罩", "运动防震发育背心", "体育课专用发育内衣", "跑步不晃少女文胸",
+                "青春期护理用品", "少女经期卫生巾", "学生迷你护垫", "弱酸私处护理湿巾", "青春期私处洗液", "少女纯棉生理内裤", "初中透气三角内裤", "发育期抑菌内裤", "少女防漏生理裤", "学生经期安睡裤",
+                "少女运动发育内衣", "瑜伽发育期背心", "舞蹈练功少女抹胸", "体育课防震文胸", "高弹透气发育内衣", "速干学生运动背心", "不闷汗少女运动胸罩", "一体式舞蹈发育内衣", "校园日常运动小背心", "高强度防震发育文胸",
+                "萌芽初期发育背心", "刚发育少女内衣", "胸部微凸小背心", "无束缚萌芽期抹胸", "宽松纯棉初期发育内衣", "低年级女童发育打底", "轻薄无感萌芽背心", "不勒胸初期少女内衣", "简约纯色萌芽发育小背心", "小学生专用萌芽内衣",
+                "中期定型发育期文胸", "胸部成型少女胸罩", "轻微聚拢发育内衣", "防外扩学生文胸", "收副乳少女发育内衣", "上托定型发育期胸罩", "贴合胸型少女背心", "软钢圈温和定型内衣", "薄款定型学生文胸", "日常定型发育抹胸",
+                "大胸少女发育内衣", "发育期大胸显小文胸", "加宽侧收发育胸罩", "加高侧比少女内衣", "全包覆大胸发育背心", "防震大胸学生文胸", "透气薄垫大胸发育内衣", "不压胸少女大胸胸罩", "校园大童大胸发育背心", "高弹力大胸发育期内衣",
+                "小胸少女发育内衣", "平胸学生发育小背心", "轻薄贴合小胸抹胸", "无痕隐形小胸发育内衣", "无压迫少女小胸胸罩", "简约纯色小胸发育背心", "低年级小胸女童内衣", "无感贴合小胸发育期抹胸", "宽松舒适小胸少女背心", "校园日常小胸文胸",
+                "无束缚发育期内衣", "零压少女发育背心", "不勒肋骨学生抹胸", "宽松透气发育期胸罩", "柔软亲肤少女内衣", "无紧绷感发育小背心", "居家睡眠发育内衣", "睡觉可穿少女抹胸", "全天舒适发育期文胸", "不闷肤宽松发育背心",
+                "少女纯色发育内衣", "白色校园小背心", "浅粉温柔发育抹胸", "灰色简约学生文胸", "米色百搭发育期胸罩", "浅蓝清新少女背心", "无印花基础发育内衣", "耐脏浅色系发育抹胸", "低饱和纯色少女文胸", "简约基础款发育背心",
+                "卡通少女发育小背心", "可爱印花学生内衣", "小熊图案发育期抹胸", "简约碎花少女胸罩", "低龄女童卡通发育背心", "清新小图案校园内衣", "柔和印花发育期文胸", "少女心浅色系背心", "不花哨学生卡通内衣", "大童简约卡通抹胸",
+                "发育期学生内裤", "少女纯棉三角内裤", "中腰透气发育内裤", "不夹臀学生生理裤", "抑菌底裆少女内裤", "宽松不勒腰发育期内裤", "纯色简约女童内裤", "薄款夏季学生内裤", "加厚秋冬发育内裤", "莫代尔柔软少女内裤",
+                "夏季薄款发育内衣", "网眼透气少女背心", "超薄无感发育期抹胸", "冰丝凉爽学生文胸", "不闷汗夏季发育内衣", "轻薄单层少女小背心", "镂空透气发育期胸罩", "空调房薄款发育抹胸", "校园夏日轻薄内衣", "速干透气少女发育背心",
+                "秋冬加厚发育内衣", "磨毛柔软少女背心", "薄棉保暖发育期抹胸", "德绒恒温学生文胸", "居家加厚发育小背心", "柔软亲肤秋冬内衣", "不冰凉少女发育期胸罩", "室内保暖打底背心", "春秋适中厚度发育抹胸", "长袖款少女发育打底内衣",
+                "睡眠发育期内衣", "少女睡觉专用小背心", "宽松零压睡眠抹胸", "无钢圈睡眠发育文胸", "柔软亲肤居家内衣", "不压胸夜间发育背心", "一体式无痕睡眠抹胸", "学生宿舍睡眠内衣", "全天可穿发育期胸罩", "宽松透气夜间小背心",
+                "校园通勤发育内衣", "校服内搭少女背心", "不露肩学生发育抹胸", "不露边无痕发育期文胸", "校服隐形打底内衣", "不外露肩带少女胸罩", "纯色低调校园背心", "日常上学发育抹胸", "百搭校服内搭内衣", "简约不显眼发育期小背心",
+                "独立包装发育内衣", "单片密封少女背心", "便携换洗发育期抹胸", "住校学生分装内衣", "出差旅行便携发育小背心", "干净无菌独立包装胸罩", "宿舍囤货分装少女内衣", "多件组合装发育期背心", "学生平价组合套装", "五件装少女发育内衣",
+                "女童大童发育内衣套装", "背心内裤两件套", "发育期全套护理套装", "学生多件混搭套装", "少女四季组合内衣", "居家外出两套组合", "住校囤货组合套装", "简约纯色成套发育用品", "运动日常两套内衣", "开学季学生发育套装",
+                "敏感肌少女发育内衣", "无荧光剂发育期背心", "无甲醛学生抹胸", "无香精少女胸罩", "亲肤低刺激发育内衣", "医用级柔软少女背心", "不致敏纯棉发育期抹胸", "温和面料学生文胸", "弱酸性底裆发育内衣", "天然棉少女发育期背心",
+                "高弹不勒发育内衣", "弹力拉伸少女小背心", "胖女童宽松发育抹胸", "微胖学生弹力胸罩", "高弹侧收发育内衣", "不紧绷大童背心", "可拉伸肩带发育期抹胸", "弹力包容胸型少女文胸", "微胖女孩舒适发育内衣", "宽松弹力大码发育背心",
+                "发育期洗护用品", "少女内衣专用清洗皂", "学生内衣洗衣液", "温和无刺激内衣清洁剂", "生理期内裤清洗液", "少女贴身衣物除菌皂", "便携旅行内衣清洗皂", "住校专用内衣洗护套装", "抑菌内衣清洁液", "温和去血渍清洗液",
+                "胖女孩发育期内衣", "加大码少女发育背心", "微胖初中学生抹胸", "加宽弹力发育期胸罩", "不勒肉大童内衣", "加大包容胸型背心", "高弹宽松微胖少女文胸", "全包覆防外扩发育内衣", "胖女童透气发育抹胸", "大版型舒适发育期背心",
+                "发育期防护小物", "少女隐形肩带", "透明无痕内衣肩带", "防滑替换肩带", "校服防走光贴", "胸部透气防凸贴", "学生隐形胸贴", "少女贴身透气胸垫", "可替换加厚薄棉垫", "内衣防滑扣固定器", "隐形无痕内衣侧边贴"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

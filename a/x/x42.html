@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户袜子分享</title>
+    <meta name="keywords" content="网上用户袜子分享,纯棉袜子,男士中筒袜,隐形船袜,运动篮球袜,女士堆堆袜,儿童学生袜,羊毛保暖袜,防滑瑜伽袜" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：纯棉船袜）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 袜子关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 150个袜子全品类关键词
+        const categoryKeywords = {
+            "袜子全品类大全": [
+                "袜子", "棉袜", "短袜", "船袜", "隐形袜", "中筒袜", "长筒袜", "过膝袜", "堆堆袜", "小腿袜",
+                "男士袜子", "男士中筒袜", "商务黑袜", "冰丝男袜", "超薄丝袜男", "运动男袜", "毛巾底篮球袜", "防臭棉男袜", "白色通勤男袜", "工装长袜",
+                "女士袜子", "日系堆堆袜", "JK小腿袜", "蕾丝花边袜", "冰丝隐形船袜", "碎花中筒袜", "纯色棉袜女", "外穿潮袜", "蝴蝶结长袜", "薄款空调袜",
+                "儿童袜子", "宝宝防滑袜", "婴儿网眼袜", "学生三杠白袜", "足球长筒童袜", "卡通棉童袜", "新生儿无骨袜", "幼儿园透气袜", "女童蝴蝶结袜", "男童运动袜",
+                "纯棉袜子", "精梳棉袜", "新疆棉袜", "全棉透气袜", "无骨缝合棉袜", "吸汗棉袜", "四季棉袜", "加厚毛圈棉袜", "薄款网眼棉袜", "抗菌棉袜",
+                "运动袜子", "篮球精英袜", "跑步压力袜", "羽毛球短袜", "健身防滑袜", "骑行长筒袜", "足球加厚袜", "滑板潮袜", "瑜伽点胶袜", "跳绳减震袜",
+                "夏季薄袜子", "冰丝船袜", "网眼透气袜", "超薄隐形袜", "水晶丝袜", "清凉浅口袜", "镂空透气袜", "不闷脚短袜", "裸感超薄袜", "防勾丝丝袜",
+                "冬季保暖袜", "羊毛袜子", "加绒加厚袜", "德绒保暖袜", "加厚毛圈袜", "雪地靴中筒袜", "防寒过膝袜", "中老年厚棉袜", "东北加绒袜", "发热保暖袜",
+                "防滑不掉跟船袜", "硅胶隐形袜", "浅口防滑袜", "皮鞋专用船袜", "单鞋隐形棉袜", "低帮无痕袜", "懒人浅口袜", "通勤隐形短袜", "高跟鞋专用袜", "防掉跟浅口袜",
+                "商务正装袜子", "黑色纯色中筒袜", "西装皮鞋袜", "透气商务棉袜", "超薄冰丝商务袜", "灰色通勤袜", "不掉筒正装袜", "长款商务棉袜", "中年简约棉袜", "纯色通勤袜",
+                "潮流网红袜子", "ins字母潮袜", "美式复古中筒袜", "阿美咔叽花袜", "彩色条纹袜", "扎染个性袜", "刺绣卡通袜", "街头嘻哈长袜", "小众设计堆堆袜", "撞色百搭潮袜",
+                "抗菌防臭袜子", "银离子抑菌袜", "艾草除臭棉袜", "透气防脚臭袜", "久穿不闷袜", "吸汗去味袜", "男士防臭运动袜", "日常抗菌棉袜", "久站透气袜", "抑菌四季袜",
+                "丝袜薄款系列", "天鹅绒短丝袜", "超薄隐形丝袜", "防勾丝中筒丝袜", "美肤面膜丝袜", "黑色透肉丝袜", "彩色浅口丝袜", "护膝空调丝袜", "长款过膝丝袜", "耐磨钢丝丝袜",
+                "居家月子袜子", "宽松月子袜", "产后保暖棉袜", "无束缚松口袜", "老人宽松棉袜", "不勒脚中老年袜", "睡眠柔软棉袜", "地板防滑居家袜", "室内薄款居家袜", "透气月子棉袜",
+                "量贩组合袜子", "十双装棉袜", "家庭混装袜子", "男女组合套装", "儿童四季组合袜", "整箱批发棉袜", "平价实惠袜子", "多色混搭套装", "四季囤货棉袜", "情侣成对袜子",
+                "功能专用袜子", "压力瘦腿小腿袜", "点胶防滑瑜伽袜", "减震加厚篮球袜", "防水户外徒步袜", "分趾二趾袜", "无痕隐形婚纱袜", "舞蹈练功防滑袜", "透气医护袜子", "吸湿排汗户外袜",
+                "纯色基础袜子", "白色基础棉袜", "黑色百搭短袜", "灰色简约中筒袜", "米色温柔堆堆袜", "藏青通勤棉袜", "纯色无图案袜", "基础四季棉袜", "浅色系温柔袜", "深色耐脏棉袜"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>
