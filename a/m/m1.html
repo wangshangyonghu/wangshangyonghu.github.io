@@ -1,28 +1,78 @@
-<!doctype html><html lang="zh-cn">
-
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta name="viewport" content="width=device-width,  user-scalable=yes" /><!--手机版本代码-->
-
-<meta http-equiv='content-language' content='zh-cn'><!--国家地区-->
-<link rel="shortcut icon" href="./favicon.ico" alt="网上用户" type="image/x-icon"><!--图标-->
-<link rel="icon" sizes="any" mask href="./favicon.ico"alt="网上用户">
-<link rel="apple-touch-icon-precomposed" href="./favicon.ico"alt="网上用户">
-<link rel="apple-touch-icon" href="./favicon.ico"alt="网上用户">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><!--网页乱码修复-->
-<base onmouseover="window.status='';return true">
-<!--页脚--><script src="/a/js/yj.js"></script><!--页脚-->
-
-<title>网上用户</title>
-<meta name="keywords" content="网上用户,网上用户,网上用户,公平村,张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生" /><!--关键词-->
-<meta name="description" content="网上用户,网上用户微信一网上用户优惠券一网上用户红包码一网上用户邀请码一网上用户铆钉厂一网上用户斗车厂一网上用户牙科一网上用户手机报价一网上用户图片一网上用户淘宝一网上用户天猫一网上用户浏览器主页一网上用户领红包一网上用户SMT贴片厂一网上用户公平村一网上用户视频" />
-
+    <meta charset="UTF-8">
+    <title>网上用户</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            padding: 20px;
+        }
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        #urlInput {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #visitBtn {
+            padding: 8px 16px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #iframeBox {
+            width: 100%;
+            height: calc(100vh - 80px);
+            border: 0;
+        }
+    </style>
 </head>
+<body>
+    <div class="search-box">
+        <input type="text" id="urlInput" placeholder="请输入网址，例：https://xxx.com">
+        <button id="visitBtn">访问</button>
+    </div>
+    <iframe id="iframeBox" src="/"></iframe>
+
+    <script>
+        const input = document.getElementById('urlInput');
+        const btn = document.getElementById('visitBtn');
+        const iframe = document.getElementById('iframeBox');
+
+        btn.onclick = function () {
+            let url = input.value.trim();
+            if (!url.startsWith('http')) {
+                url = 'https://' + url;
+            }
+            iframe.src = url;
+        }
+
+        input.onkeydown = function (e) {
+            if (e.key === 'Enter') {
+                btn.click();
+            }
+        }
+    </script>
 
 
+<link rel="stylesheet" href="/a/js/bj.css"><!--全局页面样式-->
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+<!-- seo 放这里最完美 --><script src="/a/js/seo.js"></script>
+<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/ico.js"></script>
 
-    <frameset cols="0,*" frameborder="NO" border="0" framespacing="0">
-        <frame scrolling="NO" noresize src="#" name="1">
-        <frame src="https://wangshangyonghu.github.io">
-    </frameset><noframes></noframes>
-
-</HTML>
+</body>
+</html>
