@@ -41,8 +41,27 @@
 
 <body>
 
+    <!-- 引入外部CSS -->
+        <!-- 搜索 --><link rel="stylesheet" href="/a/js/ss.css">
+</head>
+<body>
+    <!-- 搜索区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" 
+                   class="search-input" 
+                   name="q" 
+                   placeholder="请输入搜索关键词（如：铆钉）" 
+                   required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
 
+    <!-- 引入外部JS，放底部保证DOM加载完成 -->
+    <script src="/a/js/ss.js"></script>
+        <!-- 搜索 -->
 
+<hr/>
 
 <h1><a href="/" target="_blank">网上用户的友情链接</a></h1><hr/>
 
