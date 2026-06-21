@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淘宝搜索组件</title>
+    <!-- 引入外部CSS -->
+        <!-- 搜索 --><link rel="stylesheet" href="/a/js/ss.css">
+</head>
+<body>
+    <!-- 搜索区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" 
+                   class="search-input" 
+                   name="q" 
+                   placeholder="请输入搜索关键词（如：铆钉）" 
+                   required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 关键词分类模块（保留原有结构） -->
+    <div class="search-tip">搜索提示文字示例</div>
+    <div class="keyword-category">
+        <h3 class="category-title">热门关键词</h3>
+        <div class="keyword-buttons">
+            <span class="keyword-btn">铆钉</span>
+            <span class="keyword-btn">螺丝</span>
+            <span class="keyword-btn">螺母</span>
+        </div>
+    </div>
+
+    <!-- 引入外部JS，放底部保证DOM加载完成 -->
+    <script src="/a/js/ss.js"></script>
+        <!-- 搜索 -->
+</body>
+</html>
