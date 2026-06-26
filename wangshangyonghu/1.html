@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多行计算器一网上用户一多行算式自动计算器</title>
+
+<style>
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: system-ui, sans-serif;
+    padding: 20px 15px;
+}
+.wrap{
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    border: 1px solid #222;
+    padding: 12px;
+}
+.line{
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+    border-bottom: 1px solid #666;
+}
+.line input{
+    flex: 1;
+    margin-right: 15px;
+    border: none;
+    font-size: 18px;
+    outline: 0;
+    padding: 2px 0;
+    background: transparent;
+}
+.total{
+    margin-top: 8px;
+    font-size: 22px;
+    font-weight: bold;
+}
+.bottom-title{
+    text-align: center;
+    font-size: 28px;
+    margin-top: 25px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="line">
+        <input class="exp">
+        <span class="num">0</span>
+    </div>
+    <div class="line">
+        <input class="exp">
+        <span class="num">0</span>
+    </div>
+    <div class="line">
+        <input class="exp">
+        <span class="num">0</span>
+    </div>
+    <div class="line">
+        <input class="exp">
+        <span class="num">0</span>
+    </div>
+    <div class="line">
+        <input class="exp">
+        <span class="num">0</span>
+    </div>
+    <div class="line">
+        <input class="exp">
+        <span class="num">0</span>
+    </div>
+    <div class="line">
+        <input class="exp">
+        <span class="num">0</span>
+    </div>
+    <div class="line">
+        <input class="exp">
+        <span class="num">0</span>
+    </div>
+
+    <div class="total">合计:<span id="sum">0</span></div>
+</div>
+
+<!-- 文字放到方框最下方 -->
+<div class="bottom-title">输入数字带+-*/%自动计算</div>
+
+<script>
+function calculate(str){
+    if(!str.trim()) return 0;
+    str = str.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
+    if(!/^[\d+\-*/.()\s]+$/.test(str)) return 0;
+    try{
+        return new Function('"use strict";return ('+str+')')();
+    }catch{
+        return 0;
+    }
+}
+
+const inputs = document.querySelectorAll('.exp');
+const nums = document.querySelectorAll('.num');
+const totalBox = document.getElementById('sum');
+
+function refresh(){
+    let total = 0;
+    inputs.forEach((inp,idx)=>{
+        let res = calculate(inp.value);
+        nums[idx].innerText = res;
+        total += res;
+    })
+    totalBox.innerText = total;
+}
+
+inputs.forEach((input, index)=>{
+    input.oninput = refresh;
+    input.onkeydown = function(e){
+        if(e.key === 'Enter'){
+            e.preventDefault();
+            let next = inputs[index+1];
+            if(next) next.focus();
+        }
+    }
+})
+</script>
+
+<!-- 页脚页眉 放这里最完美 -->
+<script src="/a/js/ym.js"></script>
+<!-- ico 放这里最完美 -->
+<script src="/a/js/ico.js"></script>
+
+</body>
+</html>
