@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>送货单</title>
+<style>
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: "SimSun", serif;
+    padding: 15px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+.title-wrap{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.title-input{
+    color: #0000cc;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: clamp(24px, 3vw, 34px);
+    text-align: center;
+    width: 100%;
+}
+.info-row{
+    display: flex;
+    justify-content: space-between;
+    font-size: clamp(20px, 2.5vw, 28px);
+    margin-bottom: 15px;
+}
+.blue-input{
+    color: #0000cc;
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: inherit;
+    padding: 0;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: clamp(18px, 2.2vw, 26px);
+    /* 固定列宽，不再自动均分 */
+    table-layout: fixed;
+}
+/* 手动分配每一列宽度 */
+col:nth-child(1) { width: 28%; }
+col:nth-child(2) { width: 10%; }
+col:nth-child(3) { width: 14%; }
+col:nth-child(4) { width: 14%; }
+col:nth-child(5) { width: 16%; }
+col:nth-child(6) { width: 18%; }
+
+th{
+    padding: 10px 5px;
+    border: 2px solid #000;
+    text-align: center;
+}
+tbody tr td{
+    border: 2px solid #000;
+    text-align: center;
+}
+/* 第1列、第6列加大上下内边距（行高变大） */
+tbody tr td:first-child,
+tbody tr td:last-child{
+    padding: 16px 6px !important;
+}
+/* 第2~5列缩小上下内边距（行高紧凑） */
+tbody tr td:nth-child(2),
+tbody tr td:nth-child(3),
+tbody tr td:nth-child(4),
+tbody tr td:nth-child(5){
+    padding: 6px 6px !important;
+}
+.total-line{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-size: clamp(22px, 2.6vw, 30px);
+    margin-top: 10px;
+}
+.total-text{
+    grid-column: 4;
+    text-align: right;
+}
+.total-value{
+    grid-column: 5;
+    text-align: center;
+}
+.clear-btn{
+    margin-top: 30px;
+    padding:8px 16px;
+    font-size:18px;
+}
+</style>
+</head>
+<body>
+    <div class="title-wrap">
+        <input class="title-input" value="网上用户送货单">
+    </div>
+
+    <div class="info-row">
+        <div>
+            <div>客户：</div>
+            <div><input class="blue-input" value="网上用户"></div>
+        </div>
+        <div style="text-align:right;">
+            <div>日期：</div>
+            <div><input class="blue-input" value="2026年6月26日"></div>
+        </div>
+    </div>
+
+    <table>
+        <colgroup>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>名称及规格</th>
+                <th>单位</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>金额</th>
+                <th>备注</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input class="blue-input item" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input unit" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input num" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input price" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input amt" value="" readonly></td>
+                <td><input class="blue-input remark" value="" oninput="autoShrink(this)"></td>
+            </tr>
+            <tr>
+                <td><input class="blue-input item" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input unit" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input num" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input price" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input amt" value="" readonly></td>
+                <td><input class="blue-input remark" value="" oninput="autoShrink(this)"></td>
+            </tr>
+            <tr>
+                <td><input class="blue-input item" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input unit" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input num" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input price" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input amt" value="" readonly></td>
+                <td><input class="blue-input remark" value="" oninput="autoShrink(this)"></td>
+            </tr>
+            <tr>
+                <td><input class="blue-input item" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input unit" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input num" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input price" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input amt" value="" readonly></td>
+                <td><input class="blue-input remark" value="" oninput="autoShrink(this)"></td>
+            </tr>
+            <tr>
+                <td><input class="blue-input item" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input unit" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input num" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input price" value="" oninput="autoShrink(this)"></td>
+                <td><input class="blue-input amt" value="" readonly></td>
+                <td><input class="blue-input remark" value="" oninput="autoShrink(this)"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="total-line">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="total-text">合计：</div>
+        <div class="total-value"><input class="blue-input" id="total" value="" readonly></div>
+        <div></div>
+    </div>
+
+    <button class="clear-btn" onclick="resetAll()">清空所有输入</button>
+
+<script>
+// 文字超出自动缩小字号
+function autoShrink(input){
+    let minFont = 12;
+    let maxFont = parseInt(getComputedStyle(input).fontSize);
+    input.style.fontSize = maxFont + "px";
+    while(input.scrollWidth > input.clientWidth && parseInt(input.style.fontSize) > minFont){
+        input.style.fontSize = (parseInt(input.style.fontSize) - 1) + "px";
+    }
+}
+
+// 自动计算金额
+function calculate(){
+    let totalSum = 0;
+    let rows = document.querySelectorAll("tbody tr");
+    rows.forEach(row=>{
+        let n = Number(row.querySelector(".num").value) || 0;
+        let p = Number(row.querySelector(".price").value) || 0;
+        let money = n * p;
+        row.querySelector(".amt").value = money || "";
+        totalSum += money;
+    })
+    document.getElementById("total").value = totalSum || "";
+}
+
+// 一键清空
+function resetAll(){
+    document.querySelectorAll(".blue-input, .title-input").forEach(input=>{
+        if(!input.readOnly){
+            input.value = "";
+            input.style.fontSize = "";
+        }else{
+            input.value = "";
+        }
+    })
+    calculate();
+}
+
+document.querySelectorAll(".num, .price").forEach(el=>{
+    el.addEventListener("input", calculate);
+})
+calculate();
+</script>
+</body>
+</html>

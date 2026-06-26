@@ -25,11 +25,10 @@ body{
 .line{
     display: flex;
     justify-content: space-between;
-    margin: 6px 0;
+    margin: 4px 0;
     border-bottom: 1px solid #666;
-    align-items: flex-start;
 }
-.line textarea{
+.line input{
     flex: 1;
     margin-right: 15px;
     border: none;
@@ -37,19 +36,14 @@ body{
     outline: 0;
     padding: 2px 0;
     background: transparent;
+    white-space: nowrap;
     overflow: hidden;
-    resize: none;
-    white-space: normal;
-    word-break: break-all;
-    line-height: 24px;
 }
 .num{
-    white-space: pre-wrap;
-    word-break: break-all;
-    padding-top: 2px;
+    white-space: nowrap;
 }
 .total{
-    margin-top: 12px;
+    margin-top: 8px;
     font-size: 22px;
     font-weight: bold;
 }
@@ -73,35 +67,35 @@ body{
 <body>
 <div class="wrap">
     <div class="line">
-        <textarea class="exp" rows="1"></textarea>
+        <input class="exp">
         <span class="num">0</span>
     </div>
     <div class="line">
-        <textarea class="exp" rows="1"></textarea>
+        <input class="exp">
         <span class="num">0</span>
     </div>
     <div class="line">
-        <textarea class="exp" rows="1"></textarea>
+        <input class="exp">
         <span class="num">0</span>
     </div>
     <div class="line">
-        <textarea class="exp" rows="1"></textarea>
+        <input class="exp">
         <span class="num">0</span>
     </div>
     <div class="line">
-        <textarea class="exp" rows="1"></textarea>
+        <input class="exp">
         <span class="num">0</span>
     </div>
     <div class="line">
-        <textarea class="exp" rows="1"></textarea>
+        <input class="exp">
         <span class="num">0</span>
     </div>
     <div class="line">
-        <textarea class="exp" rows="1"></textarea>
+        <input class="exp">
         <span class="num">0</span>
     </div>
     <div class="line">
-        <textarea class="exp" rows="1"></textarea>
+        <input class="exp">
         <span class="num">0</span>
     </div>
 
@@ -114,7 +108,6 @@ body{
 <script>
 function calculate(str){
     if(!str.trim()) return 0;
-    str = str.replace(/\n/g,"");
     str = str.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
     if(!/^[\d+\-*/.()\s]+$/.test(str)) return 0;
     try{
@@ -124,18 +117,16 @@ function calculate(str){
     }
 }
 
-// 自动缩小字号 + 自动增高文本域
-function adaptField(ta){
-    const maxFont = 18;
-    const minFont = 10;
-    ta.style.fontSize = maxFont + "px";
-    // 先缩小字体
-    while(ta.scrollWidth > ta.clientWidth && parseFloat(ta.style.fontSize) > minFont){
-        ta.style.fontSize = parseFloat(ta.style.fontSize) - 0.6 + "px";
+// 实时输入自动缩放
+function autoFontSize(input) {
+    const max = 18;
+    const min = 1;
+    let size = max;
+    input.style.fontSize = size + "px";
+    while (input.scrollWidth > input.clientWidth && size > min) {
+        size -= 0.7;
+        input.style.fontSize = size + "px";
     }
-    // 自动撑开高度，视觉换行，无真实回车
-    ta.style.height = "auto";
-    ta.style.height = ta.scrollHeight + "px";
 }
 
 const inputs = document.querySelectorAll('.exp');
@@ -150,7 +141,7 @@ function loadCache(){
     inputs.forEach((inp,idx)=>{
         if(arr[idx]!==undefined){
             inp.value = arr[idx];
-            adaptField(inp);
+            autoFontSize(inp);
         }
     })
     refresh();
@@ -165,7 +156,7 @@ function saveCache(){
 function refresh(){
     let total = 0;
     inputs.forEach((inp,idx)=>{
-        adaptField(inp);
+        autoFontSize(inp);
         let res = calculate(inp.value);
         nums[idx].innerText = res;
         total += res;
@@ -178,14 +169,17 @@ document.getElementById("clearBtn").onclick = function(){
     inputs.forEach(inp=>{
         inp.value = "";
         inp.style.fontSize = "18px";
-        inp.style.height = "24px";
     })
     localStorage.removeItem(storageKey);
     refresh();
 }
 
+// 每输入一个字符立刻缩小字体
 inputs.forEach((input, index)=>{
-    input.oninput = refresh;
+    input.oninput = function(){
+        autoFontSize(input);
+        refresh();
+    };
     input.onkeydown = function(e){
         if(e.key === 'Enter'){
             e.preventDefault();
