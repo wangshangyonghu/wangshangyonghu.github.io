@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>销轴单重计算器一网上用户一销轴计算器单重克公斤材料费总重量,网上用户</title>
+<style>
+.wrap{max-width:500px;margin:0 auto;}
+input{width:180px;}
+</style>
+</head>
+
+<div class="wrap">
+<h1>销轴单重计算器一网上用户</h1>
+<hr color=0000ff>
+
+杆径:<input type="number" id="num1" />毫米
+<br/>
+总长:<input type="number" id="num2" />毫米
+<br/>
+密度:<input type="number" id="num3" />密度
+<br/>
+数量:<input type="number" id="num4" />个
+<br/>
+原材料费:<input type="number" id="num5" placeholder="输入多少钱一公斤" />/公斤
+<hr/>
+
+<button onclick="multiply()">计算</button>
+&nbsp; &nbsp; &nbsp;
+<button onclick="resetInput()">清零</button>
+<hr/>
+结果仅供参考
+<hr/>
+单重:<input type="number" id="numa" />公斤
+<br/>
+单重:<input type="number" id="nums" />克
+<br/>
+总重量:<input type="number" id="numd" />公斤
+<br/>
+总材料费:<input type="number" id="numf" />元
+<hr/>
+
+原材料密度参考:<hr/>
+不锈钢304 : 7.93<hr/>
+不锈钢316 : 7.98<hr/>
+430:7.75<hr/>
+铁 : 7.86<hr/>
+黄铜 : 8.92<hr/>
+紫铜 : 8.98<hr/>
+铝 : 2.7<hr/>
+铝合金 : 2.73<hr/>
+</div>
+
+<link rel="stylesheet" href="/a/js/h.css">
+<script src="/a/js/ico.js"></script>
+
+<script>
+var inputs = document.querySelectorAll("input[type='number']");
+for(var i=0;i<inputs.length;i++){
+    inputs[i].onkeydown = function(e){
+        if(e.keyCode===13){
+            e.preventDefault();
+            let next = this.nextElementSibling;
+            while(next && next.tagName!=='INPUT'){
+                next = next.nextElementSibling;
+            }
+            if(next){
+                next.focus();
+            }else{
+                multiply();
+            }
+        }
+    }
+}
+
+function multiply() {
+  var num1 = parseFloat(document.getElementById("num1").value)||0;
+  var num2 = parseFloat(document.getElementById("num2").value)||0;
+  var num3 = parseFloat(document.getElementById("num3").value)||0;
+  var num4 = parseFloat(document.getElementById("num4").value)||0;
+  var num5 = parseFloat(document.getElementById("num5").value)||0;
+
+  var GPC234 = 3.14;
+  var product = (num1/2 * num1/2 * GPC234 * num2 * num3 )/1000/1000 ;
+  var product2 =(num1/2 * num1/2 * GPC234 * num2 * num3 )/1000;
+  var product3 =product * num4 ;
+  var product4 =product3*num5;
+
+  document.getElementById("numa").value = product.toFixed(10);
+  document.getElementById("nums").value = product2.toFixed(10);
+  document.getElementById("numd").value = product3.toFixed(10);
+  document.getElementById("numf").value = product4.toFixed(10);
+}
+
+function resetInput() {
+document.getElementById("num1").value = "";
+document.getElementById("num2").value = "";
+document.getElementById("num3").value = "";
+document.getElementById("num4").value = "";
+document.getElementById("num5").value = "";
+document.getElementById("numa").value = "";
+document.getElementById("nums").value = "";
+document.getElementById("numd").value = "";
+document.getElementById("numf").value = "";
+document.getElementById("num1").focus();
+}
+</script>
+
+</html>
