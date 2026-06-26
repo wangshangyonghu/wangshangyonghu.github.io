@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>输入框计算器</title>
+<style>
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: system-ui, sans-serif;
+    padding: 20px 15px;
+}
+.wrap{
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    border: 1px solid #222;
+    padding: 12px;
+}
+.top-total{
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+#exp{
+    width: 100%;
+    min-height: 500px;
+    border: none;
+    font-size: 18px;
+    outline: 0;
+    padding: 4px;
+    background: transparent;
+    resize: none;
+    white-space: normal;
+    word-break: break-all;
+    line-height: 26px;
+}
+#clearBtn{
+    width: 100%;
+    margin-top:15px;
+    padding:10px;
+    font-size:18px;
+    background:#f44336;
+    color:#fff;
+    border:none;
+    border-radius:4px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top-total">计算结果：<span id="sum">0</span></div>
+    <textarea id="exp"></textarea>
+    <button id="clearBtn">清空</button>
+</div>
+
+<script>
+function calculate(str){
+    if(!str.trim()) return 0;
+    str = str.replace(/\n/g,"");
+    str = str.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
+    if(!/^[\d+\-*/.()\s]+$/.test(str)) return 0;
+    try{
+        return new Function('"use strict";return ('+str+')')();
+    }catch{
+        return 0;
+    }
+}
+
+const ta = document.getElementById('exp');
+const totalBox = document.getElementById('sum');
+const storageKey = "calcSingleData";
+
+function loadCache(){
+    let data = localStorage.getItem(storageKey);
+    if(data){
+        ta.value = data;
+        refresh();
+    }
+}
+function saveCache(){
+    localStorage.setItem(storageKey, ta.value);
+}
+function refresh(){
+    let res = calculate(ta.value);
+    totalBox.innerText = res;
+    saveCache();
+}
+
+ta.oninput = refresh;
+
+document.getElementById("clearBtn").onclick = function(){
+    ta.value = "";
+    localStorage.removeItem(storageKey);
+    refresh();
+}
+
+window.onload = loadCache;
+</script>
+</body>
+</html>
