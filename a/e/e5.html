@@ -1,0 +1,528 @@
+<!-- 没一备注的html模版 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="zh-CN">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/favicon.ico">
+    <meta name="mobile-web-app-capable" content="yes">
+<!--居中--><style type="text/css">       
+      body {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 20px;
+          line-height: 1.7;
+          background-color: #f8f9fa;
+          color: #333;
+      }          
+       </style><!--居中-->
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+ <title>浏览器主页</title><!--标题-->
+<!--关键词--> <meta name="keywords" content="网上用户,浏览器主页,浏览器首页,网上用户浏览器主页,个人用户浏览器主页,个人浏览器主页,浏览器主页,公平村浏览器主页手机版,公平村浏览器主页,公平村网址导航,平村网站导航,网上用户浏览器首页,公平村,公平村浏览器首页,wangshangyonghu,a网上用户,a01234567890w" /><!--关键词-->
+<!--描述--><meta name="description" content="公平村浏览器主页，这是一个提供各种网站链接和搜索引擎的浏览器主页，包括百度、必应、搜狗、360、抖音等热门平台。你可以快速访问你想要的网站，也可以使用不同的搜索工具找到...网上用户,浏览器主页,网上用户浏览器主页,公平村浏览器主页,网上用户浏览器首页,公平村,公平村浏览器首页,浏览器首页,wangshangyonghu,a网上用户,a01234567890w,个人用户浏览器主页,个人浏览器主页" />
+
+
+</head>
+<body>
+
+
+<style>
+:root {
+    --primary-color: #0066FF;
+    --secondary-color: #CCFFFF;
+    --text-color: #333;
+    --light-text: #D6D6D6;
+    --border-color: #ccc;
+    --btn-hover: #0055DD;
+    --container-width: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    outline: none;
+    border: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px 15px;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+header h1 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 28px;
+}
+
+.top-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.top-nav a {
+    color: var(--light-text);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    transition: color 0.3s;
+}
+
+.top-nav a:hover {
+    color: var(--primary-color);
+}
+
+.search-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#searchInput {
+    width: 60%;
+    min-width: 30%;
+    height: 100px;
+    padding: 0 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px 0 0 8px;
+    font-size: 18px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchInput:focus {
+    border-color: var(--btn-hover);
+}
+
+.search-btn {
+    height: 60px;
+    padding: 0 25px;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+#result {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.category-nav {
+    margin-bottom: 40px;
+}
+
+.category-title {
+    display: inline-block;
+    background: linear-gradient(to bottom, var(--primary-color), #0099ff);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.link-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 25px;
+}
+
+.link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: 500;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.link-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+footer {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 2px solid var(--primary-color);
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
+}
+
+.footer-links {
+    margin: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.upgrade-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.upgrade-summary {
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.upgrade-content {
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-left: 15px;
+    }
+    header h1 {
+        font-size: 24px;
+    }
+    #searchInput {
+        width: 75%;
+        height: 50px;
+        font-size: 16px;
+    }
+    .search-btn {
+        height: 50px;
+        padding: 0 18px;
+        font-size: 16px;
+    }
+    .link-container {
+        justify-content: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<style>
+#searchInput, .search-btn {
+  vertical-align: middle;
+  height: 80px;
+  box-sizing: border-box;
+}
+.search-section {
+  font-size: 0;
+}
+#searchInput, .search-btn {
+  font-size: 26px;
+}
+</style>
+
+<style>
+#searchInput::placeholder {
+    font-size: 16px;
+}
+#searchInput::-webkit-input-placeholder {
+    font-size: 16px;
+}
+#searchInput::-moz-placeholder {
+    font-size: 16px;
+}
+#searchInput:-ms-input-placeholder {
+    font-size: 16px;
+}
+</style>
+
+<section id="搜索" class="search-section">
+    <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)"
+        onkeyup="handleKeyUp(event)"
+    >
+    <button class="search-btn" id="mainSearchBtn">搜索</button>
+
+    <p style="font-size: 12px;">🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)</p>
+
+    <div id="result"></div>
+
+    <div class="link-container" style="margin-top: 15px;">
+搜索:
+        <button class="link-btn" data-engine="baidu">百度搜索</button>
+        <button class="link-btn" data-engine="bing">必应搜索</button>
+        <button class="link-btn" data-engine="toutiao">今日头条搜索</button>
+        <button class="link-btn" data-engine="weixin">搜狗微信搜索</button>
+        <button class="link-btn" data-engine="360">360搜索</button>
+        <button class="link-btn" data-engine="douyin">抖音搜索</button>
+        <button class="link-btn" data-engine="sogou">搜狗搜索</button>
+        <button class="link-btn" data-engine="yandex">Yandex</button>
+        <button class="link-btn" data-engine="3dsource">3DSource零件库</button>
+        <button class="link-btn" data-engine="baidu-mp3">音乐</button>
+        <button class="link-btn" data-engine="baidu-video">视频</button>
+        <button class="link-btn" data-engine="baidu-news">百度新闻</button>
+        <button class="link-btn" data-engine="taobao">爱淘宝</button>
+    </div>
+
+    <div class="link-container">
+图片搜索:
+        <button class="link-btn" data-engine="bing-image">必应图片</button>
+        <button class="link-btn" data-engine="baidu-image">百度图片</button>
+        <button class="link-btn" data-engine="sogou-image">搜狗图片</button>
+        <button class="link-btn" data-engine="360-image">360图片</button>
+        <button class="link-btn" data-engine="taobao-image">淘宝图片</button>
+    </div>
+
+    <div class="link-container">
+图片搜索:
+        <button class="link-btn" data-engine="atb">爱淘宝</button>
+        <button class="link-btn" data-engine="tb">淘宝</button>
+        <button class="link-btn" data-engine="yp">小米有品</button>
+        <button class="link-btn" data-engine="dd">当当</button>
+
+        <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D%2B1xvab%2BWJVgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMejTarIx5m0g5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401766803415%400bbb5ce5_21f4_19b5db0a2b5_0691%4001" target="_blank" class="link-btn">淘工厂</a>
+        <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D%2B1xvab%2BWJVgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMejTarIx5m0g5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401766803415%4021048906_131d_199f4c04abe_0551%4001" target="_blank" class="link-btn">天天特卖工厂</a>
+        <a href="#购物" target="_blank" class="link-btn">购物</a>
+        <a href="https://wangshangyonghu.github.io/a/x/x21.html" target="_blank" class="link-btn">商品搜索</a>
+        <button class="link-btn" data-engine=""></button>
+    </div>
+
+    <div class="link-container">
+翻译工具:
+        <button class="link-btn" data-engine="baidu-trans">百度翻译</button>
+        <button class="link-btn" data-engine="sogou-trans">搜狗翻译</button>
+        <button class="link-btn" data-engine="bing-trans">必应翻译</button>
+    </div>
+</section>
+
+<script>
+    const chineseNumber = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+    const chineseUnit = ["", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"];
+
+    function convertToChinese(num) {
+        if (!num || isNaN(num)) return "零元整";
+        let number = parseFloat(num);
+        if (number === 0) return "零元整";
+        let integerPart = Math.floor(number);
+        let decimalPart = Math.round((number - integerPart) * 100);
+        let jiao = Math.floor(decimalPart / 10);
+        let fen = decimalPart % 10;
+        let integerStr = integerPart.toString();
+        let result = "";
+        let zeroFlag = false;
+        let unitIndex = integerStr.length - 1;
+        for (let i = 0; i < integerStr.length; i++) {
+            let digit = parseInt(integerStr[i]);
+            if (digit === 0) {
+                zeroFlag = true;
+            } else {
+                if (zeroFlag) {
+                    result += "零";
+                    zeroFlag = false;
+                }
+                result += chineseNumber[digit] + chineseUnit[unitIndex - i];
+            }
+        }
+        if (result) {
+            result += "元";
+        } else {
+            result = "零元";
+        }
+        if (jiao > 0) {
+            result += chineseNumber[jiao] + "角";
+        } else if (jiao === 0 && fen > 0 && integerPart > 0) {
+            result += "零";
+        }
+        if (fen > 0) {
+            result += chineseNumber[fen] + "分";
+        } else if (jiao === 0 && fen === 0) {
+            result += "整";
+        }
+        result = result.replace(/^零元零/, '零');
+        result = result.replace(/^零元/, '');
+        return result || "零元整";
+    }
+
+    function processPercentage(expr) {
+        return expr.replace(/(\d+(\.\d+)?)%/g, (match, num) => {
+            return (parseFloat(num) / 100).toString();
+        });
+    }
+
+    function calculateExpression(expr) {
+        const validPattern = /^[\d+\-*/.()\s%]+$/;
+        if (!validPattern.test(expr)) {
+            return null;
+        }
+        try {
+            const processedExpr = processPercentage(expr);
+            const func = new Function(`return ${processedExpr};`);
+            const result = func();
+            if (isNaN(result) || !isFinite(result)) {
+                return null;
+            }
+            return result;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function handleKeyUp(event) {
+        const inputValue = document.getElementById("searchInput").value.trim();
+        const resultElement = document.getElementById("result");
+        resultElement.innerHTML = "";
+        if (inputValue === "") {
+            return;
+        }
+        const calculationResult = calculateExpression(inputValue);
+        if (calculationResult !== null && !isNaN(calculationResult)) {
+            const formattedExpr = inputValue.replace(/\s+/g, '');
+            const displayResult = Number.isInteger(calculationResult) ? calculationResult : parseFloat(calculationResult.toFixed(6));
+            let resultHtml = `<div style="color: #0066cc; font-weight: bold;">${formattedExpr} = ${displayResult}</div>`;
+            const chineseResult = convertToChinese(displayResult);
+            resultHtml += `<div style="color: #e67e22; margin-top: 5px;">${displayResult} = ${chineseResult}</div>`;
+            resultElement.innerHTML = resultHtml;
+        } else if (!isNaN(inputValue.replace(/%/g, '')) && inputValue !== "") {
+            let numValue = inputValue;
+            if (numValue.includes('%')) {
+                numValue = processPercentage(numValue);
+            }
+            const num = parseFloat(numValue);
+            if (!isNaN(num)) {
+                const chineseResult = convertToChinese(num);
+                resultElement.innerHTML = `<div style="color: #e67e22; font-weight: bold;">${inputValue} = ${chineseResult}</div>`;
+            }
+        }
+        if (event.keyCode === 13 || event.key === 'Enter') {
+            document.getElementById("mainSearchBtn").click();
+        }
+    }
+
+    const searchEngines = {
+        baidu: "https://www.baidu.com/s?wd=",
+        bing: "https://www.bing.com/search?q=",
+        toutiao: "https://so.toutiao.com/search?dvpf=pc&source=input&keyword=",
+        weixin: "https://weixin.sogou.com/weixin?type=2&s_from=input&query=",
+        360: "https://www.so.com/s?q=",
+        douyin: "https://www.douyin.com/search/",
+        sogou: "https://www.sogou.com/web?query=",
+        yandex: "https://yandex.com/search/?text=",
+        "3dsource": "http://lib.3dsource.cn/#/searchResult?searchKeyword=",
+        "baidu-mp3": "https://music.163.com/#/search/m/?s=",
+        "baidu-video": "https://www.baidu.com/sf/vsearch?pd=video&tn=vsearch&ie=utf-8&wd=",
+        "baidu-news": "https://news.baidu.com/ns?word=",
+        "bing-image": "https://cn.bing.com/images/search?q=",
+        "baidu-image": "https://image.baidu.com/search/index?word=",
+        "sogou-image": "https://pic.sogou.com/pics?query=",
+        "360-image": "https://image.so.com/i?q=",
+        "taobao-image": "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=",
+        "baidu-trans": "https://fanyi.baidu.com/mtpe-individual/multimodal?query=",
+        "sogou-trans": "https://fanyi.sogou.com/text?keyword=",
+        "bing-trans": "https://cn.bing.com/translator/?ref&text=",
+        "taobao": "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=",
+        "atb": "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=",
+        "tb": "https://s.taobao.com/search?page=1&pvid=d0f2ec2810bcec0d5a16d5283ce59f67&q=",
+        "yp": "https://www.xiaomiyoupin.com/search?keyword=",
+        "dd": "https://search.dangdang.com/?key="
+    };
+
+    document.getElementById("mainSearchBtn").addEventListener("click", () => {
+        const keyword = document.getElementById("searchInput").value;
+        if (keyword) {
+            window.open(searchEngines.bing + encodeURIComponent(keyword), "_blank");
+        }
+    });
+
+    document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const engine = btn.getAttribute("data-engine");
+            const keyword = document.getElementById("searchInput").value;
+            const url = searchEngines[engine] + encodeURIComponent(keyword || "");
+            window.open(url, "_blank");
+        });
+    });
+</script>
+  
+
+
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+
+<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
+<!-- ico 放这里最完美 --><script src="/a/js/ico.js"></script>
+
+</body>
+</html>

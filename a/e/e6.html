@@ -1,0 +1,413 @@
+<!doctype html> <!-- 声明文档类型为 HTML5，这是 HTML5 标准的文档声明方式 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档的根元素，lang 属性指定页面主要语言为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据、样式、脚本等不直接显示在页面中的内容 -->
+    <!-- 设置视口参数，使页面在移动设备上正确显示
+         width=device-width: 视口宽度等于设备宽度
+         user-scalable=yes: 允许用户缩放页面（默认值，可省略）
+         建议添加 initial-scale=1.0 确保初始缩放比例正确 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<script src="/sl1.js"></script><!--自动收录-->
+    <!-- 设置文档的语言编码，虽然 HTML5 中推荐使用 lang 属性，但保留此标签兼容旧浏览器 -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    
+    <!-- 网站图标设置区域 -->
+    <!-- 标准浏览器图标 -->
+    <link rel="icon" href="ico.jpg" type="image/x-icon" alt="网上用户一网站图标">
+    <!-- 快捷方式图标（IE 兼容） -->
+    <link rel="shortcut icon" href="ico.jpg" type="image/x-icon" alt="网上用户一网站快捷图标"/>
+    <!-- 苹果设备触摸图标（添加到主屏幕时使用） -->
+    <link rel="apple-touch-icon" href="ico.jpg" alt="网上用户一苹果设备图标"/>
+    <!-- 苹果设备启动画面图标（应用启动时显示） -->
+    <link rel="apple-touch-startup-image" href="ico.jpg" alt="网上用户一苹果设备启动画面"/>
+    <!-- 高分辨率设备图标（如 Android 高dpi设备） -->
+    <link rel="icon" sizes="192x192" href="ico.jpg" alt="网上用户一高分辨率设备图标"/>
+    <!-- 定义图标遮罩（主要用于 Safari 等浏览器） -->
+    <link rel="icon" sizes="any" mask href="ico.jpg" alt="网上用户一图标遮罩" />
+    <!-- 苹果设备预合成图标（不添加系统默认光泽效果） -->
+    <link rel="apple-touch-icon-precomposed" href="ico.jpg" alt="网上用户一苹果设备预合成图标">
+
+        <!-- 告知浏览器该页面适合作为移动端Web应用运行
+         添加到主屏幕后，会隐藏浏览器地址栏，更接近原生应用体验 -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    
+    <!-- DNS预解析，提前解析指定域名的IP地址，加快后续资源加载速度 -->
+      <link rel="dns-prefetch" href="/"/>    
+    
+    <!-- 设置文档的字符编码为UTF-8，确保页面文字正确显示，防止乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <!-- CSS样式定义部分开始 -->
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      A {
+        text-decoration: none; /* 去除a标签的下划线（建议使用小写属性名，符合CSS规范） */
+            }
+    </style>
+    <!-- CSS样式定义部分结束 -->
+
+
+ <title>浏览器主页</title><!--标题-->
+<!--关键词--> <meta name="keywords" content="网上用户,浏览器主页,浏览器首页,网上用户浏览器主页,个人用户浏览器主页,个人浏览器主页,浏览器主页,公平村浏览器主页手机版,公平村浏览器主页,公平村网址导航,平村网站导航,网上用户浏览器首页,公平村,公平村浏览器首页,wangshangyonghu,a网上用户,a01234567890w" /><!--关键词-->
+<!--描述--><meta name="description" content="公平村浏览器主页，这是一个提供各种网站链接和搜索引擎的浏览器主页，包括百度、必应、搜狗、360、抖音等热门平台。你可以快速访问你想要的网站，也可以使用不同的搜索工具找到...网上用户,浏览器主页,网上用户浏览器主页,公平村浏览器主页,网上用户浏览器首页,公平村,公平村浏览器首页,浏览器首页,wangshangyonghu,a网上用户,a01234567890w,个人用户浏览器主页,个人浏览器主页" />
+
+<style>
+:root {
+    --primary-color: #0066FF;
+    --secondary-color: #CCFFFF;
+    --text-color: #333;
+    --light-text: #D6D6D6;
+    --border-color: #ccc;
+    --btn-hover: #0055DD;
+    --container-width: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+}
+
+body {
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px 15px;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.search-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#searchInput {
+    width: 60%;
+    min-width: 30%;
+    height: 100px;
+    padding: 0 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px 0 0 8px;
+    font-size: 18px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchInput:focus {
+    border-color: var(--btn-hover);
+}
+
+.search-btn {
+    height: 60px;
+    padding: 0 25px;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+#result {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.category-title {
+    display: inline-block;
+    background: linear-gradient(to bottom, var(--primary-color), #0099ff);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.link-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 25px;
+}
+
+.link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.link-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-left: 15px;
+    }
+    #searchInput {
+        width: 75%;
+        height: 50px;
+        font-size: 16px;
+    }
+    .search-btn {
+        height: 50px;
+        padding: 0 18px;
+        font-size: 16px;
+    }
+    .link-container {
+        justify-content: center;
+    }
+}
+</style>
+
+<style>
+#searchInput, .search-btn {
+  vertical-align: middle;
+  height: 80px;
+  box-sizing: border-box;
+}
+.search-section {
+  font-size: 0;
+}
+#searchInput, .search-btn {
+  font-size: 22px;
+}
+</style>
+
+<style>
+#searchInput::placeholder {
+    font-size: 8px;
+}
+#searchInput::-webkit-input-placeholder {
+    font-size: 8px;
+}
+#searchInput::-moz-placeholder {
+    font-size: 8px;
+}
+#searchInput:-ms-input-placeholder {
+    font-size: 8px;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+<section id="搜索" class="search-section">
+    <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写/数学计算）"
+        onkeyup="handleKeyUp(event)"
+    >
+    <button class="search-btn" id="mainSearchBtn">搜索</button>
+<p style="font-size: 8px;">🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)</p>
+    <div id="result"></div>
+
+    <div class="link-container" style="margin-top: 15px;">
+搜索:
+        <button class="link-btn" data-engine="baidu">百度搜索</button>
+        <button class="link-btn" data-engine="bing">必应搜索</button>
+        <button class="link-btn" data-engine="toutiao">今日头条搜索</button>
+        <button class="link-btn" data-engine="weixin">搜狗微信搜索</button>
+        <button class="link-btn" data-engine="360">360搜索</button>
+        <button class="link-btn" data-engine="douyin">抖音搜索</button>
+        <button class="link-btn" data-engine="sogou">搜狗搜索</button>
+        <button class="link-btn" data-engine="yandex">Yandex</button>
+        <button class="link-btn" data-engine="3dsource">3DSource零件库</button>
+        <button class="link-btn" data-engine="baidu-mp3">音乐</button>
+        <button class="link-btn" data-engine="baidu-video">视频</button>
+        <button class="link-btn" data-engine="baidu-news">百度新闻</button>
+        <button class="link-btn" data-engine="taobao">爱淘宝</button>
+    </div>
+
+    <div class="link-container">
+图片搜索:
+        <button class="link-btn" data-engine="bing-image">必应图片</button>
+        <button class="link-btn" data-engine="baidu-image">百度图片</button>
+        <button class="link-btn" data-engine="sogou-image">搜狗图片</button>
+        <button class="link-btn" data-engine="360-image">360图片</button>
+        <button class="link-btn" data-engine="taobao-image">淘宝图片</button>
+    </div>
+
+    <div class="link-container">
+翻译工具:
+        <button class="link-btn" data-engine="baidu-trans">百度翻译</button>
+        <button class="link-btn" data-engine="sogou-trans">搜狗翻译</button>
+        <button class="link-btn" data-engine="bing-trans">必应翻译</button>
+    </div>
+</section>
+</div>
+
+<script>
+const chineseNumber = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+const chineseUnit = ["", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"];
+
+function convertToChinese(num) {
+    if (!num || isNaN(num)) return "零元整";
+    let numStr = num.toString().trim();
+    let integerPart = "0";
+    let decimalPart = "00";
+    if (numStr.includes('.')) {
+        const parts = numStr.split('.');
+        integerPart = parts[0] || "0";
+        decimalPart = (parts[1] || "").padEnd(2, '0').substring(0, 2);
+    } else {
+        integerPart = numStr;
+    }
+    if (integerPart === "0" && decimalPart === "00") {
+        return "零元整";
+    }
+    let integerResult = "";
+    let zeroCount = 0;
+    for (let i = 0; i < integerPart.length; i++) {
+        let digit = parseInt(integerPart[i]);
+        let unitPos = integerPart.length - 1 - i;
+        if (digit === 0) {
+            zeroCount++;
+        } else {
+            if (zeroCount > 0) {
+                integerResult += "零";
+                zeroCount = 0;
+            }
+            integerResult += chineseNumber[digit] + chineseUnit[unitPos];
+        }
+    }
+    integerResult = integerResult.replace(/零+$/, "");
+    let result = "";
+    if (integerResult) {
+        result += integerResult + "元";
+    } else if (decimalPart !== "00") {
+        result += "零元";
+    }
+    const jiao = parseInt(decimalPart[0]);
+    const fen = parseInt(decimalPart[1]);
+    if (jiao === 0 && fen === 0) {
+        result += "整";
+    } else {
+        if (jiao !== 0) {
+            result += chineseNumber[jiao] + "角";
+        } else if (integerResult && fen !== 0) {
+            result += "零";
+        }
+        if (fen !== 0) {
+            result += chineseNumber[fen] + "分";
+        }
+    }
+    return result || "零元整";
+}
+
+function calculateMathExpression(expression) {
+    const validChars = /^[0-9+\-*/%().\s]+$/;
+    if (!validChars.test(expression)) return null;
+    const sanitized = expression.replace(/[^0-9+\-*/%().\s]/g, '');
+    try {
+        const processed = sanitized.replace(/(\d+(\.\d+)?)%/g, '($1/100)');
+        const result = eval(processed);
+        if (isNaN(result) || !isFinite(result)) return null;
+        return Number.isInteger(result) ? result : parseFloat(result.toFixed(6));
+    } catch (e) {
+        return null;
+    }
+}
+
+function handleKeyUp(event) {
+    const inputValue = document.getElementById("searchInput").value.trim();
+    const resultElement = document.getElementById("result");
+    resultElement.innerHTML = "";
+    if (inputValue === "") return;
+    const mathResult = calculateMathExpression(inputValue);
+    if (mathResult !== null) {
+        resultElement.innerHTML = `<div style="color: #0066cc; font-weight: bold;">${inputValue} = ${mathResult}</div>`;
+        resultElement.innerHTML += `<div style="color: #e67e22; margin-top: 5px;">${mathResult} = ${convertToChinese(mathResult)}</div>`;
+    } else if (!isNaN(Number(inputValue)) && inputValue !== "") {
+        resultElement.innerHTML = `<div style="color: #0066cc; font-weight: bold;">${inputValue} = ${inputValue}</div>`;
+        resultElement.innerHTML += `<div style="color: #e67e22; margin-top: 5px;">${inputValue} = ${convertToChinese(inputValue)}</div>`;
+    }
+    if (event.keyCode === 13 || event.key === 'Enter') {
+        document.getElementById("mainSearchBtn").click();
+    }
+}
+
+const searchEngines = {
+    baidu: "https://www.baidu.com/s?wd=",
+    bing: "https://www.bing.com/search?q=",
+    toutiao: "https://so.toutiao.com/search?keyword=",
+    weixin: "https://weixin.sogou.com/weixinwap?type=2&ie=utf8&_sug_=n&_sug_type_=-1&s_from=input&query=",
+    360: "https://www.so.com/s?q=",
+    douyin: "https://www.douyin.com/search/",
+    sogou: "https://www.sogou.com/web?query=",
+    yandex: "https://yandex.com/search/?text=",
+    "3dsource": "http://lib.3dsource.cn/#/searchResult?searchKeyword=",
+    "baidu-mp3": "https://music.163.com/#/search/m/?s=",
+    "baidu-video": "https://m.baidu.com/sf/vsearch?pd=video&tn=vsearch&sa=vs_tab&lid=7194865086898977692&ms=1&atn=index&word=",
+    "baidu-news": "https://m.baidu.com/sf/vsearch?pd=realtime&tn=vsearch&sa=vs_tab&lid=7292861491581609769&ms=1&atn=index&word=",
+    "taobao": "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747217%400b8f386d_1236_199f4b661e8_057f%4001&q=",
+    "bing-image": "https://cn.bing.com/images/search?q=",
+    "baidu-image": "https://www.baidu.com/sf/vsearch?pd=image_content&tn=vsearch&sa=vs_tab&lid=6551618409030760268&ms=1&from=844b&atn=page&fr=tab&word=",
+    "sogou-image": "https://pic.sogou.com/pic/searchList.jsp?uID=&v=5&statref=index_form_1&spver=0&rcer=&keyword=",
+    "360-image": "https://image.so.com/i?q=",
+    "taobao-image": "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747217%400b8f386d_1236_199f4b661e8_057f%4001&q=",
+    "baidu-trans": "https://fanyi.baidu.com/m/trans?from=zh&to=en&query=",
+    "sogou-trans": "https://fanyi.sogou.com/text?keyword=",
+    "bing-trans": "https://cn.bing.com/translator/?ref&text="
+};
+
+document.getElementById("mainSearchBtn").addEventListener("click", () => {
+    const keyword = document.getElementById("searchInput").value;
+    if (keyword) {
+        window.open(searchEngines.bing + encodeURIComponent(keyword), "_blank");
+    }
+});
+
+document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const engine = btn.getAttribute("data-engine");
+        const keyword = document.getElementById("searchInput").value;
+        const url = searchEngines[engine] + encodeURIComponent(keyword || "");
+        window.open(url, "_blank");
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+<!-- seo 放这里最完美 --><script src="/a/js/seo.js"></script>
+<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
+<!-- ico 放这里最完美 --><script src="/a/js/ico.js"></script>
+
+</body>
+</html>
+
+
+
+
