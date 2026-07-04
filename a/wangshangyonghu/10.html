@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes">
+<title>九九乘法表</title>
+
+<br/><br/>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    max-width: 1200px;
+    margin: 0px auto;
+}
+.row {
+    display: flex;
+}
+.cell {
+    border: 2px solid #222222;
+    padding: 1px 3px;
+    width: 11.1111%;
+    /* 文字独立随屏幕自动变大缩小 */
+    font-size: clamp(25px, 1.4vw, 35px);
+    white-space: nowrap;
+    text-align: center;
+}
+.table-box {
+    width: 1200px;
+    transform-origin: top left;
+}
+</style>
+</head>
+<body>
+<div class="table-box" id="tableWrap"></div>
+<script>
+const wrap = document.getElementById('tableWrap');
+for(let b = 1; b <= 9; b++){
+    const tr = document.createElement('div');
+    tr.className = 'row';
+    for(let a = 1; a <= b; a++){
+        const td = document.createElement('div');
+        td.className = 'cell';
+        td.textContent = `${a} x ${b} = ${a*b}`;
+        tr.appendChild(td);
+    }
+    wrap.appendChild(tr);
+}
+function fitScreen(){
+    const screenW = document.documentElement.clientWidth;
+    const usableW = screenW - 10;
+    const baseW = 1200;
+    let scale = usableW / baseW;
+    if(screenW >= 1200){
+        scale = 1;
+    }
+    wrap.style.transform = `scale(${scale})`;
+}
+window.onload = fitScreen;
+window.onresize = fitScreen;
+</script>
+</body>
+</html>
