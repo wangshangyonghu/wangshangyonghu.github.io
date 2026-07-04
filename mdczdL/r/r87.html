@@ -1,214 +1,437 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>产品询价信息提报单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>铆钉厂张东良 - 专业铆钉定制生产</title>
     <style>
-        /* 简单美化，让表单更整洁易读且紧凑 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
         }
-
         body {
-            /* 大幅减少页面上下内边距，仅保留少量左右留白 */
-            padding: 8px 10px;
-            background-color: #f5f5f5;
-            width: 100vw;
-            overflow-x: hidden;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
         }
-
-        .inquiry-form {
-            background-color: #ffffff;
-            /* 减少表单内部上下内边距，让内容更紧凑 */
-            padding: 15px 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            min-width: 300px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
-
-        .form-title {
-            font-size: 18px; /* 进一步缩小标题字体，节省空间 */
-            font-weight: bold;
+        .header {
             text-align: center;
-            /* 减少标题下方间距 */
-            margin-bottom: 12px;
-            color: #333333;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
         }
-
-        .form-subtitle {
-            font-size: 15px;
-            font-weight: 600;
-            /* 减少子标题下方间距 */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             margin-bottom: 10px;
-            color: #555555;
+            position: relative;
         }
-
-        .form-item {
-            /* 大幅减少表单项之间的上下间距，核心解决截图溢出问题 */
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px; /* 减少标签和输入框之间的间距 */
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #bbdefb;
+            position: relative;
         }
-
-        .form-label {
-            font-size: 14px;
-            color: #333333;
+        .badge {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+            font-weight: bold;
         }
-
-        .form-input, .form-textarea {
-            flex: 1;
-            width: 100%;
-            /* 减少内边距，缩小元素高度，节省空间 */
-            padding: 8px 10px;
-            border: 1px solid #dddddd;
-            border-radius: 4px;
-            font-size: 14px;
-            color: #333333;
-            resize: none; /* 禁止textarea手动调整大小，保持布局整齐 */
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        /* 地址文本域专属样式，字体调小，适配两行显示 */
-        .address-textarea {
-            font-size: 12px; /* 小号字体，容纳更多文字 */
-            height: auto; /* 高度自适应，保持两行紧凑显示 */
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
-
-        .form-radio {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px 12px; /* 减少单选框之间的间距 */
-            flex: 1;
-            width: 100%;
-        }
-
-        .radio-item {
+        .section-title {
+            font-size: 1.5em;
+            color: #64b5f6;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1976d2;
             display: flex;
             align-items: center;
-            gap: 4px;
-            flex-wrap: nowrap;
-            font-size: 14px; /* 缩小单选框文字大小 */
         }
-
-        .tips {
-            /* 减少提示栏上方间距和内部内边距 */
-            margin-top: 15px;
-            text-align: center;
-            font-size: 15px;
-            font-weight: bold;
-            color: #e63946;
-            padding: 8px;
-            background-color: #fff6f7;
-            border-radius: 4px;
+        .section-title::before {
+            content: '▸';
+            margin-right: 10px;
+            color: #ff6b35;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .info-item {
+            background: rgba(255,255,255,0.08);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #1976d2;
+        }
+        .info-item strong {
+            color: #90caf9;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .material-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .tag {
+            background: linear-gradient(135deg, #1976d2, #0d47a1);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+        .tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(25,118,210,0.4);
+        }
+        .size-table {
             width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .size-table th, .size-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .size-table th {
+            background: rgba(25,118,210,0.3);
+            color: #bbdefb;
+        }
+        .size-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .product-item {
+            background: rgba(255,107,53,0.2);
+            border: 1px solid #ff6b35;
+            color: #ffcc80;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255,107,53,0.2), rgba(255,167,38,0.2));
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .highlight-box h3 {
+            color: #ffcc80;
+            margin-bottom: 10px;
+        }
+        .contact-section {
+            background: linear-gradient(135deg, #0d47a1, #1976d2);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .contact-section h2 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .wechat-box {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin: 10px;
+            font-size: 1.3em;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+        .wechat-box strong {
+            color: #ffcc80;
+            font-size: 1.2em;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #78909c;
+            font-size: 0.9em;
+        }
+        .search-tip {
+            background: rgba(76,175,80,0.2);
+            border: 1px solid #4caf50;
+            color: #a5d6a7;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 5px;
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .info-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="inquiry-form">
-        <div class="form-title">产品询价信息提报单</div>
-        <div class="form-subtitle">核心必填信息</div>
-
-        <!-- 1. 产品材质 -->
-        <div class="form-item">
-            <label class="form-label">产品材质：</label>
-            <input type="text" class="form-input" placeholder="请填写产品材质">
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🏭 铆钉厂张东良</h1>
+            <p class="subtitle">《真实工厂》· 可以来图来样定制 · 可以视频看厂</p>
+            <div style="margin-top:15px">
+                <span class="badge">✅ 小批量定制</span>
+                <span class="badge">📹 视频看厂</span>
+                <span class="badge">🔧 来图来样定制</span>
+            </div>
+            <div style="margin-top:15px">
+                <span class="search-tip">🔍 铆钉生产视频搜索：铆钉厂张东良</span>
+            </div>
         </div>
 
-        <!-- 2. 产品规格 -->
-        <div class="form-item">
-            <label class="form-label">产品规格：</label>
-            <input type="text" class="form-input" placeholder="请填写产品规格">
+        <!-- 可生产材质 -->
+        <div class="section">
+            <div class="section-title">可生产材质</div>
+            <div class="material-tags">
+                <span class="tag">🔩 不锈钢铆钉</span>
+                <span class="tag">⚙️ 铁铆钉</span>
+                <span class="tag">🔶 铝铆钉</span>
+                <span class="tag">🟡 黄铜铆钉</span>
+                <span class="tag">🔴 紫铜铆钉</span>
+            </div>
         </div>
 
-        <!-- 3. 采购数量 -->
-        <div class="form-item">
-            <label class="form-label">采购数量：</label>
-            <input type="text" class="form-input" placeholder="请填写采购数量">
+        <!-- 产品尺寸规格 -->
+        <div class="section">
+            <div class="section-title">可生产产品尺寸规格</div>
+            <table class="size-table">
+                <tr>
+                    <th>参数</th>
+                    <th>规格范围</th>
+                </tr>
+                <tr>
+                    <td>帽径</td>
+                    <td>1.5mm - 20mm</td>
+                </tr>
+                <tr>
+                    <td>帽厚</td>
+                    <td>0.3mm - 6mm</td>
+                </tr>
+                <tr>
+                    <td>杆径</td>
+                    <td>0.8mm - 10mm</td>
+                </tr>
+                <tr>
+                    <td>杆长</td>
+                    <td>1.5mm - 150mm</td>
+                </tr>
+            </table>
         </div>
 
-        <!-- 4. 头部类型 -->
-        <div class="form-item">
-            <label class="form-label">头部类型：</label>
-            <div class="form-radio">
-                <div class="radio-item">
-                    <input type="radio" name="headType" id="roundHead">
-                    <label for="roundHead">圆头</label>
+        <!-- 铆钉材质详解 -->
+        <div class="section">
+            <div class="section-title">铆钉材质详解</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>🟡 铜材质</strong>
+                    H65黄铜、H68黄铜、H70黄铜、T2紫铜
                 </div>
-                <div class="radio-item">
-                    <input type="radio" name="headType" id="flatHead">
-                    <label for="flatHead">平头</label>
+                <div class="info-item">
+                    <strong>🔶 铝材质</strong>
+                    1100纯铝、1060纯铝、5052铝合金、5056铝合金、6063铝合金
                 </div>
-                <div class="radio-item">
-                    <input type="radio" name="headType" id="otherHead">
-                    <label for="otherHead">其他</label>
-                    <input type="text" class="form-input" style="width: 100px; padding: 6px;" placeholder="请补充">
+                <div class="info-item">
+                    <strong>🔩 不锈钢</strong>
+                    304、316
+                </div>
+                <div class="info-item">
+                    <strong>⚙️ 铁材质</strong>
+                    CH1T国产线、进口线、1008A
                 </div>
             </div>
         </div>
 
-        <!-- 5. 结构类型 -->
-        <div class="form-item">
-            <label class="form-label">结构类型：</label>
-            <div class="form-radio">
-                <div class="radio-item">
-                    <input type="radio" name="structureType" id="solid">
-                    <label for="solid">实心</label>
+        <!-- 表面处理 -->
+        <div class="section">
+            <div class="section-title">铆钉表面处理</div>
+            <div class="material-tags">
+                <span class="tag">镀镍</span>
+                <span class="tag">哑镍</span>
+                <span class="tag">黑镍</span>
+                <span class="tag">镀白锌</span>
+                <span class="tag">兰锌</span>
+                <span class="tag">黑锌</span>
+                <span class="tag">黄锌</span>
+                <span class="tag">镀铬</span>
+                <span class="tag">镀青铜</span>
+                <span class="tag">镀锡</span>
+                <span class="tag">镀银</span>
+                <span class="tag">钝化</span>
+                <span class="tag">氧化处理</span>
+            </div>
+        </div>
+
+        <!-- 主营铆钉产品 -->
+        <div class="section">
+            <div class="section-title">主营铆钉产品</div>
+            <div class="product-list">
+                <span class="product-item">不锈钢铆钉</span>
+                <span class="product-item">铁铆钉</span>
+                <span class="product-item">铝铆钉</span>
+                <span class="product-item">黄铜铆钉</span>
+                <span class="product-item">紫铜铆钉</span>
+                <span class="product-item">子母铆钉</span>
+                <span class="product-item">半空心铆钉</span>
+                <span class="product-item">实心铆钉</span>
+                <span class="product-item">标牌铆钉</span>
+                <span class="product-item">车件</span>
+                <span class="product-item">不锈钢螺丝</span>
+                <span class="product-item">平头铆钉</span>
+                <span class="product-item">圆头铆钉</span>
+                <span class="product-item">中空钉</span>
+                <span class="product-item">子母钉</span>
+                <span class="product-item">铜套</span>
+                <span class="product-item">搓花钉</span>
+                <span class="product-item">插销</span>
+                <span class="product-item">十字钉</span>
+                <span class="product-item">各类玩具车轴螺丝</span>
+                <span class="product-item">其他五金件</span>
+            </div>
+            <div style="margin-top:20px; padding:15px; background:rgba(255,255,255,0.05); border-radius:10px;">
+                <strong style="color:#90caf9">特殊铆钉类型：</strong><br>
+                扁平头铆钉、大扁圆头铆钉、半圆头铆钉、扁圆头铆钉、沉头铆钉、半沉头铆钉、翻边铆钉、旋铆铆钉、台阶铆钉、T头铆钉、平锥头铆钉、旋铆机用铆钉、自动铆钉机用铆钉
+            </div>
+        </div>
+
+        <!-- 应用行业 -->
+        <div class="section">
+            <div class="section-title">产品应用行业</div>
+            <div class="product-list">
+                <span class="product-item">沙滩椅</span>
+                <span class="product-item">手机支架</span>
+                <span class="product-item">沙滩床</span>
+                <span class="product-item">五金类产品</span>
+                <span class="product-item">机械装备</span>
+                <span class="product-item">厨电家具</span>
+                <span class="product-item">玩具</span>
+                <span class="product-item">健身器材</span>
+                <span class="product-item">电子电器</span>
+                <span class="product-item">通讯设备</span>
+                <span class="product-item">汽车制造</span>
+                <span class="product-item">健康器械</span>
+                <span class="product-item">船舶制造</span>
+                <span class="product-item">环保设备</span>
+                <span class="product-item">头盔</span>
+                <span class="product-item">汤锅</span>
+                <span class="product-item">炒菜锅</span>
+                <span class="product-item">帐篷</span>
+                <span class="product-item">休闲椅</span>
+                <span class="product-item">直播支架</span>
+                <span class="product-item">三脚架</span>
+                <span class="product-item">空调支架</span>
+                <span class="product-item">折叠床</span>
+                <span class="product-item">折叠椅</span>
+                <span class="product-item">躺椅</span>
+                <span class="product-item">平垫片</span>
+                <span class="product-item">雪球夹</span>
+            </div>
+        </div>
+
+        <!-- 非标异形件开发 -->
+        <div class="section">
+            <div class="section-title">非标异形件开发加工</div>
+            <p>根据图纸紧固件样品开发物件及工程设计要求进行产品开发及加工。我们支持来图来样定制，满足您的个性化需求。</p>
+        </div>
+
+        <!-- 包装与交期 -->
+        <div class="section">
+            <div class="section-title">包装与交期</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>📦 包装方式</strong>
+                    内包装：胶袋；外包装：纸箱或纸袋。另可按照客户要求包装。
                 </div>
-                <div class="radio-item">
-                    <input type="radio" name="structureType" id="halfHollow">
-                    <label for="halfHollow">半空心</label>
+                <div class="info-item">
+                    <strong>⏰ 交期</strong>
+                    7-15天（具体交货期按当日订单以及生产情况所定，欢迎咨询）
                 </div>
-                <div class="radio-item">
-                    <input type="radio" name="structureType" id="otherStructure">
-                    <label for="otherStructure">其他</label>
-                    <input type="text" class="form-input" style="width: 100px; padding: 6px;" placeholder="请补充">
+                <div class="info-item">
+                    <strong>💰 价格</strong>
+                    面议
                 </div>
             </div>
         </div>
 
-        <!-- 6. 表面处理 -->
-        <div class="form-item">
-            <label class="form-label">表面处理：</label>
-            <input type="text" class="form-input" placeholder="请填写表面处理要求">
-        </div>
-
-        <!-- 7. 尺寸图纸 -->
-        <div class="form-item">
-            <label class="form-label">尺寸图纸：</label>
-            <div class="form-radio">
-                <div class="radio-item">
-                    <input type="radio" name="drawing" id="provideDrawing">
-                    <label for="provideDrawing">提供（附后）</label>
-                </div>
-                <div class="radio-item">
-                    <input type="radio" name="drawing" id="noDrawing">
-                    <label for="noDrawing">无，需供方按规格适配</label>
-                </div>
+        <!-- 联系方式 -->
+        <div class="contact-section">
+            <h2>📞 联系我们</h2>
+            <div class="wechat-box">
+                微信: <strong>mdczdL</strong>
             </div>
+            <p style="margin-top:15px; color:#bbdefb;">欢迎来电咨询，可视频看厂，可拍铆钉生产视频</p>
         </div>
 
-        <!-- 8. 配送与开票：改为2行textarea，适配长地址 -->
-        <div class="form-item">
-            <label class="form-label">配送与开票：</label>
-            <textarea class="form-textarea address-textarea" rows="2" cols="30" placeholder="含税含运费至（详细地址）"></textarea>
+        <div class="footer">
+            <p>🏭 铆钉厂张东良 · 专业铆钉定制生产 · 真实工厂</p>
+            <p>不锈钢 | 铁 | 黄铜 | 紫铜 | 铝 | 实心 | 半空心 | 各种规格铆钉</p>
         </div>
-
-        <!-- 9. 其他要求 -->
-        <div class="form-item">
-            <label class="form-label">其他要求：</label>
-            <input type="text" class="form-input" placeholder="请填写其他特殊要求">
-        </div>
-
-        <!-- 提示信息 -->
-        <div class="tips">输入后截图给我</div>
     </div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta charset="UTF-8">
+
+<hr/>
+
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+<!-- seo 放这里最完美 --><script src="/a/js/seo.js"></script>
+<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
+<!-- ico 放这里最完美 --><script src="/a/js/ico.js"></script>
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
+
 </body>
 </html>
