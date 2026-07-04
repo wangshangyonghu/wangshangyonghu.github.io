@@ -3,168 +3,447 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>广州高捷电子科技有限公司-广州本地专注SMT贴片加工、DIP插件加工、手工精密后焊的一站式PCBA制造源头工厂</title>
-    <meta name="keywords" content="SMT贴片加工,DIP插件加工,PCBA加工,PCB贴片加工,BGA焊接,电路板贴片,电路板焊接,电子组装,小批量打样,包工包料贴片,广州SMT贴片,高捷电子,广州高捷电子科技" />
+    <title>广州高捷电子科技有限公司 - PCBA贴片加工服务商</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
         }
-
+        
         body {
-            background-color: #f5f7fa;
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
             color: #333;
-            line-height: 1.7;
+            background-color: #f5f7fa;
         }
-
-        /* 头部样式 */
-        .header {
-            background-color: #0052cc;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            font-size: 26px;
-            font-weight: normal;
-        }
-
-        /* 容器 */
+        
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 0 20px;
         }
-
-        /* 模块标题 */
+        
+        /* 头部 */
+        header {
+            background: linear-gradient(135deg, #1a5276 0%, #2980b9 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        
+        header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        /* 导航 */
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            margin: 0;
+        }
+        
+        nav a {
+            display: block;
+            padding: 15px 25px;
+            color: #1a5276;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background: #eaf2f8;
+            color: #2980b9;
+        }
+        
+        /* 通用区块 */
+        section {
+            padding: 60px 0;
+        }
+        
         .section-title {
-            font-size: 22px;
-            color: #0052cc;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e6ed;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: "";
-            width: 60px;
-            height: 2px;
-            background-color: #0052cc;
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-        }
-
-        /* 公司简介 */
-        .company-info {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .company-info p {
-            font-size: 16px;
+            text-align: center;
+            font-size: 2em;
+            color: #1a5276;
             margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #2980b9;
+            border-radius: 2px;
+        }
+        
+        .section-desc {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.05em;
+        }
+        
+        /* 公司简介 */
+        .about {
+            background: #fff;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-top: 40px;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 1.05em;
             text-align: justify;
         }
-
+        
+        .about-text .highlight {
+            color: #1a5276;
+            font-weight: 600;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 4px solid #2980b9;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #1a5276;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.95em;
+        }
+        
         /* 设备实力 */
         .equipment {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
+            background: #f8f9fa;
         }
-
-        .equipment-list {
-            margin-left: 20px;
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
-
-        .equipment-list li {
-            margin-bottom: 15px;
-            font-size: 16px;
+        
+        .equipment-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            border-top: 4px solid #2980b9;
         }
-
+        
+        .equipment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .equipment-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #2980b9, #1a5276);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: white;
+        }
+        
+        .equipment-card h3 {
+            color: #1a5276;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+        }
+        
+        .equipment-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .equipment-card .spec {
+            display: inline-block;
+            background: #eaf2f8;
+            color: #1a5276;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
         /* 业务范围 */
-        .business {
-            background: white;
+        .services {
+            background: #fff;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .service-item {
+            display: flex;
+            align-items: flex-start;
             padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s;
+            border: 1px solid #e9ecef;
         }
-
-        .business ul {
-            list-style: none;
+        
+        .service-item:hover {
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-color: #2980b9;
         }
-
-        .business li {
-            padding: 8px 0;
-            font-size: 16px;
-            padding-left: 20px;
-            position: relative;
+        
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            background: #2980b9;
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 1.3em;
         }
-
-        .business li::before {
-            content: "•";
-            color: #0052cc;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
+        
+        .service-content h4 {
+            color: #1a5276;
+            margin-bottom: 8px;
+            font-size: 1.1em;
         }
-
-        /* 优势板块 */
-        .advantage {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
+        
+        .service-content p {
+            color: #777;
+            font-size: 0.95em;
+            line-height: 1.6;
         }
-
-        .advantage li {
-            padding: 8px 0;
-            font-size: 16px;
-            padding-left: 20px;
-            position: relative;
-            list-style: none;
+        
+        /* 服务优势 */
+        .advantages {
+            background: linear-gradient(135deg, #1a5276 0%, #2980b9 100%);
+            color: white;
         }
-
-        .advantage li::before {
-            content: "✓";
-            color: #0052cc;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
+        
+        .advantages .section-title {
+            color: white;
         }
-
+        
+        .advantages .section-title::after {
+            background: rgba(255,255,255,0.5);
+        }
+        
+        .advantages .section-desc {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .advantage-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+        
+        .advantage-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+        
+        .advantage-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .advantage-card h4 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .advantage-card p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
         /* 联系方式 */
         .contact {
-            background: #0052cc;
-            color: white;
-            padding: 25px;
-            border-radius: 8px;
+            background: #fff;
+            padding-bottom: 80px;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .contact-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            padding: 40px 30px;
+            border-radius: 16px;
             text-align: center;
-            font-size: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s;
         }
-        .contact a {
-            color: #ffffff !important;
-            margin-left: 8px;
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .contact-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2980b9, #1a5276);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2em;
+            color: white;
+        }
+        
+        .contact-card h3 {
+            color: #1a5276;
+            margin-bottom: 8px;
+        }
+        
+        .contact-card .role {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        
+        .contact-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #2980b9;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
             text-decoration: none;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.3s;
         }
-
+        
+        .contact-phone:hover {
+            background: #1a5276;
+            transform: scale(1.05);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: #1a252f;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.9em;
+        }
+        
         /* 响应式 */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 22px;
+            header h1 {
+                font-size: 1.8em;
             }
-            .section-title {
-                font-size: 20px;
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .equipment-grid,
+            .services-grid,
+            .advantages-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav a {
+                padding: 12px 20px;
+                text-align: center;
             }
         }
     </style>
@@ -172,66 +451,229 @@
 <body>
 
     <!-- 头部 -->
-    <div class="header">
-        <h1>广州高捷电子科技有限公司</h1>
-    </div>
+    <header>
+        <div class="container">
+            <h1>广州高捷电子科技有限公司</h1>
+            <p class="subtitle">专注PCBA贴片加工 · DIP插件加工 · 手工精密后焊</p>
+        </div>
+    </header>
 
-    <div class="container">
-        <!-- 公司简介 -->
-        <div class="company-info">
+    <!-- 导航 -->
+    <nav>
+        <ul>
+            <li><a href="#about">公司简介</a></li>
+            <li><a href="#equipment">设备实力</a></li>
+            <li><a href="#services">业务范围</a></li>
+            <li><a href="#advantages">服务优势</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- 公司简介 -->
+    <section class="about" id="about">
+        <div class="container">
             <h2 class="section-title">公司简介</h2>
-            <p>广州高捷电子科技有限公司成立于 2021 年，是广州本地专注 SMT贴片加工、DIP插件加工、手工精密后焊 的一站式PCBA制造源头工厂。</p>
-            <p>工厂自动化设备齐全、工艺流程成熟，可承接样板打样、小批量试产、大批量量产订单，服务覆盖工控、电源、数码、家电、智能电子等多行业产品电路板加工。</p>
-            <p>公司现有全职团队30余人，核心工程技术人员从业8年以上，工艺经验丰富、问题处理高效，从产前工艺评估、生产加工到成品检测全流程把控，为客户提供成熟可控、品质可控、全程对接省心的电子加工代工服务。</p>
+            <p class="section-desc">广州本地一站式PCBA制造服务商</p>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>广州高捷电子科技有限公司成立于 <span class="highlight">2021年</span>，是广州本地专注 <span class="highlight">SMT贴片加工、DIP插件加工、手工精密后焊</span> 的一站式PCBA制造服务商。</p>
+                    
+                    <p>工厂自动化设备完善、工艺流程成熟，可承接样板打样、小批量试产、大批量量产订单，服务覆盖工控、电源、数码、家电、智能电子等多行业产品电路板加工。</p>
+                    
+                    <p>公司现有全职团队<span class="highlight">30余人</span>，核心工程技术人员从业<span class="highlight">8年以上</span>，工艺经验丰富、问题处理高效，从产前工艺评估、生产加工到成品检测全流程把控，为客户提供成熟可控、品质稳定、全程对接便捷的电子加工代工服务。</p>
+                </div>
+                
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">2021</div>
+                        <div class="stat-label">成立年份</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">全职团队</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8年+</div>
+                        <div class="stat-label">核心技术经验</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3条</div>
+                        <div class="stat-label">SMT生产线</div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- 生产设备实力 -->
-        <div class="equipment">
+    <!-- 设备实力 -->
+    <section class="equipment" id="equipment">
+        <div class="container">
             <h2 class="section-title">生产设备实力</h2>
-            <p style="font-size:16px; margin-bottom:20px;">自动化设备赋能 · 品质可控、交付高效</p>
-            <ul class="equipment-list">
-                <li><strong>3条高速SMT贴片生产线</strong><br>高速高精度贴装，适配各类精密元器件，产能充足、贴片整齐、一致性高，满足大小批量快速出货需求。</li>
-                <li><strong>2台AOI全自动光学检测仪</strong><br>自动识别错件、漏件、偏移、虚焊、锡珠等不良问题，全检把控，有效识别不良、全检拦截，助力提升成品良率、降低售后风险。</li>
-                <li><strong>全自动选择性波峰焊</strong><br>插件焊点均匀饱满，减少连锡、空焊、虚焊不良，适配复杂插件工艺，焊接品质可控、一致性好。</li>
-            </ul>
+            <p class="section-desc">自动化设备赋能 · 品质稳定、交付高效</p>
+            
+            <div class="equipment-grid">
+                <div class="equipment-card">
+                    <div class="equipment-icon">🏭</div>
+                    <h3>3条高速SMT贴片生产线</h3>
+                    <p>高速高精度贴装，适配各类精密元器件，产能稳定、贴片整齐、一致性好，满足大小批量快速出货需求。</p>
+                    <span class="spec">日产能力充足</span>
+                </div>
+                
+                <div class="equipment-card">
+                    <div class="equipment-icon">🔍</div>
+                    <h3>2台AOI全自动光学检测仪</h3>
+                    <p>自动识别错件、漏件、偏移、虚焊、锡珠等不良问题，全检把控，精准识别不良、严格拦截，助力提升成品良率、降低售后风险。</p>
+                    <span class="spec">全检覆盖</span>
+                </div>
+                
+                <div class="equipment-card">
+                    <div class="equipment-icon">⚡</div>
+                    <h3>全自动选择性波峰焊</h3>
+                    <p>插件焊点均匀饱满，减少连锡、空焊、虚焊不良，适配复杂插件工艺，焊接品质稳定、一致性好。</p>
+                    <span class="spec">精密焊接</span>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- 核心业务范围 -->
-        <div class="business">
+    <!-- 业务范围 -->
+    <section class="services" id="services">
+        <div class="container">
             <h2 class="section-title">核心业务范围</h2>
-            <p style="font-size:16px; margin-bottom:15px;">主营加工服务</p>
-            <ul>
-                <li>SMT高速贴片加工（精密板、小板、密脚板均可生产）</li>
-                <li>DIP插件自动焊接、人工插件加工</li>
-                <li>高端样板精密手工后焊、疑难返修</li>
-                <li>新产品打样、研发试产、批量代工</li>
-                <li>中小批量、大批量订单稳定代工生产</li>
-                <li>BGA焊接、电路板贴片、PCB贴片加工、电子组装代工</li>
-                <li>包工包料SMT贴片、来料加工、加急贴片打样</li>
-            </ul>
-            <br>
-            <a href="https://cn.bing.com/search?q=%E5%B9%BF%E5%B7%9E%E9%AB%98%E6%8D%B7%E7%94%B5%E5%AD%90%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8" target="_blank">广州高捷电子科技有限公司</a>
+            <p class="section-desc">主营加工服务</p>
+            
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-icon">🔧</div>
+                    <div class="service-content">
+                        <h4>SMT高速贴片加工</h4>
+                        <p>精密板、小板、密脚板均可生产</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">🔌</div>
+                    <div class="service-content">
+                        <h4>DIP插件自动焊接、人工插件加工</h4>
+                        <p>自动与人工结合，满足多样化需求</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">✋</div>
+                    <div class="service-content">
+                        <h4>高端样板精密手工后焊、复杂返修</h4>
+                        <p>精细手工焊接，处理复杂工艺</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">🧪</div>
+                    <div class="service-content">
+                        <h4>新产品打样、研发试产、批量代工</h4>
+                        <p>从研发到量产全阶段支持</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">📦</div>
+                    <div class="service-content">
+                        <h4>中小批量、大批量订单稳定代工生产</h4>
+                        <p>灵活产能，按需排产</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">🎯</div>
+                    <div class="service-content">
+                        <h4>BGA焊接、电路板贴片、PCB贴片加工、电子组装代工</h4>
+                        <p>多工艺覆盖，一站式解决</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">📋</div>
+                    <div class="service-content">
+                        <h4>包工包料SMT贴片、来料加工、加急贴片打样</h4>
+                        <p>多种合作模式，灵活选择</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- 新增服务优势板块 -->
-        <div class="advantage">
+    <!-- 服务优势 -->
+    <section class="advantages" id="advantages">
+        <div class="container">
             <h2 class="section-title">服务优势</h2>
-            <ul>
-                <li>本地工厂就近接单，沟通便捷响应迅速</li>
-                <li>严格质检流程，严控产品加工品质</li>
-                <li>支持来料加工与包工包料多种合作模式</li>
-                <li>大小订单均可承接，按需排产准时交货</li>
-                <li>专业技术团队，可提供工艺优化建议</li>
-            </ul>
+            <p class="section-desc">广州高捷电子科技有限公司</p>
+            
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon">📍</div>
+                    <h4>本地工厂就近接单</h4>
+                    <p>沟通便捷响应迅速，广州本地企业，面对面沟通更高效</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">✅</div>
+                    <h4>规范质检流程</h4>
+                    <p>严控产品加工品质，每道工序均有标准检验规范</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">🤝</div>
+                    <h4>多种合作模式</h4>
+                    <p>支持来料加工与包工包料，根据需求灵活选择</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">📅</div>
+                    <h4>大小订单均可承接</h4>
+                    <p>按需排产按期交货，样板到量产全阶段覆盖</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">👨‍🔬</div>
+                    <h4>经验丰富的技术团队</h4>
+                    <p>可提供工艺优化建议，8年以上经验工程师全程支持</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- 联系方式 -->
-        <div class="contact">
-            <p>📞 联系方式：张小姐 13829781835 <a href="tel:13829781835">呼叫</a></p>
-            <br/>
-            <p>📞 联系方式：谢先生 13535045997 <a href="tel:13535045997">呼叫</a></p>
+    <!-- 联系方式 -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <p class="section-desc">欢迎来电咨询，期待与您合作</p>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-avatar">👩</div>
+                    <h3>张小姐</h3>
+                    <p class="role">业务咨询</p>
+                    <a href="tel:13829781835" class="contact-phone">📞 138-2978-1835</a>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-avatar">👨</div>
+                    <h3>谢先生</h3>
+                    <p class="role">业务咨询</p>
+                    <a href="tel:13535045997" class="contact-phone">📞 135-3504-5997</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>广州高捷电子科技有限公司 © 2021-2026 版权所有</p>
+            <p style="margin-top: 8px; font-size: 0.85em; opacity: 0.7;">一站式PCBA制造服务商 | SMT贴片加工 | DIP插件加工 | 手工精密后焊</p>
+        </div>
+    </footer>
 
 </body>
 </html>
