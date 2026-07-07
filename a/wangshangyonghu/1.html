@@ -112,13 +112,16 @@ body{
 <div class="bottom-title">输入数字带+-*/%自动计算</div>
 
 <script>
+// 修复：计算后统一保留10位小数，消除浮点尾差
 function calculate(str){
     if(!str.trim()) return 0;
     str = str.replace(/\n/g,"");
     str = str.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
     if(!/^[\d+\-*/.()\s]+$/.test(str)) return 0;
     try{
-        return new Function('"use strict";return ('+str+')')();
+        let res = new Function('"use strict";return ('+str+')')();
+        // 统一保留10位小数截断浮点误差
+        return Number(res.toFixed(10));
     }catch{
         return 0;
     }
@@ -170,7 +173,8 @@ function refresh(){
         nums[idx].innerText = res;
         total += res;
     })
-    totalBox.innerText = total;
+    // 合计同样截断浮点误差
+    totalBox.innerText = Number(total.toFixed(10));
     saveCache();
 }
 
@@ -198,6 +202,7 @@ inputs.forEach((input, index)=>{
 window.onload = loadCache;
 </script>
 
+<!-- 外部脚本保留，不影响计算逻辑 -->
 <script src="/a/js/ym.js"></script>
 <script src="/a/js/ico.js"></script>
 
