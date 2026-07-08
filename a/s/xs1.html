@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8"><!--网页乱码修复-->
+<meta http-equiv='content-language' content='zh-cn'><!--国家地区-->
+<link rel="shortcut icon" href="/favicon.ico" alt="网上用户,上网用户" type="image/x-icon"><!--图标-->
+<link rel="icon" sizes="any" mask href="/favicon.ico"alt="网上用户,上网用户">
+<link rel="apple-touch-icon-precomposed" href="/favicon.ico"alt="网上用户,上网用户">
+<link rel="apple-touch-icon" href="/favicon.ico"alt="网上用户,上网用户">
+
+<title>年虚岁属相对照表一虚岁对照表一网上用户</title>
+<meta name="keywords" content="网上用户,上网用户一岁数属相生肖对照表,年虚岁属相对照表一虚岁对照表一网上用户,网上用户,上网用户,公平村,张先生,公平村张先生,网上用户,上网用户的图片,网上用户,上网用户的个人主页,网上用户,上网用户的个人首页,网上用户,上网用户的个人中心,网上用户,上网用户的档案,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,wangshangyonghu" /><!--关键词-->
+<meta name="description" content="年虚岁属相对照表一虚岁对照表一网上用户一生肖"鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"一网上用户,上网用户" />
+
+<style type="text/css">A{TEXT-DECORATION: none}</style><!--无下划线开始-->
+ <style type="text/css">
+     body {
+    max-width: 800px; /* 页面内容最大宽度锁定800px，宽屏页面不会无限延展变宽 */
+    margin: 20px auto; /* 上下外边距10px，左右auto自动居中，实现整体页面水平居中 */
+    padding: 30px; /* 页面内部留白30px，文字内容不紧贴浏览器边框 */
+}
+        /* 全局样式：紧凑布局，适配手机屏幕 */
+        body {
+            font-size: 12px; /* 缩小基础字体，适配小屏幕 */
+        }
+        h3 {
+            text-align: center;
+            margin: 10px 0; /* 减小标题间距 */
+            font-size: 28px; /* 标题字体适中 */
+        }
+        /* 年份输入区域：紧凑排列，适配触控 */
+        .year-input-area {
+            margin: 10px 0;
+            display: flex; /* 横向排列，节省空间 */
+            align-items: center;
+            gap: 8px; /* 控件间距适中 */
+        }
+        #inputYear {
+            width: 80px; /* 缩小输入框宽度 */
+            padding: 4px; /* 减小内边距 */
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            padding: 4px 12px; /* 适配手机触控的按钮大小 */
+            font-size: 12px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        /* 表格核心样式：极致紧凑，避免横向滚动 */
+        table {
+            border-collapse: collapse;
+            width:100% ; /* 占满屏幕宽度 */
+            text-align: center;
+            table-layout:100%; /* 固定列宽，防止变形 */
+        }
+        th, td {
+            padding: 2px 0; /* 大幅减小内边距，让列更紧致 */
+            border: 1px solid #ccc;
+            overflow: hidden; /* 防止内容溢出 */
+            text-overflow: ellipsis; /* 内容过长时省略 */
+            white-space: nowrap; /* 禁止换行 */
+        }
+        th {
+            background-color: #f0f0f0;
+            font-size: 22px; /* 表头字体更小 */
+        }
+       td {
+    font-size: 26px;/* 单元格字体更小 */
+    font-weight: bold;/* 单元格字体粗体 */
+}
+        /* 关键列（目标生肖、当前年份）样式保留 */
+        .target-zodiac {
+            color: red;
+            font-weight: bold;
+        }
+        .target-year {
+            color: red;
+            font-weight: bold;
+        }
+        .age-cell {
+            color: #0000ff;
+        }
+</style>
+<style>
+    .link-container {
+        font-size: 32px;
+    }
+</style>
+</head>
+<body>
+<center><!--居中-->
+    <h3>
+        <span id="currentYear"></span>年虚岁属相对照表(手机版)<a href="/" target="_blank">网上用户</a>
+    </h3>
+    
+    <!-- 年份输入区域：优化布局，适配手机触控 -->
+    <div class="year-input-area">
+        <label for="inputYear">输入当前年份：</label>
+        <input type="number" id="inputYear" placeholder="输入年份">
+        <button onclick="updateYear()">更新</button>
+    </div>
+
+    <!-- 表格：结构不变，删除出生年份行，只保留虚岁 -->
+    <table>
+        <tr id="zodiacHeader">
+            <th style="width: 70px;">生肖</th> <!-- 固定首列宽度，避免过宽 -->
+        </tr>
+        <tbody id="tableContent">
+        </tbody>
+    </table>
+
+    <h3>
+        <span id="currentYearFooter"></span>年虚岁属相对照表(手机版)<a href="/" target="_blank">网上用户</a>
+    </h3>
+
+    <script>
+        // 1. 固定生肖顺序（按传统顺序：鼠→牛→虎→兔→龙→蛇→马→羊→猴→鸡→狗→猪）
+        const baseZodiacs = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+        
+        // 2. 根据出生年份获取对应的生肖（1988年为龙年，作为基准点，确保生肖计算准确）
+        function getZodiacForBirthYear(birthYear) {
+            const baseYear = 1988; // 已知1988年是龙年
+            const baseIndex = 4;   // 龙在baseZodiacs中的索引（baseZodiacs[4] = 龙）
+            const cycle = 12;      // 生肖周期为12年
+            let offset = (birthYear - baseYear) % cycle;
+            if (offset < 0) offset += cycle; // 处理负数年份（如1987年）
+            const index = (baseIndex + offset) % cycle;
+            return baseZodiacs[index];
+        }
+        
+        // 3. 生肖排序规则（目标年份生肖排第1列，后续按“前一年生肖”依次排列）
+        function getOrderedZodiacs(targetYear) {
+            const targetZodiac = getZodiacForBirthYear(targetYear); // 目标年份的生肖
+            const orderedList = [];
+            let currentYear = targetYear;
+            
+            // 生成12个生肖：第1列=目标年份生肖，第2列=目标前1年生肖，...，第12列=目标前11年生肖
+            for (let i = 0; i < 12; i++) {
+                orderedList.push(getZodiacForBirthYear(currentYear));
+                currentYear--; // 每次向前推1年，获取前一年的生肖
+            }
+            return orderedList;
+        }
+        
+        // 4. 更新生肖表头（按新排序规则渲染，目标生肖标红）
+        function updateZodiacHeader(targetYear) {
+            const headerRow = document.getElementById('zodiacHeader');
+            // 清除现有表头（保留“生肖”列）
+            while (headerRow.children.length > 1) {
+                headerRow.removeChild(headerRow.lastChild);
+            }
+            
+            const orderedZodiacs = getOrderedZodiacs(targetYear);
+            const targetZodiac = getZodiacForBirthYear(targetYear);
+            
+            // 按排序添加表头，目标生肖（第1列）标红
+            orderedZodiacs.forEach(zodiac => {
+                const th = document.createElement('th');
+                th.textContent = zodiac;
+                // 目标年份生肖添加特殊类
+                if (zodiac === targetZodiac) {
+                    th.classList.add('target-zodiac');
+                }
+                headerRow.appendChild(th);
+            });
+        }
+        
+        // 5. 初始化表格（删除出生年份行，只保留虚岁行，功能不变）
+        function initTable(year) {
+            updateZodiacHeader(year); // 先更新表头
+            const tableContent = document.getElementById('tableContent');
+            tableContent.innerHTML = '';
+            
+            const orderedZodiacs = getOrderedZodiacs(year); // 排序后的12个生肖
+            
+            // 生成10组数据（覆盖虚岁1-120岁，每12年一组，符合生肖周期）
+            for (let cycle = 0; cycle < 10; cycle++) {
+                // 虚岁行（每行头部显示“虚岁”）
+                const ageRow = document.createElement('tr');
+                const ageHeader = document.createElement('td');
+                ageHeader.textContent = '虚岁';
+                ageHeader.style.backgroundColor = '#f0f0f0';
+                ageRow.appendChild(ageHeader);
+                
+                // 为每个生肖列填充虚岁数据
+                orderedZodiacs.forEach((zodiac, index) => {
+                    // 虚岁计算：第1列=1+12*cycle，第2列=2+12*cycle，...，第12列=12+12*cycle
+                    const currentAge = (index + 1) + (cycle * 12);
+                    // 出生年份计算仅用于判断当前年份高亮，不再渲染
+                    const currentBirthYear = year - currentAge + 1;
+                    
+                    // 虚岁单元格（蓝色显示）
+                    const ageCell = document.createElement('td');
+                    ageCell.textContent = currentAge;
+                    ageCell.classList.add('age-cell');
+                    // 当前年份对应的虚岁标红
+                    if (currentBirthYear === year) {
+                        ageCell.classList.add('target-year');
+                    }
+                    
+                    ageRow.appendChild(ageCell);
+                });
+                
+                // 只插入虚岁行，移除出生年份行
+                tableContent.appendChild(ageRow);
+            }
+            
+            // 更新页面标题和输入框显示
+            document.getElementById('currentYear').textContent = year;
+            document.getElementById('currentYearFooter').textContent = year;
+            document.getElementById('inputYear').value = year;
+        }
+        
+        // 6. 年份更新函数（验证输入有效性，适配手机输入）
+        function updateYear() {
+            const input = document.getElementById('inputYear');
+            const year = parseInt(input.value, 10);
+            // 验证年份有效性（排除0或负数）
+            if (!isNaN(year) && year > 0) {
+                initTable(year);
+            } else {
+                alert('请输入有效的年份（正整数）');
+                // 无效输入时恢复为当前系统年份
+                const currentYear = new Date().getFullYear();
+                input.value = currentYear;
+            }
+        }
+        
+        // 7. 页面加载时初始化（默认显示当前系统年份）
+        window.onload = function() {
+            const currentYear = new Date().getFullYear();
+            initTable(currentYear);
+            // 验证生肖计算准确性（1988年应为龙，2026年应为马）
+            console.log("1988年生肖验证: " + getZodiacForBirthYear(1988)); // 输出“龙”
+            console.log("2026年生肖验证: " + getZodiacForBirthYear(2026)); // 输出“马”
+        };
+    </script>
+
+  <div class="link-container">
+<hr color="0066FF"/>
+虚岁对照表<hr/>
+虚岁完整规则（纯农历计算）   <hr/>
+先来看下什么是虚岁，虚岁的定义：一出生就是一岁，然后每过一个春节就长一岁。
+<hr/>
+一、核心定义   <hr/>
+落地即 1 岁，出生当天虚岁 = 1；   <hr/>
+每逢农历正月初一（春节） 统一加一岁，不分生日先后；   <hr/>
+全程只看农历年份，和公历生日、农历生日无关。   <hr/>
+二、标准计算公式   <hr/>
+虚岁 = 当前农历年份 − 出生当年农历年份 + 1   <hr/>
+</div>
+</center><!--居中-->
+</body><!--内容结束-->
+</html><!--结束-->

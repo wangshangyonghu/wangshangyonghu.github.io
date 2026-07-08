@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虚岁 · 中国传统计龄一网上用户</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #FAF7F2;
+      color: #333;
+      line-height: 1.6;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    /* 头部 */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .header-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #8B1A1A;
+      letter-spacing: 4px;
+    }
+    .header p {
+      color: #999;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    /* 引言 */
+    .intro {
+      background: #FFF8F0;
+      border-left: 4px solid #C45C26;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 28px;
+    }
+    .intro p {
+      color: #5C3A1E;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    /* 章节 */
+    .section {
+      margin-bottom: 28px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-num {
+      width: 36px;
+      height: 36px;
+      background: #8B1A1A;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .section-title h2 {
+      font-size: 20px;
+      color: #333;
+      font-weight: 600;
+    }
+    .card {
+      background: white;
+      border: 1px solid #E8E0D5;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .tag {
+      display: inline-block;
+      color: white;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .tag-red { background: #8B1A1A; }
+    .tag-orange { background: #C45C26; }
+    .tag-green { background: #2E7D32; }
+    .card p {
+      color: #444;
+      line-height: 1.7;
+    }
+    .card ul {
+      padding-left: 20px;
+      color: #444;
+      line-height: 1.8;
+    }
+    .card-item {
+      margin-bottom: 16px;
+    }
+    .card-item:last-child {
+      margin-bottom: 0;
+    }
+    /* 对比 */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .compare-card {
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .compare-card .icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+    .compare-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+    }
+    .compare-card p {
+      margin: 0;
+      color: #666;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .card-xusui {
+      background: #FFF8F0;
+      border: 2px solid #C45C26;
+    }
+    .card-xusui h3 { color: #8B1A1A; }
+    .card-xusui strong { color: #C45C26; }
+    .card-zhousui {
+      background: #F0F7FF;
+      border: 2px solid #1565C0;
+    }
+    .card-zhousui h3 { color: #1565C0; }
+    .card-zhousui strong { color: #1565C0; }
+    /* 总结 */
+    .summary {
+      background: #8B1A1A;
+      color: white;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .summary p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    .summary strong {
+      font-size: 18px;
+    }
+    /* 底部 */
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      color: #bbb;
+      font-size: 12px;
+    }
+    /* 响应式 */
+    @media (max-width: 480px) {
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <div class="header">
+      <div class="header-icon">🏮</div>
+      <h1>虚岁 · 中国传统计龄</h1>
+      <p>千年传承 · 本土智慧</p>
+    </div>
+
+    <!-- 引言 -->
+    <div class="intro">
+      <p>虚岁是中国本土传统计龄方式，古代只用虚岁，没有周岁一说。它承载着中国人对生命起点的独特理解——人在母体中已算一岁。</p>
+    </div>
+
+    <!-- 一、来源与使用 -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-num">一</div>
+        <h2>来源与使用</h2>
+      </div>
+      <div class="card">
+        <div class="card-item">
+          <span class="tag tag-red">起源</span>
+          <p>先秦就有，沿用几千年，古代官方、民间都算虚岁。</p>
+        </div>
+        <div class="card-item">
+          <span class="tag tag-orange">逻辑</span>
+          <p>古人认为人在母体里已算一岁，出生落地直接记 <strong style="color: #8B1A1A;">1 岁</strong>，每过农历春节加一岁。</p>
+        </div>
+        <div class="card-item">
+          <span class="tag tag-green">适用场景</span>
+          <p>传统算命、婚嫁、生肖、老家长辈口头问年龄大多说虚岁。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 二、周岁是外来算法 -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-num" style="background: #1565C0;">二</div>
+        <h2>周岁是外来算法</h2>
+      </div>
+      <div class="card">
+        <p style="margin-bottom: 12px;">周岁是现代西方公历计龄，建国后普及：</p>
+        <ul>
+          <li>按公历生日算，没过生日不算长岁</li>
+          <li>证件、上学、上班、法律全部统一用周岁</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 三、简单对比 -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-num" style="background: #6A1B9A;">三</div>
+        <h2>简单对比</h2>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-card card-xusui">
+          <div class="icon">🧧</div>
+          <h3>虚岁</h3>
+          <p>传统中国岁数<br>看<strong>农历新年</strong></p>
+        </div>
+        <div class="compare-card card-zhousui">
+          <div class="icon">📅</div>
+          <h3>周岁</h3>
+          <p>现代法定岁数<br>看<strong>公历生日</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 总结 -->
+    <div class="summary">
+      <p>
+        <span style="font-size: 20px;">📜</span> 简单总结<br>
+        <strong>虚岁才是地道中国传统岁数，周岁是现代引进的。</strong>
+      </p>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer">
+      <span>━━ 传承千年 · 知古鉴今 ━━</span>
+    </div>
+  </div>
+</body>
+</html>
