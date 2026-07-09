@@ -46,6 +46,8 @@
     <!-- CSS样式定义部分结束 -->
 
 
+
+
  <title>浏览器主页</title><!--标题-->
 <!--关键词--> <meta name="keywords" content="网上用户,浏览器主页,浏览器首页,网上用户浏览器主页,个人用户浏览器主页,个人浏览器主页,浏览器主页,公平村浏览器主页手机版,公平村浏览器主页,公平村网址导航,平村网站导航,网上用户浏览器首页,公平村,公平村浏览器首页,wangshangyonghu,a网上用户,a01234567890w" /><!--关键词-->
 <!--描述--><meta name="description" content="公平村浏览器主页，这是一个提供各种网站链接和搜索引擎的浏览器主页，包括百度、必应、搜狗、360、抖音等热门平台。你可以快速访问你想要的网站，也可以使用不同的搜索工具找到...网上用户,浏览器主页,网上用户浏览器主页,公平村浏览器主页,网上用户浏览器首页,公平村,公平村浏览器首页,浏览器首页,wangshangyonghu,a网上用户,a01234567890w,个人用户浏览器主页,个人浏览器主页" />
@@ -251,6 +253,7 @@ body {
         <button class="link-btn" data-engine="baidu-video">视频</button>
         <button class="link-btn" data-engine="baidu-news">百度新闻</button>
         <button class="link-btn" data-engine="taobao">爱淘宝</button>
+        <button class="link-btn" data-engine="bing-quote">必应精准匹配</button>
     </div>
 
     <div class="link-container">
@@ -388,15 +391,22 @@ const searchEngines = {
 document.getElementById("mainSearchBtn").addEventListener("click", () => {
     const keyword = document.getElementById("searchInput").value;
     if (keyword) {
-        window.open(searchEngines.bing + encodeURIComponent(keyword), "_blank");
+        const quoteKey = `"${keyword}"`;
+        window.open(searchEngines.bing + encodeURIComponent(quoteKey), "_blank");
     }
 });
 
 document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
     btn.addEventListener("click", () => {
         const engine = btn.getAttribute("data-engine");
-        const keyword = document.getElementById("searchInput").value;
-        const url = searchEngines[engine] + encodeURIComponent(keyword || "");
+        let keyword = document.getElementById("searchInput").value;
+        let url;
+        if(engine === "bing-quote"){
+            keyword = `"${keyword}"`;
+            url = searchEngines.bing + encodeURIComponent(keyword || "");
+        }else{
+            url = searchEngines[engine] + encodeURIComponent(keyword || "");
+        }
         window.open(url, "_blank");
     });
 });
@@ -468,8 +478,6 @@ body {
     content: counter(seq) ". ";
 }
 </style>
-
-
 </head>
 <body>
 

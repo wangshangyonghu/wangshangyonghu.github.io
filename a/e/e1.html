@@ -48,6 +48,9 @@
 <script src="/sl1.js"></script><!--自动收录-->
 
 
+
+
+
     <!-- CSS样式定义部分结束 -->
 
 <!--移动端调转代码-->
@@ -144,6 +147,7 @@ gpcfhdbBtn.addEventListener('click', () => {
 <!--关键词--> <meta name="keywords" content="网上用户,浏览器主页,浏览器首页,网上用户浏览器主页,个人用户浏览器主页,个人浏览器主页,浏览器主页,公平村浏览器主页手机版,公平村浏览器主页,公平村网址导航,平村网站导航,网上用户浏览器首页,公平村,公平村浏览器首页,wangshangyonghu,a网上用户,a01234567890w" /><!--关键词-->
 <!--描述--><meta name="description" content="公平村浏览器主页，这是一个提供各种网站链接和搜索引擎的浏览器主页，包括百度、必应、搜狗、360、抖音等热门平台。你可以快速访问你想要的网站，也可以使用不同的搜索工具找到...网上用户,浏览器主页,网上用户浏览器主页,公平村浏览器主页,网上用户浏览器首页,公平村,公平村浏览器首页,浏览器首页,wangshangyonghu,a网上用户,a01234567890w,个人用户浏览器主页,个人浏览器主页" />
 
+<base target="_blank">
 </head>
 
    <style>
@@ -320,7 +324,7 @@ header h1 {
 }
 
 /* 链接按钮样式：设置内边距、背景色、边框等 */
-.link-btn {
+.link-btn, .link-container a {
     display: inline-flex; /* 行内弹性布局 */
     align-items: center; /* 垂直居中 */
     padding: 8px 15px; /* 内边距：上下8px，左右15px */
@@ -336,7 +340,7 @@ header h1 {
 }
 
 /* 链接按钮 hover 状态：改变背景色、文本色和边框色 */
-.link-btn:hover {
+.link-btn:hover, .link-container a:hover {
     background-color: var(--primary-color); /* 背景色变为主色调 */
     color: #fff; /* 文本颜色变为白色 */
     border-color: var(--primary-color); /* 边框色变为主色调 */
@@ -346,7 +350,7 @@ header h1 {
 .anchor-nav {
     position: fixed; /* 固定定位 */
     top: 20px; /* 距离顶部20px */
-    left: 0; /* 距离左侧0 */
+    left:20px; /* 距离左侧10px */
     background-color: #fff; /* 背景色白色 */
     box-shadow: 2px 0 8px rgba(0,0,0,0.1); /* 右侧阴影效果 */
     padding: 2px 0; /* 上下内边距2px（减少整体高度） */
@@ -672,6 +676,7 @@ footer {
         <button class="link-btn" data-engine="baidu-video">视频</button>
         <button class="link-btn" data-engine="baidu-news">百度新闻</button>
         <button class="link-btn" data-engine="taobao">爱淘宝</button>
+        <button class="link-btn" data-engine="bing-quote">必应精准匹配</button>
     </div>
 
     <!-- 图片搜索 -->
@@ -692,10 +697,10 @@ footer {
         <button class="link-btn" data-engine="yp">小米有品</button>
         <button class="link-btn" data-engine="dd">当当</button>
 
-        <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D%2B1xvab%2BWJVgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMejTarIx5m0g5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401766803415%400bbb5ce5_21f4_19b5db0a2b5_0691%4001" target="_blank" class="link-btn">淘工厂</a>
-        <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D%2B1xvab%2BWJVgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMejTarIx5m0g5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401766803415%400bbb5ce5_21f4_19b5db0a2b5_0691%4001" target="_blank" class="link-btn">天天特卖工厂</a>
-        <a href="#购物"" target="_blank" class="link-btn">购物</a>
-        <a href="https://wangshangyonghu.github.io/a/x/x21.html"" target="_blank" class="link-btn">商品搜索</a>
+        <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D%2B1xvab%2BWJVgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMejTarIx5m0g5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401766803415%400bbb5ce5_21f4_19b5db0a2b5_0691%4001" target="_blank">淘工厂</a>
+        <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D%2B1xvab%2BWJVgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMejTarIx5m0g5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401766803415%400bbb5ce5_21f4_19b5db0a2b5_0691%4001" target="_blank">天天特卖工厂</a>
+        <a href="#购物"" target="_blank">购物</a>
+        <a href="https://wangshangyonghu.github.io/a/x/x21.html"" target="_blank">商品搜索</a>
         <button class="link-btn" data-engine=""></button>
     
 
@@ -913,6 +918,7 @@ footer {
    "tb": "https://s.taobao.com/search?page=1&pvid=d0f2ec2810bcec0d5a16d5283ce59f67&q=",
    "yp": "https://www.xiaomiyoupin.com/search?keyword=",
    "dd": "https://search.dangdang.com/?key=",
+"": "",
    "": "",
    "": "",
    "": "",
@@ -929,22 +935,29 @@ footer {
     };
 
     // 搜索按钮点击事件
-    document.getElementById("mainSearchBtn").addEventListener("click", () => {
-        const keyword = document.getElementById("searchInput").value;
-        if (keyword) {
-            window.open(searchEngines.bing + encodeURIComponent(keyword), "_blank");
-        }
-    });
-
+document.getElementById("mainSearchBtn").addEventListener("click", () => {
+    const keyword = document.getElementById("searchInput").value;
+    if (keyword) {
+        // 前后包裹英文双引号，实现精准匹配
+        const quoteKeyword = `"${keyword}"`;
+        window.open(searchEngines.bing + encodeURIComponent(quoteKeyword), "_blank");
+    }
+});
     // 引擎按钮点击事件
-    document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const engine = btn.getAttribute("data-engine");
-            const keyword = document.getElementById("searchInput").value;
-            const url = searchEngines[engine] + encodeURIComponent(keyword || "");
-            window.open(url, "_blank");
-        });
+document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const engine = btn.getAttribute("data-engine");
+        let keyword = document.getElementById("searchInput").value;
+        let url;
+        if(engine === "bing-quote"){
+            keyword = `"${keyword}"`;
+            url = searchEngines.bing + encodeURIComponent(keyword || "");
+        }else{
+            url = searchEngines[engine] + encodeURIComponent(keyword || "");
+        }
+        window.open(url, "_blank");
     });
+});
 
     // 返回顶部按钮 - 增加存在性检查
     const backToTopBtn = document.getElementById("backToTop");
@@ -1029,30 +1042,30 @@ footer {
 <section id="AI工具" class="category-nav">
             <div class="category-title">AI工具平台</div>
             <div class="link-container">
-                <a href="https://yuanbao.tencent.com" target="_blank" class="link-btn">腾讯元宝</a>
-                <a href="https://www.doubao.com" target="_blank" class="link-btn">豆包AI</a>
-                <a href="https://n.cn" target="_blank" class="link-btn">纳米Ai搜索</a>
-                <a href="https://bao.360.com" target="_blank" class="link-btn">AI爆款视频</a>
-                <a href="https://www.sou.com/?src=360so_index" target="_blank" class="link-btn">360AI搜索</a>
-                <a href="https://so.csdn.net/chat" target="_blank" class="link-btn">C知道</a>
-                <a href="https://yiyan.baidu.com/" target="_blank" class="link-btn">文心一言</a>
-                <a href="https://www.qianwen.com" target="_blank" class="link-btn">千问</a>
-                <a href="https://kimi.moonshot.cn/" target="_blank" class="link-btn">Kimi</a>
-                <a href="https://chat.deepseek.com/sign_in" target="_blank" class="link-btn">DeepSeek</a>
-                <a href="https://zhida.zhihu.com/" target="_blank" class="link-btn">知乎直答</a>
-                <a href="https://chatglm.cn/main/guest?lang=zh" target="_blank" class="link-btn">智谱清言</a>
-                <a href="https://www.ainav.cn/" target="_blank" class="link-btn">Ai导航</a>
-                <a href="https://hot.browser.miui.com/light/ai-tool-collection.html" target="_blank" class="link-btn">ai空间</a>
-                <a href="https://cn.bing.com/search?q=ai%E5%AF%BC%E8%88%AA" target="_blank" class="link-btn">搜索:ai导航</a>
-                <a href="https://cn.bing.com/search?q=ai大全" target="_blank" class="link-btn">ai大全</a>
-                <a href="https://cn.bing.com/search?q=ai工具" target="_blank" class="link-btn">ai工具</a>
-                <a href="https://chat.baidu.com" target="_blank" class="link-btn">百度ai</a>
-                <a href="https://fanyi.youdao.com" target="_blank" class="link-btn">有道云ai</a>
-                <a href="https://ai.dangbei.com" target="_blank" class="link-btn">当贝AI</a>
-                <a href="https://cloud.baidu.com/product-s/miaoda_home" target="_blank" class="link-btn">秒哒</a>
-                <a href="https://metaso.cn" target="_blank" class="link-btn">秘塔AI</a>
-                <a href="https://ai.quark.cn/" target="_blank" class="link-btn">夸克AI</a>
-                <a href="https://www.lingguang.com" target="_blank" class="link-btn">灵光</a>
+                <a href="https://yuanbao.tencent.com" target="_blank">腾讯元宝</a>
+                <a href="https://www.doubao.com" target="_blank">豆包AI</a>
+                <a href="https://n.cn" target="_blank">纳米Ai搜索</a>
+                <a href="https://bao.360.com" target="_blank">AI爆款视频</a>
+                <a href="https://www.sou.com/?src=360so_index" target="_blank">360AI搜索</a>
+                <a href="https://so.csdn.net/chat" target="_blank">C知道</a>
+                <a href="https://yiyan.baidu.com/" target="_blank">文心一言</a>
+                <a href="https://www.qianwen.com" target="_blank">千问</a>
+                <a href="https://kimi.moonshot.cn/" target="_blank">Kimi</a>
+                <a href="https://chat.deepseek.com/sign_in" target="_blank">DeepSeek</a>
+                <a href="https://zhida.zhihu.com/" target="_blank">知乎直答</a>
+                <a href="https://chatglm.cn/main/guest?lang=zh" target="_blank">智谱清言</a>
+                <a href="https://www.ainav.cn/" target="_blank">Ai导航</a>
+                <a href="https://hot.browser.miui.com/light/ai-tool-collection.html" target="_blank">ai空间</a>
+                <a href="https://cn.bing.com/search?q=ai%E5%AF%BC%E8%88%AA" target="_blank">搜索:ai导航</a>
+                <a href="https://cn.bing.com/search?q=ai大全" target="_blank">ai大全</a>
+                <a href="https://cn.bing.com/search?q=ai工具" target="_blank">ai工具</a>
+                <a href="https://chat.baidu.com" target="_blank">百度ai</a>
+                <a href="https://fanyi.youdao.com" target="_blank">有道云ai</a>
+                <a href="https://ai.dangbei.com" target="_blank">当贝AI</a>
+                <a href="https://cloud.baidu.com/product-s/miaoda_home" target="_blank">秒哒</a>
+                <a href="https://metaso.cn" target="_blank">秘塔AI</a>
+                <a href="https://ai.quark.cn/" target="_blank">夸克AI</a>
+                <a href="https://www.lingguang.com" target="_blank">灵光</a>
 
 
             </div>
@@ -1069,40 +1082,40 @@ footer {
         <!-- 搜索 -->
                   <div class="category-title">搜索</div>
             <div class="link-container">
-<a href="https://www.baidu.com/s?wd=" target="_blank" class="link-btn">百度搜索</a>
-<a href="https://www.bing.com/search?q=" target="_blank" class="link-btn">必应搜索</a>
-<a href="https://so.toutiao.com/search?dvpf=pc&source=input&keyword=" target="_blank" class="link-btn">头条搜索</a>
-<a href="https://weixin.sogou.com/weixin?type=2&s_from=input&query=" target="_blank" class="link-btn">微信搜索</a>
-<a href="https://www.so.com/s?q=" target="_blank" class="link-btn">360搜索</a>
-<a href="https://www.douyin.com/search/" target="_blank" class="link-btn">抖音搜索</a>
-<a href="https://www.sogou.com/web?query=" target="_blank" class="link-btn">搜狗搜索</a>
-<a href="https://yandex.com/search/?text=" target="_blank" class="link-btn">Yandex搜索</a>
-<a href="https://yandex.com" target="_blank" class="link-btn">Yandex搜索</a>
-<a href="https://ya.ru/" target="_blank" class="link-btn">ya.ru/</a>
-<a href="http://lib.3dsource.cn/#/searchResult?searchKeyword=" target="_blank" class="link-btn">3dsource搜索</a>
-<a href="https://music.163.com/#/search/m/?s=" target="_blank" class="link-btn">网易云音乐</a>
-<a href="https://www.baidu.com/sf/vsearch?pd=video&tn=vsearch&ie=utf-8&wd=" target="_blank" class="link-btn">百度视频</a>
-<a href="https://news.baidu.com/ns?word=" target="_blank" class="link-btn">百度新闻</a>
-<a href="https://cn.bing.com/images/search?q=" target="_blank" class="link-btn">必应图片</a>
-<a href="https://image.baidu.com/search/index?word=" target="_blank" class="link-btn">百度图片</a>
-<a href="https://pic.sogou.com/pics?query=" target="_blank" class="link-btn">搜狗图片</a>
-<a href="https://image.so.com/i?q=" target="_blank" class="link-btn">360图片</a>
-<a href="https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=" target="_blank" class="link-btn">淘宝图片</a>
-<a href="/" target="_blank" class="link-btn">Pinterest</a>
-<a href="https://fanyi.baidu.com/mtpe-individual/multimodal?query=" target="_blank" class="link-btn">百度翻译</a>
-<a href="https://fanyi.sogou.com/text?keyword=" target="_blank" class="link-btn">搜狗翻译</a>
-<a href="https://cn.bing.com/translator/?ref&text=" target="_blank" class="link-btn">必应翻译</a>
-<a href="https://translate.google.cn/?sl=auto&tl=zh-CN&text=" target="_blank" class="link-btn">谷歌翻译</a>
-<a href="https://fanyi.youdao.com/?keyfrom=dict2.top&q=" target="_blank" class="link-btn">有道翻译</a>
-<a href="https://fanyi.caiyunapp.com/#/translator?source=" target="_blank" class="link-btn">彩云翻译</a>
-<a href="https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=" target="_blank" class="link-btn">淘宝搜索</a>
-<a href="https://www.164580.com" target="_blank" class="link-btn">164580搜索</a>
-<a href="https://www.164580.com/biaozhun/" target="_blank" class="link-btn">GB铆钉搜索</a>
-<a href="https://www.164580.com" target="_blank" class="link-btn">GB螺丝搜索</a>
-<a href="https://www.164580.com" target="_blank" class="link-btn">紧固件标准搜索</a>
-<a href="https://www.deepl.com/translator#auto/zh/" target="_blank" class="link-btn">DeepL翻译</a>
-<a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760667563%400b10dcc6_12ad_199eff6f722_055f%4001" target="_blank" class="link-btn">爱淘宝(电脑版)</a>
-<a href="https://s.click.1688.com/t?e=E8FA7FF2F7DF95454E1F4FDB40EFBC240CAA80D1CD478E29D920A558D1D5758C796E05FBA2F4EF2AB4495A67B5147075F72F2793620489D8E03BCF364CDA73EF1455176268C6A00FBEFBDA96A9B252F6C3F99DF019CD6D6D11E350B207C9D88D208AEA6665A9BADC3EE72C6E754956EC23DE95978F62EE1856CCA7B9C617E913A2F09545400D1C6D6A30A3B5370BDF77746B5E7B45863B217021FE817B2B3E85" target="_blank" class="link-btn">1688精选货源</a>     
+<a href="https://www.baidu.com/s?wd=" target="_blank">百度搜索</a>
+<a href="https://www.bing.com/search?q=" target="_blank">必应搜索</a>
+<a href="https://so.toutiao.com/search?dvpf=pc&source=input&keyword=" target="_blank">头条搜索</a>
+<a href="https://weixin.sogou.com/weixin?type=2&s_from=input&query=" target="_blank">微信搜索</a>
+<a href="https://www.so.com/s?q=" target="_blank">360搜索</a>
+<a href="https://www.douyin.com/search/" target="_blank">抖音搜索</a>
+<a href="https://www.sogou.com/web?query=" target="_blank">搜狗搜索</a>
+<a href="https://yandex.com/search/?text=" target="_blank">Yandex搜索</a>
+<a href="https://yandex.com" target="_blank">Yandex搜索</a>
+<a href="https://ya.ru/" target="_blank">ya.ru/</a>
+<a href="http://lib.3dsource.cn/#/searchResult?searchKeyword=" target="_blank">3dsource搜索</a>
+<a href="https://music.163.com/#/search/m/?s=" target="_blank">网易云音乐</a>
+<a href="https://www.baidu.com/sf/vsearch?pd=video&tn=vsearch&ie=utf-8&wd=" target="_blank">百度视频</a>
+<a href="https://news.baidu.com/ns?word=" target="_blank">百度新闻</a>
+<a href="https://cn.bing.com/images/search?q=" target="_blank">必应图片</a>
+<a href="https://image.baidu.com/search/index?word=" target="_blank">百度图片</a>
+<a href="https://pic.sogou.com/pics?query=" target="_blank">搜狗图片</a>
+<a href="https://image.so.com/i?q=" target="_blank">360图片</a>
+<a href="https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=" target="_blank">淘宝图片</a>
+<a href="/" target="_blank">Pinterest</a>
+<a href="https://fanyi.baidu.com/mtpe-individual/multimodal?query=" target="_blank">百度翻译</a>
+<a href="https://fanyi.sogou.com/text?keyword=" target="_blank">搜狗翻译</a>
+<a href="https://cn.bing.com/translator/?ref&text=" target="_blank">必应翻译</a>
+<a href="https://translate.google.cn/?sl=auto&tl=zh-CN&text=" target="_blank">谷歌翻译</a>
+<a href="https://fanyi.youdao.com/?keyfrom=dict2.top&q=" target="_blank">有道翻译</a>
+<a href="https://fanyi.caiyunapp.com/#/translator?source=" target="_blank">彩云翻译</a>
+<a href="https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=" target="_blank">淘宝搜索</a>
+<a href="https://www.164580.com" target="_blank">164580搜索</a>
+<a href="https://www.164580.com/biaozhun/" target="_blank">GB铆钉搜索</a>
+<a href="https://www.164580.com" target="_blank">GB螺丝搜索</a>
+<a href="https://www.164580.com" target="_blank">紧固件标准搜索</a>
+<a href="https://www.deepl.com/translator#auto/zh/" target="_blank">DeepL翻译</a>
+<a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760667563%400b10dcc6_12ad_199eff6f722_055f%4001" target="_blank">爱淘宝(电脑版)</a>
+<a href="https://s.click.1688.com/t?e=E8FA7FF2F7DF95454E1F4FDB40EFBC240CAA80D1CD478E29D920A558D1D5758C796E05FBA2F4EF2AB4495A67B5147075F72F2793620489D8E03BCF364CDA73EF1455176268C6A00FBEFBDA96A9B252F6C3F99DF019CD6D6D11E350B207C9D88D208AEA6665A9BADC3EE72C6E754956EC23DE95978F62EE1856CCA7B9C617E913A2F09545400D1C6D6A30A3B5370BDF77746B5E7B45863B217021FE817B2B3E85" target="_blank">1688精选货源</a>     
 
    </div>
         </section>
@@ -1121,22 +1134,22 @@ footer {
 
             <div class="category-title">购物平台</div>
             <div class="link-container">
-                <a href="https://cn.bing.com/search?q=%E8%B4%AD%E7%89%A9" target="_blank" class="link-btn">购物搜索（必应）</a>
-                <a href="https://www.taobao.com/" target="_blank" class="link-btn">淘宝</a>
-                <a href="https://www.tmall.com" target="_blank" class="link-btn">天猫</a>
-                <a href="https://www.1688.com" target="_blank" class="link-btn">1688</a>
-                <a href="https://www.xiaomiyoupin.com" target="_blank" class="link-btn">小米有品</a>
-                <a href="https://www.dangdang.com/" target="_blank" class="link-btn">当当</a>
-                <a href="https://www.suning.com/" target="_blank" class="link-btn">苏宁易购</a>
-                <a href="https://www.mi.com/shop" target="_blank" class="link-btn">小米商城</a>
-                <a href="https://www.vmall.com/index.html" target="_blank" class="link-btn">华为商城</a>
-                <a href="https://www.vip.com/" target="_blank" class="link-btn">唯品会</a>
-                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DToeSffRMvSccQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMW7VdsN6mBHxRitN3%2FurF3zEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6AJjNZvpnUkNZXXQPnMEVgRxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401749699081%40212ca094_0ed9_19762313543_054e%4001" target="_blank" class="link-btn">天猫超市</a>
-                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DdcwuDpunQkscQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMWrcZAqtI%2Fg85x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GTh9G%2FvhWTBzMNPueRDzgzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401749699015%40210752c5_0e74_1976230325a_0561%4001" target="_blank" class="link-btn">漫花旗舰店</a>
-                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D78HcyfeG2WYcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMZNtuO5iGdZE5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401749698975%402132dcb4_0e33_197622f98db_056a%4001" target="_blank" class="link-btn">天天特卖工厂</a>
-                <a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_115896750188&union_lens=lensId%3APUB%401749698940%40212ca094_0ed9_197622f0ed0_054d%4001" target="_blank" class="link-btn">爱淘宝</a>
-                <a href="https://mobile.yangkeduo.com/duo_collection.html?__page=djbis&pid=9419863_268967929&cpsSign=CIP_250208_9419863_268967929_8826120d408f16155cb601f3fac6f486&_x_ddjb_act=%7B%22st%22%3A%2217%22%7D&duoduo_type=2" target="_blank" class="link-btn">拼多多内购清单</a>
-<a href="https://s.click.1688.com/t?e=E8FA7FF2F7DF95454E1F4FDB40EFBC240CAA80D1CD478E29D920A558D1D5758C796E05FBA2F4EF2AB4495A67B5147075F72F2793620489D8E03BCF364CDA73EF1455176268C6A00FBEFBDA96A9B252F6C3F99DF019CD6D6D11E350B207C9D88D208AEA6665A9BADC3EE72C6E754956EC23DE95978F62EE1856CCA7B9C617E913A2F09545400D1C6D6A30A3B5370BDF77746B5E7B45863B217021FE817B2B3E85" target="_blank" class="link-btn">1688精选货源</a>     
+                <a href="https://cn.bing.com/search?q=%E8%B4%AD%E7%89%A9" target="_blank">购物搜索（必应）</a>
+                <a href="https://www.taobao.com/" target="_blank">淘宝</a>
+                <a href="https://www.tmall.com" target="_blank">天猫</a>
+                <a href="https://www.1688.com" target="_blank">1688</a>
+                <a href="https://www.xiaomiyoupin.com" target="_blank">小米有品</a>
+                <a href="https://www.dangdang.com/" target="_blank">当当</a>
+                <a href="https://www.suning.com/" target="_blank">苏宁易购</a>
+                <a href="https://www.mi.com/shop" target="_blank">小米商城</a>
+                <a href="https://www.vmall.com/index.html" target="_blank">华为商城</a>
+                <a href="https://www.vip.com/" target="_blank">唯品会</a>
+                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DToeSffRMvSccQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMW7VdsN6mBHxRitN3%2FurF3zEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6AJjNZvpnUkNZXXQPnMEVgRxKmPmpIKZsA%3D%3D&union_lens=lensId%3APUB%401749699081%40212ca094_0ed9_19762313543_054e%4001" target="_blank">天猫超市</a>
+                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DdcwuDpunQkscQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMWrcZAqtI%2Fg85x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GTh9G%2FvhWTBzMNPueRDzgzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401749699015%40210752c5_0e74_1976230325a_0561%4001" target="_blank">漫花旗舰店</a>
+                <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D78HcyfeG2WYcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMZNtuO5iGdZE5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401749698975%402132dcb4_0e33_197622f98db_056a%4001" target="_blank">天天特卖工厂</a>
+                <a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_115896750188&union_lens=lensId%3APUB%401749698940%40212ca094_0ed9_197622f0ed0_054d%4001" target="_blank">爱淘宝</a>
+                <a href="https://mobile.yangkeduo.com/duo_collection.html?__page=djbis&pid=9419863_268967929&cpsSign=CIP_250208_9419863_268967929_8826120d408f16155cb601f3fac6f486&_x_ddjb_act=%7B%22st%22%3A%2217%22%7D&duoduo_type=2" target="_blank">拼多多内购清单</a>
+<a href="https://s.click.1688.com/t?e=E8FA7FF2F7DF95454E1F4FDB40EFBC240CAA80D1CD478E29D920A558D1D5758C796E05FBA2F4EF2AB4495A67B5147075F72F2793620489D8E03BCF364CDA73EF1455176268C6A00FBEFBDA96A9B252F6C3F99DF019CD6D6D11E350B207C9D88D208AEA6665A9BADC3EE72C6E754956EC23DE95978F62EE1856CCA7B9C617E913A2F09545400D1C6D6A30A3B5370BDF77746B5E7B45863B217021FE817B2B3E85" target="_blank">1688精选货源</a>     
             </div>
         </section>
 
@@ -1165,18 +1178,18 @@ footer {
 <section id="网页导航" class="category-nav">
             <div class="category-title">网页导航</div>
             <div class="link-container">
-                <a href="https://www.hao123.com" target="_blank" class="link-btn">好123导航</a>
-                <a href="https://hao.360.cn/?src=lm&ls=n1d36d26f94" target="_blank" class="link-btn">360导航</a>
-                <a href="https://www.uc123.com/" target="_blank" class="link-btn">uc导航</a>
-                <a href="http://hao.uc.cn/" target="_blank" class="link-btn">手机版uc导航</a>
-                <a href="https://123.sogou.com/" target="_blank" class="link-btn">搜狗导航</a>
-                <a href="https://hao.qq.com/" target="_blank" class="link-btn">QQ导航</a>
-                <a href="http://hao.rising.cn/" target="_blank" class="link-btn">瑞星安全网址导航</a>
-                <a href="https://www.duba.com" target="_blank" class="link-btn">毒霸导航</a>
-                <a href="http://hao.sm.cn/" target="_blank" class="link-btn">网址导航-神马</a>
-                <a href="https://www.2345.com/?kcn91" target="_blank" class="link-btn">2345网址导航</a>
-                <a href="https://young.hao.360.com/" target="_blank" class="link-btn">360导航少年版</a>
-                <a href="https://cn.bing.com/search?q=%E7%BD%91%E5%9D%80%E5%AF%BC%E8%88%AA" target="_blank" class="link-btn">网址导航 - 国内版 Bing</a>
+                <a href="https://www.hao123.com" target="_blank">好123导航</a>
+                <a href="https://hao.360.cn/?src=lm&ls=n1d36d26f94" target="_blank">360导航</a>
+                <a href="https://www.uc123.com/" target="_blank">uc导航</a>
+                <a href="http://hao.uc.cn/" target="_blank">手机版uc导航</a>
+                <a href="https://123.sogou.com/" target="_blank">搜狗导航</a>
+                <a href="https://hao.qq.com/" target="_blank">QQ导航</a>
+                <a href="http://hao.rising.cn/" target="_blank">瑞星安全网址导航</a>
+                <a href="https://www.duba.com" target="_blank">毒霸导航</a>
+                <a href="http://hao.sm.cn/" target="_blank">网址导航-神马</a>
+                <a href="https://www.2345.com/?kcn91" target="_blank">2345网址导航</a>
+                <a href="https://young.hao.360.com/" target="_blank">360导航少年版</a>
+                <a href="https://cn.bing.com/search?q=%E7%BD%91%E5%9D%80%E5%AF%BC%E8%88%AA" target="_blank">网址导航 - 国内版 Bing</a>
             </div>
         </section>
 
@@ -1184,11 +1197,11 @@ footer {
 <section id="百科" class="category-nav">
             <div class="category-title">百科平台</div>
             <div class="link-container">
-                <a href="https://www.baike.com" target="_blank" class="link-btn">快懂百科</a>
-                <a href="https://baike.baidu.com" target="_blank" class="link-btn">百度百科</a>
-                <a href="https://baike.so.com" target="_blank" class="link-btn">360百科</a>
-                <a href="https://baike.sogou.com" target="_blank" class="link-btn">搜狗百科</a>
-                <a href="https://baike.weixin.qq.com" target="_blank" class="link-btn">微信百科</a>
+                <a href="https://www.baike.com" target="_blank">快懂百科</a>
+                <a href="https://baike.baidu.com" target="_blank">百度百科</a>
+                <a href="https://baike.so.com" target="_blank">360百科</a>
+                <a href="https://baike.sogou.com" target="_blank">搜狗百科</a>
+                <a href="https://baike.weixin.qq.com" target="_blank">微信百科</a>
             </div>
         </section>
 
@@ -1196,13 +1209,13 @@ footer {
 <section id="问答" class="category-nav">
             <div class="category-title">问答平台</div>
             <div class="link-container">
-                <a href="https://www.zhihu.com/" target="_blank" class="link-btn">知乎</a>
-                <a href="https://wukong.toutiao.com/" target="_blank" class="link-btn">头条问答</a>
-                <a href="https://zhidao.baidu.com/" target="_blank" class="link-btn">百度知道</a>
-                <a href="https://wenda.so.com/?src=tab_web" target="_blank" class="link-btn">360问答</a>
-                <a href="https://wenwen.sogou.com/" target="_blank" class="link-btn">搜狗问问</a>
-                <a href="http://wenda.tianya.cn" target="_blank" class="link-btn">天涯问答</a>
-                <a href="https://ask.zol.com.cn/" target="_blank" class="link-btn">ZOL问答</a>
+                <a href="https://www.zhihu.com/" target="_blank">知乎</a>
+                <a href="https://wukong.toutiao.com/" target="_blank">头条问答</a>
+                <a href="https://zhidao.baidu.com/" target="_blank">百度知道</a>
+                <a href="https://wenda.so.com/?src=tab_web" target="_blank">360问答</a>
+                <a href="https://wenwen.sogou.com/" target="_blank">搜狗问问</a>
+                <a href="http://wenda.tianya.cn" target="_blank">天涯问答</a>
+                <a href="https://ask.zol.com.cn/" target="_blank">ZOL问答</a>
             </div>
         </section>
 
@@ -1232,26 +1245,26 @@ footer {
 <section id="自媒体" class="category-nav">
             <div class="category-title">自媒体平台</div>
             <div class="link-container">
-                <a href="https://creator.douyin.com/" target="_blank" class="link-btn">抖音创作服务平台</a>
-                <a href="https://www.douyinec.com/" target="_blank" class="link-btn">抖音电商官网</a>
-                <a href="https://mp.toutiao.com/" target="_blank" class="link-btn">头条号</a>
-                <a href="https://mp.weixin.qq.com/" target="_blank" class="link-btn">公众号</a>
-                <a href="https://yuanqi.tencent.com/" target="_blank" class="link-btn">腾讯元器 - 腾讯官方智能体平台</a>
+                <a href="https://creator.douyin.com/" target="_blank">抖音创作服务平台</a>
+                <a href="https://www.douyinec.com/" target="_blank">抖音电商官网</a>
+                <a href="https://mp.toutiao.com/" target="_blank">头条号</a>
+                <a href="https://mp.weixin.qq.com/" target="_blank">公众号</a>
+                <a href="https://yuanqi.tencent.com/" target="_blank">腾讯元器 - 腾讯官方智能体平台</a>
 
 
-                <a href="https://baijiahao.baidu.com/" target="_blank" class="link-btn">百家号</a>
-                <a href="https://om.qq.com" target="_blank" class="link-btn">企鹅号（腾讯内容开放平台）</a>
-                <a href="https://mp.163.com/" target="_blank" class="link-btn">网易号</a>
-                <a href="https://mp.iqiyi.com/" target="_blank" class="link-btn">爱奇艺iQ号</a>
-                <a href="https://studio.ixigua.com/" target="_blank" class="link-btn">西瓜创作平台</a>
-                <a href="https://member.bilibili.com/" target="_blank" class="link-btn">哔哩哔哩创作中心</a>
-                <a href="https://mp.youku.com/new/video" target="_blank" class="link-btn">优酷创作中心官网</a>
-                <a href="https://media.weishi.qq.com/" target="_blank" class="link-btn">腾讯微视·视频上传</a>
-                <a href="https://cp.kuaishou.com" target="_blank" class="link-btn">快手创作者服务平台</a>
-                <a href="https://creator.xiaohongshu.com/login" target="_blank" class="link-btn">小红书创作服务平台</a>
-                <a href="https://channels.weixin.qq.com" target="_blank" class="link-btn">视频号助手</a>
-                <a href="https://buyin.jinritemai.com/dashboard?new_enter_from=" target="_blank" class="link-btn">巨量百应Buyin</a>
-                <a href="https://buyin.jinritemai.com/dashboard/short-video-diagnosis" target="_blank" class="link-btn">巨量百应Buyin:视频管理</a>
+                <a href="https://baijiahao.baidu.com/" target="_blank">百家号</a>
+                <a href="https://om.qq.com" target="_blank">企鹅号（腾讯内容开放平台）</a>
+                <a href="https://mp.163.com/" target="_blank">网易号</a>
+                <a href="https://mp.iqiyi.com/" target="_blank">爱奇艺iQ号</a>
+                <a href="https://studio.ixigua.com/" target="_blank">西瓜创作平台</a>
+                <a href="https://member.bilibili.com/" target="_blank">哔哩哔哩创作中心</a>
+                <a href="https://mp.youku.com/new/video" target="_blank">优酷创作中心官网</a>
+                <a href="https://media.weishi.qq.com/" target="_blank">腾讯微视·视频上传</a>
+                <a href="https://cp.kuaishou.com" target="_blank">快手创作者服务平台</a>
+                <a href="https://creator.xiaohongshu.com/login" target="_blank">小红书创作服务平台</a>
+                <a href="https://channels.weixin.qq.com" target="_blank">视频号助手</a>
+                <a href="https://buyin.jinritemai.com/dashboard?new_enter_from=" target="_blank">巨量百应Buyin</a>
+                <a href="https://buyin.jinritemai.com/dashboard/short-video-diagnosis" target="_blank">巨量百应Buyin:视频管理</a>
             </div>
         </section>
 
@@ -1260,44 +1273,44 @@ footer {
             <div class="category-title">视频平台</div>
             <div class="link-container">
 
-                <a href="https://www.douyin.com/" target="_blank" class="link-btn">抖音</a>
-                <a href="https://kuaishou.cn/" target="_blank" class="link-btn">快手</a>
-                <a href="https://www.xiaohongshu.com" target="_blank" class="link-btn">小红书</a>
-                <a href="https://www.bilibili.com/" target="_blank" class="link-btn">哔哩哔哩</a>
-                <a href="https://haokan.baidu.com/" target="_blank" class="link-btn">好看视频</a>
-                <a href="https://tv.sohu.com" target="_blank" class="link-btn">搜狐视频</a>
+                <a href="https://www.douyin.com/" target="_blank">抖音</a>
+                <a href="https://kuaishou.cn/" target="_blank">快手</a>
+                <a href="https://www.xiaohongshu.com" target="_blank">小红书</a>
+                <a href="https://www.bilibili.com/" target="_blank">哔哩哔哩</a>
+                <a href="https://haokan.baidu.com/" target="_blank">好看视频</a>
+                <a href="https://tv.sohu.com" target="_blank">搜狐视频</a>
                 
-                <a href="https://tv.cctv.com/live/" target="_blank" class="link-btn">CCTV节目官网_央视网</a>
-                <a href="https://www.yangshipin.cn/" target="_blank" class="link-btn">央视频</a>
-                <a href="http://dsjapk.com" target="_blank" class="link-btn">电视家</a>
+                <a href="https://tv.cctv.com/live/" target="_blank">CCTV节目官网_央视网</a>
+                <a href="https://www.yangshipin.cn/" target="_blank">央视频</a>
+                <a href="http://dsjapk.com" target="_blank">电视家</a>
 
 
 
 
-                <a href="http://www.aikantv.org/" target="_blank" class="link-btn">爱看TV</a>
-                <a href="https://www.ixigua.com/" target="_blank" class="link-btn">西瓜视频</a>
-                <a href="https://www.youku.com/" target="_blank" class="link-btn">优酷</a>
-                <a href="https://www.iqiyi.com/" target="_blank" class="link-btn">爱奇艺</a>
-                <a href="https://v.qq.com/" target="_blank" class="link-btn">腾讯视频</a>
-                <a href="https://www.bilibili.com/" target="_blank" class="link-btn">哔哩哔哩</a>
-                <a href="https://www.mgtv.com/" target="_blank" class="link-btn">芒果TV</a>
-                <a href="https://tv.sohu.com/" target="_blank" class="link-btn">搜狐视频</a>
-                <a href="https://new.tudou.com/" target="_blank" class="link-btn">土豆视频</a>
-                <a href="https://www.56.com/" target="_blank" class="link-btn">56视频</a>
-                <a href="https://v.ifeng.com/" target="_blank" class="link-btn">凤凰视频</a>
-                <a href="http://www.zjstv.com/" target="_blank" class="link-btn">蓝天下 蓝莓视频</a>
-                <a href="https://www.pptv.com/" target="_blank" class="link-btn">pptv</a>
-                <a href="https://maoyan.com/" target="_blank" class="link-btn">猫眼电影</a>
-                <a href="http://www.fun.tv/" target="_blank" class="link-btn">风行</a>
-                <a href="http://movie.le.com/" target="_blank" class="link-btn">乐视电影</a>
-                <a href="https://tv.cctv.com/cctv6/" target="_blank" class="link-btn">CCTV6</a>
-                <a href="https://www.migu.cn/" target="_blank" class="link-btn">咪咕视频</a>
-                <a href="https://haokan.baidu.com/?sfrom=baidu-top" target="_blank" class="link-btn">好看视频</a>
-                <a href="https://video.360kan.com/?src=tab_web" target="_blank" class="link-btn">360影视</a>
-                <a href="https://v.sogou.com/" target="_blank" class="link-btn">搜狗视频</a>
-                <a href="https://cn.bing.com/videos/trending?form=HDRSC3" target="_blank" class="link-btn">国内版 Bing video</a>
-                <a href="https://www.1905.com/" target="_blank" class="link-btn">电影网_1905.com</a>
-                <a href="https://young.hao.360.com/channel/MdfUPUPlZK3BPj" target="_blank" class="link-btn">少年放映厅</a>
+                <a href="http://www.aikantv.org/" target="_blank">爱看TV</a>
+                <a href="https://www.ixigua.com/" target="_blank">西瓜视频</a>
+                <a href="https://www.youku.com/" target="_blank">优酷</a>
+                <a href="https://www.iqiyi.com/" target="_blank">爱奇艺</a>
+                <a href="https://v.qq.com/" target="_blank">腾讯视频</a>
+                <a href="https://www.bilibili.com/" target="_blank">哔哩哔哩</a>
+                <a href="https://www.mgtv.com/" target="_blank">芒果TV</a>
+                <a href="https://tv.sohu.com/" target="_blank">搜狐视频</a>
+                <a href="https://new.tudou.com/" target="_blank">土豆视频</a>
+                <a href="https://www.56.com/" target="_blank">56视频</a>
+                <a href="https://v.ifeng.com/" target="_blank">凤凰视频</a>
+                <a href="http://www.zjstv.com/" target="_blank">蓝天下 蓝莓视频</a>
+                <a href="https://www.pptv.com/" target="_blank">pptv</a>
+                <a href="https://maoyan.com/" target="_blank">猫眼电影</a>
+                <a href="http://www.fun.tv/" target="_blank">风行</a>
+                <a href="http://movie.le.com/" target="_blank">乐视电影</a>
+                <a href="https://tv.cctv.com/cctv6/" target="_blank">CCTV6</a>
+                <a href="https://www.migu.cn/" target="_blank">咪咕视频</a>
+                <a href="https://haokan.baidu.com/?sfrom=baidu-top" target="_blank">好看视频</a>
+                <a href="https://video.360kan.com/?src=tab_web" target="_blank">360影视</a>
+                <a href="https://v.sogou.com/" target="_blank">搜狗视频</a>
+                <a href="https://cn.bing.com/videos/trending?form=HDRSC3" target="_blank">国内版 Bing video</a>
+                <a href="https://www.1905.com/" target="_blank">电影网_1905.com</a>
+                <a href="https://young.hao.360.com/channel/MdfUPUPlZK3BPj" target="_blank">少年放映厅</a>
 
 
 
@@ -1311,17 +1324,17 @@ footer {
             <div class="category-title">邮箱</div>
             <div class="link-container">
 
-                <a href="https://mail.163.com/" target="_blank" class="link-btn">163网易邮箱</a>
-                <a href="https://exmail.qq.com/" target="_blank" class="link-btn">腾讯企业邮箱</a>
-                <a href="https://mail.qq.com/" target="_blank" class="link-btn">QQ邮箱</a>
-                <a href="https://mail.126.com/" target="_blank" class="link-btn">126网易邮箱</a>
-                <a href="https://mail.10086.cn/" target="_blank" class="link-btn">139邮箱</a>
-                <a href="https://webmail30.189.cn/w2/" target="_blank" class="link-btn">189邮箱</a>
-                <a href="https://mail.aliyun.com/" target="_blank" class="link-btn">阿里邮箱</a>
-                <a href="https://mail.21cn.com/w2/" target="_blank" class="link-btn">21cn邮箱</a>
-                <a href="https://mail.sohu.com/fe/#/login" target="_blank" class="link-btn">搜狐闪电邮箱</a>
-                <a href="https://mail.tom.com/" target="_blank" class="link-btn">TOM免费邮箱</a>
-                <a href="https://mail.sina.com.cn" target="_blank" class="link-btn">新浪邮箱</a>
+                <a href="https://mail.163.com/" target="_blank">163网易邮箱</a>
+                <a href="https://exmail.qq.com/" target="_blank">腾讯企业邮箱</a>
+                <a href="https://mail.qq.com/" target="_blank">QQ邮箱</a>
+                <a href="https://mail.126.com/" target="_blank">126网易邮箱</a>
+                <a href="https://mail.10086.cn/" target="_blank">139邮箱</a>
+                <a href="https://webmail30.189.cn/w2/" target="_blank">189邮箱</a>
+                <a href="https://mail.aliyun.com/" target="_blank">阿里邮箱</a>
+                <a href="https://mail.21cn.com/w2/" target="_blank">21cn邮箱</a>
+                <a href="https://mail.sohu.com/fe/#/login" target="_blank">搜狐闪电邮箱</a>
+                <a href="https://mail.tom.com/" target="_blank">TOM免费邮箱</a>
+                <a href="https://mail.sina.com.cn" target="_blank">新浪邮箱</a>
             </div>
         </section>
 
@@ -1351,28 +1364,28 @@ footer {
 <section id="翻译" class="category-nav">
             <div class="category-title">翻译工具</div>
             <div class="link-container">
-                <a href="https://cn.bing.com/translator/?ref" target="_blank" class="link-btn">Bing翻译</a>
-                <a href="https://fanyi.sogou.com/text" target="_blank" class="link-btn">搜狗翻译</a>
-                <a href="https://fanyi.baidu.com/" target="_blank" class="link-btn">百度翻译</a>
-                <a href="https://cn.bing.com/search?q=翻译" target="_blank" class="link-btn">必应翻译</a>
-                <a href="https://hanyu.baidu.com/hanyu-page/zici/s?wd=%E4%BD%A0&ptype=zici&tn=sug_click" target="_blank" class="link-btn">怎么读,怎么写,笔顺</a>
-                <a href="https://hanyu.baidu.com/zici/" target="_blank" class="link-btn">百度汉语</a>
-                <a href="https://translate.google.cn/" target="_blank" class="link-btn">Google 翻译</a>
-                <a href="https://fanyi.youdao.com/" target="_blank" class="link-btn">在线翻译_有道</a>
-                <a href="https://fanyi.qq.com/" target="_blank" class="link-btn">腾讯翻译</a>
-                <a href="https://dict.cnki.net/index" target="_blank" class="link-btn">CNKI翻译助手</a>
-                <a href="http://fanyi.dict.cn/" target="_blank" class="link-btn">fanyi_英文在线翻译</a>
-                <a href="https://www.dreye.com.cn/trans/" target="_blank" class="link-btn">Dr.eye 译典通 | 翻译</a>
-                <a href="https://www.mydict.com/" target="_blank" class="link-btn">www.mydict.com</a>
-                <a href="https://fanyi.caiyunapp.com/#/" target="_blank" class="link-btn">彩云小译 - 在线翻译</a>
-                <a href="https://www.iamwawa.cn/pinyin.html" target="_blank" class="link-btn">中文换拼音</a>
-                <a href="http://xh.5156edu.com" target="_blank" class="link-btn">在线新华字典</a>
-                <a href="http://du.hanyupinyin.cn/" target="_blank" class="link-btn">在线读拼音</a>
-                <a href="https://dz.wubidz.cn/dzlx.php" target="_blank" class="link-btn">在线打字练习模式</a>
-                <a href="https://www.deepl.com" target="_blank" class="link-btn">DeepL翻译</a>
-                <a href="https://www.chazidian.com/" target="_blank" class="link-btn">查字典</a>
-                <a href="https://www.dazima.cn/" target="_blank" class="link-btn">打字练习</a>
-                <a href="http://cy.5156edu.com/" target="_blank" class="link-btn">成语字典</a>
+                <a href="https://cn.bing.com/translator/?ref" target="_blank">Bing翻译</a>
+                <a href="https://fanyi.sogou.com/text" target="_blank">搜狗翻译</a>
+                <a href="https://fanyi.baidu.com/" target="_blank">百度翻译</a>
+                <a href="https://cn.bing.com/search?q=翻译" target="_blank">必应翻译</a>
+                <a href="https://hanyu.baidu.com/hanyu-page/zici/s?wd=%E4%BD%A0&ptype=zici&tn=sug_click" target="_blank">怎么读,怎么写,笔顺</a>
+                <a href="https://hanyu.baidu.com/zici/" target="_blank">百度汉语</a>
+                <a href="https://translate.google.cn/" target="_blank">Google 翻译</a>
+                <a href="https://fanyi.youdao.com/" target="_blank">在线翻译_有道</a>
+                <a href="https://fanyi.qq.com/" target="_blank">腾讯翻译</a>
+                <a href="https://dict.cnki.net/index" target="_blank">CNKI翻译助手</a>
+                <a href="http://fanyi.dict.cn/" target="_blank">fanyi_英文在线翻译</a>
+                <a href="https://www.dreye.com.cn/trans/" target="_blank">Dr.eye 译典通 | 翻译</a>
+                <a href="https://www.mydict.com/" target="_blank">www.mydict.com</a>
+                <a href="https://fanyi.caiyunapp.com/#/" target="_blank">彩云小译 - 在线翻译</a>
+                <a href="https://www.iamwawa.cn/pinyin.html" target="_blank">中文换拼音</a>
+                <a href="http://xh.5156edu.com" target="_blank">在线新华字典</a>
+                <a href="http://du.hanyupinyin.cn/" target="_blank">在线读拼音</a>
+                <a href="https://dz.wubidz.cn/dzlx.php" target="_blank">在线打字练习模式</a>
+                <a href="https://www.deepl.com" target="_blank">DeepL翻译</a>
+                <a href="https://www.chazidian.com/" target="_blank">查字典</a>
+                <a href="https://www.dazima.cn/" target="_blank">打字练习</a>
+                <a href="http://cy.5156edu.com/" target="_blank">成语字典</a>
             </div>
         </section>
 
@@ -1381,14 +1394,14 @@ footer {
             <div class="category-title">企业信息</div>
             <div class="link-container">
           
-                <a href="https://aiqicha.baidu.com/" target="_blank" class="link-btn">爱企查</a>
-                <a href="https://www.tianyancha.com/" target="_blank" class="link-btn">天眼查</a>
-                <a href="https://www.qcc.com/" target="_blank" class="link-btn">企查查</a>
-                <a href="https://www.qichamao.com/" target="_blank" class="link-btn">企查猫</a>
-                <a href="https://www.qixin.com/" target="_blank" class="link-btn">启信宝</a>
-                <a href="https://www.riskbird.com" target="_blank" class="link-btn">风鸟</a>
-                <a href="https://shuidi.cn/" target="_blank" class="link-btn">水滴信用</a>
-                <a href="https://88cha.com/" target="_blank" class="link-btn">88查</a>
+                <a href="https://aiqicha.baidu.com/" target="_blank">爱企查</a>
+                <a href="https://www.tianyancha.com/" target="_blank">天眼查</a>
+                <a href="https://www.qcc.com/" target="_blank">企查查</a>
+                <a href="https://www.qichamao.com/" target="_blank">企查猫</a>
+                <a href="https://www.qixin.com/" target="_blank">启信宝</a>
+                <a href="https://www.riskbird.com" target="_blank">风鸟</a>
+                <a href="https://shuidi.cn/" target="_blank">水滴信用</a>
+                <a href="https://88cha.com/" target="_blank">88查</a>
             </div>
         </section>
 
@@ -1420,13 +1433,13 @@ footer {
  <section id="地图" class="category-nav">
             <div class="category-title">地图平台</div>
             <div class="link-container">
-                   <a href="https://www.amap.com/" target="_blank" class="link-btn">高德地图</a>
-                <a href="https://map.baidu.com/" target="_blank" class="link-btn">百度地图</a>
-                <a href="https://map.qq.com/" target="_blank" class="link-btn">腾讯地图</a>
-                <a href="https://map.sogou.com" target="_blank" class="link-btn">搜狗地图</a>
-                <a href="https://ditu.so.com/" target="_blank" class="link-btn">360地图</a>
-                <a href="https://map.careland.com.cn/" target="_blank" class="link-btn">凯立德地图</a>
-                <a href="https://cn.bing.com/maps" target="_blank" class="link-btn">Bing 地图</a>
+                   <a href="https://www.amap.com/" target="_blank">高德地图</a>
+                <a href="https://map.baidu.com/" target="_blank">百度地图</a>
+                <a href="https://map.qq.com/" target="_blank">腾讯地图</a>
+                <a href="https://map.sogou.com" target="_blank">搜狗地图</a>
+                <a href="https://ditu.so.com/" target="_blank">360地图</a>
+                <a href="https://map.careland.com.cn/" target="_blank">凯立德地图</a>
+                <a href="https://cn.bing.com/maps" target="_blank">Bing 地图</a>
             </div>
         </section>
 
@@ -1455,16 +1468,16 @@ footer {
 <section id="手机品牌" class="category-nav">
             <div class="category-title">手机品牌</div>
             <div class="link-container">
-                <a href="https://www.vmall.com" target="_blank" class="link-btn">华为</a>
-                <a href="https://www.mi.com" target="_blank" class="link-btn">小米</a>
-                <a href="https://www.oppo.com" target="_blank" class="link-btn">oppo</a>
-                <a href="https://www.vivo.com.cn" target="_blank" class="link-btn">vivo</a>
-                <a href="https://www.oneplus.com" target="_blank" class="link-btn">一加</a>
-                <a href="https://www.realme.com" target="_blank" class="link-btn">真我</a>
-                <a href="https://www.meizu.com" target="_blank" class="link-btn">魅族</a>
-                <a href="https://www.nokia.com" target="_blank" class="link-btn">诺基亚</a>
-                <a href="https://www.apple.com.cn" target="_blank" class="link-btn">苹果</a>
-                <a href="https://shop.samsung.com.cn" target="_blank" class="link-btn">三星</a>
+                <a href="https://www.vmall.com" target="_blank">华为</a>
+                <a href="https://www.mi.com" target="_blank">小米</a>
+                <a href="https://www.oppo.com" target="_blank">oppo</a>
+                <a href="https://www.vivo.com.cn" target="_blank">vivo</a>
+                <a href="https://www.oneplus.com" target="_blank">一加</a>
+                <a href="https://www.realme.com" target="_blank">真我</a>
+                <a href="https://www.meizu.com" target="_blank">魅族</a>
+                <a href="https://www.nokia.com" target="_blank">诺基亚</a>
+                <a href="https://www.apple.com.cn" target="_blank">苹果</a>
+                <a href="https://shop.samsung.com.cn" target="_blank">三星</a>
             </div>
         </section>
 
@@ -1472,16 +1485,16 @@ footer {
 <section id="浏览器主页" class="category-nav">
             <div class="category-title">浏览器主页</div>
             <div class="link-container">
-                <a href="https://go.itab.link/" target="_blank" class="link-btn">新标签页</a>
-                <a href="https://limestart.cn/" target="_blank" class="link-btn">青柠起始页</a>
-                <a href="https://start.firefoxchina.cn/" target="_blank" class="link-btn">火狐起始页</a>
-                <a href="https://www.jianfast.com/" target="_blank" class="link-btn">简法主页</a>
-                <a href="https://browser.qq.com/home" target="_blank" class="link-btn">QQ浏览器主页</a>
-                <a href="https://go.mtab.cc/" target="_blank" class="link-btn">mTab书签-新标签页</a>
-                <a href="https://inftab.com/" target="_blank" class="link-btn">Infinity 主页</a>
-                <a href="http://www.oojzy.cn/" target="_blank" class="link-btn">简主页</a>
-                <a href="https://6-u.com/" target="_blank" class="link-btn">乐游导航</a>
-                <a href="https://www.51kim.com/" target="_blank" class="link-btn">氪主页</a>
+                <a href="https://go.itab.link/" target="_blank">新标签页</a>
+                <a href="https://limestart.cn/" target="_blank">青柠起始页</a>
+                <a href="https://start.firefoxchina.cn/" target="_blank">火狐起始页</a>
+                <a href="https://www.jianfast.com/" target="_blank">简法主页</a>
+                <a href="https://browser.qq.com/home" target="_blank">QQ浏览器主页</a>
+                <a href="https://go.mtab.cc/" target="_blank">mTab书签-新标签页</a>
+                <a href="https://inftab.com/" target="_blank">Infinity 主页</a>
+                <a href="http://www.oojzy.cn/" target="_blank">简主页</a>
+                <a href="https://6-u.com/" target="_blank">乐游导航</a>
+                <a href="https://www.51kim.com/" target="_blank">氪主页</a>
             </div>
         </section>
 
@@ -1510,12 +1523,12 @@ footer {
     <section id="图床" class="category-nav">
             <div class="category-title">图床工具</div>
             <div class="link-container">
-                <a href="https://tutu.to" target="_blank" class="link-btn">兔兔</a>
-                <a href="https://cn.bing.com/search?q=%E5%9B%BE%E5%BA%8A%E5%AF%BC%E8%88%AA&qs=n&form=QBRE&=%25e%E7%AE%A1%E7%90%86%E6%90%9C%E7%B4%A2%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%25E&sp=-1&lq=0&pq=%E5%9B%BE%E5%BA%8A%E5%AF%BC%E8%88%AA&sc=1-4&sk=&cvid=66959893314E40A78FC91438944B9BB9" target="_blank" class="link-btn">图床导航</a>
-                <a href="https://cn.bing.com/search?q=%E5%9B%BE%E5%BA%8A&form=QBLH&sp=-1&lq=0&pq=%E5%9B%BE%E5%BA%8A&sc=12-2&qs=n&sk=&cvid=BA8E6CE4F218410A8F8753DFF232DEA7" target="_blank" class="link-btn">图床</a>
-                <a href="https://www.imageoss.com/gpc234" target="_blank" class="link-btn">imageoss</a>
-                <a href="https://www.imagehub.cc/" target="_blank" class="link-btn">imagehub</a>
-                <a href="https://imglink.org/" target="_blank" class="link-btn">imglink.org</a>
+                <a href="https://tutu.to" target="_blank">兔兔</a>
+                <a href="https://cn.bing.com/search?q=%E5%9B%BE%E5%BA%8A%E5%AF%BC%E8%88%AA&qs=n&form=QBRE&=%25e%E7%AE%A1%E7%90%86%E6%90%9C%E7%B4%A2%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%25E&sp=-1&lq=0&pq=%E5%9B%BE%E5%BA%8A%E5%AF%BC%E8%88%AA&sc=1-4&sk=&cvid=66959893314E40A78FC91438944B9BB9" target="_blank">图床导航</a>
+                <a href="https://cn.bing.com/search?q=%E5%9B%BE%E5%BA%8A&form=QBLH&sp=-1&lq=0&pq=%E5%9B%BE%E5%BA%8A&sc=12-2&qs=n&sk=&cvid=BA8E6CE4F218410A8F8753DFF232DEA7" target="_blank">图床</a>
+                <a href="https://www.imageoss.com/gpc234" target="_blank">imageoss</a>
+                <a href="https://www.imagehub.cc/" target="_blank">imagehub</a>
+                <a href="https://imglink.org/" target="_blank">imglink.org</a>
 
             </div>
         </section>
@@ -1524,20 +1537,20 @@ footer {
 <section id="网盘" class="category-nav">
             <div class="category-title">网盘工具</div>
             <div class="link-container">
-                <a href="https://www.123pan.com/" target="_blank" class="link-btn">123云盘</a>
-                <a href="https://www.aliyundrive.com/sign/in" target="_blank" class="link-btn">阿里云盘</a>
-                <a href="https://pan.baidu.com/" target="_blank" class="link-btn">百度网盘</a>
-                <a href="https://www.weiyun.com/" target="_blank" class="link-btn">腾讯微云</a>
-                <a href="https://pan.quark.cn/list#/list/all" target="_blank" class="link-btn">夸克网盘</a>
-                <a href="https://yun.139.com/w/#/" target="_blank" class="link-btn">中国移动云盘</a>
-                <a href="https://share.feijipan.com/s/12ZQjRvH" target="_blank" class="link-btn">小飞机网盘盘</a>
-                <a href="https://cn.bing.com/search?q=%E7%BD%91%E7%9B%98" target="_blank" class="link-btn">更多网盘</a>
-                <a href="https://cloud.huawei.com/" target="_blank" class="link-btn">华为云空间</a>
-                <a href="https://i.mi.com/" target="_blank" class="link-btn">小米云服务</a>
-                <a href="https://cloud.oppo.com/" target="_blank" class="link-btn">oppo云服务</a>
-                <a href="https://yun.vivo.com.cn/" target="_blank" class="link-btn">vivo云服务</a>
-                <a href="https://www.icloud.com/unsupported_browser/" target="_blank" class="link-btn">苹果icloud</a>
-                <a href="https://cn.bing.com/search?q=%E6%89%8B%E6%9C%BA%E4%BA%91%E6%9C%8D%E5%8A%A1" target="_blank" class="link-btn">手机云服务</a>
+                <a href="https://www.123pan.com/" target="_blank">123云盘</a>
+                <a href="https://www.aliyundrive.com/sign/in" target="_blank">阿里云盘</a>
+                <a href="https://pan.baidu.com/" target="_blank">百度网盘</a>
+                <a href="https://www.weiyun.com/" target="_blank">腾讯微云</a>
+                <a href="https://pan.quark.cn/list#/list/all" target="_blank">夸克网盘</a>
+                <a href="https://yun.139.com/w/#/" target="_blank">中国移动云盘</a>
+                <a href="https://share.feijipan.com/s/12ZQjRvH" target="_blank">小飞机网盘盘</a>
+                <a href="https://cn.bing.com/search?q=%E7%BD%91%E7%9B%98" target="_blank">更多网盘</a>
+                <a href="https://cloud.huawei.com/" target="_blank">华为云空间</a>
+                <a href="https://i.mi.com/" target="_blank">小米云服务</a>
+                <a href="https://cloud.oppo.com/" target="_blank">oppo云服务</a>
+                <a href="https://yun.vivo.com.cn/" target="_blank">vivo云服务</a>
+                <a href="https://www.icloud.com/unsupported_browser/" target="_blank">苹果icloud</a>
+                <a href="https://cn.bing.com/search?q=%E6%89%8B%E6%9C%BA%E4%BA%91%E6%9C%8D%E5%8A%A1" target="_blank">手机云服务</a>
 
 
             </div>
@@ -1547,12 +1560,12 @@ footer {
 <section id="日历工具" class="category-nav">
             <div class="category-title">日历工具</div>
             <div class="link-container">
-                <a href="https://tools.2345.com/rili.htm" target="_blank" class="link-btn">2345日历</a>
-                <a href="https://www.wnl.cc" target="_blank" class="link-btn">万年日历</a>
-                <a href="https://cn.bing.com/search?q=%E6%97%A5%E5%8E%86&form=QBLH&sp=-1&lq=0&pq=ril&sc=12-3&qs=n&sk=&cvid=1DBE7C27B2C048B5B1A152695DF3E2FC" target="_blank" class="link-btn">必应搜索:日历</a>
-                <a href="https://www.baidu.com/s?wd=%E6%97%A5%E5%8E%86" target="_blank" class="link-btn">百度搜索:日历</a>
-                <a href="https://sapp.788v.com/calendar/pages/main/huangli" target="_blank" class="link-btn">老黄历</a>
-                <a href="https://sapp.788v.com/calendar/pages/main/calendar" target="_blank" class="link-btn">轻简万年历</a>
+                <a href="https://tools.2345.com/rili.htm" target="_blank">2345日历</a>
+                <a href="https://www.wnl.cc" target="_blank">万年日历</a>
+                <a href="https://cn.bing.com/search?q=%E6%97%A5%E5%8E%86&form=QBLH&sp=-1&lq=0&pq=ril&sc=12-3&qs=n&sk=&cvid=1DBE7C27B2C048B5B1A152695DF3E2FC" target="_blank">必应搜索:日历</a>
+                <a href="https://www.baidu.com/s?wd=%E6%97%A5%E5%8E%86" target="_blank">百度搜索:日历</a>
+                <a href="https://sapp.788v.com/calendar/pages/main/huangli" target="_blank">老黄历</a>
+                <a href="https://sapp.788v.com/calendar/pages/main/calendar" target="_blank">轻简万年历</a>
             </div>
         </section>
 
@@ -1581,10 +1594,10 @@ footer {
         <section id="字体工具" class="category-nav">
             <div class="category-title">字体工具</div>
             <div class="link-container">
-   <a href="https://www.alibabafonts.com/#/font" target="_blank" class="link-btn">阿里巴巴普惠体</a>
-   <a href="https://alibabafont.taobao.com/wow/alibabafont/act/alifont?spm" target="_blank" class="link-btn">阿里巴巴普惠体</a>
-  <a href="https://web.vip.miui.com/page/info/mio/mio/detail?postId=33935854" target="_blank" class="link-btn">MiSans MIUI13全新系统字体</a>
-  <a href="https://cn.bing.com/search?q=%E5%AE%8C%E5%85%A8%E5%85%8D%E8%B4%B9%E5%8F%AF%E5%95%86%E7%94%A8%E7%9A%84%E5%AD%97%E4%BD%93" target="_blank" class="link-btn">必应搜索:字体</a>
+   <a href="https://www.alibabafonts.com/#/font" target="_blank">阿里巴巴普惠体</a>
+   <a href="https://alibabafont.taobao.com/wow/alibabafont/act/alifont?spm" target="_blank">阿里巴巴普惠体</a>
+  <a href="https://web.vip.miui.com/page/info/mio/mio/detail?postId=33935854" target="_blank">MiSans MIUI13全新系统字体</a>
+  <a href="https://cn.bing.com/search?q=%E5%AE%8C%E5%85%A8%E5%85%8D%E8%B4%B9%E5%8F%AF%E5%95%86%E7%94%A8%E7%9A%84%E5%AD%97%E4%BD%93" target="_blank">必应搜索:字体</a>
             </div>
         </section>
 
@@ -1592,9 +1605,9 @@ footer {
         <section id="输入法工具" class="category-nav">
             <div class="category-title">输入法工具</div>
             <div class="link-container">
-                <a href="https://shurufa.sogou.com" target="_blank" class="link-btn">搜狗输入法</a>
-                <a href="https://z.weixin.qq.com" target="_blank" class="link-btn">微信输入法</a>
-                <a href="https://srf.baidu.com" target="_blank" class="link-btn">百度输入法</a>
+                <a href="https://shurufa.sogou.com" target="_blank">搜狗输入法</a>
+                <a href="https://z.weixin.qq.com" target="_blank">微信输入法</a>
+                <a href="https://srf.baidu.com" target="_blank">百度输入法</a>
             </div>
         </section>
 
@@ -1602,10 +1615,16 @@ footer {
         <section id="常用软件" class="category-nav">
             <div class="category-title">常用软件</div>
             <div class="link-container">
-                <a href="https://weixin.qq.com/" target="_blank" class="link-btn">微信</a>
-                <a href="https://im.qq.com" target="_blank" class="link-btn">QQ</a>
-                <a href="https://www.wps.cn/" target="_blank" class="link-btn">WPS</a>
-                <a href="https://yasuo.360.cn/" target="_blank" class="link-btn">360压缩</a>
+                <a href="https://weixin.qq.com/" target="_blank">微信</a>
+                <a href="https://im.qq.com" target="_blank">QQ</a>
+                <a href="https://www.wps.cn/" target="_blank">WPS</a>
+                <a href="https://yasuo.360.cn/" target="_blank">360压缩</a>
+<a href="https://www.winrar.com.cn/" target="_blank">WinRAR</a>
+
+
+
+
+
             </div>
         </section>
 
@@ -1650,10 +1669,10 @@ footer {
         <section id="浏览器工具" class="category-nav">
             <div class="category-title">浏览器工具</div>
             <div class="link-container">
-                <a href="https://www.google.cn/chrome/index.html" target="_blank" class="link-btn">Google Chrome 网络浏览器</a>
-                <a href="https://www.microsoft.com/zh-cn/edge/download?form=MA13FJ" target="_blank" class="link-btn">Microsoft Edge 浏览器</a>
-                <a href="http://browser.360.cn/" target="_blank" class="link-btn">360浏览器</a>
-                <a href="https://browser.yandex.com/" target="_blank" class="link-btn">Yandex浏览器</a>
+                <a href="https://www.google.cn/chrome/index.html" target="_blank">Google Chrome 网络浏览器</a>
+                <a href="https://www.microsoft.com/zh-cn/edge/download?form=MA13FJ" target="_blank">Microsoft Edge 浏览器</a>
+                <a href="http://browser.360.cn/" target="_blank">360浏览器</a>
+                <a href="https://browser.yandex.com/" target="_blank">Yandex浏览器</a>
             </div>
         </section>
 
@@ -1661,11 +1680,11 @@ footer {
         <section id="网络运营商" class="category-nav">
             <div class="category-title">网络运营商</div>
             <div class="link-container">
-                <a href="https://www.10086.cn" target="_blank" class="link-btn">移动</a>
-                <a href="https://www.189.cn" target="_blank" class="link-btn">电信</a>
-                <a href="https://www.10010.com" target="_blank" class="link-btn">联通</a>
-                <a href="https://www.10099.com.cn" target="_blank" class="link-btn">广电</a>
-                <a href="https://10046.mi.com/" target="_blank" class="link-btn">小米</a>
+                <a href="https://www.10086.cn" target="_blank">移动</a>
+                <a href="https://www.189.cn" target="_blank">电信</a>
+                <a href="https://www.10010.com" target="_blank">联通</a>
+                <a href="https://www.10099.com.cn" target="_blank">广电</a>
+                <a href="https://10046.mi.com/" target="_blank">小米</a>
             </div>
         </section>
 
@@ -1678,10 +1697,10 @@ footer {
         <section class="category-nav">
             <div class="category-title">下载浏览器主页</div>
             <div class="link-container">
-                <a href="e.zip" download="浏览器主页.zip" class="link-btn">下载:浏览器主页.zip</a>
-                <a href="e1.html" download="浏览器主页.html" class="link-btn">下载:浏览器主页.html</a>
-                <a href="e7.html" target="_blank" class="link-btn">网上用户浏览器主页网盘下载</a>
-                <a href="/" target="_blank" class="link-btn">网上用户资源汇总</a>
+                <a href="e.zip" download="浏览器主页.zip">下载:浏览器主页.zip</a>
+                <a href="e1.html" download="浏览器主页.html">下载:浏览器主页.html</a>
+                <a href="e7.html" target="_blank">网上用户浏览器主页网盘下载</a>
+                <a href="/" target="_blank">网上用户资源汇总</a>
             </div>
         </section>
 
@@ -1717,17 +1736,17 @@ footer {
         <section id="监控电脑版" class="category-nav">
             <div class="category-title">监控电脑版</div>
             <div class="link-container">
-                <a href="https://cnshupgrade.jooancloud.com/vms/rev/myjl/喵眼精灵2.0.3.36.exe" target="_blank" class="link-btn">喵眼精灵2.0.3.36.exe</a>
-                <a href="https://cnshupgrade.jooancloud.com/vms/rev/myjl/喵眼精灵2.0.3.36.exe" target="_blank" class="link-btn">乔安监控</a>
-                <a href="https://service.ys7.com/download/document?id=69" target="_blank" class="link-btn">萤石云</a>
-                <a href="https://service.ys7.com/download/document?id=69" target="_blank" class="link-btn">萤石工作室</a>
-                <a href="https://service.ezviz.com/download" target="_blank" class="link-btn">萤石客户端软件</a>
-                <a href="" target="_blank" class="link-btn"></a>
-                <a href="" target="_blank" class="link-btn"></a>
-                <a href="" target="_blank" class="link-btn"></a>
-                <a href="" target="_blank" class="link-btn"></a>
-                <a href="" target="_blank" class="link-btn"></a>
-                <a href="" target="_blank" class="link-btn"></a>
+                <a href="https://cnshupgrade.jooancloud.com/vms/rev/myjl/喵眼精灵2.0.3.36.exe" target="_blank">喵眼精灵2.0.3.36.exe</a>
+                <a href="https://cnshupgrade.jooancloud.com/vms/rev/myjl/喵眼精灵2.0.3.36.exe" target="_blank">乔安监控</a>
+                <a href="https://service.ys7.com/download/document?id=69" target="_blank">萤石云</a>
+                <a href="https://service.ys7.com/download/document?id=69" target="_blank">萤石工作室</a>
+                <a href="https://service.ezviz.com/download" target="_blank">萤石客户端软件</a>
+                <a href="" target="_blank"></a>
+                <a href="" target="_blank"></a>
+                <a href="" target="_blank"></a>
+                <a href="" target="_blank"></a>
+                <a href="" target="_blank"></a>
+                <a href="" target="_blank"></a>
 
 
             </div>
@@ -1738,11 +1757,11 @@ footer {
         <section id="收音机" class="category-nav">
             <div class="category-title">收音机</div>
             <div class="link-container">
-                <a href="https://www.qtfm.cn" target="_blank" class="link-btn">蜻蜓FM</a>
-                <a href="https://www.ximalaya.com/" target="_blank" class="link-btn">喜马拉雅</a>
-                <a href="https://radio5.cn" target="_blank" class="link-btn">瑞丢</a>
-                <a href="https://www.radio.cn/pc-portal/erji/radioStation.html" target="_blank" class="link-btn">云听</a>
-                <a href="https://cn.bing.com/search?q=%E7%BD%91%E9%A1%B5%E6%94%B6%E9%9F%B3%E6%9C%BA" target="_blank" class="link-btn">搜索:收音机</a>
+                <a href="https://www.qtfm.cn" target="_blank">蜻蜓FM</a>
+                <a href="https://www.ximalaya.com/" target="_blank">喜马拉雅</a>
+                <a href="https://radio5.cn" target="_blank">瑞丢</a>
+                <a href="https://www.radio.cn/pc-portal/erji/radioStation.html" target="_blank">云听</a>
+                <a href="https://cn.bing.com/search?q=%E7%BD%91%E9%A1%B5%E6%94%B6%E9%9F%B3%E6%9C%BA" target="_blank">搜索:收音机</a>
                        </div>
         </section>
 
@@ -1757,88 +1776,88 @@ footer {
 <section id="友情链接" class="upgrade-section">
             <div class="category-title">友情链接</div>
             <div class="link-container">
-  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DIWwyXXEVzGQcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMY6Tik17Ed1u1aH1Hk3GeOjEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BtNQsgGpX2VyJDv7AW50WH2%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401736729526%402103cabb_1511_1945d257f9f_058c%4001"target="_blank" class="link-btn">淘工厂</a>
-    <a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_115604700063&union_lens=lensId%3APUB%401736732023%40213e6898_1518_1945d4b9c3c_0577%4001"target="_blank" class="link-btn">淘宝优惠券</a>
-	<a href="https://cn.bing.com/search?q=年龄计算器"target="_blank" class="link-btn">年龄计算器</a>
-	<a href="https://cn.bing.com/search?q=岁数属相对照表一网上用户"target="_blank" class="link-btn">岁数属相对照表</a>
-	<a href="https://cn.bing.com/search?q=AI"target="_blank" class="link-btn">AI</a>
-<a href="https://cn.bing.com/search?q=网盘"target="_blank" class="link-btn">网盘</a>
-<a href="https://cn.bing.com/search?q=时间"target="_blank" class="link-btn">时间</a>
-<a href="https://cn.bing.com/search?q=日历"target="_blank" class="link-btn">日历</a>
-<a href="https://cn.bing.com/search?q=购物"target="_blank" class="link-btn">购物</a>
-<a href="https://cn.bing.com/search?q=输入法"target="_blank" class="link-btn">输入法</a>
-<a href="https://cn.bing.com/search?q=二维码"target="_blank" class="link-btn">二维码</a>
-<a href="https://www.wps.cn/learning/"target="_blank" class="link-btn">wps教程</a>
-<a href="https://www.douyin.com"target="_blank" class="link-btn">抖音</a>
-<a href="https://www.kuaishou.cn"target="_blank" class="link-btn">快手</a>
-<a href="https://www.xiaohongshu.com"target="_blank" class="link-btn">小红书</a>
-<a href="https://www.bilibili.com"target="_blank" class="link-btn">哔哩哔哩</a>
-	<a href="https://cn.bing.com/search?q=公平村浏览器电脑版"target="_blank" class="link-btn">电脑版</a>	
-  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DIWwyXXEVzGQcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMY6Tik17Ed1u1aH1Hk3GeOjEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BtNQsgGpX2VyJDv7AW50WH2%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401736729526%402103cabb_1511_1945d257f9f_058c%4001"target="_blank" class="link-btn">淘工厂</a>
-	 <a href="https://ai.m.taobao.com/index.html?pid=mm_5518923388_3058500304_115604700063&union_lens=lensId%3APUB%401705836367%40213d5e9b_1018_18d2bc54f06_04b8%4001"target="_blank" class="link-btn">爱淘宝</a>	
-	<a href="https://10000.gd.cn/#/"target="_blank" class="link-btn">测网速</a>	
-	<a href="https://mobile.yangkeduo.com/duo_cms_mall.html?pid=9419863_268968161&cpsSign=CM_230602_9419863_268968161_2c7a1635f027387fd9d20e32cae89bec&_x_ddjb_act=%7B%22st%22%3A%223%22%7D&duoduo_type=2"target="_blank" class="link-btn">拼多多</a>
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DIWwyXXEVzGQcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMY6Tik17Ed1u1aH1Hk3GeOjEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BtNQsgGpX2VyJDv7AW50WH2%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401736729526%402103cabb_1511_1945d257f9f_058c%4001"target="_blank">淘工厂</a>
+    <a href="https://ai.taobao.com?pid=mm_5518923388_3058500304_115604700063&union_lens=lensId%3APUB%401736732023%40213e6898_1518_1945d4b9c3c_0577%4001"target="_blank">淘宝优惠券</a>
+	<a href="https://cn.bing.com/search?q=年龄计算器"target="_blank">年龄计算器</a>
+	<a href="https://cn.bing.com/search?q=岁数属相对照表一网上用户"target="_blank">岁数属相对照表</a>
+	<a href="https://cn.bing.com/search?q=AI"target="_blank">AI</a>
+<a href="https://cn.bing.com/search?q=网盘"target="_blank">网盘</a>
+<a href="https://cn.bing.com/search?q=时间"target="_blank">时间</a>
+<a href="https://cn.bing.com/search?q=日历"target="_blank">日历</a>
+<a href="https://cn.bing.com/search?q=购物"target="_blank">购物</a>
+<a href="https://cn.bing.com/search?q=输入法"target="_blank">输入法</a>
+<a href="https://cn.bing.com/search?q=二维码"target="_blank">二维码</a>
+<a href="https://www.wps.cn/learning/"target="_blank">wps教程</a>
+<a href="https://www.douyin.com"target="_blank">抖音</a>
+<a href="https://www.kuaishou.cn"target="_blank">快手</a>
+<a href="https://www.xiaohongshu.com"target="_blank">小红书</a>
+<a href="https://www.bilibili.com"target="_blank">哔哩哔哩</a>
+	<a href="https://cn.bing.com/search?q=公平村浏览器电脑版"target="_blank">电脑版</a>	
+  <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DIWwyXXEVzGQcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMY6Tik17Ed1u1aH1Hk3GeOjEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BtNQsgGpX2VyJDv7AW50WH2%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401736729526%402103cabb_1511_1945d257f9f_058c%4001"target="_blank">淘工厂</a>
+	 <a href="https://ai.m.taobao.com/index.html?pid=mm_5518923388_3058500304_115604700063&union_lens=lensId%3APUB%401705836367%40213d5e9b_1018_18d2bc54f06_04b8%4001"target="_blank">爱淘宝</a>	
+	<a href="https://10000.gd.cn/#/"target="_blank">测网速</a>	
+	<a href="https://mobile.yangkeduo.com/duo_cms_mall.html?pid=9419863_268968161&cpsSign=CM_230602_9419863_268968161_2c7a1635f027387fd9d20e32cae89bec&_x_ddjb_act=%7B%22st%22%3A%223%22%7D&duoduo_type=2"target="_blank">拼多多</a>
 
  	
-  	<a href="https://pub.alimama.com/?forward=http%3A%2F%2Fpub.alimama.com%2Ffourth%2Fpromo%2Factivity.htm%3Fspm%3Da219t.11816995.c601d1c8f.1.40646a156Y7zcj%26tab%3Dtbtm"target="_blank" class="link-btn">淘宝联盟</a>
- 	<a href="https://github.com/"target="_blank" class="link-btn">github</a>
- 	<a href="https://console.hsk.oray.com/forward"target="_blank" class="link-btn">花生壳内网穿透</a>
- 	<a href="https://sunlogin.oray.com/"target="_blank" class="link-btn">向日葵远程</a>
+  	<a href="https://pub.alimama.com/?forward=http%3A%2F%2Fpub.alimama.com%2Ffourth%2Fpromo%2Factivity.htm%3Fspm%3Da219t.11816995.c601d1c8f.1.40646a156Y7zcj%26tab%3Dtbtm"target="_blank">淘宝联盟</a>
+ 	<a href="https://github.com/"target="_blank">github</a>
+ 	<a href="https://console.hsk.oray.com/forward"target="_blank">花生壳内网穿透</a>
+ 	<a href="https://sunlogin.oray.com/"target="_blank">向日葵远程</a>
   	
- 	<a href="https://cn.bing.com/search?q=%E8%AF%BB%E6%8B%BC%E9%9F%B3"target="_blank" class="link-btn">读拼音</a>
- 	<a href="https://cli.im"target="_blank" class="link-btn">草料二维码</a>
- 	<a href="http://www.ngrok.cc/user"target="_blank" class="link-btn">Sunny-Ngrok内网穿透服务</a>
-  	<a href="https://www.cqc.com.cn/www/chinese/zscx/"target="_blank" class="link-btn">CCC证书查询</a>
- 	<a href="http://qszt.cn"target="_blank" class="link-btn">生产许可证查询网</a>
-  	<a href="https://www.boc.cn/fimarkets/lilv/fd32/201310/t20131031_2591219.html"target="_blank" class="link-btn">贷款市场报价利率（LPR）</a>
-	<a href="https://mp.weixin.qq.com/s/77ogPnkqxpt2gYW3KnD7vQ" target="_blank" class="link-btn">岁数属相对照表(手机版)网上用户</a>
+ 	<a href="https://cn.bing.com/search?q=%E8%AF%BB%E6%8B%BC%E9%9F%B3"target="_blank">读拼音</a>
+ 	<a href="https://cli.im"target="_blank">草料二维码</a>
+ 	<a href="http://www.ngrok.cc/user"target="_blank">Sunny-Ngrok内网穿透服务</a>
+  	<a href="https://www.cqc.com.cn/www/chinese/zscx/"target="_blank">CCC证书查询</a>
+ 	<a href="http://qszt.cn"target="_blank">生产许可证查询网</a>
+  	<a href="https://www.boc.cn/fimarkets/lilv/fd32/201310/t20131031_2591219.html"target="_blank">贷款市场报价利率（LPR）</a>
+	<a href="https://mp.weixin.qq.com/s/77ogPnkqxpt2gYW3KnD7vQ" target="_blank">岁数属相对照表(手机版)网上用户</a>
   	
-<a href="https://cn.bing.com/search?q=日历"target="_blank" class="link-btn">日历</a>
-<a href="https://www.wnl.cc/"target="_blank" class="link-btn">万年历</a>
-<a href="https://sapp.788v.com/calendar/pages/main/calendar"target="_blank" class="link-btn">轻简万年历</a>
-<a href="https://tools.2345.com/m/rili.htm"target="_blank" class="link-btn">2345万年历</a>
-	<a href="https://www.toolhelper.cn/Date/Age"target="_blank" class="link-btn">年龄计算器</a>
- 	<a href="https://cn.bing.com/search?q=时间"target="_blank" class="link-btn">时间</a>
+<a href="https://cn.bing.com/search?q=日历"target="_blank">日历</a>
+<a href="https://www.wnl.cc/"target="_blank">万年历</a>
+<a href="https://sapp.788v.com/calendar/pages/main/calendar"target="_blank">轻简万年历</a>
+<a href="https://tools.2345.com/m/rili.htm"target="_blank">2345万年历</a>
+	<a href="https://www.toolhelper.cn/Date/Age"target="_blank">年龄计算器</a>
+ 	<a href="https://cn.bing.com/search?q=时间"target="_blank">时间</a>
 
-	<a href="/a/c/j/j14.html"target="_blank" class="link-btn">含税计算器</a>
- 	<a href="/a/c/tjdsgz/tjdsgz1.html"target="_blank" class="link-btn">统计多少个字</a>
-  	<a href="/a/c/zy/zy8.html"target="_blank" class="link-btn">搜索提交</a>
-	<a href="/a/c/j/j13.html"target="_blank" class="link-btn">打折计算器</a>
-	<a href="/a/c/jc/jc1.html"target="_blank" class="link-btn">屏幕检测</a>
-	<a href="/a/c/jc/jc1.html"target="_blank" class="link-btn">屏幕检测</a>
-	<a href="/a/c/sx/sx1.html"target="_blank" class="link-btn">岁数属相对照表</a>
- 	<a href="/a/c/dazitishurukuang/srk1.html"target="_blank" class="link-btn">大字输入框</a>
- 	<a href="/a/c/j/j73.html"target="_blank" class="link-btn">包数计算器</a>
-        <a href="/a/c/mb/mb1.html"target="_blank" class="link-btn">秒表</a>
-        <a href="/a/c/j/j1.html"target="_blank" class="link-btn">铆钉单重计算器</a>
- 	<a href="/a/c/j/j98.html"target="_blank" class="link-btn">时间间隔计算器</a>
- 	<a href="/a/c/j/j52.html"target="_blank" class="link-btn">克换公斤</a>
- 	<a href="/a/c/j/j86.html"target="_blank" class="link-btn">公差计算器</a>
- 	<a href="/a/c/chepai/cp1.html"target="_blank" class="link-btn">车牌字母</a>
- 	<a href="/a/c/ds/ds2.html"target="_blank" class="link-btn">乘法表</a>
- 	<a href="/a/x/x21.html"target="_blank" class="link-btn">商品搜索</a>
- 	<a href="/a/z/e1.html"target="_blank" class="link-btn">浏览器主页</a>
- 	<a href="/a/s/sy1.html" target="_blank" class="link-btn">网上用户</a> 	
-        <a href="https://cn.bing.com/search?q=网上用户"target="_blank" class="link-btn">搜索:网上用户</a>
-        <a href="/a/j/j4.html"target="_blank" class="link-btn">铆钉帽子长度材料计算器</a>
-        <a href="/a/j/j102.html"target="_blank" class="link-btn">土地亩数计算器</a>
-
-
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href=""target="_blank" class="link-btn"></a>
-        <a href="/a/c/zj/zj1.html"target="_blank" class="link-btn">主机</a>
+	<a href="/a/c/j/j14.html"target="_blank">含税计算器</a>
+ 	<a href="/a/c/tjdsgz/tjdsgz1.html"target="_blank">统计多少个字</a>
+  	<a href="/a/c/zy/zy8.html"target="_blank">搜索提交</a>
+	<a href="/a/c/j/j13.html"target="_blank">打折计算器</a>
+	<a href="/a/c/jc/jc1.html"target="_blank">屏幕检测</a>
+	<a href="/a/c/jc/jc1.html"target="_blank">屏幕检测</a>
+	<a href="/a/c/sx/sx1.html"target="_blank">岁数属相对照表</a>
+ 	<a href="/a/c/dazitishurukuang/srk1.html"target="_blank">大字输入框</a>
+ 	<a href="/a/c/j/j73.html"target="_blank">包数计算器</a>
+        <a href="/a/c/mb/mb1.html"target="_blank">秒表</a>
+        <a href="/a/c/j/j1.html"target="_blank">铆钉单重计算器</a>
+ 	<a href="/a/c/j/j98.html"target="_blank">时间间隔计算器</a>
+ 	<a href="/a/c/j/j52.html"target="_blank">克换公斤</a>
+ 	<a href="/a/c/j/j86.html"target="_blank">公差计算器</a>
+ 	<a href="/a/c/chepai/cp1.html"target="_blank">车牌字母</a>
+ 	<a href="/a/c/ds/ds2.html"target="_blank">乘法表</a>
+ 	<a href="/a/x/x21.html"target="_blank">商品搜索</a>
+ 	<a href="/a/z/e1.html"target="_blank">浏览器主页</a>
+ 	<a href="/a/s/sy1.html" target="_blank">网上用户</a> 	
+        <a href="https://cn.bing.com/search?q=网上用户"target="_blank">搜索:网上用户</a>
+        <a href="/a/j/j4.html"target="_blank">铆钉帽子长度材料计算器</a>
+        <a href="/a/j/j102.html"target="_blank">土地亩数计算器</a>
 
 
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href=""target="_blank" class="link-btn"></a>
- 	<a href="e1.html"target="_blank" class="link-btn">个人浏览器主页</a>
-	<a href="/"target="_blank" class="link-btn">下一页</a>	
+ 	<a href=""target="_blank"></a>
+ 	<a href=""target="_blank"></a>
+ 	<a href=""target="_blank"></a>
+ 	<a href=""target="_blank"></a>
+        <a href="/a/c/zj/zj1.html"target="_blank">主机</a>
+
+
+ 	<a href=""target="_blank"></a>
+ 	<a href=""target="_blank"></a>
+ 	<a href=""target="_blank"></a>
+ 	<a href=""target="_blank"></a>
+ 	<a href=""target="_blank"></a>
+ 	<a href=""target="_blank"></a>
+ 	<a href="e1.html"target="_blank">个人浏览器主页</a>
+	<a href="/"target="_blank">下一页</a>	
 		
 
           </div>
@@ -1888,3 +1907,4 @@ footer {
     <script src="/a/js/yj.js"></script>
 </body>
 </html>
+
