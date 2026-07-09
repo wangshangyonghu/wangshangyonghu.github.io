@@ -247,9 +247,9 @@ header h1 {
     margin-bottom: 30px; /* 底部外边距30px */
 }
 
-/* 搜索输入框样式：设置宽度、高度、边框等 */
+/* 搜索输入框样式：2026年7月9日设置宽度、高度、边框等 */
 #searchInput {
-    width: 60%; /* 宽度占60% */
+    width: 80%; /* 宽度占60% */
     min-width: 30%; /* 最小宽度30% */
     height: 100px; /* 高度100px */
     padding: 0 15px; /* 左右内边距15px */
@@ -660,8 +660,12 @@ footer {
 
     <div id="result"></div>
 
+
+
+
     <!-- 多搜索引擎 -->
     <div class="link-container" style="margin-top: 15px;">
+
 
 <!--给内容加""-->
  <button id="quoteBtn" onclick="addQuote()">给内容加""</button>
@@ -714,6 +718,7 @@ footer {
 <!--给内容加""-->
 
 
+
 搜索:
         <button class="link-btn" data-engine="baidu">百度搜索</button>
         <button class="link-btn" data-engine="bing">必应搜索</button>
@@ -728,7 +733,6 @@ footer {
         <button class="link-btn" data-engine="baidu-video">视频</button>
         <button class="link-btn" data-engine="baidu-news">百度新闻</button>
         <button class="link-btn" data-engine="taobao">爱淘宝</button>
-        <button class="link-btn" data-engine="bing-quote">必应精准匹配</button>
     </div>
 
     <!-- 图片搜索 -->
@@ -970,7 +974,6 @@ footer {
    "tb": "https://s.taobao.com/search?page=1&pvid=d0f2ec2810bcec0d5a16d5283ce59f67&q=",
    "yp": "https://www.xiaomiyoupin.com/search?keyword=",
    "dd": "https://search.dangdang.com/?key=",
-"": "",
    "": "",
    "": "",
    "": "",
@@ -987,29 +990,22 @@ footer {
     };
 
     // 搜索按钮点击事件
-document.getElementById("mainSearchBtn").addEventListener("click", () => {
-    const keyword = document.getElementById("searchInput").value;
-    if (keyword) {
-        // 前后包裹英文双引号，实现精准匹配
-        const quoteKeyword = `"${keyword}"`;
-        window.open(searchEngines.bing + encodeURIComponent(quoteKeyword), "_blank");
-    }
-});
-    // 引擎按钮点击事件
-document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const engine = btn.getAttribute("data-engine");
-        let keyword = document.getElementById("searchInput").value;
-        let url;
-        if(engine === "bing-quote"){
-            keyword = `"${keyword}"`;
-            url = searchEngines.bing + encodeURIComponent(keyword || "");
-        }else{
-            url = searchEngines[engine] + encodeURIComponent(keyword || "");
+    document.getElementById("mainSearchBtn").addEventListener("click", () => {
+        const keyword = document.getElementById("searchInput").value;
+        if (keyword) {
+            window.open(searchEngines.bing + encodeURIComponent(keyword), "_blank");
         }
-        window.open(url, "_blank");
     });
-});
+
+    // 引擎按钮点击事件
+    document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const engine = btn.getAttribute("data-engine");
+            const keyword = document.getElementById("searchInput").value;
+            const url = searchEngines[engine] + encodeURIComponent(keyword || "");
+            window.open(url, "_blank");
+        });
+    });
 
     // 返回顶部按钮 - 增加存在性检查
     const backToTopBtn = document.getElementById("backToTop");
@@ -1932,11 +1928,6 @@ document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
             <p>浏览器主页 - 高效上网入口  </p>
             <p>中文大写: 壹 贰 叁 肆 伍 陆 柒 捌 玖 拾 佰 仟 万 亿 兆 圆 角 分 零 整</p>
 
-
-
-        </footer>
-    </div>
-
     <!-- 返回顶部按钮 -->
     <button id="backToTop" title="返回顶部">↑</button>
 
@@ -1959,4 +1950,10 @@ document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
     <script src="/a/js/yj.js"></script>
 </body>
 </html>
+
+
+</footer>
+</div>
+
+
 

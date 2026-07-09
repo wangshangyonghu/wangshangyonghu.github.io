@@ -68,6 +68,7 @@
 </style>
 <!--页面放大-->
 
+
 <!--搜索-->
 <style>
 :root {
@@ -110,7 +111,7 @@ body {
     padding: 0 15px;
     border: 2px solid var(--primary-color);
     border-radius: 8px 0 0 8px;
-    font-size: 12px;
+    font-size: 18px;
     color: #333;
     outline: none;
     transition: border-color 0.3s;
@@ -199,7 +200,7 @@ body {
     }
     .search-btn {
         height: 50px;
-        padding: 0 6px;
+        padding: 0 16px;
         font-size: 16px;
     }
     .link-container {
@@ -224,16 +225,16 @@ body {
 
 <style>
 #searchInput::placeholder {
-    font-size: 6px;
+    font-size: 8px;
 }
 #searchInput::-webkit-input-placeholder {
-    font-size: 6px;
+    font-size: 8px;
 }
 #searchInput::-moz-placeholder {
-    font-size: 6px;
+    font-size: 8px;
 }
 #searchInput:-ms-input-placeholder {
-    font-size: 6px;
+    font-size: 8px;
 }
 </style>
 
@@ -247,11 +248,14 @@ body {
         placeholder="🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写/数学计算）"
         onkeyup="handleKeyUp(event)"
     >
+
     <button class="search-btn" id="mainSearchBtn">搜索</button>
 <p style="font-size: 8px;">🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)</p>
     <div id="result"></div>
 
     <div class="link-container" style="margin-top: 15px;">
+
+
 
 <!--给内容加""-->
  <button id="quoteBtn" onclick="addQuote()">给内容加""</button>
@@ -303,6 +307,7 @@ body {
 <!--给内容加""-->
 
 
+
 搜索:
         <button class="link-btn" data-engine="baidu">百度搜索</button>
         <button class="link-btn" data-engine="bing">必应搜索</button>
@@ -317,7 +322,6 @@ body {
         <button class="link-btn" data-engine="baidu-video">视频</button>
         <button class="link-btn" data-engine="baidu-news">百度新闻</button>
         <button class="link-btn" data-engine="taobao">爱淘宝</button>
-        <button class="link-btn" data-engine="bing-quote">必应精准匹配</button>
     </div>
 
     <div class="link-container">
@@ -455,22 +459,15 @@ const searchEngines = {
 document.getElementById("mainSearchBtn").addEventListener("click", () => {
     const keyword = document.getElementById("searchInput").value;
     if (keyword) {
-        const quoteKey = `"${keyword}"`;
-        window.open(searchEngines.bing + encodeURIComponent(quoteKey), "_blank");
+        window.open(searchEngines.bing + encodeURIComponent(keyword), "_blank");
     }
 });
 
 document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
     btn.addEventListener("click", () => {
         const engine = btn.getAttribute("data-engine");
-        let keyword = document.getElementById("searchInput").value;
-        let url;
-        if(engine === "bing-quote"){
-            keyword = `"${keyword}"`;
-            url = searchEngines.bing + encodeURIComponent(keyword || "");
-        }else{
-            url = searchEngines[engine] + encodeURIComponent(keyword || "");
-        }
+        const keyword = document.getElementById("searchInput").value;
+        const url = searchEngines[engine] + encodeURIComponent(keyword || "");
         window.open(url, "_blank");
     });
 });
@@ -542,6 +539,8 @@ body {
     content: counter(seq) ". ";
 }
 </style>
+
+
 </head>
 <body>
 
