@@ -1366,3 +1366,27 @@ document.write(gpc234+ "<br>");
 
 
      <section id="底部" class="category-nav">
+
+<!--缓存2026年7月10日-->
+<script>
+const searchInput = document.getElementById('searchInput');
+
+// 页面加载回填缓存
+window.addEventListener('load', function() {
+    let cacheText = localStorage.getItem('searchCache');
+    if (cacheText) {
+        searchInput.value = cacheText;
+    }
+})
+
+// 单独监听输入，实时保存，不干扰onkeyup原有计算函数
+searchInput.addEventListener('input', function() {
+    localStorage.setItem('searchCache', this.value);
+})
+
+// 清空缓存按钮函数
+function clearSearchCache() {
+    localStorage.removeItem('searchCache');
+    searchInput.value = '';
+}
+</script><!--缓存2026年7月10日-->

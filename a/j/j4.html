@@ -86,12 +86,28 @@
 </center>
 
 <script>
+// 页面加载时读取本地缓存回填输入框
+window.onload = function(){
+    const cache1 = localStorage.getItem('rivet_num1');
+    const cache2 = localStorage.getItem('rivet_num2');
+    const cache3 = localStorage.getItem('rivet_num3');
+    if(cache1) document.getElementById("num1").value = cache1;
+    if(cache2) document.getElementById("num2").value = cache2;
+    if(cache3) document.getElementById("num3").value = cache3;
+    calculate();
+}
+
 function calculate() {
     var capDiameter = parseFloat(document.getElementById("num1").value) || 0;
     var capThickness = parseFloat(document.getElementById("num2").value) || 0;
     var wireDiameter = parseFloat(document.getElementById("num3").value) || 0;
     var stepsElement = document.getElementById("steps");
     var resultElement = document.getElementById("nums");
+
+    // 实时保存当前输入值到本地缓存
+    localStorage.setItem('rivet_num1', capDiameter);
+    localStorage.setItem('rivet_num2', capThickness);
+    localStorage.setItem('rivet_num3', wireDiameter);
     
     // 清空之前的结果和步骤
     resultElement.value = "";
@@ -132,6 +148,10 @@ function resetInput() {
     document.getElementById("num3").value = "";
     document.getElementById("nums").value = "";
     document.getElementById("steps").innerHTML = "";
+    // 清空本地缓存数据
+    localStorage.removeItem('rivet_num1');
+    localStorage.removeItem('rivet_num2');
+    localStorage.removeItem('rivet_num3');
 }
 </script>
 </body>
