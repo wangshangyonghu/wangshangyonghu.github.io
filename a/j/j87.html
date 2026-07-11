@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 移动端视口核心配置 -->
+
+ <title>分数化简一搜索:网上用户</title>
+<meta name="keywords" content=",搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+
+    <style>
+  
+
+        .container {
+            width: 100%;
+max-width: 600px; /* 增加最大宽度以容纳讲解内容 */
+            margin: 50px auto;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            box-shadow: 0 0 10px #ccc;
+            border-radius: 8px;
+        }
+
+
+        h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin: 15px 0;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        input {
+            width: 150px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .fraction-display {
+            margin: 20px 0;
+            padding-left: 115px;
+        }
+        .original-fraction, .result-fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .equal-sign {
+            display: inline-block;
+            margin: 0 15px;
+            vertical-align: middle;
+            font-size: 20px;
+        }
+        .numerator, .denominator {
+            display: block;
+        }
+        .fraction-line {
+            border-bottom: 2px solid #000;
+            width: 80px;
+            margin: 2px 0;
+        }
+        button {
+            margin: 10px 0 20px 115px;
+            padding: 8px 15px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            display: none; /* 隐藏按钮 */
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+        .steps {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        .steps p {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+        .steps-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+        .explanation {
+            color: #666;
+            padding-left: 10px;
+            border-left: 2px solid #ddd;
+            margin: 5px 0 15px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>分数化简</h3>
+        <div class="input-group">
+            <label for="numerator">输入分子：</label>
+            <input type="number" id="numerator" min="1" oninput="calculateAndShowSteps()">
+        </div>
+        <div class="input-group">
+            <label for="denominator">输入分母：</label>
+            <input type="number" id="denominator" min="1" oninput="calculateAndShowSteps()">
+        </div>
+        
+        <div class="fraction-display">
+            <div class="original-fraction">
+                <span class="numerator" id="display-numerator"></span>
+                <div class="fraction-line"></div>
+                <span class="denominator" id="display-denominator"></span>
+            </div>
+            <span class="equal-sign">=</span>
+            <div class="result-fraction">
+                <span class="numerator" id="result-numerator"></span>
+                <div class="fraction-line"></div>
+                <span class="denominator" id="result-denominator"></span>
+            </div>
+        </div>
+        
+        <button onclick="calculateAndShowSteps()">显示详细的计算步骤</button>
+        
+        <div class="steps" id="steps">
+            <p class="steps-title">计算步骤与讲解：</p>
+            <p id="step-original"></p>
+            <p id="step-method"></p>
+            <div class="explanation">
+                辗转相除法（也称欧几里得算法）是求两个数最大公约数的有效方法，基本原理是：两个数的最大公约数等于其中较小的数和两数相除余数的最大公约数。
+            </div>
+            <div id="steps-list"></div>
+            <p id="step-gcd"></p>
+            <div class="explanation">
+                最大公约数（GCD）是能同时整除两个数的最大正整数，找到它后，我们就可以将分数化简为最简形式。
+            </div>
+            <p id="step-simplify-title"></p>
+            <p id="step-simplify-desc"></p>
+            <div class="explanation">
+                分数的基本性质：分数的分子和分母同时乘或者除以相同的数（0除外），分数的大小不变。这里我们除以最大公约数，得到的就是最简分数。
+            </div>
+            <p id="step-final"></p>
+        </div>
+    </div>
+
+    <script>
+        // 计算最大公约数并获取步骤（使用减法实现辗转相除）
+        function gcdWithSteps(a, b) {
+            let steps = [];
+            let explanations = [];
+            let stepCount = 1;
+            
+            // 确保a是较大的数
+            if (a < b) {
+                [a, b] = [b, a];
+                steps.push(`步骤${stepCount}：交换数值使较大数在前，得到 ${a} 和 ${b}`);
+                explanations.push("为了方便计算，我们总是让较大的数作为被减数，较小的数作为减数");
+                stepCount++;
+            } else {
+                steps.push(`步骤${stepCount}：初始数值为 ${a} 和 ${b}`);
+                explanations.push("我们将使用这两个数进行辗转相减运算");
+                stepCount++;
+            }
+            
+            // 辗转相减法
+            while (a !== b) {
+                if (a > b) {
+                    let diff = a - b;
+                    steps.push(`步骤${stepCount}：${a} - ${b} = ${diff}`);
+                    explanations.push(`用较大的数${a}减去较小的数${b}，得到差为${diff}。现在我们用${b}和${diff}继续计算`);
+                    a = diff;
+                } else {
+                    let diff = b - a;
+                    steps.push(`步骤${stepCount}：${b} - ${a} = ${diff}`);
+                    explanations.push(`用较大的数${b}减去较小的数${a}，得到差为${diff}。现在我们用${a}和${diff}继续计算`);
+                    b = diff;
+                }
+                stepCount++;
+            }
+            
+            return { gcd: a, steps: steps, explanations: explanations };
+        }
+        
+        // 计算并显示步骤
+        function calculateAndShowSteps() {
+            // 获取输入值
+            const numerator = parseInt(document.getElementById('numerator').value);
+            const denominator = parseInt(document.getElementById('denominator').value);
+            
+            // 验证输入
+            if (isNaN(numerator) || isNaN(denominator) || denominator <= 0 || numerator <= 0) {
+                // 清空显示
+                document.getElementById('display-numerator').textContent = '';
+                document.getElementById('display-denominator').textContent = '';
+                document.getElementById('result-numerator').textContent = '';
+                document.getElementById('result-denominator').textContent = '';
+                document.getElementById('steps').style.display = 'none';
+                return;
+            }
+            
+            // 更新显示的原始分数
+            document.getElementById('display-numerator').textContent = numerator;
+            document.getElementById('display-denominator').textContent = denominator;
+            
+            // 计算最大公约数和步骤
+            const result = gcdWithSteps(numerator, denominator);
+            const gcd = result.gcd;
+            const steps = result.steps;
+            const explanations = result.explanations;
+            
+            // 计算化简后的分数
+            const simplifiedNum = numerator / gcd;
+            const simplifiedDen = denominator / gcd;
+            
+            // 更新结果显示
+            document.getElementById('result-numerator').textContent = simplifiedNum;
+            document.getElementById('result-denominator').textContent = simplifiedDen;
+            
+            // 更新步骤显示
+            document.getElementById('step-original').textContent = `需要化简的分数：${numerator}/${denominator}`;
+            document.getElementById('step-method').textContent = "求解方法：使用辗转相减法求分子和分母的最大公约数，再进行化简";
+            
+            // 清空并填充步骤列表
+            const stepsList = document.getElementById('steps-list');
+            stepsList.innerHTML = '';
+            
+            // 同时添加步骤和解释
+            for (let i = 0; i < steps.length; i++) {
+                const stepP = document.createElement('p');
+                stepP.textContent = steps[i];
+                stepsList.appendChild(stepP);
+                
+                const explanationDiv = document.createElement('div');
+                explanationDiv.className = 'explanation';
+                explanationDiv.textContent = explanations[i];
+                stepsList.appendChild(explanationDiv);
+            }
+            
+            // 填充其他步骤信息
+            document.getElementById('step-gcd').textContent = `步骤${steps.length + 1}：分子和分母的最大公约数为${gcd}`;
+            document.getElementById('step-simplify-title').textContent = "化简步骤：";
+            document.getElementById('step-simplify-desc').textContent = `将分子和分母同时除以最大公约数${gcd}`;
+            document.getElementById('step-final').textContent = 
+                `${numerator}/${denominator} = (${numerator} ÷ ${gcd}) / (${denominator} ÷ ${gcd}) = ${simplifiedNum}/${simplifiedDen}`;
+            
+            // 显示步骤区域
+            document.getElementById('steps').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+    

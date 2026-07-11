@@ -1,0 +1,1252 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 --><style type="text/css">
+  /* 为所有的 a 标签设置样式 */
+  A {
+    /* 去除 a 标签的下划线 */
+    TEXT-DECORATION: none;
+    /* 为 a 标签设置粗体样式 */
+    font-weight: bold;
+font-size: 32px;    /* 为 a 标签设置字体大小 */
+  }</style><!-- css样式定义部分结束 --> 
+
+
+ <title>销轴单重计算器</title>
+<meta name="keywords" content="替换,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS,上网用户," /><!--关键词-->
+<meta name="description" content="销轴单重计算器一搜索:网上用户" />
+</head> <!-- 文档头部结束 -->
+
+
+
+    
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #F5F7FA;
+            color: #1D2129;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
+            padding: 16px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            color: #165DFF;
+            font-size: 24px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #165DFF;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #165DFF;
+        }
+        
+        .menu-toggle {
+            display: none;
+            color: #666;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background-color: white;
+            border-top: 1px solid #eee;
+            padding: 10px 0;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            color: #666;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            color: #165DFF;
+        }
+        
+        /* 主内容区样式 */
+        main {
+            padding: 32px 0 64px;
+        }
+        
+        .intro-section {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .intro-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .intro-desc {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .info-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(22, 93, 255, 0.1);
+            color: #165DFF;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+        }
+        
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+        
+        @media (min-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 3fr 2fr;
+            }
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title i {
+            color: #165DFF;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .unit-selector {
+            display: flex;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 16px;
+        }
+        
+        .radio-label {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+        }
+        
+        .radio-label input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .radio-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .radio-label input:checked + .radio-custom {
+            border-color: #165DFF;
+        }
+        
+        .radio-label input:checked + .radio-custom::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #165DFF;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .sub-title {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sub-title i {
+            color: #36CFC9;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        
+        @media (min-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .form-field {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        
+        .form-hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #165DFF;
+            box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.2);
+            outline: none;
+        }
+        
+        .input-unit {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        @media (min-width: 768px) {
+            .materials-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .material-option {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .material-option:hover {
+            border-color: #165DFF;
+        }
+        
+        .material-option input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .material-option input:checked + .material-content {
+            border-color: #165DFF;
+            background-color: rgba(22, 93, 255, 0.05);
+        }
+        
+        .material-content {
+            border: 1px solid transparent;
+            border-radius: 6px;
+            padding: 8px 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .material-icon {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .material-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        
+        .material-density {
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #165DFF;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 4px 12px rgba(22, 93, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* 结果区域样式 */
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 16px 0;
+            flex: 1;
+        }
+        
+        .result-icon {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            background-color: rgba(22, 93, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        
+        .result-icon i {
+            color: #165DFF;
+            font-size: 64px;
+        }
+        
+        .result-value {
+            margin-bottom: 24px;
+        }
+        
+        .result-label {
+            color: #777;
+            margin-bottom: 4px;
+        }
+        
+        .result-weight {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1D2129;
+        }
+        
+        .volumes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 24px;
+        }
+        
+        .volume-item {
+            background-color: #F5F7FA;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        
+        .volume-label {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 4px;
+        }
+        
+        .volume-value {
+            font-weight: 600;
+        }
+        
+        .calculation-details {
+            width: 100%;
+            background-color: #F5F7FA;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: left;
+        }
+        
+        .details-label {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 8px;
+        }
+        
+        .details-list {
+            list-style: none;
+        }
+        
+        .details-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .reset-btn {
+            margin-top: 24px;
+            padding: 10px 24px;
+        }
+        
+        /* 说明部分样式 */
+        .info-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        
+        @media (min-width: 768px) {
+            .info-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .diagram-container {
+            background-color: #F5F7FA;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1/1;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .calculation-notes {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .calculation-notes p {
+            margin-bottom: 16px;
+        }
+        
+        .formula-box {
+            padding-left: 16px;
+            border-left: 2px solid rgba(22, 93, 255, 0.3);
+            margin: 16px 0;
+        }
+        
+        .formula-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .formula-desc {
+            font-size: 14px;
+            color: #777;
+            margin-top: 4px;
+        }
+        
+        .tip-box {
+            background-color: rgba(22, 93, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 16px;
+        }
+        
+        .tip-box i {
+            color: #165DFF;
+            margin-right: 8px;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #1D2129;
+            color: white;
+            padding: 48px 0 24px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        
+        .footer-column h4 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-column h4 i {
+            color: #165DFF;
+        }
+        
+        .footer-text {
+            color: #999;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #165DFF;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: #165DFF;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 24px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* 自定义图标类 */
+        .icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            stroke-width: 0;
+            stroke: currentColor;
+            fill: currentColor;
+            vertical-align: middle;
+        }
+        
+        .icon-calculator::before { content: "🧮"; }
+        .icon-bars::before { content: "☰"; }
+        .icon-sliders::before { content: "⚙️"; }
+        .icon-cylinder::before { content: "🔧"; }
+        .icon-pin::before { content: "📌"; }
+        .icon-microchip::before { content: "🧩"; }
+        .icon-anchor::before { content: "⚓"; }
+        .icon-shield::before { content: "🛡️"; }
+        .icon-bolt::before { content: "⚡"; }
+        .icon-plane::before { content: "✈️"; }
+        .icon-balance-scale::before { content: "⚖️"; }
+        .icon-weight::before { content: "⚖️"; }
+        .icon-refresh::before { content: "🔄"; }
+        .icon-picture-o::before { content: "🖼️"; }
+        .icon-info-circle::before { content: "ℹ️"; }
+        .icon-lightbulb-o::before { content: "💡"; }
+        .icon-weixin::before { content: "微"; }
+        .icon-weibo::before { content: "微"; }
+        .icon-qq::before { content: "Q"; }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-pulse {
+            animation: pulse 0.5s ease-in-out;
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="icon icon-calculator logo-icon"></span>
+                <span class="logo-text">销轴单重计算器</span>
+            </div>
+            <nav class="nav-links hidden md:flex">
+                <a href="#">使用说明</a>
+                <a href="#">常见问题</a>
+                <a href="#">联系我们</a>
+            </nav>
+            <div class="menu-toggle md:hidden" id="menuToggle">
+                <span class="icon icon-bars"></span>
+            </div>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="mobile-menu hidden md:hidden container">
+            <a href="#">使用说明</a>
+            <a href="#">常见问题</a>
+            <a href="#">联系我们</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 介绍部分 -->
+        <section class="intro-section">
+            <h2 class="intro-title">精确计算销轴的单重</h2>
+            <p class="intro-desc">输入销轴参数和材料密度，即可快速计算出单个销轴的重量，帮助您进行成本估算和物料管理。</p>
+            <div class="info-tag">
+                <span class="icon icon-info-circle"></span>
+                <span>计算结果仅供参考，实际重量可能存在±5%误差</span>
+            </div>
+        </section>
+        
+        <!-- 计算器主体 -->
+        <section class="calculator-section">
+            <!-- 输入表单 -->
+            <div class="card">
+                <h3 class="card-title">
+                    <span class="icon icon-sliders"></span>
+                    输入参数
+                </h3>
+                
+                <form id="calculatorForm" class="form-group">
+                    <!-- 单位选择 -->
+                    <div class="unit-selector">
+                        <label class="radio-label">
+                            <input type="radio" name="unit" value="mm" checked>
+                            <span class="radio-custom"></span>
+                            <span>毫米 (mm)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="unit" value="cm">
+                            <span class="radio-custom"></span>
+                            <span>厘米 (cm)</span>
+                        </label>
+                    </div>
+                    
+                    <!-- 销轴参数 -->
+                    <div class="form-group">
+                        <h4 class="sub-title">
+                            <span class="icon icon-pin"></span>
+                            销轴主体参数
+                        </h4>
+                        
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label for="shaftDiameter" class="form-label">销轴直径 (d)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="shaftDiameter" name="shaftDiameter" required 
+                                        class="form-input"
+                                        placeholder="例如：20" min="0.1" step="0.1">
+                                    <span class="input-unit" id="shaftDiameterUnit">mm</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label for="shaftLength" class="form-label">销轴长度 (L)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="shaftLength" name="shaftLength" required 
+                                        class="form-input"
+                                        placeholder="例如：100" min="0.1" step="0.1">
+                                    <span class="input-unit" id="shaftLengthUnit">mm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 头部参数 -->
+                    <div class="form-group">
+                        <h4 class="sub-title">
+                            <span class="icon icon-cylinder"></span>
+                            头部参数（如无头部可设为0）
+                        </h4>
+                        
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label for="headDiameter" class="form-label">头部直径 (D)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="headDiameter" name="headDiameter" required 
+                                        class="form-input"
+                                        placeholder="例如：28" min="0" step="0.1">
+                                    <span class="input-unit" id="headDiameterUnit">mm</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label for="headLength" class="form-label">头部长度 (h)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="headLength" name="headLength" required 
+                                        class="form-input"
+                                        placeholder="例如：15" min="0" step="0.1">
+                                    <span class="input-unit" id="headLengthUnit">mm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 材料选择和密度输入 -->
+                    <div class="form-group">
+                        <h4 class="sub-title">
+                            <span class="icon icon-microchip"></span>
+                            材料密度
+                        </h4>
+                        
+                        <p class="form-hint">选择常用材料或直接输入密度值 (g/cm³)</p>
+                        
+                        <div class="materials-grid">
+                            <label class="material-option">
+                                <input type="radio" name="material" value="steel" checked>
+                                <div class="material-content">
+                                    <span class="icon icon-anchor material-icon"></span>
+                                    <div class="material-name">普通钢</div>
+                                    <div class="material-density">7.85</div>
+                                </div>
+                            </label>
+                            
+                            <label class="material-option">
+                                <input type="radio" name="material" value="stainless">
+                                <div class="material-content">
+                                    <span class="icon icon-shield material-icon"></span>
+                                    <div class="material-name">不锈钢</div>
+                                    <div class="material-density">7.93</div>
+                                </div>
+                            </label>
+                            
+                            <label class="material-option">
+                                <input type="radio" name="material" value="copper">
+                                <div class="material-content">
+                                    <span class="icon icon-bolt material-icon"></span>
+                                    <div class="material-name">铜</div>
+                                    <div class="material-density">8.9</div>
+                                </div>
+                            </label>
+                            
+                            <label class="material-option">
+                                <input type="radio" name="material" value="aluminum">
+                                <div class="material-content">
+                                    <span class="icon icon-plane material-icon"></span>
+                                    <div class="material-name">铝</div>
+                                    <div class="material-density">2.7</div>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <!-- 直接显示密度输入框 -->
+                        <div class="form-field">
+                            <label for="density" class="form-label">材料密度 (g/cm³)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="density" name="density" required 
+                                    class="form-input"
+                                    placeholder="例如：7.85" min="0.01" step="0.01" value="7.85">
+                            </div>
+                            <p class="form-hint">可直接修改数值，或选择上方常用材料自动填充</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 计算按钮 -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="icon icon-calculator"></span>
+                            计算单重
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- 结果展示 -->
+            <div class="card">
+                <h3 class="card-title">
+                    <span class="icon icon-balance-scale"></span>
+                    计算结果
+                </h3>
+                
+                <div class="result-container">
+                    <div class="result-icon">
+                        <span class="icon icon-weight"></span>
+                    </div>
+                    
+                    <div class="result-value">
+                        <p class="result-label">单个销轴重量</p>
+                        <p id="weightResult" class="result-weight">--</p>
+                    </div>
+                    
+                    <div class="volumes-grid">
+                        <div class="volume-item">
+                            <p class="volume-label">主体体积</p>
+                            <p id="shaftVolume" class="volume-value">-- cm³</p>
+                        </div>
+                        <div class="volume-item">
+                            <p class="volume-label">头部体积</p>
+                            <p id="headVolume" class="volume-value">-- cm³</p>
+                        </div>
+                    </div>
+                    
+                    <div class="calculation-details">
+                        <p class="details-label">计算信息</p>
+                        <ul class="details-list" id="calculationDetails">
+                            <li class="details-item"><span>材料密度:</span> <span id="densityInfo">--</span></li>
+                            <li class="details-item"><span>总体积:</span> <span id="totalVolume">--</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee;">
+                    <button id="resetBtn" class="btn btn-secondary reset-btn">
+                        <span class="icon icon-refresh"></span>
+                        重置参数
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 示意图和说明 -->
+        <section class="info-section">
+            <div class="card">
+                <h3 class="card-title">
+                    <span class="icon icon-picture-o"></span>
+                    参数示意图
+                </h3>
+                <div class="diagram-container">
+                    <!-- 销轴参数示意图 -->
+                    <svg viewBox="0 0 200 200" width="100%" height="100%">
+                        <!-- 销轴主体 -->
+                        <rect x="80" y="80" width="40" height="120" rx="20" fill="#CBD5E1" />
+                        <!-- 销轴头部 -->
+                        <rect x="70" y="40" width="60" height="40" rx="10" fill="#94A3B8" />
+                        
+                        <!-- 参数标注 -->
+                        <!-- 销轴直径 d -->
+                        <line x1="70" y1="120" x2="110" y2="120" stroke="#165DFF" stroke-width="1.5" stroke-dasharray="4" />
+                        <text x="90" y1="115" text-anchor="middle" fill="#165DFF" font-size="10">d (销轴直径)</text>
+                        
+                        <!-- 销轴长度 L -->
+                        <line x1="125" y1="80" x2="125" y2="200" stroke="#165DFF" stroke-width="1.5" stroke-dasharray="4" />
+                        <text x="130" y="140" text-anchor="start" fill="#165DFF" font-size="10">L (销轴长度)</text>
+                        
+                        <!-- 头部直径 D -->
+                        <line x1="60" y1="60" x2="120" y2="60" stroke="#165DFF" stroke-width="1.5" stroke-dasharray="4" />
+                        <text x="90" y="55" text-anchor="middle" fill="#165DFF" font-size="10">D (头部直径)</text>
+                        
+                        <!-- 头部长度 h -->
+                        <line x1="125" y1="40" x2="125" y2="80" stroke="#165DFF" stroke-width="1.5" stroke-dasharray="4" />
+                        <text x="130" y="60" text-anchor="start" fill="#165DFF" font-size="10">h (头部长度)</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">
+                    <span class="icon icon-info-circle"></span>
+                    计算说明
+                </h3>
+                <div class="calculation-notes">
+                    <p>销轴单重计算公式：<br>
+                    <span style="font-weight: 600;">单重 = (主体体积 + 头部体积) × 材料密度</span></p>
+                    
+                    <div class="formula-box">
+                        <p class="formula-title">主体体积计算：</p>
+                        <p>V₁ = π × (d/2)² × L</p>
+                        <p class="formula-desc">（d为销轴直径，L为销轴长度）</p>
+                    </div>
+                    
+                    <div class="formula-box">
+                        <p class="formula-title">头部体积计算：</p>
+                        <p>V₂ = π × (D/2)² × h</p>
+                        <p class="formula-desc">（D为头部直径，h为头部长度，无头部时为0）</p>
+                    </div>
+                    
+                    <p class="tip-box">
+                        <span class="icon icon-lightbulb-o"></span>
+                        提示：计算结果已忽略倒角、孔眼等细节，实际重量可能有±5%的误差。如需精确结果，建议使用三维建模软件测量体积。对于无头部的销轴，可将头部参数设为0。
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>
+                        <span class="icon icon-calculator"></span>
+                        销轴单重计算器
+                    </h4>
+                    <p class="footer-text">
+                        一款专业的工程计算工具，帮助您快速准确地计算销轴的单重，提高工作效率。
+                    </p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">使用说明</a></li>
+                        <li><a href="#">常见问题</a></li>
+                        <li><a href="#">计算公式</a></li>
+                        <li><a href="#">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>关注我们</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link icon icon-weixin"></a>
+                        <a href="#" class="social-link icon icon-weibo"></a>
+                        <a href="#" class="social-link icon icon-qq"></a>
+                    </div>
+                    <p class="footer-text">
+                        反馈问题或建议，请联系： 
+                    </p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2023 销轴单重计算器 - 保留所有权利</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 材料密度数据
+        const materialDensities = {
+            steel: 7.85,
+            stainless: 7.93,
+            copper: 8.9,
+            aluminum: 2.7
+        };
+        
+        // DOM元素
+        const form = document.getElementById('calculatorForm');
+        const resetBtn = document.getElementById('resetBtn');
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const densityInput = document.getElementById('density');
+        const materialRadios = document.querySelectorAll('input[name="material"]');
+        const unitRadios = document.querySelectorAll('input[name="unit"]');
+        const unitLabels = [
+            document.getElementById('shaftDiameterUnit'),
+            document.getElementById('shaftLengthUnit'),
+            document.getElementById('headDiameterUnit'),
+            document.getElementById('headLengthUnit')
+        ];
+        
+        // 结果显示元素
+        const weightResult = document.getElementById('weightResult');
+        const shaftVolume = document.getElementById('shaftVolume');
+        const headVolume = document.getElementById('headVolume');
+        const densityInfo = document.getElementById('densityInfo');
+        const totalVolume = document.getElementById('totalVolume');
+        
+        // 移动端菜单切换
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 监听材料选择变化，自动填充对应密度值
+        materialRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    const density = materialDensities[radio.value];
+                    densityInput.value = density;
+                }
+            });
+        });
+        
+        // 监听单位选择变化，更新单位标签
+        unitRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                const unit = radio.value;
+                unitLabels.forEach(label => {
+                    label.textContent = unit;
+                });
+            });
+        });
+        
+        // 计算销轴单重
+        function calculateWeight(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const unit = document.querySelector('input[name="unit"]:checked').value;
+            
+            // 输入值转换为数字
+            const shaftDiameter = parseFloat(document.getElementById('shaftDiameter').value);
+            const shaftLength = parseFloat(document.getElementById('shaftLength').value);
+            const headDiameter = parseFloat(document.getElementById('headDiameter').value);
+            const headLength = parseFloat(document.getElementById('headLength').value);
+            const density = parseFloat(densityInput.value);
+            
+            // 验证输入值
+            if (isNaN(shaftDiameter) || shaftDiameter <= 0) {
+                alert('请输入有效的销轴直径');
+                return;
+            }
+            
+            if (isNaN(shaftLength) || shaftLength <= 0) {
+                alert('请输入有效的销轴长度');
+                return;
+            }
+            
+            if (isNaN(density) || density <= 0) {
+                alert('请输入有效的材料密度');
+                densityInput.focus();
+                return;
+            }
+            
+            // 单位转换：如果是毫米，转换为厘米（因为密度单位是g/cm³）
+            const conversionFactor = unit === 'mm' ? 0.1 : 1;
+            const d = shaftDiameter * conversionFactor;  // 销轴直径（cm）
+            const L = shaftLength * conversionFactor;    // 销轴长度（cm）
+            const D = headDiameter * conversionFactor;   // 头部直径（cm）
+            const h = headLength * conversionFactor;     // 头部长度（cm）
+            
+            // 计算体积
+            const shaftVol = Math.PI * Math.pow(d / 2, 2) * L;  // 主体体积（cm³）
+            const headVol = Math.PI * Math.pow(D / 2, 2) * h;   // 头部体积（cm³）
+            const totalVol = shaftVol + headVol;                // 总体积（cm³）
+            
+            // 计算重量（克）
+            const weight = totalVol * density;
+            
+            // 更新结果显示
+            updateResults(weight, shaftVol, headVol, totalVol, density);
+            
+            // 添加结果动画效果
+            weightResult.classList.add('animate-pulse');
+            setTimeout(() => {
+                weightResult.classList.remove('animate-pulse');
+            }, 500);
+        }
+        
+        // 更新结果显示
+        function updateResults(weight, shaftVol, headVol, totalVol, density) {
+            // 格式化显示数值
+            const weightFormatted = weight.toFixed(2);
+            const shaftVolFormatted = shaftVol.toFixed(4);
+            const headVolFormatted = headVol.toFixed(4);
+            const totalVolFormatted = totalVol.toFixed(4);
+            const densityFormatted = density.toFixed(2);
+            
+            // 更新DOM
+            weightResult.textContent = `${weightFormatted} g`;
+            shaftVolume.textContent = `${shaftVolFormatted} cm³`;
+            headVolume.textContent = `${headVolFormatted} cm³`;
+            densityInfo.textContent = `${densityFormatted} g/cm³`;
+            totalVolume.textContent = `${totalVolFormatted} cm³`;
+        }
+        
+        // 重置表单
+        function resetForm() {
+            form.reset();
+            // 默认选中普通钢
+            document.querySelector('input[name="material"][value="steel"]').checked = true;
+            densityInput.value = materialDensities.steel;
+            
+            // 重置结果显示
+            weightResult.textContent = '--';
+            shaftVolume.textContent = '-- cm³';
+            headVolume.textContent = '-- cm³';
+            densityInfo.textContent = '--';
+            totalVolume.textContent = '--';
+        }
+        
+        // 事件监听
+        form.addEventListener('submit', calculateWeight);
+        resetBtn.addEventListener('click', resetForm);
+        
+        // 页面滚动时改变导航栏样式
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.style.padding = '8px 0';
+            } else {
+                header.style.padding = '16px 0';
+            }
+        });
+        
+        // 添加示例数据填充功能
+        document.addEventListener('keydown', (e) => {
+            // 按Alt+D填充示例数据
+            if (e.altKey && e.key === 'd') {
+                e.preventDefault();
+                document.getElementById('shaftDiameter').value = 20;
+                document.getElementById('shaftLength').value = 100;
+                document.getElementById('headDiameter').value = 28;
+                document.getElementById('headLength').value = 15;
+                document.querySelector('input[name="material"][value="steel"]').checked = true;
+                densityInput.value = 7.85;
+                
+                // 自动计算
+                const event = new Event('submit', {cancelable: true});
+                form.dispatchEvent(event);
+            }
+        });
+    </script>
+</body>
+</html>

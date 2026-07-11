@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>自定义六尺寸带公差图形预览</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <style>
+    /* 基础样式设置 */
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      padding: 2rem;
+      background-color: #f8fafc;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .app-title {
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    
+    /* 图形容器样式 */
+    .drawing-container {
+      position: relative;
+      background-color: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 2rem;
+      min-height: 400px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* 主图形样式 */
+    .main-shape {
+      position: relative;
+      margin: 4rem auto;
+      width: var(--main-length, 300px);
+      height: var(--main-width, 150px);
+      border: 2px solid #334155;
+    }
+    
+    /* 上部突出部分 */
+    .top-extension {
+      position: absolute;
+      top: calc(var(--top-extension-length, 50px) * -1);
+      left: var(--top-extension-offset, 80px);
+      width: var(--top-extension-width, 100px);
+      height: var(--top-extension-length, 50px);
+      border: 2px solid #334155;
+      border-bottom: none;
+    }
+    
+    /* 右侧孔样式 */
+    .right-hole {
+      position: absolute;
+      top: var(--hole-offset, 50px);
+      right: calc(var(--hole-diameter, 40px) * -0.5);
+      width: var(--hole-diameter, 40px);
+      height: var(--hole-diameter, 40px);
+      border: 2px solid #334155;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+    
+    /* 底部槽样式 */
+    .bottom-slot {
+      position: absolute;
+      bottom: calc(var(--slot-depth, 30px) * -1);
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--slot-width, 120px);
+      height: var(--slot-depth, 30px);
+      border: 2px solid #334155;
+      border-top: none;
+    }
+    
+    /* 尺寸标注样式 */
+    .dimension {
+      position: absolute;
+      background: rgba(255, 251, 214, 0.9);
+      padding: 3px 8px;
+      border: 1px dashed #94a3b8;
+      border-radius: 4px;
+      font-size: 13px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    
+    /* 控制面板样式 */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    
+    .control-group {
+      background-color: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    .control-group h3 {
+      font-size: 1rem;
+      color: #334155;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .form-group {
+      margin-bottom: 0.75rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      transition: border-color 0.15s ease-in-out;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.25);
+    }
+    
+    .actions {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-reset {
+      background-color: #f87171;
+      color: white;
+    }
+    
+    .btn-reset:hover {
+      background-color: #ef4444;
+    }
+    
+    .btn-screenshot-hint {
+      background-color: #3b82f6;
+      color: white;
+    }
+    
+    .btn-screenshot-hint:hover {
+      background-color: #2563eb;
+    }
+    
+    .screenshot-hint {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background-color: #dbeafe;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      color: #1e40af;
+      display: none;
+    }
+    
+    .screenshot-hint.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="app-title text-2xl">自定义六尺寸带公差图形预览工具</h1>
+    
+    <div class="drawing-container" id="drawingContainer">
+      <!-- 主图形 -->
+      <div class="main-shape" id="mainShape">
+        <div class="top-extension" id="topExtension"></div>
+        <div class="right-hole" id="rightHole"></div>
+        <div class="bottom-slot" id="bottomSlot"></div>
+        
+        <!-- 尺寸标注 -->
+        <div class="dimension" style="top: -20px; left: 50%; transform: translateX(-50%);">
+          <span id="dimMainLength">300±0.3</span> mm（主体长度）
+        </div>
+        <div class="dimension" style="right: -60px; top: 50%; transform: translateY(-50%) rotate(90deg);">
+          <span id="dimMainWidth">150±0.2</span> mm（主体宽度）
+        </div>
+        <div class="dimension" style="top: calc(var(--top-extension-length, 50px) * -1 - 20px); left: calc(var(--top-extension-offset, 80px) + var(--top-extension-width, 100px) / 2); transform: translateX(-50%);">
+          <span id="dimTopExtensionWidth">100±0.2</span> mm（上部突出宽度）
+        </div>
+        <div class="dimension" style="left: calc(var(--top-extension-offset, 80px) - 20px); top: calc(var(--top-extension-length, 50px) * -0.5); transform: translateY(-50%) rotate(-90deg);">
+          <span id="dimTopExtensionLength">50±0.15</span> mm（上部突出长度）
+        </div>
+        <div class="dimension" style="right: calc(var(--hole-diameter, 40px) * -0.5 + 20px); top: var(--hole-offset, 50px); transform: translateY(-50%) rotate(90deg);">
+          <span id="dimHoleDiameter">40±0.1</span> mm（孔径）
+        </div>
+        <div class="dimension" style="bottom: calc(var(--slot-depth, 30px) * -1 - 20px); left: 50%; transform: translateX(-50%);">
+          <span id="dimSlotWidth">120±0.2</span> mm（底部槽宽）
+        </div>
+      </div>
+    </div>
+    
+    <div class="controls-grid">
+      <!-- 主体尺寸控制 -->
+      <div class="control-group">
+        <h3><i class="fa fa-cube"></i> 主体尺寸</h3>
+        <div class="form-group">
+          <label for="mainLength">主体长度 (mm)</label>
+          <input type="number" step="0.1" value="300" id="mainLength" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="mainLengthTolerance">长度公差 (mm)</label>
+          <input type="number" step="0.01" value="0.3" id="mainLengthTolerance" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="mainWidth">主体宽度 (mm)</label>
+          <input type="number" step="0.1" value="150" id="mainWidth" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="mainWidthTolerance">宽度公差 (mm)</label>
+          <input type="number" step="0.01" value="0.2" id="mainWidthTolerance" class="form-control">
+        </div>
+      </div>
+      
+      <!-- 上部突出部分控制 -->
+      <div class="control-group">
+        <h3><i class="fa fa-arrow-up"></i> 上部突出部分</h3>
+        <div class="form-group">
+          <label for="topExtensionWidth">突出宽度 (mm)</label>
+          <input type="number" step="0.1" value="100" id="topExtensionWidth" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="topExtensionWidthTolerance">宽度公差 (mm)</label>
+          <input type="number" step="0.01" value="0.2" id="topExtensionWidthTolerance" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="topExtensionLength">突出长度 (mm)</label>
+          <input type="number" step="0.1" value="50" id="topExtensionLength" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="topExtensionLengthTolerance">长度公差 (mm)</label>
+          <input type="number" step="0.01" value="0.15" id="topExtensionLengthTolerance" class="form-control">
+        </div>
+      </div>
+      
+      <!-- 孔和槽控制 -->
+      <div class="control-group">
+        <h3><i class="fa fa-circle-o"></i> 孔和底部槽</h3>
+        <div class="form-group">
+          <label for="holeDiameter">孔径 (mm)</label>
+          <input type="number" step="0.1" value="40" id="holeDiameter" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="holeDiameterTolerance">孔径公差 (mm)</label>
+          <input type="number" step="0.01" value="0.1" id="holeDiameterTolerance" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="slotWidth">底部槽宽 (mm)</label>
+          <input type="number" step="0.1" value="120" id="slotWidth" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="slotWidthTolerance">槽宽公差 (mm)</label>
+          <input type="number" step="0.01" value="0.2" id="slotWidthTolerance" class="form-control">
+        </div>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button id="resetBtn" class="btn btn-reset">
+        <i class="fa fa-refresh"></i> 重置所有尺寸
+      </button>
+      <button id="screenshotHintBtn" class="btn btn-screenshot-hint">
+        <i class="fa fa-camera"></i> 显示截图提示
+      </button>
+    </div>
+    
+    <div id="screenshotHint" class="screenshot-hint">
+      <p><i class="fa fa-info-circle"></i> 截图快捷键：</p>
+      <ul class="list-disc list-inside mt-1">
+        <li>Windows: Win + Shift + S</li>
+        <li>macOS: Command + Shift + 4</li>
+        <li>Linux: 通常是 PrintScreen 键，具体取决于桌面环境</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // 获取DOM元素
+    const mainShape = document.getElementById('mainShape');
+    const topExtension = document.getElementById('topExtension');
+    const rightHole = document.getElementById('rightHole');
+    const bottomSlot = document.getElementById('bottomSlot');
+    
+    // 尺寸显示元素
+    const dimMainLength = document.getElementById('dimMainLength');
+    const dimMainWidth = document.getElementById('dimMainWidth');
+    const dimTopExtensionWidth = document.getElementById('dimTopExtensionWidth');
+    const dimTopExtensionLength = document.getElementById('dimTopExtensionLength');
+    const dimHoleDiameter = document.getElementById('dimHoleDiameter');
+    const dimSlotWidth = document.getElementById('dimSlotWidth');
+    
+    // 输入控件
+    const mainLength = document.getElementById('mainLength');
+    const mainLengthTolerance = document.getElementById('mainLengthTolerance');
+    const mainWidth = document.getElementById('mainWidth');
+    const mainWidthTolerance = document.getElementById('mainWidthTolerance');
+    const topExtensionWidth = document.getElementById('topExtensionWidth');
+    const topExtensionWidthTolerance = document.getElementById('topExtensionWidthTolerance');
+    const topExtensionLength = document.getElementById('topExtensionLength');
+    const topExtensionLengthTolerance = document.getElementById('topExtensionLengthTolerance');
+    const holeDiameter = document.getElementById('holeDiameter');
+    const holeDiameterTolerance = document.getElementById('holeDiameterTolerance');
+    const slotWidth = document.getElementById('slotWidth');
+    const slotWidthTolerance = document.getElementById('slotWidthTolerance');
+    
+    // 按钮
+    const resetBtn = document.getElementById('resetBtn');
+    const screenshotHintBtn = document.getElementById('screenshotHintBtn');
+    const screenshotHint = document.getElementById('screenshotHint');
+    
+    // 存储初始值用于重置
+    const initialValues = {
+      mainLength: mainLength.value,
+      mainLengthTolerance: mainLengthTolerance.value,
+      mainWidth: mainWidth.value,
+      mainWidthTolerance: mainWidthTolerance.value,
+      topExtensionWidth: topExtensionWidth.value,
+      topExtensionWidthTolerance: topExtensionWidthTolerance.value,
+      topExtensionLength: topExtensionLength.value,
+      topExtensionLengthTolerance: topExtensionLengthTolerance.value,
+      holeDiameter: holeDiameter.value,
+      holeDiameterTolerance: holeDiameterTolerance.value,
+      slotWidth: slotWidth.value,
+      slotWidthTolerance: slotWidthTolerance.value
+    };
+    
+    // 更新主体长度
+    function updateMainLength() {
+      const value = mainLength.value;
+      const tolerance = mainLengthTolerance.value;
+      mainShape.style.setProperty('--main-length', `${value}px`);
+      // 调整上部突出的位置，使其始终居中
+      const offset = (parseFloat(value) - parseFloat(topExtensionWidth.value)) / 2;
+      mainShape.style.setProperty('--top-extension-offset', `${offset}px`);
+      dimMainLength.textContent = `${value}±${tolerance}`;
+    }
+    
+    // 更新主体宽度
+    function updateMainWidth() {
+      const value = mainWidth.value;
+      const tolerance = mainWidthTolerance.value;
+      mainShape.style.setProperty('--main-width', `${value}px`);
+      // 调整孔的位置，使其垂直居中
+      mainShape.style.setProperty('--hole-offset', `${parseFloat(value) / 2}px`);
+      dimMainWidth.textContent = `${value}±${tolerance}`;
+    }
+    
+    // 更新上部突出宽度
+    function updateTopExtensionWidth() {
+      const value = topExtensionWidth.value;
+      const tolerance = topExtensionWidthTolerance.value;
+      mainShape.style.setProperty('--top-extension-width', `${value}px`);
+      // 调整位置使其居中
+      const offset = (parseFloat(mainLength.value) - parseFloat(value)) / 2;
+      mainShape.style.setProperty('--top-extension-offset', `${offset}px`);
+      dimTopExtensionWidth.textContent = `${value}±${tolerance}`;
+    }
+    
+    // 更新上部突出长度
+    function updateTopExtensionLength() {
+      const value = topExtensionLength.value;
+      const tolerance = topExtensionLengthTolerance.value;
+      mainShape.style.setProperty('--top-extension-length', `${value}px`);
+      dimTopExtensionLength.textContent = `${value}±${tolerance}`;
+    }
+    
+    // 更新孔径
+    function updateHoleDiameter() {
+      const value = holeDiameter.value;
+      const tolerance = holeDiameterTolerance.value;
+      mainShape.style.setProperty('--hole-diameter', `${value}px`);
+      dimHoleDiameter.textContent = `${value}±${tolerance}`;
+    }
+    
+    // 更新底部槽宽
+    function updateSlotWidth() {
+      const value = slotWidth.value;
+      const tolerance = slotWidthTolerance.value;
+      mainShape.style.setProperty('--slot-width', `${value}px`);
+      dimSlotWidth.textContent = `${value}±${tolerance}`;
+    }
+    
+    // 绑定事件监听器
+    mainLength.addEventListener('input', updateMainLength);
+    mainLengthTolerance.addEventListener('input', updateMainLength);
+    mainWidth.addEventListener('input', updateMainWidth);
+    mainWidthTolerance.addEventListener('input', updateMainWidth);
+    topExtensionWidth.addEventListener('input', updateTopExtensionWidth);
+    topExtensionWidthTolerance.addEventListener('input', updateTopExtensionWidth);
+    topExtensionLength.addEventListener('input', updateTopExtensionLength);
+    topExtensionLengthTolerance.addEventListener('input', updateTopExtensionLength);
+    holeDiameter.addEventListener('input', updateHoleDiameter);
+    holeDiameterTolerance.addEventListener('input', updateHoleDiameter);
+    slotWidth.addEventListener('input', updateSlotWidth);
+    slotWidthTolerance.addEventListener('input', updateSlotWidth);
+    
+    // 重置按钮功能
+    resetBtn.addEventListener('click', () => {
+      // 恢复所有输入框的初始值
+      for (const [id, value] of Object.entries(initialValues)) {
+        document.getElementById(id).value = value;
+      }
+      
+      // 更新所有尺寸显示
+      updateMainLength();
+      updateMainWidth();
+      updateTopExtensionWidth();
+      updateTopExtensionLength();
+      updateHoleDiameter();
+      updateSlotWidth();
+      
+      // 隐藏截图提示
+      screenshotHint.classList.remove('show');
+    });
+    
+    // 截图提示按钮功能
+    screenshotHintBtn.addEventListener('click', () => {
+      screenshotHint.classList.toggle('show');
+    });
+    
+    // 初始化显示
+    updateMainLength();
+    updateMainWidth();
+  </script>
+</body>
+</html>

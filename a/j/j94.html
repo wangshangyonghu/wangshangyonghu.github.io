@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加法表一网上用户</title>
+<meta name="keywords" content="加法表,搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .addition-table {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr); /* 9列布局 */
+            gap: 10px;
+        }
+        .addition-item {
+            background-color: white;
+            padding: 12px 8px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 16px;
+        }
+        .equation {
+            color: #333;
+        }
+        .result {
+            color: #666;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .addition-table {
+                grid-template-columns: repeat(5, 1fr); /* 小屏幕显示5列 */
+            }
+        }
+        @media (max-width: 480px) {
+            .addition-table {
+                grid-template-columns: repeat(3, 1fr); /* 手机屏幕显示3列 */
+            }
+            .addition-item {
+                font-size: 14px;
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>1-9加法表</h1>
+    <div class="addition-table" id="tableContainer"></div>
+
+    <script>
+        const container = document.getElementById('tableContainer');
+        
+        // 先按行号j循环（1-9），再按列号i循环（1-9）
+        // 这样就能保证第一列是1+1,1+2...；第二列是2+1,2+2...
+        for (let j = 1; j <= 9; j++) {
+            for (let i = 1; i <= 9; i++) {
+                const sum = i + j;
+                const item = document.createElement('div');
+                item.className = 'addition-item';
+                item.innerHTML = `<span class="equation">${i} + ${j}</span> = <span class="result">${sum}</span>`;
+                container.appendChild(item);
+            }
+        }
+    </script>
+</body>
+</html>

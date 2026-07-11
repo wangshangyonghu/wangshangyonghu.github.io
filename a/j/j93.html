@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>英寸转毫米自动换算</title>
+<meta name="keywords" content="英寸转毫米自动换算,搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+<meta name="description" content="英寸转毫米自动换算,搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h3 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        input {
+            width: 90%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="number"] {
+            text-align: right;
+        }
+        input[readonly] {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .info {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>英寸转毫米自动换算工具</h3>
+        <p style="text-align:center">1 英寸（in）= 25.4 毫米（mm）</p>
+        
+        <table>
+            <tr>
+                <th>输入英寸（in）</th>
+                <th>自动转换毫米（mm）</th>
+            </tr>
+        </table>
+        
+        <div class="info">
+            提示：在左侧输入框中输入英寸数值，右侧将自动显示对应的毫米值
+        </div>
+    </div>
+
+    <script>
+        // 创建22行换算表格
+        const table = document.querySelector('table');
+        const rowCount = 22;
+        
+        // 添加换算行
+        for (let i = 0; i < rowCount; i++) {
+            const row = document.createElement('tr');
+            
+            // 英寸输入框
+            const inchCell = document.createElement('td');
+            const inchInput = document.createElement('input');
+            inchInput.type = 'number';
+            inchInput.step = 'any';
+            inchInput.placeholder = '输入英寸值';
+            inchCell.appendChild(inchInput);
+            
+            // 毫米结果框
+            const mmCell = document.createElement('td');
+            const mmInput = document.createElement('input');
+            mmInput.type = 'text';
+            mmInput.readOnly = true;
+            mmCell.appendChild(mmInput);
+            
+            // 添加到行
+            row.appendChild(inchCell);
+            row.appendChild(mmCell);
+            table.appendChild(row);
+            
+            // 添加换算事件
+            inchInput.addEventListener('input', function() {
+                // 清除非数字输入的影响
+                if (this.value === '' || isNaN(this.value)) {
+                    mmInput.value = '';
+                    return;
+                }
+                
+                // 计算并保留两位小数
+                const mmValue = parseFloat(this.value) * 25.4;
+                mmInput.value = mmValue.toFixed(2);
+            });
+        }
+    </script>
+</body>
+</html>

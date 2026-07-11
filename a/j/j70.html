@@ -1,0 +1,319 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 --><style type="text/css">
+  /* 为所有的 a 标签设置样式 */
+  A {
+    /* 去除 a 标签的下划线 */
+    TEXT-DECORATION: none;
+    /* 为 a 标签设置粗体样式 */
+    font-weight: bold;
+font-size: 32px;    /* 为 a 标签设置字体大小 */
+  }</style><!-- css样式定义部分结束 --> 
+
+
+ <title>定时器一搜索:网上用户</title>
+<meta name="keywords" content="替换,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS,上网用户," /><!--关键词-->
+<meta name="description" content="" />
+</head> <!-- 文档头部结束 -->
+
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: '#1F2937',
+                        light: '#F3F4F6'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .timer-shadow {
+                box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
+            }
+            .timer-button {
+                @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+            }
+            .timer-input {
+                @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300;
+            }
+            .timer-animation {
+                animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            @keyframes pulse {
+                0%, 100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.7;
+                }
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gradient-to-br from-blue-50 to-indigo-50 min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- 头部 -->
+        <div class="bg-primary text-white p-6">
+            <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold flex items-center">
+                <i class="fa fa-clock-o mr-3"></i>高级定时器
+            </h1>
+            <p class="mt-2 text-blue-100 opacity-90">设置倒计时，专注工作与生活</p>
+        </div>
+
+        <!-- 定时器显示 -->
+        <div class="p-8">
+            <div id="timer-display" class="text-[clamp(2.5rem,8vw,4rem)] font-bold text-center text-dark mb-8 timer-shadow bg-light rounded-xl p-4">
+                00:00:00
+            </div>
+
+            <!-- 时间设置 -->
+            <div class="grid grid-cols-3 gap-4 mb-8">
+                <div>
+                    <label for="hours" class="block text-sm font-medium text-gray-700 mb-1">小时</label>
+                    <input type="number" id="hours" class="timer-input" min="0" max="23" value="0">
+                </div>
+                <div>
+                    <label for="minutes" class="block text-sm font-medium text-gray-700 mb-1">分钟</label>
+                    <input type="number" id="minutes" class="timer-input" min="0" max="59" value="0">
+                </div>
+                <div>
+                    <label for="seconds" class="block text-sm font-medium text-gray-700 mb-1">秒钟</label>
+                    <input type="number" id="seconds" class="timer-input" min="0" max="59" value="10">
+                </div>
+            </div>
+
+            <!-- 控制按钮 -->
+            <div class="flex flex-wrap gap-3 justify-center">
+                <button id="start-btn" class="timer-button bg-secondary text-white hover:bg-secondary/90 focus:ring-secondary/50">
+                    <i class="fa fa-play mr-2"></i>开始
+                </button>
+                <button id="pause-btn" class="timer-button bg-warning text-white hover:bg-warning/90 focus:ring-warning/50" disabled>
+                    <i class="fa fa-pause mr-2"></i>暂停
+                </button>
+                <button id="reset-btn" class="timer-button bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500">
+                    <i class="fa fa-refresh mr-2"></i>重置
+                </button>
+            </div>
+
+            <!-- 历史记录 -->
+            <div class="mt-8">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                    <i class="fa fa-history mr-2"></i>历史记录
+                </h2>
+                <ul id="history-list" class="space-y-2 max-h-40 overflow-y-auto pr-2">
+                    <li class="text-sm text-gray-600 italic">暂无记录</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="mt-6 text-center text-gray-500 text-sm">
+        <p>© 2025 高级定时器 | 专注你的每一刻</p>
+    </footer>
+
+    <!-- 音效元素 -->
+    <audio id="alert-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // DOM 元素
+        const timerDisplay = document.getElementById('timer-display');
+        const hoursInput = document.getElementById('hours');
+        const minutesInput = document.getElementById('minutes');
+        const secondsInput = document.getElementById('seconds');
+        const startBtn = document.getElementById('start-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const historyList = document.getElementById('history-list');
+        const alertSound = document.getElementById('alert-sound');
+
+        // 计时器变量
+        let timer = null;
+        let totalSeconds = 0;
+        let isRunning = false;
+        let history = [];
+
+        // 更新计时器显示
+        function updateDisplay() {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            timerDisplay.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // 倒计时结束
+            if (totalSeconds <= 0) {
+                stopTimer();
+                timerDisplay.classList.add('text-danger', 'timer-animation');
+                playAlertSound();
+                addHistory('倒计时完成');
+            }
+        }
+
+        // 播放提示音
+        function playAlertSound() {
+            alertSound.currentTime = 0;
+            alertSound.play().catch(error => {
+                console.error('播放提示音失败:', error);
+            });
+        }
+
+        // 开始计时器
+        function startTimer() {
+            if (isRunning) return;
+
+            // 如果计时器未运行且总秒数为0，则从输入获取时间
+            if (totalSeconds === 0) {
+                const hours = parseInt(hoursInput.value) || 0;
+                const minutes = parseInt(minutesInput.value) || 0;
+                const seconds = parseInt(secondsInput.value) || 0;
+
+                if (hours === 0 && minutes === 0 && seconds === 0) {
+                    alert('请设置有效的时间！');
+                    return;
+                }
+
+                totalSeconds = hours * 3600 + minutes * 60 + seconds;
+                addHistory(`设置时间: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+            }
+
+            isRunning = true;
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            timerDisplay.classList.remove('text-danger', 'timer-animation');
+
+            // 减少一秒并更新显示
+            timer = setInterval(() => {
+                totalSeconds--;
+                updateDisplay();
+            }, 1000);
+        }
+
+        // 暂停计时器
+        function pauseTimer() {
+            if (!isRunning) return;
+
+            clearInterval(timer);
+            isRunning = false;
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            addHistory('计时器暂停');
+        }
+
+        // 停止计时器
+        function stopTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+
+        // 重置计时器
+        function resetTimer() {
+            stopTimer();
+            totalSeconds = 0;
+            hoursInput.value = 0;
+            minutesInput.value = 0;
+            secondsInput.value = 10;
+            timerDisplay.textContent = '00:00:00';
+            timerDisplay.classList.remove('text-danger', 'timer-animation');
+            addHistory('计时器重置');
+        }
+
+        // 添加历史记录
+        function addHistory(action) {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            history.unshift({ time: timeStr, action });
+            
+            // 最多显示10条记录
+            if (history.length > 10) {
+                history.pop();
+            }
+            
+            renderHistory();
+        }
+
+        // 渲染历史记录
+        function renderHistory() {
+            if (history.length === 0) {
+                historyList.innerHTML = '<li class="text-sm text-gray-600 italic">暂无记录</li>';
+                return;
+            }
+            
+            historyList.innerHTML = '';
+            history.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'p-2 bg-gray-50 rounded border-l-4 border-primary/50 flex justify-between items-center';
+                li.innerHTML = `
+                    <span class="text-gray-700">${item.action}</span>
+                    <span class="text-xs text-gray-500">${item.time}</span>
+                `;
+                historyList.appendChild(li);
+            });
+        }
+
+        // 事件监听
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        // 输入框变化时更新总秒数
+        [hoursInput, minutesInput, secondsInput].forEach(input => {
+            input.addEventListener('change', () => {
+                if (isRunning) return;
+                
+                const hours = parseInt(hoursInput.value) || 0;
+                const minutes = parseInt(minutesInput.value) || 0;
+                const seconds = parseInt(secondsInput.value) || 0;
+                
+                totalSeconds = hours * 3600 + minutes * 60 + seconds;
+                updateDisplay();
+            });
+        });
+
+        // 初始化
+        updateDisplay();
+    </script>
+</body>
+</html>
+    

@@ -1,0 +1,99 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 --><style type="text/css">
+  /* 为所有的 a 标签设置样式 */
+  A {
+    /* 去除 a 标签的下划线 */
+    TEXT-DECORATION: none;
+    /* 为 a 标签设置粗体样式 */
+    font-weight: bold;
+font-size: 32px;    /* 为 a 标签设置字体大小 */
+  }</style><!-- css样式定义部分结束 --> 
+
+
+ <title>铆钉帽子长度材料计算器一网上用户</title>
+<meta name="keywords" content="替换,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS,上网用户," /><!--关键词-->
+<meta name="description" content="" />
+</head> <!-- 文档头部结束 -->
+
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+<!--左上角-->&nbsp; &nbsp; <a href="../jpg/h1.jpg" target="_blank">
+<img src="../jpg/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../y/h1.html" target="_blank"><img src="../jpg/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+
+<hr color=0066FF> <!--分界线-->
+
+<center><!--居中-->
+<body><!--内容开始body-->
+<!--文档内容开始......-->
+
+<body>
+
+  帽经:<input type="number" id="num1" oninput="calculate()" />毫米
+  <br/>
+  帽厚:<input type="number" id="num2" oninput="calculate()" />毫米
+  <br/>
+  原材料线径:<input type="number" id="num3" oninput="calculate()" />毫米
+  <br/><p>自动计算线长</p>
+    线长:<input type="number" id="nums" style="font-size: 18px;" readonly /> (毫米)
+  <hr/>
+  <button onclick="resetInput()" style="font-size: 52px;">清零</button>
+  <hr/>
+  
+
+
+<script>
+function calculate() {
+  var capDiameter = parseFloat(document.getElementById("num1").value) || 0;
+  var capThickness = parseFloat(document.getElementById("num2").value) || 0;
+  var wireDiameter = parseFloat(document.getElementById("num3").value) || 0;
+
+  // 优化后的计算公式 (圆柱体体积比计算线长)
+  if (capDiameter > 0 && capThickness > 0 && wireDiameter > 0) {
+    // 帽体积 = π × (帽经/2)² × 帽厚
+    var capVolume = Math.PI * Math.pow(capDiameter/2, 2) * capThickness;
+    
+    // 线横截面积 = π × (线径/2)²
+    var wireArea = Math.PI * Math.pow(wireDiameter/2, 2);
+    
+    // 线长 = 帽体积 / 线横截面积
+    var wireLength = capVolume / wireArea;
+    
+    // 直接显示完整计算结果
+    document.getElementById("nums").value = wireLength;
+  } else {
+    document.getElementById("nums").value = "";
+  }
+}
+
+// 清零
+function resetInput() {
+  document.getElementById("num1").value = "";
+  document.getElementById("num2").value = "";
+  document.getElementById("num3").value = "";
+  document.getElementById("nums").value = "";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<style type="text/css">A{text-decoration: none;}</style> <!-- 设置所有链接无下划线样式-->
+<style type="text/css">A{font-weight: bold; }</style> <!-- 设置所有链接为所有 a 标签添加粗体样式-->
+
+<title>bit,bytes,KB,MB,GB,TB在线转换一搜索:网上用户</title>
+<meta name="keywords" content="bit,bytes,KB,MB,GB,TB在线转换,搜索:网上用户,网上用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS" /><!--关键词-->
+<meta name="description" content="" />
+</head> <!-- 文档头部结束 -->
+
+<body>
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+
+<!--左上角-->&nbsp; &nbsp; <a href="../jpg/h1.jpg" target="_blank">
+<img src="../jpg/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../y/h1.html" target="_blank"><img src="../jpg/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .converter {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+        <div class="converter">
+        <div class="input-group">
+            <label for="value">数值:</label>
+            <input type="number" id="value" placeholder="输入要转换的数值" step="any">
+        </div>
+        <div class="input-group">
+            <label for="fromUnit">从:</label>
+            <select id="fromUnit">
+                <option value="bit">bit (比特)</option>
+                <option value="byte" selected>Byte (字节)</option>
+                <option value="kb">KB (千字节)</option>
+                <option value="mb">MB (兆字节)</option>
+                <option value="gb">GB (吉字节)</option>
+                <option value="tb">TB (太字节)</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="toUnit">转换为:</label>
+            <select id="toUnit">
+                <option value="bit">bit (比特)</option>
+                <option value="byte">Byte (字节)</option>
+                <option value="kb" selected>KB (千字节)</option>
+                <option value="mb">MB (兆字节)</option>
+                <option value="gb">GB (吉字节)</option>
+                <option value="tb">TB (太字节)</option>
+            </select>
+        </div>
+        <button onclick="convert()">转换</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function convert() {
+            // 获取输入值和单位
+            const value = parseFloat(document.getElementById('value').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            
+            if (isNaN(value)) {
+                alert('请输入有效的数值');
+                return;
+            }
+            
+            // 首先将所有单位转换为bit
+            let valueInBits;
+            switch (fromUnit) {
+                case 'bit':
+                    valueInBits = value;
+                    break;
+                case 'byte':
+                    valueInBits = value * 8;
+                    break;
+                case 'kb':
+                    valueInBits = value * 1024 * 8;
+                    break;
+                case 'mb':
+                    valueInBits = value * 1024 * 1024 * 8;
+                    break;
+                case 'gb':
+                    valueInBits = value * 1024 * 1024 * 1024 * 8;
+                    break;
+                case 'tb':
+                    valueInBits = value * 1024 * 1024 * 1024 * 1024 * 8;
+                    break;
+                default:
+                    valueInBits = value;
+            }
+            
+            // 然后从bit转换为目标单位
+            let result;
+            switch (toUnit) {
+                case 'bit':
+                    result = valueInBits;
+                    break;
+                case 'byte':
+                    result = valueInBits / 8;
+                    break;
+                case 'kb':
+                    result = valueInBits / (1024 * 8);
+                    break;
+                case 'mb':
+                    result = valueInBits / (1024 * 1024 * 8);
+                    break;
+                case 'gb':
+                    result = valueInBits / (1024 * 1024 * 1024 * 8);
+                    break;
+                case 'tb':
+                    result = valueInBits / (1024 * 1024 * 1024 * 1024 * 8);
+                    break;
+                default:
+                    result = valueInBits;
+            }
+            
+            // 显示结果
+            const resultElement = document.getElementById('result');
+            resultElement.style.display = 'block';
+            resultElement.innerHTML = `
+                <strong>转换结果:</strong><br>
+                ${value} ${getUnitName(fromUnit)} = ${result.toFixed(6)} ${getUnitName(toUnit)}
+            `;
+        }
+        
+        function getUnitName(unit) {
+            const units = {
+                'bit': 'bit (比特)',
+                'byte': 'Byte (字节)',
+                'kb': 'KB (千字节)',
+                'mb': 'MB (兆字节)',
+                'gb': 'GB (吉字节)',
+                'tb': 'TB (太字节)'
+            };
+            return units[unit];
+        }
+    </script>
+
+
+
+<hr color=0066ff>	功能说明
+<hr color=0066ff>	这个网页提供了以下数据单位之间的转换：
+<hr color=0066ff>	
+<hr color=0066ff>	bit (比特)
+<hr color=0066ff>	
+<hr color=0066ff>	Byte (字节)
+<hr color=0066ff>	
+<hr color=0066ff>	KB (千字节)
+<hr color=0066ff>	
+<hr color=0066ff>	MB (兆字节)
+<hr color=0066ff>	
+<hr color=0066ff>	GB (吉字节)
+<hr color=0066ff>	
+<hr color=0066ff>	TB (太字节)
+<hr color=0066ff>	
+<hr color=0066ff>	转换原理：
+<hr color=0066ff>	
+<hr color=0066ff>	1 Byte = 8 bit
+<hr color=0066ff>	
+<hr color=0066ff>	1 KB = 1024 Byte
+<hr color=0066ff>	
+<hr color=0066ff>	1 MB = 1024 KB
+<hr color=0066ff>	
+<hr color=0066ff>	1 GB = 1024 MB
+<hr color=0066ff>	
+<hr color=0066ff>	1 TB = 1024 GB
+<hr color=0066ff>	
+<hr color=0066ff>	使用方法：
+<hr color=0066ff>	
+<hr color=0066ff>	输入要转换的数值
+<hr color=0066ff>	
+<hr color=0066ff>	选择原始单位
+<hr color=0066ff>	
+<hr color=0066ff>	选择目标单位
+<hr color=0066ff>	
+<hr color=0066ff>	点击"转换"按钮查看结果
+<hr color=0066ff>	
+
+
+
+
+
+
+
+
+
+</strong><!--加粗-->
+</span><!--字体大小-->
+</body>
+</html> 

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="viewport" content="width=device-width,  user-scalable=yes" /><!--手机版本代码-->
+<meta charset="utf-8"><!--网页乱码修复-->
+<meta http-equiv='content-language' content='zh-cn'><!--国家地区-->
+<link  href="./favicon.ico" alt="网上用户"  rel="shortcut icon" type="image/x-icon" /><!--图标-->
+
+<title>计算器网页版一网上用户</title>
+<meta name="keywords" content="计算器网页版,网上用户,张先生,公平村,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网上用户,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生" /><!--关键词-->
+<meta name="description" content="计算器网页版一搜索:网上用户,公平村," />
+
+</head>
+
+<style type="text/css">A{TEXT-DECORATION: none}</style><!--无下划线开始-->
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+<hr color=0066FF> <!--分界线-->
+
+
+<body><!--内容开始body-->
+<br/><br/>
+
+<!--文档内容......-->
+
+<style>
+        /* 样式保持不变 */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 300px;
+        }
+        #expression {
+            width: 100%;
+            height: 60px;
+            font-size: 24px;
+            text-align: right;
+            border: none;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+        .operator {
+            background-color: #f1c40f;
+            color: white;
+        }
+        .operator:hover {
+            background-color: #d4ac0d;
+        }
+        .equals {
+            background-color: #3498db;
+            color: white;
+        }
+        .equals:hover {
+            background-color: #2980b9;
+        }
+        .clear, .backspace {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .clear:hover, .backspace:hover {
+            background-color: #c0392b;
+        }
+        #history {
+            margin-top: 20px;
+            max-height: 150px;
+            overflow-y: auto;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 10px;
+        }
+        #history p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+</style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="expression" readonly>
+        <div class="buttons">
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('+')" class="operator">+</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('-')" class="operator">-</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('*')" class="operator">×</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculate()" class="equals">=</button>
+            <button onclick="appendToDisplay('/')" class="operator">÷</button>
+            <button onclick="clearDisplay()" class="clear" style="grid-column: span 2;">清除</button>
+            <button onclick="backspace()" class="backspace" style="grid-column: span 2;">退格</button>
+        </div>
+        <div id="history"></div>
+    </div>
+
+    <script>
+        let expression = ''; // 存储当前表达式
+        let lastResult = ''; // 存储上一次计算结果
+        const expressionDisplay = document.getElementById('expression');
+
+        // 将数字或运算符添加到显示屏
+        function appendToDisplay(value) {
+            if (lastResult !== '') {
+                // 如果有上一次的计算结果，则从结果开始新的表达式
+                if ('+-*/'.includes(value)) {
+                    expression = lastResult + value;
+                } else {
+                    expression = value;
+                }
+                lastResult = '';
+            } else {
+                expression += value;
+            }
+            expressionDisplay.value = expression;
+        }
+
+        // 清除显示屏
+        function clearDisplay() {
+            expression = '';
+            lastResult = '';
+            expressionDisplay.value = '';
+        }
+
+        // 退格功能
+        function backspace() {
+            expression = expression.slice(0, -1);
+            expressionDisplay.value = expression;
+        }
+
+        // 计算表达式结果
+        function calculate() {
+            try {
+                // 使用Function构造函数计算表达式
+                const result = Function('"use strict";return (' + expression + ')')();
+                if (isNaN(result) || !isFinite(result)) {
+                    throw new Error('无效的计算结果');
+                }
+                addToHistory(expression, result);
+                lastResult = result.toString();
+                expression = lastResult;
+                expressionDisplay.value = expression;
+            } catch (error) {
+                expression = '计算错误: ' + error.message;
+                expressionDisplay.value = expression;
+                lastResult = '';
+            }
+        }
+
+        // 添加计算历史记录
+        function addToHistory(expr, res) {
+            const historyDiv = document.getElementById('history');
+            const historyItem = document.createElement('p');
+            historyItem.textContent = `${expr} = ${res}`;
+            historyDiv.insertBefore(historyItem, historyDiv.firstChild);
+            // 限制历史记录最多显示10条
+            if (historyDiv.childElementCount > 10) {
+                historyDiv.removeChild(historyDiv.lastChild);
+            }
+        }
+
+        // 键盘事件监听器
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            if (/[0-9+\-*/.=]/.test(key)) {
+                event.preventDefault();
+                if (key === '=') {
+                    calculate();
+                } else {
+                    appendToDisplay(key);
+                }
+            } else if (key === 'Enter') {
+                event.preventDefault();
+                calculate();
+            } else if (key === 'Backspace') {
+                event.preventDefault();
+                backspace();
+            } else if (key === 'Escape') {
+                event.preventDefault();
+                clearDisplay();
+            }
+        });
+</script>
+
+
+
+
+
+<hr color=0066FF>
+<a href="#top" target="_self">返回顶部</a>
+<hr color=0066FF>
+<p id="currentDateTime"></p>
+    <script>
+        const currentDateTimeElement = document.getElementById('currentDateTime');
+        const now = new Date();
+
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        const day = now.getDate();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+
+        const formattedDateTime = `日期:${year}年${month}月${day}日${hours}:${minutes}:${seconds}`;
+
+        currentDateTimeElement.textContent = formattedDateTime;
+    </script>
+
+
+<hr color=0066FF>
+<center> <!--居中-->
+<head>
+<style>textarea#gpc234{width: 100%;height: 2%;}</style>
+</head>
+<textarea cols="40%" rows="1%" id="gpc234">
+
+
+
+替换一搜索:网上用户,
+
+替换一网上用户的图片网上用户的个人主页网上用户的个人首页网上用户的个人中心网上用户的档案公平村张先生艺名张先生网上用户网民张先生网号张先生用户名张先生账号张先生客家人张先生
+
+替换,网上用户,张先生,公平村,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网上用户,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生
+
+终结目击者.一Azue一梦想一ZYL一念一静夜一平安喜乐一锦绣山河一静夜香水一源喜欢你亚一铃声随风一张良GPC234一网上用户图片一网上用户视频一网上用户邀请码一网上用户红包码
+公平村
+头盔汤锅炒菜锅帐篷旋铆机全自动铆钉机休闲椅手机直播支架三脚架空调支架折叠床折叠椅躺椅沙滩床沙滩椅平垫片雪球夹smt贴片加工厂
+</textarea>
+<!--内容结束-->
+<hr color=0000ff> <!--分界线-->
+   <hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<a href="/">下一页</a>
+&nbsp; 	<a href="	./1.html	" target="_blank">1</a>	&nbsp; 
+	<a href="	./2.html	" target="_blank">2</a>	&nbsp; 
+	<a href="	./3.html	" target="_blank">3</a>	&nbsp; 
+	<a href="	./4.html	" target="_blank">4</a>	&nbsp; 
+	<a href="	./5.html	" target="_blank">5</a>	&nbsp; 
+	<a href="	./6.html	" target="_blank">6</a>	&nbsp; 
+	<a href="	./7.html	" target="_blank">7</a>	&nbsp; 
+	<a href="	./8.html	" target="_blank">8</a>	&nbsp; 
+	<a href="	./9.html	" target="_blank">9</a>	&nbsp; 
+	<a href="	./10.html	" target="_blank">10</a>	&nbsp; 
+	<a href="	./11.html	" target="_blank">11</a>	&nbsp; 
+	<a href="	./12.html	" target="_blank">12</a>	&nbsp; 
+	<a href="	./13.html	" target="_blank">13</a>	&nbsp; 
+	<a href="	./14.html	" target="_blank">14</a>	&nbsp; 
+	<a href="	./15.html	" target="_blank">15</a>	&nbsp; 
+	<a href="	./16.html	" target="_blank">16</a>	&nbsp; 
+	<a href="	./17.html	" target="_blank">17</a>	&nbsp; 
+	<a href="	./18.html	" target="_blank">18</a>	&nbsp; 
+	<a href="	./19.html	" target="_blank">19</a>	&nbsp; 
+	<a href="	./20.html	" target="_blank">20</a>	&nbsp; 
+	<a href="	./21.html	" target="_blank">21</a>	&nbsp; 
+	<a href="	./22.html	" target="_blank">22</a>	&nbsp; 
+	<a href="	./23.html	" target="_blank">23</a>	&nbsp; 
+        <a href="	./1.html	" target="_blank">→</a>	&nbsp; 
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<!--内容结束-->
+</body><!--内容结束-->
+</center><!--居中-->
+<head><!--无下划线-->
+</strong><!--加粗-->
+</span><!--字体大小-->
+</html><!--结束-->

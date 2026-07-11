@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工资计算器（含计算步骤）</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        label {
+            display: inline-block;
+            width: 180px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 120px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+        input[type="number"] {
+            flex: 1;
+            min-width: 150px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .formula {
+            flex: 100%;
+            margin-left: 180px;
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-top: -5px;
+            padding: 5px 0;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+            text-align: center;
+        }
+        hr {
+            margin: 25px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+        .other-wage-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .other-wage-label {
+            width: 180px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>工资计算器（含计算步骤）</h1>
+        
+        <div class="form-group">
+            <label for="baseSalary">最低工资（元）：</label>
+            <input type="number" id="baseSalary" value="" min="0">
+    <div class="formula">提示：深圳从2025年3月1日起全日制就业劳动者最低工资标准为2520元/月</div>
+
+        </div>
+        
+        <div class="form-group">
+            <label for="monthHours">月计薪小时数：</label>
+            <input type="number" id="monthHours" value="174" min="0">
+            <div class="formula">提示：标准月计薪小时数 = 21.75天 × 8小时/天 = 174小时</div>
+        </div>
+        
+        <div class="form-group">
+            <label>时薪（元/小时）：</label>
+            <input type="number" id="hourlyWage" readonly>
+            <div class="formula" id="hourlyFormula">0÷ 174 = 14.48</div>
+        </div>
+        
+        <hr>
+        
+        <div class="form-group">
+            <label for="weekdayOvertime">当月工作日（周一至周五）累计加班时长（小时）：</label>
+            <input type="number" id="weekdayOvertime" value="0" min="0">
+        </div>
+        
+        <div class="form-group">
+            <label>平时加班工资（元）：</label>
+            <input type="number" id="weekdayPay" readonly>
+            <div class="formula" id="weekdayFormula">0 × 14.48 × 1.5 = 0.00</div>
+        </div>
+        
+        <hr>
+        
+        <div class="form-group">
+            <label for="weekendOvertime">当月休息日（星期六、星期日）累计加班时长（小时）：</label>
+            <input type="number" id="weekendOvertime" value="0" min="0">
+        </div>
+        
+        <div class="form-group">
+            <label>休息日加班工资（元）：</label>
+            <input type="number" id="weekendPay" readonly>
+            <div class="formula" id="weekendFormula">0 × 14.48 × 2 = 0.00</div>
+        </div>
+        
+        <hr>
+        
+        <div class="form-group">
+            <label for="holidayOvertime">当月法定节假日累计加班时长（小时）：</label>
+            <input type="number" id="holidayOvertime" value="0" min="0">
+        </div>
+        
+        <div class="form-group">
+            <label>节假日加班工资（元）：</label>
+            <input type="number" id="holidayPay" readonly>
+            <div class="formula" id="holidayFormula">0 × 14.48 × 3 = 0.00</div>
+        </div>
+        
+        <hr>
+        
+        <!-- 新增其它工资1 -->
+        <div class="form-group other-wage-group">
+            <label class="other-wage-label">其它工资1：</label>
+            <input type="text" id="otherWageName1" placeholder="例如：绩效奖金" value="绩效奖金">
+            <input type="number" id="otherWage1" value="0" min="0">
+            <div class="formula" id="otherFormula1">绩效奖金 = 0.00元</div>
+        </div>
+        
+        <!-- 新增其它工资2 -->
+        <div class="form-group other-wage-group">
+            <label class="other-wage-label">其它工资2：</label>
+            <input type="text" id="otherWageName2" placeholder="例如：交通补贴" value="交通补贴">
+            <input type="number" id="otherWage2" value="0" min="0">
+            <div class="formula" id="otherFormula2">交通补贴 = 0.00元</div>
+        </div>
+        
+        <!-- 新增房租补贴 -->
+        <div class="form-group other-wage-group">
+            <label class="other-wage-label">房租补贴：</label>
+            <input type="text" id="housingSubsidyName" placeholder="例如：房租补贴" value="房租补贴" readonly>
+            <input type="number" id="housingSubsidy" value="0" min="0">
+            <div class="formula" id="housingSubsidyFormula">房租补贴 = 0.00元</div>
+        </div>
+        
+        <!-- 新增伙食补贴 -->
+        <div class="form-group other-wage-group">
+            <label class="other-wage-label">伙食补贴：</label>
+            <input type="text" id="mealSubsidyName" placeholder="例如：伙食补贴" value="伙食补贴" readonly>
+            <input type="number" id="mealSubsidy" value="0" min="0">
+            <div class="formula" id="mealSubsidyFormula">伙食补贴 = 0.00元</div>
+        </div>
+        
+        <button onclick="calculateSalary()">计算总工资</button>
+        
+        <div class="total">
+            月总工资：<span id="totalSalary">0</span> 元
+            <div class="formula" style="font-style: normal; font-size: 16px; margin-top: 10px; word-wrap: break-word;" id="totalFormula">0.00（最低工资） + 0.00（平时加班） + 0.00（休息日加班） + 0.00（节假日加班） + 0.00（绩效奖金） + 0.00（交通补贴） + 0.00（房租补贴） + 0.00（伙食补贴） = 0</div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化计算
+        calculateHourlyWage();
+        updateOtherWageFormulas();
+        updateSubsidyFormulas(); // 初始化补贴公式
+        
+        // 计算时薪和时薪公式
+        function calculateHourlyWage() {
+            const baseSalary = parseFloat(document.getElementById('baseSalary').value) || 0;
+            const monthHours = parseFloat(document.getElementById('monthHours').value) || 0;
+            
+            // 计算时薪
+            const hourlyWage = monthHours > 0 ? (baseSalary / monthHours).toFixed(2) : 0;
+            document.getElementById('hourlyWage').value = hourlyWage;
+            
+            // 显示时薪计算步骤
+            const hourlyFormulaText = monthHours > 0 
+                ? `${baseSalary.toFixed(2)} ÷ ${monthHours.toFixed(2)} = ${hourlyWage}`
+                : '月计薪小时数不能为0';
+            document.getElementById('hourlyFormula').textContent = hourlyFormulaText;
+            
+            calculateOvertimePay();
+        }
+        
+        // 计算各类加班费和对应公式
+        function calculateOvertimePay() {
+            const hourlyWage = parseFloat(document.getElementById('hourlyWage').value) || 0;
+            
+            // 平时加班（1.5倍）
+            const weekdayOvertime = parseFloat(document.getElementById('weekdayOvertime').value) || 0;
+            const weekdayPay = (weekdayOvertime * hourlyWage * 1.5).toFixed(2);
+            document.getElementById('weekdayPay').value = weekdayPay;
+            document.getElementById('weekdayFormula').textContent = `${weekdayOvertime.toFixed(2)} × ${hourlyWage} × 1.5 = ${weekdayPay}`;
+            
+            // 休息日加班（2倍）
+            const weekendOvertime = parseFloat(document.getElementById('weekendOvertime').value) || 0;
+            const weekendPay = (weekendOvertime * hourlyWage * 2).toFixed(2);
+            document.getElementById('weekendPay').value = weekendPay;
+            document.getElementById('weekendFormula').textContent = `${weekendOvertime.toFixed(2)} × ${hourlyWage} × 2 = ${weekendPay}`;
+            
+            // 节假日加班（3倍）
+            const holidayOvertime = parseFloat(document.getElementById('holidayOvertime').value) || 0;
+            const holidayPay = (holidayOvertime * hourlyWage * 3).toFixed(2);
+            document.getElementById('holidayPay').value = holidayPay;
+            document.getElementById('holidayFormula').textContent = `${holidayOvertime.toFixed(2)} × ${hourlyWage} × 3 = ${holidayPay}`;
+        }
+        
+        // 更新其它工资公式
+        function updateOtherWageFormulas() {
+            const name1 = document.getElementById('otherWageName1').value || '其它工资1';
+            const wage1 = parseFloat(document.getElementById('otherWage1').value) || 0;
+            document.getElementById('otherFormula1').textContent = `${name1} = ${wage1.toFixed(2)}元`;
+            
+            const name2 = document.getElementById('otherWageName2').value || '其它工资2';
+            const wage2 = parseFloat(document.getElementById('otherWage2').value) || 0;
+            document.getElementById('otherFormula2').textContent = `${name2} = ${wage2.toFixed(2)}元`;
+        }
+        
+        // 更新补贴公式（房租补贴和伙食补贴）
+        function updateSubsidyFormulas() {
+            // 房租补贴
+            const housingName = document.getElementById('housingSubsidyName').value || '房租补贴';
+            const housingAmount = parseFloat(document.getElementById('housingSubsidy').value) || 0;
+            document.getElementById('housingSubsidyFormula').textContent = `${housingName} = ${housingAmount.toFixed(2)}元`;
+            
+            // 伙食补贴
+            const mealName = document.getElementById('mealSubsidyName').value || '伙食补贴';
+            const mealAmount = parseFloat(document.getElementById('mealSubsidy').value) || 0;
+            document.getElementById('mealSubsidyFormula').textContent = `${mealName} = ${mealAmount.toFixed(2)}元`;
+        }
+        
+        // 计算总工资和总公式
+        function calculateSalary() {
+            calculateHourlyWage();
+            updateOtherWageFormulas();
+            updateSubsidyFormulas();
+            
+            const baseSalary = parseFloat(document.getElementById('baseSalary').value) || 0;
+            const weekdayPay = parseFloat(document.getElementById('weekdayPay').value) || 0;
+            const weekendPay = parseFloat(document.getElementById('weekendPay').value) || 0;
+            const holidayPay = parseFloat(document.getElementById('holidayPay').value) || 0;
+            const otherWage1 = parseFloat(document.getElementById('otherWage1').value) || 0;
+            const otherWage2 = parseFloat(document.getElementById('otherWage2').value) || 0;
+            const housingSubsidy = parseFloat(document.getElementById('housingSubsidy').value) || 0;
+            const mealSubsidy = parseFloat(document.getElementById('mealSubsidy').value) || 0;
+            
+            const otherName1 = document.getElementById('otherWageName1').value || '其它工资1';
+            const otherName2 = document.getElementById('otherWageName2').value || '其它工资2';
+            const housingName = document.getElementById('housingSubsidyName').value || '房租补贴';
+            const mealName = document.getElementById('mealSubsidyName').value || '伙食补贴';
+            
+            // 计算总工资
+            const total = (baseSalary + weekdayPay + weekendPay + holidayPay + otherWage1 + otherWage2 + housingSubsidy + mealSubsidy).toFixed(2);
+            document.getElementById('totalSalary').textContent = total;
+            
+            // 显示总工资计算步骤（包含所有项目）
+            const totalFormulaText = `${baseSalary.toFixed(2)}（最低工资） + ${weekdayPay}（平时加班） + ${weekendPay}（休息日加班） + ${holidayPay}（节假日加班） + ${otherWage1.toFixed(2)}（${otherName1}） + ${otherWage2.toFixed(2)}（${otherName2}） + ${housingSubsidy.toFixed(2)}（${housingName}） + ${mealSubsidy.toFixed(2)}（${mealName}） = ${total}`;
+            document.getElementById('totalFormula').textContent = totalFormulaText;
+        }
+        
+        // 监听输入变化，实时计算
+        document.getElementById('baseSalary').addEventListener('input', calculateHourlyWage);
+        document.getElementById('monthHours').addEventListener('input', calculateHourlyWage);
+        document.getElementById('weekdayOvertime').addEventListener('input', calculateOvertimePay);
+        document.getElementById('weekendOvertime').addEventListener('input', calculateOvertimePay);
+        document.getElementById('holidayOvertime').addEventListener('input', calculateOvertimePay);
+        document.getElementById('otherWageName1').addEventListener('input', updateOtherWageFormulas);
+        document.getElementById('otherWage1').addEventListener('input', updateOtherWageFormulas);
+        document.getElementById('otherWageName2').addEventListener('input', updateOtherWageFormulas);
+        document.getElementById('otherWage2').addEventListener('input', updateOtherWageFormulas);
+        document.getElementById('housingSubsidy').addEventListener('input', updateSubsidyFormulas);
+        document.getElementById('mealSubsidy').addEventListener('input', updateSubsidyFormulas);
+    </script>
+<hr/>
+月计薪天数＝（365天-104天）÷12个月＝21.75天<hr/>
+一年星期六+星期日=104天<hr/>
+加班费计算公式如下：<hr/>
+星期一至星期五（超过8小时）加班费 = 月工资标准 / 21.75 ÷ 8小时 × 加班时数 × 150%<hr/>
+星期六和星期日加班费 = 月工资标准 / 21.75 ÷ 8小时 × 加班时数 × 200%<hr/>
+法定节假日加班费 = 月工资标准 / 21.75 ÷ 8小时 × 加班时数 × 300%<hr/>
+<a href="https://cn.bing.com/search?q=%E5%85%A8%E5%9B%BD%E5%90%84%E7%9C%81%E6%9C%80%E4%BD%8E%E5%B7%A5%E8%B5%84%E6%A0%87%E5%87%86" target="_blank">全国各省最低工资标准</a><hr/>
+
+</body>
+</html>

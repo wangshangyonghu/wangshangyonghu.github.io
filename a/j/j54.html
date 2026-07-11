@@ -1,0 +1,193 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 --><style type="text/css">
+  /* 为所有的 a 标签设置样式 */
+  A {
+    /* 去除 a 标签的下划线 */
+    TEXT-DECORATION: none;
+    /* 为 a 标签设置粗体样式 */
+    font-weight: bold;
+font-size: 32px;    /* 为 a 标签设置字体大小 */
+  }</style><!-- css样式定义部分结束 --> 
+
+
+ <title>数字大写转换器</title>
+<meta name="keywords" content="替换,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS,上网用户," /><!--关键词-->
+<meta name="description" content="数字大写转换器一搜索:网上用户一" />
+</head> <!-- 文档头部结束 -->
+
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      background-color: #f9f9f9;
+    }
+
+   .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    button {
+      display: none; /* 隐藏原来的按钮 */
+    }
+
+    #result {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    #result p {
+      padding: 10px;
+      background-color: #f1f8e9;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+
+    #result span {
+      font-weight: bold;
+      color: #212121;
+    }
+
+   .title {
+      color: #333;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <input type="number" id="numberInput" placeholder="请输入数字" step="any">
+    <button onclick="convertToChinese()">转换为大写</button>
+
+    <div id="result">
+      <p>大写金额: <span id="amountChinese"></span></p>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('numberInput');
+    input.addEventListener('input', convertToChinese); // 监听input事件
+
+    function convertToChinese() {
+      const num = input.value.trim();
+
+      // 输入验证
+      if (num === '') {
+        document.getElementById('amountChinese').textContent = '';
+        return;
+      }
+
+      if (isNaN(num)) {
+        document.getElementById('amountChinese').textContent = '请输入有效的数字';
+        return;
+      }
+
+      // 处理小数部分
+      let [integer, decimal] = num.split('.');
+      if (decimal && decimal.length > 2) {
+        decimal = decimal.substring(0, 2); // 只保留两位小数
+        input.value = integer + '.' + decimal;
+      }
+
+      // 数字转中文大写
+      const digits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+      const units = ['', '拾', '佰', '仟', '万', '拾', '佰', '仟', '亿', '拾', '佰', '仟', '万'];
+
+      // 处理整数部分
+      let result = '';
+      for (let i = 0; i < integer.length; i++) {
+        const digit = parseInt(integer[i]);
+        const position = integer.length - i - 1;
+
+        if (digit === 0) {
+          // 避免多个零连续出现，以及零在单位前的情况
+          if (i > 0 && parseInt(integer[i - 1])!== 0) {
+            result += digits[0];
+          }
+          // 处理万亿单位
+          if (position % 4 === 0 && position > 0) {
+            result += units[position];
+          }
+        } else {
+          result += digits[digit] + units[position];
+        }
+      }
+
+      // 处理小数部分（角分）
+      let decimalResult = '';
+      if (decimal) {
+        if (decimal.length >= 1) {
+          const jiao = parseInt(decimal[0]);
+          if (jiao!== 0) {
+            decimalResult += digits[jiao] + '角';
+          } else if (result === '') {
+            decimalResult += digits[0];
+          }
+        }
+        if (decimal.length >= 2) {
+          const fen = parseInt(decimal[1]);
+          if (fen!== 0) {
+            decimalResult += digits[fen] + '分';
+          }
+        }
+      }
+
+      // 组合结果
+      let amountChinese = '';
+      if (result === '') {
+        amountChinese = decimalResult || digits[0] + '元整';
+      } else {
+        amountChinese = result + '元' + decimalResult;
+        if (!decimalResult) {
+          amountChinese += '整';
+        }
+      }
+
+      // 更新结果
+      document.getElementById('amountChinese').textContent = amountChinese;
+    }
+  </script>
+</body>
+
+
+

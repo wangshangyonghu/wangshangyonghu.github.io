@@ -1,0 +1,236 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 --><style type="text/css">
+  /* 为所有的 a 标签设置样式 */
+  A {
+    /* 去除 a 标签的下划线 */
+    TEXT-DECORATION: none;
+    /* 为 a 标签设置粗体样式 */
+    font-weight: bold;
+font-size: 32px;    /* 为 a 标签设置字体大小 */
+  }</style><!-- css样式定义部分结束 --> 
+
+
+ <title>存储单位自动换算一搜索:网上用户</title>
+<meta name="keywords" content="存储单位自动换算,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS,上网用户," /><!--关键词-->
+<meta name="description" content="" />
+</head> <!-- 文档头部结束 -->
+
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+<!--左上角-->&nbsp; &nbsp; <a href="../jpg/h1.jpg" target="_blank">
+<img src="../jpg/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../y/h1.html" target="_blank"><img src="../jpg/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+
+<hr color=0066FF> <!--分界线-->
+
+<center><!--居中-->
+<body><!--内容开始body-->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 400px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        input {
+            width: 120px; /* 增加输入框宽度 */
+            padding: 4px;
+            text-align: right; /* 右对齐数字 */
+        }
+    </style>
+</head>
+<body>
+    <h2>存储单位自动换算</h2>
+    <table>
+        <tr>
+            <th>单位</th>
+            <th>符号</th>
+            <th>输入/自动换算</th>
+        </tr>
+        <tr>
+            <td>比特（位）</td>
+            <td>bit</td>
+            <td><input type="text" id="bit" oninput="convert(this)"></td>
+        </tr>
+        <tr>
+            <td>字节</td>
+            <td>Byte</td>
+            <td><input type="text" id="byte" oninput="convert(this)"></td>
+        </tr>
+        <tr>
+            <td>千字节</td>
+            <td>KB</td>
+            <td><input type="text" id="kb" oninput="convert(this)"></td>
+        </tr>
+        <tr>
+            <td>兆字节</td>
+            <td>MB</td>
+            <td><input type="text" id="mb" oninput="convert(this)"></td>
+        </tr>
+        <tr>
+            <td>吉字节</td>
+            <td>GB</td>
+            <td><input type="text" id="gb" oninput="convert(this)"></td>
+        </tr>
+        <tr>
+            <td>太字节</td>
+            <td>TB</td>
+            <td><input type="text" id="tb" oninput="convert(this)"></td>
+        </tr>
+    </table>
+
+    <script>
+        // 存储单位换算关系（以 bit 为基准，1 Byte = 8 bit，1 KB = 1024 Byte，以此类推）
+        const conversion = {
+            bit: 1,
+            byte: 8,
+            kb: 8 * 1024,
+            mb: 8 * 1024 * 1024,
+            gb: 8 * 1024 * 1024 * 1024,
+            tb: 8 * 1024 * 1024 * 1024 * 1024
+        };
+
+        // 添加千位分隔符
+        function formatNumber(num) {
+            if (isNaN(num)) return '';
+            // 保留最多8位小数
+            const fixedNum = parseFloat(num).toFixed(8);
+            // 移除末尾多余的0和小数点
+            const cleanedNum = fixedNum.replace(/\.?0+$/, '');
+            // 添加千位分隔符
+            return cleanedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // 从格式化的数字中移除千位分隔符
+        function parseNumber(str) {
+            return parseFloat(str.replace(/,/g, ''));
+        }
+
+        function convert(input) {
+            // 获取输入的值和当前单位
+            const value = parseNumber(input.value);
+            const unit = input.id;
+
+            // 如果输入不是数字，清空其他输入框
+            if (isNaN(value)) {
+                document.querySelectorAll('input').forEach(elem => {
+                    if (elem!== input) elem.value = '';
+                });
+                return;
+            }
+
+            // 计算当前输入对应的 bit 总数
+            const totalBits = value * conversion[unit];
+
+            // 更新其他单位的输入框，使用格式化后的数字
+            document.getElementById('bit').value = formatNumber(totalBits / conversion.bit);
+            document.getElementById('byte').value = formatNumber(totalBits / conversion.byte);
+            document.getElementById('kb').value = formatNumber(totalBits / conversion.kb);
+            document.getElementById('mb').value = formatNumber(totalBits / conversion.mb);
+            document.getElementById('gb').value = formatNumber(totalBits / conversion.gb);
+            document.getElementById('tb').value = formatNumber(totalBits / conversion.tb);
+        }
+    </script>
+</body>
+
+
+ <style>
+        table {
+            width: 600px;
+            margin: 50px auto;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>单位</th>
+                <th>符号</th>
+                <th>换算关系（以 Bit 为基准）</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>比特（位）</td>
+                <td>bit</td>
+                <td>1 bit（最小单位）</td>
+            </tr>
+            <tr>
+                <td>字节</td>
+                <td>Byte</td>
+                <td>1 Byte = 8 bit（计算机处理数据的基本单位）</td>
+            </tr>
+            <tr>
+                <td>千字节</td>
+                <td>KB</td>
+                <td>1 KB = 1024 Byte = 2<sup>10</sup> Byte</td>
+            </tr>
+            <tr>
+                <td>兆字节</td>
+                <td>MB</td>
+                <td>1 MB = 1024 KB = 2<sup>20</sup> Byte</td>
+            </tr>
+            <tr>
+                <td>吉字节</td>
+                <td>GB</td>
+                <td>1 GB = 1024 MB = 2<sup>30</sup> Byte</td>
+            </tr>
+            <tr>
+                <td>太字节</td>
+                <td>TB</td>
+                <td>1 TB = 1024 GB = 2<sup>40</sup> Byte</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+
+
+
+
+
+
+
+</html>

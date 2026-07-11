@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温度单位自动换算</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+        }
+        th {
+            background: #e9ecef;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">温度单位自动换算</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>单位</th>
+                <th>符号</th>
+                <th>输入值</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>摄氏度</td>
+                <td>°C</td>
+                <td><input type="number" id="celsius" oninput="convert('celsius', this.value)"></td>
+            </tr>
+            <tr>
+                <td>华氏度</td>
+                <td>°F</td>
+                <td><input type="number" id="fahrenheit" oninput="convert('fahrenheit', this.value)"></td>
+            </tr>
+            <tr>
+                <td>开尔文</td>
+                <td>K</td>
+                <td><input type="number" id="kelvin" oninput="convert('kelvin', this.value)"></td>
+            </tr>
+            <tr>
+                <td>列氏度</td>
+                <td>°Ré</td>
+                <td><input type="number" id="réaumur" oninput="convert('réaumur', this.value)"></td>
+            </tr>
+            <tr>
+                <td>兰金度</td>
+                <td>°R</td>
+                <td><input type="number" id="rankine" oninput="convert('rankine', this.value)"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // 核心换算逻辑：以摄氏度为中间值，先转成°C，再转其他单位
+        function convert(unit, value) {
+            value = parseFloat(value);
+            if (isNaN(value)) return; // 输入非数字时不处理
+
+            let celsius;
+            // 根据触发的单位，先转成摄氏度
+            switch(unit) {
+                case 'celsius':
+                    celsius = value;
+                    break;
+                case 'fahrenheit':
+                    celsius = (value - 32) * 5/9;
+                    break;
+                case 'kelvin':
+                    celsius = value - 273.15;
+                    break;
+                case 'réaumur':
+                    celsius = value * 5/4;
+                    break;
+                case 'rankine':
+                    celsius = (value - 491.67) * 5/9;
+                    break;
+            }
+
+            // 再把摄氏度转成其他单位，更新输入框
+            document.getElementById('celsius').value = celsius.toFixed(2);
+            document.getElementById('fahrenheit').value = (celsius * 9/5 + 32).toFixed(2);
+            document.getElementById('kelvin').value = (celsius + 273.15).toFixed(2);
+            document.getElementById('réaumur').value = (celsius * 4/5).toFixed(2);
+            document.getElementById('rankine').value = (celsius * 9/5 + 491.67).toFixed(2);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 --><style type="text/css">
+  /* 为所有的 a 标签设置样式 */
+  A {
+    /* 去除 a 标签的下划线 */
+    TEXT-DECORATION: none;
+    /* 为 a 标签设置粗体样式 */
+    font-weight: bold;
+  }</style><!-- css样式定义部分结束 --> 
+
+
+ <title>含税计算器一搜索:网上用户</title>
+<meta name="keywords" content="含税计算器,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS" /><!--关键词-->
+<meta name="description" content="" />
+</head> <!-- 文档头部结束 -->
+
+
+<body>
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+
+<!--左上角-->&nbsp; &nbsp; <a href="../jpg/h1.jpg" target="_blank">
+<img src="../jpg/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../y/h1.html" target="_blank"><img src="../jpg/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+
+
+
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            line-height: 2.25rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #3b82f6;
+            color: #fff;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        #result {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>含税计算器</h1>
+        <label for="amount">金额:</label>
+        <input type="number" id="amount" placeholder="请输入金额" required>
+        <label for="taxRate">税率 (%):</label>
+        <input type="number" id="taxRate" placeholder="请输入税率" required>
+        <label for="calculationType">计算类型:</label>
+        <select id="calculationType">
+            <option value="taxInclusive">含税价格</option>
+            <option value="taxExclusive">不含税价格</option>
+        </select>
+        <button onclick="calculate()">计算(Entmr回车键)</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function calculate() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const taxRate = parseFloat(document.getElementById('taxRate').value);
+            const calculationType = document.getElementById('calculationType').value;
+            let taxAmount = amount * (taxRate / 100);
+            let taxInclusive = amount + taxAmount;
+            let resultText = '';
+
+            if (calculationType === 'taxInclusive') {
+                resultText = `税额: ${taxAmount.toFixed(2)}<br>含税价格: ${taxInclusive.toFixed(2)}`;
+            } else if (calculationType === 'taxExclusive') {
+                let taxExclusive = amount / (1 + (taxRate / 100));
+                taxAmount = amount - taxExclusive;
+                resultText = `税额: ${taxAmount.toFixed(2)}<br>含税价格: ${amount.toFixed(2)}`;
+            }
+
+            document.getElementById('result').innerHTML = resultText;
+        }
+
+        // 为输入框添加键盘事件监听
+        const amountInput = document.getElementById('amount');
+        const taxRateInput = document.getElementById('taxRate');
+        amountInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                calculate();
+            }
+        });
+        taxRateInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                calculate();
+            }
+        });
+    </script>
+</body>
+
+    
+
+
+
+
+
+
+
+</strong><!--加粗-->
+</span><!--字体大小-->
+
+</html> 

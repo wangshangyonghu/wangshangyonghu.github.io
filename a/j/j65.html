@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>面积单位自动换算</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input {
+      width: 90%;
+      padding: 6px;
+      text-align: right;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .error {
+      border-color: #ff0000;
+      background-color: #ffebee;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>面积单位自动换算</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>单位</th>
+        <th>符号</th>
+        <th>输入值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 公制基础单位 -->
+      <tr>
+        <td>平方米</td>
+        <td>m²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareMeter"></td>
+      </tr>
+      <tr>
+        <td>平方分米</td>
+        <td>dm²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareDecimeter"></td>
+      </tr>
+      <tr>
+        <td>平方厘米</td>
+        <td>cm²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareCentimeter"></td>
+      </tr>
+      <tr>
+        <td>平方毫米</td>
+        <td>mm²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareMillimeter"></td>
+      </tr>
+      <!-- 公制较大单位 -->
+      <tr>
+        <td>公顷</td>
+        <td>hm²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="hectare"></td>
+      </tr>
+      <tr>
+        <td>平方千米</td>
+        <td>km²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareKilometer"></td>
+      </tr>
+      <!-- 英制单位 -->
+      <tr>
+        <td>平方英里</td>
+        <td>mi²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareMile"></td>
+      </tr>
+      <tr>
+        <td>平方码</td>
+        <td>yd²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareYard"></td>
+      </tr>
+      <tr>
+        <td>平方英尺</td>
+        <td>ft²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareFoot"></td>
+      </tr>
+      <tr>
+        <td>平方英寸</td>
+        <td>in²</td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareInch"></td>
+      </tr>
+      <!-- 中国市制单位 -->
+      <tr>
+        <td>平方丈</td>
+        <td></td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareZhang"></td>
+      </tr>
+      <tr>
+        <td>平方尺</td>
+        <td></td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareChi"></td>
+      </tr>
+      <tr>
+        <td>平方寸</td>
+        <td></td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="squareCun"></td>
+      </tr>
+      <!-- 特殊单位 -->
+      <tr>
+        <td>亩</td>
+        <td></td>
+        <td><input type="text" oninput="convertArea(this)" data-unit="mu"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    // 面积单位换算关系（以平方米为中间单位）
+    const unitConversions = {
+      squareMeter: 1,
+      squareDecimeter: 0.01,
+      squareCentimeter: 0.0001,
+      squareMillimeter: 0.000001,
+      hectare: 10000,
+      squareKilometer: 1000000,
+      squareMile: 2589988.110336,
+      squareYard: 0.83612736,
+      squareFoot: 0.09290304,
+      squareInch: 0.00064516,
+      squareZhang: 9, // 1平方丈 = 9平方米（1丈=3米，1平方丈=3×3=9平方米  ）
+      squareChi: 0.09, // 1平方尺 = 0.09平方米（1尺=0.3米，1平方尺=0.3×0.3=0.09平方米  ）
+      squareCun: 0.0009, // 1平方寸 = 0.0009平方米（1寸=0.03米，1平方寸=0.03×0.03=0.0009平方米  ）
+      mu: 666.6667 // 1亩≈666.6667平方米
+    };
+
+    function convertArea(inputElem) {
+      const unit = inputElem.getAttribute('data-unit');
+      let inputVal = inputElem.value.trim();
+
+      // 重置错误样式
+      document.querySelectorAll('input[data-unit]').forEach(input => {
+        input.classList.remove('error');
+      });
+
+      // 处理空输入
+      if (inputVal === "") {
+        clearAllInputs();
+        return;
+      }
+
+      // 允许临时不完整输入
+      if (inputVal === '.' || inputVal === '-' || inputVal === '-.') {
+        return;
+      }
+
+      // 解析数值
+      const num = parseFloat(inputVal);
+      if (isNaN(num) || !isValidNumber(inputVal)) {
+        inputElem.classList.add('error');
+        return;
+      }
+
+      // 转换为平方米
+      const squareMeters = num * unitConversions[unit];
+
+      // 转换为所有单位并更新
+      Object.keys(unitConversions).forEach(targetUnit => {
+        const input = document.querySelector(`input[data-unit="${targetUnit}"]`);
+        const value = squareMeters / unitConversions[targetUnit];
+        updateInput(input, value);
+      });
+    }
+
+    function isValidNumber(str) {
+      const pattern = /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/;
+      return pattern.test(str);
+    }
+
+    function updateInput(input, value) {
+      let formattedValue;
+      if (Math.abs(value) < 1e-6 || Math.abs(value) >= 1e21) {
+        formattedValue = value.toExponential(6);
+      } else {
+        formattedValue = value.toFixed(6).replace(/\.?0+$/, '');
+      }
+      input.value = formattedValue;
+    }
+
+    function clearAllInputs() {
+      document.querySelectorAll('input[data-unit]').forEach(input => {
+        input.value = "";
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!doctype html> <!-- 声明文档类型为 HTML5，这是 HTML5 标准的文档声明方式 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档的根元素，lang 属性指定页面主要语言为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据、样式、脚本等不直接显示在页面中的内容 -->
+    <!-- 设置视口参数，使页面在移动设备上正确显示
+         width=device-width: 视口宽度等于设备宽度
+         user-scalable=yes: 允许用户缩放页面（默认值，可省略）
+         建议添加 initial-scale=1.0 确保初始缩放比例正确 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+    <!-- 设置文档的语言编码，虽然 HTML5 中推荐使用 lang 属性，但保留此标签兼容旧浏览器 -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    
+    <!-- 网站图标设置区域 -->
+    <!-- 标准浏览器图标 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网站图标">
+    <!-- 快捷方式图标（IE 兼容） -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" alt="网站快捷图标"/>
+    <!-- 苹果设备触摸图标（添加到主屏幕时使用） -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="苹果设备图标"/>
+    <!-- 苹果设备启动画面图标（应用启动时显示） -->
+    <link rel="apple-touch-startup-image" href="/favicon.ico" alt="苹果设备启动画面"/>
+    <!-- 高分辨率设备图标（如 Android 高dpi设备） -->
+    <link rel="icon" sizes="192x192" href="/favicon.ico" alt="高分辨率设备图标"/>
+    <!-- 定义图标遮罩（主要用于 Safari 等浏览器） -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="图标遮罩" />
+    <!-- 苹果设备预合成图标（不添加系统默认光泽效果） -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="苹果设备预合成图标">
+    
+    <!-- 告知浏览器该页面适合作为移动端Web应用运行
+         添加到主屏幕后，会隐藏浏览器地址栏，更接近原生应用体验 -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    
+    <!-- DNS预解析，提前解析指定域名的IP地址，加快后续资源加载速度 -->
+    <link rel="dns-prefetch" href="//"/>    
+    
+    <!-- 设置文档的字符编码为UTF-8，确保页面文字正确显示，防止乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <!-- CSS样式定义部分开始 -->
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      A {
+        text-decoration: none; /* 去除a标签的下划线（建议使用小写属性名，符合CSS规范） */
+        font-weight: bold; /* 为a标签设置粗体样式 */
+        font-size: 32px; /* 为a标签设置字体大小为32像素 */
+      }
+    </style>
+    <!-- CSS样式定义部分结束 -->
+
+ <title>打折计算器</title>
+<meta name="keywords" content="替换,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,上网用户," /><!--关键词-->
+<meta name="description" content="商品打折计算器一搜索:网上用户" />
+</head> <!-- 文档头部结束 -->
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto; /* 移除顶部margin，改为0 */
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #f5f5f5;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 0; /* 确保容器顶部没有间距 */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            margin-top: 0; /* 移除标题顶部margin */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .highlight {
+            color: #007BFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+ 
+        <div class="form-group">
+
+            <input type="number" id="originalPrice" placeholder="请输入原价（元）" min="0" step="0.01" oninput="calculateDiscount()">
+        </div>
+        <div class="form-group">
+
+            <input type="number" id="discountRate" placeholder="请输入折扣（例如：8.5表示85折）" min="0" max="10" step="0.1" oninput="calculateDiscount()">
+        </div>
+        <div class="result">
+            <p>节省金额：<span id="saveAmount" class="highlight">0.00元</span></p>
+            <p>折后价格：<span id="discountedPrice" class="highlight">0.00元</span></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateDiscount() {
+            // 获取输入的原价和折扣
+            var originalPrice = parseFloat(document.getElementById('originalPrice').value) || 0;
+            var discountRate = (parseFloat(document.getElementById('discountRate').value) || 0) / 10;
+
+            // 验证折扣范围
+            if (discountRate > 1) discountRate = 1;
+            if (discountRate < 0) discountRate = 0;
+
+            // 计算打折后价格和节省金额
+            var discountedPrice = originalPrice * discountRate;
+            var saveAmount = originalPrice - discountedPrice;
+
+            // 将结果显示在页面上
+            document.getElementById('saveAmount').innerText = saveAmount.toFixed(2) + '元';
+            document.getElementById('discountedPrice').innerText = discountedPrice.toFixed(2) + '元';
+        }
+    </script>
+</body>
+
+</html>
+<!--底部显示-->
+<a href="/" target="_blank" style="color: #999; font-size: 12px;">下一页</a>
+ <script src="/a/js/tua.js"></script>
+<div id="gpczxstua"></div>
+<!--底下显示-->

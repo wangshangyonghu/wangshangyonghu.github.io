@@ -1,0 +1,621 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content="width=device-width,  user-scalable=yes" />
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 --><style type="text/css">
+  /* 为所有的 a 标签设置样式 */
+  A {
+    /* 去除 a 标签的下划线 */
+    TEXT-DECORATION: none;
+    /* 为 a 标签设置粗体样式 */
+    font-weight: bold;
+font-size: 32px;    /* 为 a 标签设置字体大小 */
+  }</style><!-- css样式定义部分结束 --> 
+
+
+ <title>六角螺丝单重计算器一搜索:网上用户</title>
+<meta name="keywords" content="替换,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS,上网用户," /><!--关键词-->
+<meta name="description" content="六角螺丝单重计算器" />
+</head> <!-- 文档头部结束 -->
+
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+
+<hr color=0066FF> <!--分界线-->
+
+
+
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        accent: '#FF7D00',
+                        neutral: '#F5F7FA',
+                        dark: '#1D2129'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-shadow {
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            }
+            .input-focus {
+                @apply focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none;
+            }
+            .btn-hover {
+                @apply hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300;
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-neutral min-h-screen text-dark">
+    <!-- 顶部导航 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-calculator text-primary text-2xl"></i>
+                <h1 class="text-xl md:text-2xl font-bold text-primary">六角螺丝单重计算器</h1>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-primary transition-colors">使用说明</a>
+                <a href="#" class="text-gray-600 hover:text-primary transition-colors">常见问题</a>
+                <a href="#" class="text-gray-600 hover:text-primary transition-colors">联系我们</a>
+            </div>
+            <button class="md:hidden text-gray-600" id="menuToggle">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#" class="py-2 text-gray-600 hover:text-primary transition-colors">使用说明</a>
+                <a href="#" class="py-2 text-gray-600 hover:text-primary transition-colors">常见问题</a>
+                <a href="#" class="py-2 text-gray-600 hover:text-primary transition-colors">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+        <!-- 介绍部分 -->
+        <section class="mb-10 text-center max-w-3xl mx-auto">
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-dark">精确计算六角螺丝的单重</h2>
+            <p class="text-gray-600 text-lg mb-6">输入螺丝参数，选择材料类型，即可快速计算出单个螺丝的重量，帮助您进行成本估算和物料管理。</p>
+            <div class="inline-flex items-center px-4 py-2 bg-primary/10 text-primary rounded-full">
+                <i class="fa fa-info-circle mr-2"></i>
+                <span>计算结果仅供参考，实际重量可能存在±5%误差</span>
+            </div>
+        </section>
+        
+        <!-- 计算器主体 -->
+        <section class="grid md:grid-cols-5 gap-8 mb-12">
+            <!-- 输入表单 -->
+            <div class="md:col-span-3 bg-white rounded-xl p-6 md:p-8 card-shadow transform transition-all duration-300 hover:shadow-xl">
+                <h3 class="text-xl font-bold mb-6 flex items-center">
+                    <i class="fa fa-sliders text-primary mr-2"></i>
+                    输入参数
+                </h3>
+                
+                <form id="calculatorForm" class="space-y-6">
+                    <!-- 单位选择 -->
+                    <div class="flex items-center space-x-4 border-b pb-4">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="unit" value="mm" checked class="sr-only peer">
+                            <div class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center peer-checked:border-primary">
+                                <div class="w-3 h-3 rounded-full bg-primary hidden peer-checked:block"></div>
+                            </div>
+                            <span class="ml-2">毫米 (mm)</span>
+                        </label>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="unit" value="cm" class="sr-only peer">
+                            <div class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center peer-checked:border-primary">
+                                <div class="w-3 h-3 rounded-full bg-primary hidden peer-checked:block"></div>
+                            </div>
+                            <span class="ml-2">厘米 (cm)</span>
+                        </label>
+                    </div>
+                    
+                    <!-- 头部参数 -->
+                    <div class="space-y-4">
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                            <i class="fa fa-cube text-secondary mr-2"></i>
+                            头部参数
+                        </h4>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="headWidth" class="block text-sm font-medium text-gray-700 mb-1">对边距离 (S)</label>
+                                <div class="relative">
+                                    <input type="number" id="headWidth" name="headWidth" required 
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus"
+                                        placeholder="例如：13" min="0" step="0.1">
+                                    <span class="absolute right-3 top-2.5 text-gray-500" id="headWidthUnit">mm</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="headHeight" class="block text-sm font-medium text-gray-700 mb-1">头部厚度 (H)</label>
+                                <div class="relative">
+                                    <input type="number" id="headHeight" name="headHeight" required 
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus"
+                                        placeholder="例如：6" min="0" step="0.1">
+                                    <span class="absolute right-3 top-2.5 text-gray-500" id="headHeightUnit">mm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 螺杆参数 -->
+                    <div class="space-y-4">
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                            <i class="fa fa-cylinder text-secondary mr-2"></i>
+                            螺杆参数
+                        </h4>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="rodDiameter" class="block text-sm font-medium text-gray-700 mb-1">公称直径 (d)</label>
+                                <div class="relative">
+                                    <input type="number" id="rodDiameter" name="rodDiameter" required 
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus"
+                                        placeholder="例如：8" min="0" step="0.1">
+                                    <span class="absolute right-3 top-2.5 text-gray-500" id="rodDiameterUnit">mm</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="rodLength" class="block text-sm font-medium text-gray-700 mb-1">螺杆长度 (L)</label>
+                                <div class="relative">
+                                    <input type="number" id="rodLength" name="rodLength" required 
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus"
+                                        placeholder="例如：20" min="0" step="0.1">
+                                    <span class="absolute right-3 top-2.5 text-gray-500" id="rodLengthUnit">mm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 材料选择 -->
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
+                            <i class="fa fa-microchip text-secondary mr-2"></i>
+                            材料选择
+                        </h4>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <label class="cursor-pointer">
+                                <div class="border border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors peer-checked:border-primary peer-checked:bg-primary/5">
+                                    <input type="radio" name="material" value="steel" checked class="sr-only peer">
+                                    <i class="fa fa-anchor text-2xl mb-2 text-gray-600"></i>
+                                    <div class="font-medium">普通钢</div>
+                                    <div class="text-sm text-gray-500">7.85 g/cm³</div>
+                                </div>
+                            </label>
+                            
+                            <label class="cursor-pointer">
+                                <div class="border border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors peer-checked:border-primary peer-checked:bg-primary/5">
+                                    <input type="radio" name="material" value="stainless" class="sr-only peer">
+                                    <i class="fa fa-shield text-2xl mb-2 text-gray-600"></i>
+                                    <div class="font-medium">不锈钢</div>
+                                    <div class="text-sm text-gray-500">7.93 g/cm³</div>
+                                </div>
+                            </label>
+                            
+                            <label class="cursor-pointer">
+                                <div class="border border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors peer-checked:border-primary peer-checked:bg-primary/5">
+                                    <input type="radio" name="material" value="copper" class="sr-only peer">
+                                    <i class="fa fa-bolt text-2xl mb-2 text-gray-600"></i>
+                                    <div class="font-medium">铜</div>
+                                    <div class="text-sm text-gray-500">8.9 g/cm³</div>
+                                </div>
+                            </label>
+                            
+                            <label class="cursor-pointer">
+                                <div class="border border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors peer-checked:border-primary peer-checked:bg-primary/5">
+                                    <input type="radio" name="material" value="aluminum" class="sr-only peer">
+                                    <i class="fa fa-plane text-2xl mb-2 text-gray-600"></i>
+                                    <div class="font-medium">铝</div>
+                                    <div class="text-sm text-gray-500">2.7 g/cm³</div>
+                                </div>
+                            </label>
+                            
+                            <label class="cursor-pointer">
+                                <div class="border border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors peer-checked:border-primary peer-checked:bg-primary/5">
+                                    <input type="radio" name="material" value="custom" class="sr-only peer">
+                                    <i class="fa fa-sliders text-2xl mb-2 text-gray-600"></i>
+                                    <div class="font-medium">自定义</div>
+                                    <div class="text-sm text-gray-500" id="customDensityText">输入密度</div>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <!-- 自定义密度输入框 -->
+                        <div id="customDensityContainer" class="mt-4 hidden">
+                            <label for="customDensity" class="block text-sm font-medium text-gray-700 mb-1">
+                                材料密度 (g/cm³)
+                            </label>
+                            <input type="number" id="customDensity" name="customDensity" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus"
+                                placeholder="例如：7.85" min="0" step="0.01" value="7.85">
+                        </div>
+                    </div>
+                    
+                    <!-- 计算按钮 -->
+                    <div class="pt-2">
+                        <button type="submit" class="w-full bg-primary text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center btn-hover">
+                            <i class="fa fa-calculator mr-2"></i>
+                            计算单重
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- 结果展示 -->
+            <div class="md:col-span-2">
+                <div class="bg-white rounded-xl p-6 md:p-8 h-full card-shadow flex flex-col">
+                    <h3 class="text-xl font-bold mb-6 flex items-center">
+                        <i class="fa fa-balance-scale text-accent mr-2"></i>
+                        计算结果
+                    </h3>
+                    
+                    <div id="resultContainer" class="flex-1 flex flex-col justify-center items-center text-center">
+                        <div class="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                            <i class="fa fa-weight text-primary text-5xl"></i>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="text-gray-500 mb-1">单个螺丝重量</p>
+                            <p id="weightResult" class="text-4xl font-bold text-dark">--</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 w-full max-w-xs mb-6">
+                            <div class="bg-neutral rounded-lg p-3">
+                                <p class="text-gray-500 text-sm mb-1">头部体积</p>
+                                <p id="headVolume" class="font-semibold">-- cm³</p>
+                            </div>
+                            <div class="bg-neutral rounded-lg p-3">
+                                <p class="text-gray-500 text-sm mb-1">螺杆体积</p>
+                                <p id="rodVolume" class="font-semibold">-- cm³</p>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full bg-neutral rounded-lg p-4">
+                            <p class="text-gray-500 text-sm mb-2">计算信息</p>
+                            <ul class="text-left text-sm space-y-1 text-gray-600" id="calculationDetails">
+                                <li class="flex justify-between"><span>材料密度:</span> <span id="densityInfo">--</span></li>
+                                <li class="flex justify-between"><span>总体积:</span> <span id="totalVolume">--</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t">
+                        <button id="resetBtn" class="w-full border border-gray-300 text-gray-700 font-medium py-2 px-6 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                            <i class="fa fa-refresh mr-2"></i>
+                            重置参数
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 示意图和说明 -->
+        <section class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white rounded-xl p-6 md:p-8 card-shadow">
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <i class="fa fa-picture-o text-primary mr-2"></i>
+                    参数示意图
+                </h3>
+                <div class="aspect-square max-w-md mx-auto bg-neutral rounded-lg flex items-center justify-center p-4">
+                    <!-- 螺丝参数示意图 -->
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <!-- 螺杆 -->
+                        <rect x="90" y="60" width="20" height="120" fill="#CBD5E1" rx="2" />
+                        <!-- 螺纹示意 -->
+                        <path d="M90,60 Q100,50 110,60 T110,80 T110,100 T110,120 T110,140 T110,160 T110,180" fill="none" stroke="#94A3B8" stroke-width="1" />
+                        <!-- 头部 - 六边形 -->
+                        <polygon points="100,10 130,30 130,70 100,90 70,70 70,30" fill="#94A3B8" />
+                        
+                        <!-- 参数标注 -->
+                        <!-- 对边距离 S -->
+                        <line x1="70" y1="50" x2="130" y2="50" stroke="#165DFF" stroke-width="1.5" stroke-dasharray="4" />
+                        <text x="100" y="45" text-anchor="middle" fill="#165DFF" font-size="10">S (对边距离)</text>
+                        
+                        <!-- 头部厚度 H -->
+                        <line x1="135" y1="30" x2="135" y2="70" stroke="#165DFF" stroke-width="1.5" stroke-dasharray="4" />
+                        <text x="140" y="50" text-anchor="start" fill="#165DFF" font-size="10">H (头部厚度)</text>
+                        
+                        <!-- 公称直径 d -->
+                        <line x1="85" y1="100" x2="115" y2="100" stroke="#165DFF" stroke-width="1.5" stroke-dasharray="4" />
+                        <text x="100" y="95" text-anchor="middle" fill="#165DFF" font-size="10">d (公称直径)</text>
+                        
+                        <!-- 螺杆长度 L -->
+                        <line x1="125" y1="60" x2="125" y2="180" stroke="#165DFF" stroke-width="1.5" stroke-dasharray="4" />
+                        <text x="130" y="120" text-anchor="start" fill="#165DFF" font-size="10">L (螺杆长度)</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 md:p-8 card-shadow">
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <i class="fa fa-info-circle text-primary mr-2"></i>
+                    计算说明
+                </h3>
+                <div class="space-y-4 text-gray-600">
+                    <p>六角螺丝单重计算公式：<br>
+                    <span class="font-medium">单重 = (头部体积 + 螺杆体积) × 材料密度</span></p>
+                    
+                    <div class="pl-4 border-l-2 border-primary/30">
+                        <p class="font-medium">头部体积计算：</p>
+                        <p>V₁ = 0.866 × S² × H</p>
+                        <p class="text-sm text-gray-500 mt-1">（S为对边距离，H为头部厚度）</p>
+                    </div>
+                    
+                    <div class="pl-4 border-l-2 border-primary/30">
+                        <p class="font-medium">螺杆体积计算：</p>
+                        <p>V₂ = π × (d/2)² × L</p>
+                        <p class="text-sm text-gray-500 mt-1">（d为公称直径，L为螺杆长度）</p>
+                    </div>
+                    
+                    <p class="text-sm bg-primary/5 p-3 rounded-lg">
+                        <i class="fa fa-lightbulb-o text-primary mr-1"></i>
+                        提示：计算结果已忽略头部倒角、螺纹牙型等细节，实际重量可能有±5%的误差。如需精确结果，建议使用三维建模软件测量体积。
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fa fa-calculator text-primary mr-2"></i>
+                        六角螺丝单重计算器
+                    </h4>
+                    <p class="text-gray-400 text-sm">
+                        一款专业的工程计算工具，帮助您快速准确地计算六角螺丝的单重，提高工作效率。
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-colors">使用说明</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">常见问题</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">计算公式</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-weixin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-qq"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-4">
+                        反馈问题或建议，请联系：
+                    </p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+                <p>© 2023 六角螺丝单重计算器 - 保留所有权利</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 材料密度数据
+        const materialDensities = {
+            steel: 7.85,
+            stainless: 7.93,
+            copper: 8.9,
+            aluminum: 2.7,
+            custom: 7.85
+        };
+        
+        // DOM元素
+        const form = document.getElementById('calculatorForm');
+        const resetBtn = document.getElementById('resetBtn');
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const customDensityContainer = document.getElementById('customDensityContainer');
+        const customDensityText = document.getElementById('customDensityText');
+        const customDensityInput = document.getElementById('customDensity');
+        const materialRadios = document.querySelectorAll('input[name="material"]');
+        const unitRadios = document.querySelectorAll('input[name="unit"]');
+        const unitLabels = [
+            document.getElementById('headWidthUnit'),
+            document.getElementById('headHeightUnit'),
+            document.getElementById('rodDiameterUnit'),
+            document.getElementById('rodLengthUnit')
+        ];
+        
+        // 结果显示元素
+        const weightResult = document.getElementById('weightResult');
+        const headVolume = document.getElementById('headVolume');
+        const rodVolume = document.getElementById('rodVolume');
+        const densityInfo = document.getElementById('densityInfo');
+        const totalVolume = document.getElementById('totalVolume');
+        
+        // 移动端菜单切换
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 监听材料选择变化，显示/隐藏自定义密度输入框
+        materialRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'custom') {
+                    customDensityContainer.classList.remove('hidden');
+                    customDensityContainer.classList.add('animate-fadeIn');
+                } else {
+                    customDensityContainer.classList.add('hidden');
+                }
+            });
+        });
+        
+        // 监听单位选择变化，更新单位标签
+        unitRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                const unit = radio.value;
+                unitLabels.forEach(label => {
+                    label.textContent = unit;
+                });
+            });
+        });
+        
+        // 计算螺丝单重
+        function calculateWeight(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const unit = document.querySelector('input[name="unit"]:checked').value;
+            const material = document.querySelector('input[name="material"]:checked').value;
+            
+            // 输入值转换为数字
+            const headWidth = parseFloat(document.getElementById('headWidth').value);
+            const headHeight = parseFloat(document.getElementById('headHeight').value);
+            const rodDiameter = parseFloat(document.getElementById('rodDiameter').value);
+            const rodLength = parseFloat(document.getElementById('rodLength').value);
+            
+            // 获取材料密度
+            let density = material === 'custom' 
+                ? parseFloat(customDensityInput.value) 
+                : materialDensities[material];
+            
+            // 单位转换：如果是毫米，转换为厘米（因为密度单位是g/cm³）
+            const conversionFactor = unit === 'mm' ? 0.1 : 1;
+            const S = headWidth * conversionFactor;    // 对边距离（cm）
+            const H = headHeight * conversionFactor;   // 头部厚度（cm）
+            const d = rodDiameter * conversionFactor;  // 公称直径（cm）
+            const L = rodLength * conversionFactor;    // 螺杆长度（cm）
+            
+            // 计算体积
+            const headVol = 0.866 * S * S * H;  // 头部体积（cm³）
+            const rodVol = Math.PI * Math.pow(d / 2, 2) * L;  // 螺杆体积（cm³）
+            const totalVol = headVol + rodVol;  // 总体积（cm³）
+            
+            // 计算重量（克）
+            const weight = totalVol * density;
+            
+            // 更新结果显示
+            updateResults(weight, headVol, rodVol, totalVol, density, unit);
+            
+            // 添加结果动画效果
+            weightResult.classList.add('animate-pulse');
+            setTimeout(() => {
+                weightResult.classList.remove('animate-pulse');
+            }, 500);
+        }
+        
+        // 更新结果显示
+        function updateResults(weight, headVol, rodVol, totalVol, density, unit) {
+            // 格式化显示数值
+            const weightFormatted = weight.toFixed(2);
+            const headVolFormatted = headVol.toFixed(4);
+            const rodVolFormatted = rodVol.toFixed(4);
+            const totalVolFormatted = totalVol.toFixed(4);
+            const densityFormatted = density.toFixed(2);
+            
+            // 更新DOM
+            weightResult.textContent = `${weightFormatted} g`;
+            headVolume.textContent = `${headVolFormatted} cm³`;
+            rodVolume.textContent = `${rodVolFormatted} cm³`;
+            densityInfo.textContent = `${densityFormatted} g/cm³`;
+            totalVolume.textContent = `${totalVolFormatted} cm³`;
+        }
+        
+        // 重置表单
+        function resetForm() {
+            form.reset();
+            customDensityContainer.classList.add('hidden');
+            
+            // 重置结果显示
+            weightResult.textContent = '--';
+            headVolume.textContent = '-- cm³';
+            rodVolume.textContent = '-- cm³';
+            densityInfo.textContent = '--';
+            totalVolume.textContent = '--';
+        }
+        
+        // 事件监听
+        form.addEventListener('submit', calculateWeight);
+        resetBtn.addEventListener('click', resetForm);
+        
+        // 页面滚动时改变导航栏样式
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('py-2');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-2');
+            }
+        });
+        
+        // 添加示例数据填充功能
+        document.addEventListener('keydown', (e) => {
+            // 按Alt+D填充示例数据
+            if (e.altKey && e.key === 'd') {
+                e.preventDefault();
+                document.getElementById('headWidth').value = 13;
+                document.getElementById('headHeight').value = 6;
+                document.getElementById('rodDiameter').value = 8;
+                document.getElementById('rodLength').value = 20;
+                
+                // 自动计算
+                const event = new Event('submit', {cancelable: true});
+                form.dispatchEvent(event);
+            }
+        });
+    </script>
+</body>
+</html>
