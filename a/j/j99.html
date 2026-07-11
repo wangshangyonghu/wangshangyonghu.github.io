@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农历春节倒计时</title>
+<meta name="keywords" content="农历春节倒计时,春节倒计时,搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+
+    <style>
+        /* 保持原有样式不变 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #fdf5e6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(#ff4500 0.5px, transparent 0.5px),
+                radial-gradient(#ff4500 0.5px, #fdf5e6 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+        
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid #e63946;
+        }
+        
+        h1 {
+            color: #e63946;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .year {
+            font-size: 1.2rem;
+            color: #457b9d;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-box {
+            background-color: #1d3557;
+            color: white;
+            padding: 20px 10px;
+            border-radius: 10px;
+            min-width: 80px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .time {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        
+        .celebration {
+            margin-top: 30px;
+            font-size: 1.1rem;
+            color: #e63946;
+            display: none;
+        }
+        
+        .decorations {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .decor {
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .lantern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23e63946' d='M50,10 C30,10 10,30 10,50 C10,70 30,90 50,90 C70,90 90,70 90,50 C90,30 70,10 50,10 Z'/%3E%3Cpath fill='%23ffb703' d='M50,30 L50,70 M30,50 L70,50' stroke='%23ffb703' stroke-width='5'/%3E%3C/svg%3E");
+        }
+        
+        .spring {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%234cc9f0'/%3E%3Ctext x='50' y='60' font-size='24' text-anchor='middle' fill='white' font-weight='bold'%3E春%3C/text%3E%3C/svg%3E");
+        }
+        
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .time-box {
+                min-width: 60px;
+                padding: 15px 5px;
+            }
+            
+            .time {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>春节倒计时</h1>
+        <div class="year" id="targetYear">加载中...</div>
+        <div class="countdown">
+            <div class="time-box">
+                <div class="time" id="days">00</div>
+                <div class="label">天</div>
+            </div>
+            <div class="time-box">
+                <div class="time" id="hours">00</div>
+                <div class="label">时</div>
+            </div>
+            <div class="time-box">
+                <div class="time" id="minutes">00</div>
+                <div class="label">分</div>
+            </div>
+            <div class="time-box">
+                <div class="time" id="seconds">00</div>
+                <div class="label">秒</div>
+            </div>
+        </div>
+        <div class="celebration" id="celebration">
+            新年快乐！恭喜发财！
+        </div>
+        <div class="decorations">
+            <div class="decor lantern"></div>
+            <div class="decor spring"></div>
+            <div class="decor lantern"></div>
+        </div>
+    </div>
+
+    <script>
+        // 计算春节日期的函数（农历正月初一转换为公历）
+        function getSpringFestivalDate(year) {
+            // 基础数据：2023-2040年春节日期（公历）
+            const springFestivalDates = {
+     
+                2025: '2025-01-29',
+                2026: '2026-02-17',
+                2027: '2027-02-06',
+                2028: '2028-01-26',
+                2029: '2029-02-13',
+                2030: '2030-02-03',
+                2031: '2031-01-23',
+                2032: '2032-02-11',
+                2033: '2033-01-31',
+                2034: '2034-02-19',
+                2035: '2035-02-08',
+                2036: '2036-01-28',
+                2037: '2037-02-15',
+                2038: '2038-02-04',
+                2039: '2039-01-24',
+                2040: '2040-02-12'
+            };
+            
+            // 如果在已知范围内，直接返回
+            if (springFestivalDates[year]) {
+                return new Date(springFestivalDates[year] + 'T00:00:00');
+            }
+            
+            // 超出范围时的简易估算（实际应用中可扩展日期表）
+            // 春节日期大致在1月21日至2月20日之间
+            const lastYearDate = springFestivalDates[year - 1] || '2023-01-22';
+            const lastYear = new Date(lastYearDate);
+            // 农历年约354天，加上可能的闰月
+            const estimatedTime = lastYear.getTime() + (354 + Math.random() > 0.7 ? 30 : 0) * 24 * 60 * 60 * 1000;
+            return new Date(estimatedTime);
+        }
+        
+        // 获取当前应该倒计时的春节日期
+        function getCurrentTargetDate() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // 先检查今年的春节
+            const currentYearSpringFestival = getSpringFestivalDate(currentYear);
+            
+            // 如果今年的春节还没到，就用今年的
+            if (currentYearSpringFestival >= now) {
+                return {
+                    date: currentYearSpringFestival,
+                    year: currentYear
+                };
+            }
+            
+            // 否则用明年的
+            const nextYear = currentYear + 1;
+            return {
+                date: getSpringFestivalDate(nextYear),
+                year: nextYear
+            };
+        }
+        
+        // 获取目标日期
+        let targetInfo = getCurrentTargetDate();
+        let targetDate = targetInfo.date;
+        
+        // 更新年份显示
+        document.getElementById('targetYear').textContent = 
+            `${targetInfo.year}年春节（农历正月初一）`;
+        
+        function updateCountdown() {
+            const now = new Date();
+            const difference = targetDate - now;
+            
+            // 检查是否需要更新目标日期（跨年后自动更新）
+            const newTargetInfo = getCurrentTargetDate();
+            if (newTargetInfo.year !== targetInfo.year) {
+                targetInfo = newTargetInfo;
+                targetDate = targetInfo.date;
+                document.getElementById('targetYear').textContent = 
+                    `${targetInfo.year}年春节（农历正月初一）`;
+                // 重新显示倒计时（如果之前隐藏了）
+                document.getElementById('celebration').style.display = 'none';
+                document.querySelector('.countdown').style.display = 'flex';
+            }
+            
+            // 如果已经过了春节，显示庆祝信息
+            if (difference <= 0) {
+                document.getElementById('celebration').style.display = 'block';
+                document.querySelector('.countdown').style.display = 'none';
+                return;
+            }
+            
+            // 计算剩余的天、时、分、秒
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            
+            // 显示在页面上，确保两位数显示
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // 初始化时更新一次
+        updateCountdown();
+        
+        // 每秒更新一次
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

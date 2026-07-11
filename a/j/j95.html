@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加法表一网上用户</title>
+<meta name="keywords" content=",搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        /* 表格容器 - 实现横向滚动 */
+        .table-wrapper {
+            overflow-x: auto; /* 允许横向滚动 */
+            -webkit-overflow-scrolling: touch; /* 优化移动端滚动体验 */
+            padding-bottom: 10px; /* 避免滚动条遮挡内容 */
+        }
+        .addition-table {
+            min-width: 900px; /* 表格最小宽度，确保内容不挤压 */
+            border-collapse: separate;
+            border-spacing: 8px;
+        }
+        .addition-table td {
+            background-color: white;
+            padding: 12px 15px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+            font-size: 16px;
+            white-space: nowrap; /* 强制内容不换行 */
+        }
+        .equation {
+            color: #333;
+        }
+        .result {
+            color: #666;
+            font-weight: bold;
+        }
+        /* 小屏幕调整单元格样式 */
+        @media (max-width: 768px) {
+            .addition-table td {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+        }
+        @media (max-width: 480px) {
+            .addition-table td {
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>1-9加法表</h1>
+    <!-- 表格容器用于实现横向滚动 -->
+    <div class="table-wrapper">
+        <table class="addition-table" id="tableContainer"></table>
+    </div>
+
+    <script>
+        const table = document.getElementById('tableContainer');
+        let tableHTML = '';
+
+        // 生成9行（每行对应j的值1-9）
+        for (let j = 1; j <= 9; j++) {
+            tableHTML += '<tr>'; // 开始一行
+            
+            // 每行包含9列（每列对应i的值1-9）
+            for (let i = 1; i <= 9; i++) {
+                const sum = i + j;
+                tableHTML += `
+                    <td>
+                        <span class="equation">${i} + ${j}</span> = 
+                        <span class="result">${sum}</span>
+                    </td>
+                `;
+            }
+            
+            tableHTML += '</tr>'; // 结束一行
+        }
+
+        table.innerHTML = tableHTML;
+    </script>
+</body>
+</html>

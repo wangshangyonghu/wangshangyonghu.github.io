@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金额大写数字键盘</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:SimHei,Microsoft YaHei;}
+body{padding:20px;max-width:720px;margin:20px auto;}
+.wrap{border:2px solid #000;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;}
+/* 顶部两行全屏显示 */
+.show-num{grid-column:1/-1;text-align:center;padding:20px;font-size:42px;border-bottom:1px solid #000;}
+.show-cn{grid-column:1/-1;text-align:center;padding:20px;font-size:36px;border-bottom:1px solid #000;}
+/* 按键通用 */
+.key{border:1px solid #000;padding:30px 0;text-align:center;font-size:32px;cursor:pointer;user-select:none;background:#fff;}
+.key:active{background:#eee;}
+/* 右侧功能键 */
+.key-func{background:#f8f8f8;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="show-num" id="numBox">0</div>
+  <div class="show-cn" id="cnBox">零元整</div>
+
+  <div class="key" data-v="1">1</div>
+  <div class="key" data-v="2">2</div>
+  <div class="key" data-v="3">3</div>
+  <div class="key key-func" id="del">删除</div>
+
+  <div class="key" data-v="4">4</div>
+  <div class="key" data-v="5">5</div>
+  <div class="key" data-v="6">6</div>
+  <div class="key key-func" id="clear">清空</div>
+
+  <div class="key" data-v="7">7</div>
+  <div class="key" data-v="8">8</div>
+  <div class="key" data-v="9">9</div>
+  <div></div>
+
+  <div class="key" data-v="0">0</div>
+  <div class="key" data-v="00">00</div>
+  <div class="key" data-v=".">.</div>
+  <div></div>
+</div>
+
+<script>
+const STORAGE_KEY = "moneyCache";
+let inputVal = localStorage.getItem(STORAGE_KEY) || "0";
+const numDom = document.getElementById("numBox");
+const cnDom = document.getElementById("cnBox");
+
+// 数字转人民币大写
+function toChineseMoney(numStr){
+  let num = Number(numStr);
+  if(num <= 0 || isNaN(num)) return "零元整";
+  const digit = ["零","壹","贰","叁","肆","伍","陆","柒","捌","玖"];
+  const intUnit = ["","拾","佰","仟","万","拾","佰","仟","亿"];
+  const decUnit = ["角","分"];
+  let [intS, decS] = num.toFixed(2).split(".");
+  let res = "";
+
+  // 整数部分转换
+  for(let i=0;i<intS.length;i++){
+    let n = Number(intS[i]);
+    let pos = intS.length - 1 - i;
+    if(n !== 0){
+      res += digit[n] + intUnit[pos];
+    }else{
+      if(!res.endsWith("零")) res += "零";
+    }
+  }
+  res = res.replace(/零+$/, "") + "元";
+
+  // 角分处理
+  let jiao = Number(decS[0]), fen = Number(decS[1]);
+  if(jiao > 0) res += digit[jiao] + "角";
+  if(fen > 0) res += digit[fen] + "分";
+  if(jiao === 0 && fen === 0) res += "整";
+  return res;
+}
+
+// 更新页面+缓存
+function render(){
+  numDom.innerText = inputVal;
+  cnDom.innerText = toChineseMoney(inputVal);
+  localStorage.setItem(STORAGE_KEY, inputVal);
+}
+
+// 数字按键点击
+document.querySelectorAll(".key[data-v]").forEach(el=>{
+  el.onclick = ()=>{
+    let v = el.dataset.v;
+    // 初始0替换
+    if(inputVal === "0" && v !== ".") inputVal = "";
+    // 只能一个小数点
+    if(v === "." && inputVal.includes(".")) return;
+    // 小数最多两位
+    if(inputVal.includes(".") && inputVal.split(".")[1].length >= 2) return;
+    inputVal += v;
+    render();
+  }
+})
+
+// 删除
+document.getElementById("del").onclick = ()=>{
+  inputVal = inputVal.length <= 1 ? "0" : inputVal.slice(0,-1);
+  render();
+}
+
+// 清空
+document.getElementById("clear").onclick = ()=>{
+  inputVal = "0";
+  render();
+}
+
+// 初始化加载缓存
+render();
+</script>
+</body>
+</html>
