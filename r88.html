@@ -1,0 +1,785 @@
+html_content = """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>铆钉厂张东良 - 专业铆钉生产厂家</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        /* 顶部导航 */
+        .navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 20px 25px;
+            display: block;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(233, 69, 96, 0.2);
+            color: #e94560;
+        }
+        
+        /* Banner区域 */
+        .banner {
+            margin-top: 70px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233,69,96,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .banner h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .banner .subtitle {
+            font-size: 20px;
+            color: #e94560;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .banner .desc {
+            font-size: 16px;
+            line-height: 2;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.6);
+        }
+        
+        /* 产品展示 */
+        .products-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        
+        .section-title .line {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border: 1px solid #eee;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #e94560;
+        }
+        
+        .product-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: #fff;
+        }
+        
+        .product-card h3 {
+            font-size: 20px;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        
+        .product-card p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* 规格参数 */
+        .specs-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 80px 20px;
+        }
+        
+        .specs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .specs-section .section-title h2 {
+            color: #fff;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .spec-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .spec-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.02);
+        }
+        
+        .spec-number {
+            font-size: 42px;
+            font-weight: bold;
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        
+        .spec-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        /* 企业文化 */
+        .culture-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .culture-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid #e94560;
+            transition: all 0.3s;
+        }
+        
+        .culture-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            transform: translateY(-5px);
+        }
+        
+        .culture-card h3 {
+            font-size: 22px;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .culture-card h3 .icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+        }
+        
+        .culture-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .culture-card ul li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .culture-card ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #e94560;
+            font-weight: bold;
+        }
+        
+        .culture-card .intro {
+            color: #e94560;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(233, 69, 96, 0.05);
+            border-radius: 8px;
+        }
+        
+        /* 优势展示 */
+        .advantages-section {
+            background: #f0f2f5;
+            padding: 80px 20px;
+        }
+        
+        .advantages-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .advantage-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+        
+        .advantage-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .advantage-item .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .advantage-item h4 {
+            font-size: 18px;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        
+        .advantage-item p {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        /* 联系我们 */
+        .contact-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .wechat-card {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #e94560;
+            border-radius: 20px;
+            padding: 40px;
+            display: inline-block;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .wechat-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        
+        .wechat-label {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .wechat-id {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e94560;
+            letter-spacing: 2px;
+            background: rgba(233, 69, 96, 0.15);
+            padding: 15px 30px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background: #0a0a1a;
+            color: #888;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .banner h1 {
+                font-size: 32px;
+            }
+            
+            .banner .subtitle {
+                font-size: 16px;
+            }
+            
+            .culture-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .wechat-id {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">🔩</div>
+                铆钉厂张东良
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#products">产品中心</a></li>
+                <li><a href="#specs">规格参数</a></li>
+                <li><a href="#culture">企业文化</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>铆钉厂张东良</h1>
+            <p class="subtitle">专业铆钉生产厂家 · 严控生产品质</p>
+            <p class="desc">
+                主营铆钉、不锈钢铆钉、铜铆钉、铝铆钉、铁铆钉、子母钉、半空心铆钉、台阶铆钉、实心铆钉。<br>
+                配备标准化生产设备，拥有多年实操技术团队；产品发往国内及海外多地，严控做工与定价，可按订单约定周期排产交付，提供全程对接服务。
+            </p>
+            <a href="#contact" class="contact-btn">立即联系咨询</a>
+        </div>
+    </section>
+
+    <!-- 产品中心 -->
+    <section class="products-section" id="products">
+        <div class="section-title">
+            <h2>产品中心</h2>
+            <div class="line"></div>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-icon">⚙️</div>
+                <h3>不锈钢铆钉</h3>
+                <p>金属材质具备不错耐腐性能、机械强度良好，适配多数户外、轻度腐蚀工况</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔧</div>
+                <h3>铜铆钉</h3>
+                <p>导电性能稳定，不易氧化，外观整洁美观</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔩</div>
+                <h3>铝铆钉</h3>
+                <p>自重较轻，机械强度达标，常应用于航空配套配件加工</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">⛓️</div>
+                <h3>铁铆钉</h3>
+                <p>采购成本可控，综合性价比可观，适用场景广泛</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔗</div>
+                <h3>子母钉</h3>
+                <p>对扣式结构，装配简易、扣合稳固</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">📌</div>
+                <h3>半空心铆钉</h3>
+                <p>铆接操作简易</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">📐</div>
+                <h3>台阶铆钉</h3>
+                <p>定制台阶结构，适配特殊装配尺寸要求</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">💎</div>
+                <h3>实心铆钉</h3>
+                <p>整体一体成型，结构稳定，承载性能满足常规装配使用需求</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 规格参数 -->
+    <section class="specs-section" id="specs">
+        <div class="specs-container">
+            <div class="section-title">
+                <h2>规格参数</h2>
+                <div class="line"></div>
+            </div>
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <div class="spec-number">0.8 - 10.0</div>
+                    <div class="spec-label">公称直径 mm</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-number">3 - 150</div>
+                    <div class="spec-label">长度 mm</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-number">1.3 - 30</div>
+                    <div class="spec-label">帽径 mm</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心优势 -->
+    <section class="advantages-section">
+        <div class="advantages-container">
+            <div class="section-title">
+                <h2>核心优势</h2>
+                <div class="line"></div>
+            </div>
+            <div class="advantages-grid">
+                <div class="advantage-item">
+                    <div class="icon">🏭</div>
+                    <h4>标准化生产设备</h4>
+                    <p>配套成套生产加工设备，满足各类铆钉批量加工需求</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="icon">👨‍🔧</div>
+                    <h4>成熟技术团队</h4>
+                    <p>配备从业多年实操技术人员，可配合客户定制加工</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="icon">✅</div>
+                    <h4>高性价比产品</h4>
+                    <p>严控生产工艺，制定亲民定价方案</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="icon">⚡</div>
+                    <h4>按约排产交付</h4>
+                    <p>订单专人对接，依据合同约定周期安排出货</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="icon">🌏</div>
+                    <h4>海内外同步供货</h4>
+                    <p>国内多地及海外客户均有长期合作订单</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="icon">🤝</div>
+                    <h4>全程配套服务</h4>
+                    <p>提供售前选型、售后对接一站式跟进服务</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 企业文化 -->
+    <section class="culture-section" id="culture">
+        <div class="section-title">
+            <h2>企业文化</h2>
+            <div class="line"></div>
+        </div>
+        <div class="culture-grid">
+            <div class="culture-card">
+                <h3><span class="icon">🎯</span>企业愿景</h3>
+                <p class="intro">铆钉厂张东良五金生产厂家</p>
+                <ul>
+                    <li>不断倾听和满足用户需求，引导并超越用户需求，赢得用户尊敬</li>
+                    <li>通过提升企业地位与品牌形象，使员工具有高度的企业荣誉感和自豪感，赢得员工尊敬</li>
+                    <li>推动五金加工行业的健康发展，与合作伙伴共同成长，赢得行业尊敬</li>
+                    <li>注重企业责任，关爱社会、回馈社会，赢得社会尊敬</li>
+                </ul>
+            </div>
+            <div class="culture-card">
+                <h3><span class="icon">🚀</span>企业使命</h3>
+                <p class="intro">严控产品品质，精简流通环节，打造高适配五金配件！简化客户采购流程！</p>
+                <ul>
+                    <li>使产品和服务像水和电一样源源不断融入人们的生活，为人们带来便捷和愉悦</li>
+                    <li>关注不同地域、不同群体，并针对不同对象提供差异化的产品和服务</li>
+                    <li>打造开放共赢平台，与合作伙伴共同营造健康的五金加工合作环境</li>
+                </ul>
+            </div>
+            <div class="culture-card">
+                <h3><span class="icon">💎</span>核心价值</h3>
+                <p class="intro">诚信经营、多方共赢！</p>
+                <ul>
+                    <li>不断倾听和满足用户需求，贴合客户实际使用需求</li>
+                    <li>具备大局观，能够与其他团队相互配合，共同达成目标</li>
+                    <li>乐于分享专业知识与工作经验，与同事共同成长</li>
+                </ul>
+            </div>
+            <div class="culture-card">
+                <h3><span class="icon">📈</span>发展理念</h3>
+                <p class="intro">"品质为根、以诚为本、以德为先、以信为基"</p>
+                <ul>
+                    <li>为员工提供良好的工作环境和激励机制</li>
+                    <li>完善员工培养体系和职业发展通道，使员工获得与企业同步成长的快乐</li>
+                    <li>充分尊重和信任员工，不断引导和鼓励，使其获得成就的喜悦</li>
+                </ul>
+            </div>
+            <div class="culture-card">
+                <h3><span class="icon">⭐</span>追求理念</h3>
+                <p class="intro">提供适配不同场景的高性价比配件！</p>
+                <ul>
+                    <li>注重长远发展，不因短期商业利益损害客户长期价值</li>
+                    <li>关注并深刻理解用户需求，持续优化产品与配套服务</li>
+                    <li>重视与用户的情感沟通，尊重用户感受，与用户共成长</li>
+                </ul>
+            </div>
+            <div class="culture-card">
+                <h3><span class="icon">🏆</span>经营理念</h3>
+                <p class="intro">"诚信 务实 专业 共享"</p>
+                <ul>
+                    <li>以开拓进取、敬业创新为精神持续优化生产工艺</li>
+                    <li>做好配套对接服务，稳定合作交付效率</li>
+                    <li>持续优化生产工艺，适配客户多样化定制需求</li>
+                    <li>热忱欢迎国内外新老客户洽谈合作，携手共谋发展</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <h2>联系我们</h2>
+            <p>热忱欢迎国内外新老客户洽谈合作，携手共谋发展！</p>
+            <div class="wechat-card">
+                <div class="wechat-icon">💬</div>
+                <div class="wechat-label">联系微信</div>
+                <div class="wechat-id">mdczdL</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>© 2026 铆钉厂张东良 版权所有 | 专业铆钉生产厂家</p>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 滚动时导航栏效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(26, 26, 46, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else {
+                navbar.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+                navbar.style.backdropFilter = 'none';
+            }
+        });
+
+        // 元素进入视口动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card, .culture-card, .spec-card, .advantage-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+
+<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
+<!-- ico 放这里最完美 --><script src="/a/js/ico.js"></script>
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
+</body>
+</html>
