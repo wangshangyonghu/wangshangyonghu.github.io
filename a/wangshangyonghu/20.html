@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地理文化常识核对版@网上用户</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+        .header h1 {
+            font-size: 2.4em;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .badge.ok { background: #d4edda; color: #155724; }
+        .badge.fix { background: #fff3cd; color: #856404; }
+        .badge.del { background: #f8d7da; color: #721c24; }
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-2px); }
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-title .icon {
+            font-size: 1.4em;
+        }
+        .item {
+            padding: 12px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            line-height: 1.8;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .item:last-child { border-bottom: none; }
+        .item-num {
+            min-width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85em;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .item-content {
+            flex: 1;
+        }
+        .item-content strong {
+            color: #2d3748;
+        }
+        .item-content .highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fef3c7 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
+            padding: 0 4px;
+            font-weight: 600;
+            color: #92400e;
+        }
+        .fix-box {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+        .fix-box .fix-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .fix-box .fix-content {
+            color: #78350f;
+            line-height: 1.8;
+        }
+        .fix-box .fix-content del {
+            color: #9ca3af;
+            text-decoration: line-through;
+        }
+        .fix-box .fix-content ins {
+            color: #92400e;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .note-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 4px solid #22c55e;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            color: #14532d;
+            line-height: 1.8;
+        }
+        .note-box .note-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+            margin: 24px 0;
+        }
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+        @media (max-width: 600px) {
+            body { padding: 20px 12px; }
+            .header h1 { font-size: 1.8em; }
+            .card { padding: 20px; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 地理文化常识核对版</h1>
+            <p class="subtitle">@网上用户</p>
+        </div>
+
+               <!-- 一、地理常识 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">🌍</span>一、地理常识</div>
+            <div class="item">
+                <div class="item-num">1</div>
+                <div class="item-content">中国唯一全域无农村、城镇化率100%的城市：<strong>深圳</strong>（2004年成为全国首个撤销全部农村建制的城市）</div>
+            </div>
+            <div class="item">
+                <div class="item-num">2</div>
+                <div class="item-content">我国全境无气候意义冬季的省份：<strong>海南</strong></div>
+            </div>
+            <div class="item">
+                <div class="item-num">3</div>
+                <div class="item-content">三千余年未曾更改名称的城市：<strong>河北邯郸</strong></div>
+            </div>
+            <div class="item">
+                <div class="item-num">4</div>
+                <div class="item-content">中国原产水果中唯一以地名命名的果品：<strong>哈密瓜</strong>（产自新疆哈密，清康熙年间赐名）</div>
+            </div>
+            <div class="item">
+                <div class="item-num">5</div>
+                <div class="item-content">无天然乔木生长的城市：<strong>西藏那曲</strong>（平均海拔4500米以上，高寒缺氧）</div>
+            </div>
+            <div class="item">
+                <div class="item-num">6</div>
+                <div class="item-content">国内日出最早城市：<strong>黑龙江抚远市</strong>；日落最晚城市：<strong>新疆喀什</strong></div>
+            </div>
+            <div class="item">
+                <div class="item-num">7</div>
+                <div class="item-content">我国领土最北端城市：<strong>漠河市</strong>；领土最南端辖区：<strong>三沙市</strong></div>
+            </div>
+            <div class="item">
+                <div class="item-num">8</div>
+                <div class="item-content">南北地域、气候、风俗差异最大的省份：<strong>安徽省</strong>（跨淮河而治，北部属北方文化圈，南部属南方文化圈）</div>
+            </div>
+            <div class="item">
+                <div class="item-num">9</div>
+                <div class="item-content">中国最冷城市（冷极）：<strong>内蒙古根河市</strong>；最热城市（火洲）：<strong>新疆吐鲁番</strong></div>
+            </div>
+        </div>
+
+        <!-- 二、文化必考常识 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📖</span>二、文化必考常识（中小学考点）</div>
+            <div class="item">
+                <div class="item-num">1</div>
+                <div class="item-content">中国四大别称：<strong>中华、华夏、九州、神州</strong></div>
+            </div>
+            <div class="item">
+                <div class="item-num">2</div>
+                <div class="item-content">中国四大领海：<strong>渤海、黄海、东海、南海</strong></div>
+            </div>
+            <div class="item">
+                <div class="item-num">3</div>
+                <div class="item-content">传统四大古都：<strong>北京、西安、洛阳、南京</strong></div>
+            </div>
+            <div class="item">
+                <div class="item-num">4</div>
+                <div class="item-content">国画代表：<strong>水墨画</strong></div>
+            </div>
+            <div class="item">
+                <div class="item-num">5</div>
+                <div class="item-content">四大名绣之首：<strong>苏绣</strong>（苏绣、湘绣、粤绣、蜀绣）</div>
+            </div>
+            <div class="item">
+                <div class="item-num">6</div>
+                <div class="item-content">经典国瓷：<strong>景德镇瓷器</strong></div>
+            </div>
+        </div>
+
+        <!-- 三、省份方位成对知识点 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">🗺️</span>三、省份方位成对知识点（考试常考）</div>
+            <div style="color:#64748b; margin-bottom:14px; font-size:0.95em;">两两分界由来：</div>
+            <div class="item">
+                <div class="item-num">1</div>
+                <div class="item-content"><strong>山东、山西</strong>：以<span class="highlight">太行山</span>划分</div>
+            </div>
+            <div class="item">
+                <div class="item-num">2</div>
+                <div class="item-content"><strong>河南、河北</strong>：以<span class="highlight">黄河</span>划分</div>
+            </div>
+            <div class="item">
+                <div class="item-num">3</div>
+                <div class="item-content"><strong>湖南、湖北</strong>：以<span class="highlight">洞庭湖</span>划分</div>
+            </div>
+            <div class="item">
+                <div class="item-num">4</div>
+                <div class="item-content"><strong>广东、广西</strong>：以<span class="highlight">古广信地界</span>划分</div>
+            </div>
+        </div>
+
+        <!-- 趣味问答 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">💡</span>趣味问答：为何有云南，没有云北？</div>
+            <div class="item" style="border-bottom:none;">
+                <div class="item-num">答</div>
+                <div class="item-content">
+                    云南因地处<strong>云岭山脉以南</strong>得名。云岭北侧土地分属四川、西藏，历朝历代没有设立过"云北"行政区，故而不存在云北省。
+                </div>
+            </div>
+        </div>
+
+        <!-- 备注 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📝</span>备注（不纳入背诵）</div>
+            <div class="note-box">
+                <div class="note-title">📊 关于收入数据</div>
+                城镇平均工资、人均可支配收入等数据每年由国家统计局更新发布，京沪浙粤等东部省份常年居前，甘肃、贵州、云南等西部省份相对靠后，<strong>具体排名以最新公布为准</strong>，不宜作为固定背诵内容。
+            </div>
+            <div class="note-box" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-left-color:#3b82f6; color:#1e3a5f;">
+                <div class="note-title">🎵 关于国乐与民乐</div>
+                古琴为正统国乐，古筝为大众民乐，二者不可混为一谈。
+            </div>
+            <div class="note-box" style="background:linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-left-color:#a855f7; color:#581c87;">
+                <div class="note-title">🏷️ 关于文化象征</div>
+                中国红、汉服、龙井、麒麟等均为民间公认的文化象征，<strong>无国家官方统一认定文件</strong>，不属于课本标准答案范畴。
+            </div>
+            <div class="note-box" style="background:linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-left-color:#ef4444; color:#7f1d1d;">
+                <div class="note-title">📏 关于各类排名</div>
+                身高排名、全国物价高低等无官方固定榜单，不属于课本标准答案，无需记忆。
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>核对日期：2026年7月24日 · 内容经权威来源交叉验证</p>
+        </div>
+    </div>
+</body>
+</html>
+
+<!--页脚-->
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+
+<hr/>
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+<!-- ico 放这里最完美 --><script src="/a/js/ico.js"></script>
+<!-- yj2 放这里最完美 --><script src="/a/js/yj2.js"></script>
+
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
+
+
+</html>
