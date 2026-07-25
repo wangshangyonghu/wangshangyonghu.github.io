@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今日头条极速版领红包@网上用户</title>
+<style>
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body{
+background: #f5f5f5;
+padding: 30px 16px;
+font-size: 16px;
+}
+.box{
+max-width: 460px;
+margin: 0 auto;
+background: #fff;
+border-radius: 16px;
+padding: 24px;
+box-shadow: 0 2px 12px #00000015;
+}
+.title{
+text-align: center;
+font-size: 20px;
+font-weight: bold;
+color: #e64340;
+margin-bottom: 24px;
+}
+.pwd-box{
+border: 1px dashed #ff4444;
+background: #fff0f0;
+border-radius: 10px;
+padding: 16px;
+margin-bottom: 20px;
+}
+.desc{
+font-size: 14px;
+color: #666;
+margin-bottom: 8px;
+}
+.pwd-text{
+word-break: break-all;
+color: #222;
+}
+.copy-btn{
+width: 100%;
+border: none;
+background: #e64340;
+color: #fff;
+font-size: 18px;
+padding: 14px 0;
+border-radius: 10px;
+cursor: pointer;
+margin-bottom: 12px;
+}
+.copy-btn:active{
+background: #cc3936;
+}
+.tip-text{
+text-align: center;
+color: #00aa44;
+height: 26px;
+margin-bottom: 20px;
+}
+.step-wrap{
+background: #f8f8f8;
+border-radius: 10px;
+padding: 16px;
+margin-bottom: 20px;
+line-height: 1.8;
+}
+.qrcode-desc{
+text-align: center;
+font-size: 14px;
+color: #666;
+margin-bottom: 12px;
+}
+.qrcode-img{
+width: 100%;
+border-radius: 10px;
+border: 1px solid #eee;
+display: block;
+}
+</style>
+</head>
+<body>
+<div class="box">
+<h2 class="title">今日头条极速版 领现金红包</h2>
+
+<div class="pwd-box">
+<p class="desc">邀请口令：</p>
+<p id="pwdText" class="pwd-text">1 a:/红包邀请码【Q7557471】
+第1步: 下载【今日头条极速版】
+第2步: 填写红包邀请码
+第3步:在任务列表中并填写红包邀请码
+第4步: 获得专属红包奖励, 当天即可提现到支付宝 l@ve.you</p>
+</div>
+
+<button class="copy-btn" onclick="copyText()">一键复制口令</button>
+<div id="tip" class="tip-text"></div>
+
+<div class="step-wrap">
+<p>第1步：下载【今日头条极速版】</p>
+<p>第2步：填写红包邀请码</p>
+<p>第3步：进入任务列表填写邀请码</p>
+<p>第4步：领取专属红包，当天可提现至支付宝</p>
+</div>
+
+<p class="qrcode-desc">扫码下载填写邀请码领取奖励</p>
+<img src="17.jpg" alt="今日头条极速版二维码" class="qrcode-img">
+</div>
+
+<script>
+function copyText(){
+    let content = document.getElementById('pwdText').innerText;
+    let textarea = document.createElement('textarea');
+    textarea.value = content;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('tip').innerText = '✅ 口令复制成功，打开APP粘贴使用';
+}
+</script>
+</body>
+</html>
+
+<!-- yj2 -->
+<script src="/a/js/yj2.js"></script>

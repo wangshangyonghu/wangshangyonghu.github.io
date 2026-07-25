@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>支付宝红包领取@网上用户</title>
+<style>
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body{
+background: #f5f5f5;
+padding: 30px 16px;
+font-size: 16px;
+}
+.box{
+max-width: 460px;
+margin: 0 auto;
+background: #fff;
+border-radius: 16px;
+padding: 24px;
+box-shadow: 0 2px 12px #00000015;
+}
+.title{
+text-align: center;
+font-size: 20px;
+font-weight: bold;
+color: #1677ff;
+margin-bottom: 24px;
+}
+.pwd-box{
+border: 1px dashed #ff9500;
+background: #fff8e8;
+border-radius: 10px;
+padding: 16px;
+margin-bottom: 20px;
+}
+.desc{
+font-size: 14px;
+color: #666;
+margin-bottom: 8px;
+}
+.pwd-text{
+word-break: break-all;
+color: #222;
+}
+.copy-btn{
+width: 100%;
+border: none;
+background: #1677ff;
+color: #fff;
+font-size: 18px;
+padding: 14px 0;
+border-radius: 10px;
+cursor: pointer;
+margin-bottom: 12px;
+}
+.copy-btn:active{
+background: #0e66dd;
+}
+.tip-text{
+text-align: center;
+color: #00aa44;
+height: 26px;
+margin-bottom: 20px;
+}
+.qrcode-desc{
+text-align: center;
+font-size: 14px;
+color: #666;
+margin-bottom: 12px;
+}
+.qrcode-img{
+width: 100%;
+border-radius: 10px;
+border: 1px solid #eee;
+display: block;
+}
+</style>
+</head>
+<body>
+<div class="box">
+<h2 class="title">支付宝天降红包</h2>
+
+<div class="pwd-box">
+<p class="desc">领取口令：</p>
+<p id="pwdText" class="pwd-text">G:/IF7VGBG99rQ 或服值此消息打开支 f`u 宝，哄苞实惠，天天有微笑  D:/N ZH8228 $213</p>
+</div>
+
+<button class="copy-btn" onclick="copyText()">一键复制红包口令</button>
+<div id="tip" class="tip-text"></div>
+
+<p class="qrcode-desc">打开支付宝扫码领取红包</p>
+<img src="16.png" alt="支付宝红包二维码@网上用户" class="qrcode-img">
+</div>
+
+<script>
+function copyText(){
+    let content = document.getElementById('pwdText').innerText;
+    let textarea = document.createElement('textarea');
+    textarea.value = content;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('tip').innerText = '✅ 复制成功，打开支付宝粘贴使用';
+}
+</script>
+</body>
+</html><!-- yj2 -->
+<script src="/a/js/yj2.js"></script>
