@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>根号计算器@网上用户）</title>
+<style>
+*{box-sizing:border-box; font-family:Arial, sans-serif;}
+body{background:#f5f5f5; margin:0; padding:20px;}
+.container{max-width:400px; margin:0 auto; background:#fff; border-radius:12px; padding:20px; box-shadow:0 2px 10px #0002;}
+h2{text-align:center; color:#333; margin-top:0;}
+input{width:100%; padding:12px; font-size:18px; border:1px solid #ccc; border-radius:8px; margin-bottom:15px; outline:none;}
+input:focus{border-color:#2196F3;}
+.result{font-size:18px; padding:12px; background:#f8f9fa; border-radius:8px; margin-bottom:15px; text-align:center;}
+.history{max-height:250px; overflow-y:auto; border-top:1px solid #eee; padding-top:10px;}
+.item{padding:8px; font-size:14px; color:#333; border-bottom:1px solid #f5f5f5;}
+.clearBtn{width:100%; padding:12px; font-size:18px; background:#f44336; color:white; border:none; border-radius:8px; cursor:pointer;}
+.clearBtn:hover{background:#d32f2f;}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>平方根计算器</h2>
+
+<input id="num" type="number" step="any" placeholder="输入数字，实时自动计算">
+
+<div class="result">结果：<span id="res">—</span></div>
+
+<button class="clearBtn" onclick="clearHistory()">清空历史记录</button>
+
+<div class="history" id="history"></div>
+</div>
+
+<script>
+let history = JSON.parse(localStorage.getItem('sqrtHistory')) || [];
+const numInput = document.getElementById('num');
+const resDom = document.getElementById('res');
+
+window.onload = function(){
+    renderHistory();
+    // 读取上次输入的值
+    let lastVal = localStorage.getItem('lastInput');
+    if(lastVal){
+        numInput.value = lastVal;
+        calc();
+    }
+}
+
+// 输入变化立刻自动计算
+numInput.addEventListener('input',calc);
+
+function calc(){
+    let val = parseFloat(numInput.value);
+    localStorage.setItem('lastInput', numInput.value);
+
+    if(isNaN(val) || val < 0){
+        resDom.innerText = "无效数字";
+        return;
+    }
+    let r = Math.sqrt(val);
+    let resultText = r.toFixed(10).replace(/\.?0*$/,'');
+    resDom.innerText = resultText;
+
+    // 存入历史缓存
+    history.unshift({n:val, sqrt:resultText});
+    localStorage.setItem('sqrtHistory', JSON.stringify(history));
+    renderHistory();
+}
+
+function renderHistory(){
+    let html = '';
+    history.forEach(item=>{
+        html += `<div class="item">√${item.n} = ${item.sqrt}</div>`;
+    });
+    document.getElementById('history').innerHTML = html;
+}
+
+function clearHistory(){
+    history = [];
+    localStorage.removeItem('sqrtHistory');
+    localStorage.removeItem('lastInput');
+    numInput.value = '';
+    resDom.innerText = '—';
+    renderHistory();
+}
+</script>
+</body>
+</html>
+
+<!-- yj2 -->
+<script src="/a/js/yj2.js"></script>

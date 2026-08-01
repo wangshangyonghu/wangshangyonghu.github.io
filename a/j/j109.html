@@ -22,6 +22,16 @@ body{
     border: 1px solid #222;
     padding: 12px;
 }
+#clearBtn{
+    width: 100%;
+    margin-bottom:15px;
+    padding:10px;
+    font-size:18px;
+    background:#f44336;
+    color:#fff;
+    border:none;
+    border-radius:4px;
+}
 .line{
     display: flex;
     justify-content: space-between;
@@ -58,240 +68,141 @@ body{
     font-size: 28px;
     margin-top: 25px;
 }
-#clearBtn{
-    width: 100%;
-    margin-top:15px;
-    padding:10px;
-    font-size:18px;
-    background:#f44336;
-    color:#fff;
-    border:none;
-    border-radius:4px;
-}
 </style>
 </head>
 <body>
 <div class="wrap">
+    <!-- 清空按钮挪到最上方 -->
+    <button id="clearBtn">清空所有数据</button>
+<hr/>
     <!-- 共30组输入行 -->
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
-    <div class="line">
-        <textarea class="exp" rows="1"></textarea>
-        <span class="num">0</span>
-    </div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
 
     <div class="total">合计:<span id="sum">0</span></div>
-    <button id="clearBtn">清空所有数据</button>
 </div>
 
 <div class="bottom-title">输入数字带+-*/%自动计算</div>
 
 <script>
-// 修复：计算后统一保留10位小数，消除浮点尾差
-function calculate(str){
-    if(!str.trim()) return 0;
-    str = str.replace(/\n/g,"");
-    str = str.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
-    if(!/^[\d+\-*/.()\s]+$/.test(str)) return 0;
-    try{
-        let res = new Function('"use strict";return ('+str+')')();
-        // 统一保留10位小数截断浮点误差
-        return Number(res.toFixed(10));
-    }catch{
-        return 0;
+document.addEventListener('DOMContentLoaded', function(){
+    function calculate(str){
+        if(!str.trim()) return 0;
+        let s = str.replace(/\n/g,"");
+        s = s.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
+        if(!/^[\d+\-*/.()\s]*$/.test(s)) return 0;
+        try{
+            let res = new Function('"use strict";return ('+s+')')();
+            return Number(res.toFixed(10));
+        }catch(err){
+            return 0;
+        }
     }
-}
 
-// 自动缩小字号 + 自动增高文本域
-function adaptField(ta){
-    const maxFont = 18;
-    const minFont = 10;
-    ta.style.fontSize = maxFont + "px";
-    // 先缩小字体
-    while(ta.scrollWidth > ta.clientWidth && parseFloat(ta.style.fontSize) > minFont){
-        ta.style.fontSize = parseFloat(ta.style.fontSize) - 0.6 + "px";
+    function adaptField(ta){
+        const maxFont = 18;
+        const minFont = 10;
+        ta.style.fontSize = maxFont + "px";
+        while(ta.scrollWidth > ta.clientWidth && parseFloat(ta.style.fontSize) > minFont){
+            ta.style.fontSize = parseFloat(ta.style.fontSize) - 0.6 + "px";
+        }
+        ta.style.height = "auto";
+        ta.style.height = ta.scrollHeight + "px";
     }
-    // 自动撑开高度，视觉换行，无真实回车
-    ta.style.height = "auto";
-    ta.style.height = ta.scrollHeight + "px";
-}
 
-const inputs = document.querySelectorAll('.exp');
-const nums = document.querySelectorAll('.num');
-const totalBox = document.getElementById('sum');
-const storageKey = "calcData";
+    const inputs = document.querySelectorAll('.exp');
+    const nums = document.querySelectorAll('.num');
+    const totalBox = document.getElementById('sum');
+    const storageKey = "calcData";
 
-function loadCache(){
-    let dataStr = localStorage.getItem(storageKey);
-    if(!dataStr) return;
-    let arr = JSON.parse(dataStr);
-    inputs.forEach((inp,idx)=>{
-        if(arr[idx]!==undefined){
-            inp.value = arr[idx];
+    function loadCache(){
+        let dataStr = localStorage.getItem(storageKey);
+        if(!dataStr) return;
+        let arr = JSON.parse(dataStr);
+        inputs.forEach((inp,idx)=>{
+            if(arr[idx] !== undefined){
+                inp.value = arr[idx];
+                adaptField(inp);
+            }
+        })
+        refresh();
+    }
+
+    function saveCache(){
+        let arr = [];
+        inputs.forEach(inp=>arr.push(inp.value));
+        localStorage.setItem(storageKey, JSON.stringify(arr));
+    }
+
+    function refresh(){
+        let total = 0;
+        inputs.forEach((inp,idx)=>{
             adaptField(inp);
-        }
-    })
-    refresh();
-}
+            let val = calculate(inp.value);
+            nums[idx].textContent = val;
+            total += val;
+        })
+        totalBox.textContent = Number(total.toFixed(10));
+        saveCache();
+    }
 
-function saveCache(){
-    let arr = [];
-    inputs.forEach(inp=>arr.push(inp.value));
-    localStorage.setItem(storageKey, JSON.stringify(arr));
-}
-
-function refresh(){
-    let total = 0;
-    inputs.forEach((inp,idx)=>{
-        adaptField(inp);
-        let res = calculate(inp.value);
-        nums[idx].innerText = res;
-        total += res;
+    document.getElementById("clearBtn").addEventListener('click', function(){
+        inputs.forEach(inp=>{
+            inp.value = "";
+            inp.style.fontSize = "18px";
+            inp.style.height = "24px";
+        })
+        localStorage.removeItem(storageKey);
+        refresh();
     })
-    // 合计同样截断浮点误差
-    totalBox.innerText = Number(total.toFixed(10));
-    saveCache();
-}
 
-document.getElementById("clearBtn").onclick = function(){
-    inputs.forEach(inp=>{
-        inp.value = "";
-        inp.style.fontSize = "18px";
-        inp.style.height = "24px";
-    })
-    localStorage.removeItem(storageKey);
-    refresh();
-}
+    inputs.forEach((input, index)=>{
+        input.addEventListener('input', refresh);
+        input.addEventListener('propertychange', function(e){
+            if(e.propertyName === 'value') refresh();
+        });
 
-inputs.forEach((input, index)=>{
-    input.oninput = refresh;
-    input.onkeydown = function(e){
-        if(e.key === 'Enter'){
-            e.preventDefault();
-            let next = inputs[index+1];
-            if(next) next.focus();
-        }
+        input.addEventListener('keydown', function(e){
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                let next = inputs[index+1];
+                if(next) next.focus();
+            }
+        })
     })
+
+    loadCache();
 })
-
-window.onload = loadCache;
 </script>
 
-<!-- 外部脚本保留，不影响计算逻辑 -->
 <script src="/a/js/ym.js"></script>
 <script src="/a/js/ico.js"></script>
 
