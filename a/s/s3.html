@@ -94,6 +94,75 @@ body {
     <meta name="description" content="网上用户专属内容介绍:">
 
 </head>
+
+<!--搜索-->
+<style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+        body{
+            padding:40px 20px;
+            /* 删除垂直居中，只保留水平居中 */
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+        }
+      
+        .wrap{display:flex;width:100%;max-width:900px}
+        input{
+            flex:1;
+            padding:18px 20px;
+            font-size:22px;
+            border:3px solid #0058ff;
+            border-radius:12px 0 0 12px;
+            border-right:none;
+            outline:none;
+            pointer-events: auto;
+        }
+        button{
+            padding:18px 36px;
+            font-size:22px;
+            background-color:#0058ff;
+            color:white;
+            border:3px solid #0058ff;
+            border-radius:0 12px 12px 0;
+            cursor:pointer;
+            border-left:0;
+        }
+    </style>
+</head>
+<body>
+  
+    <div class="wrap">
+        <input type="text" placeholder="输入搜索关键词">
+        <button>搜索</button>
+    </div>
+    <script>
+        const inp = document.querySelector('input')
+        const btn = document.querySelector('button')
+        function search(){
+            let key = inp.value.trim()
+            if(!key)return
+            window.open(`https://cn.bing.com/search?q="${key}"`)
+        }
+        btn.onclick = search
+        inp.addEventListener("keydown",(e)=>{
+            if(e.key === "Enter"){
+                search()
+            }
+        })
+    </script>
+<!--搜索-->
+
+
+
+
+
+
+
+
+
+
+
+
 <body>
 <div class="container">
 <section id="友情链接" class="category-nav">
@@ -285,7 +354,7 @@ body {
 <a href="s2.html" target="_blank">路由器管理地址</a>
 <a href="/a/c/zj/zj1.html" target="_blank">主机</a>
 <a href="/a/c/shuiyin/sy1.html" target="_blank">图片加水印</a>
-
+<a href="/a/j/j112.html" target="_blank">数字上下标转换器:上标、下标</a>
 
 
 
