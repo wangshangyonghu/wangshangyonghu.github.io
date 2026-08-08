@@ -1,0 +1,31 @@
+@网上用户
+
+<script>
+// 等待整个页面所有内容（图片、DOM结构等）全部加载完毕后，再执行内部代码
+window.onload = function () {
+    // 获取页面中所有的 <a> 超链接标签，返回节点集合
+    const links = document.querySelectorAll('a');
+
+    // 遍历每一个a链接元素
+    links.forEach(item => {
+        // 设置链接打开方式：_blank = 在全新浏览器标签页打开网页
+        item.target = '_blank';
+        // 安全属性：
+        // noopener：禁止新页面访问原页面window对象，防止安全攻击
+        // noreferrer：不向跳转后的网站传递来路页面信息，保护隐私
+        item.rel = 'noopener noreferrer';
+    })
+}
+</script>
+### 简洁实用标题（可选）
+
+1. JS 一键设置页面全部链接新窗口打开
+2. JavaScript 批量给所有 a 标签添加新窗口跳转属性
+3. 网页全局链接默认新标签页打开 JS 代码
+4. 全站超链接统一新窗口打开脚本
+
+ 写一个在 HTML 中使用 JavaScript 给所有 a 标签添加新窗口跳转属性的代码示例
+
+ 如何在 HTML 中使用 JavaScript 给特定的 a 标签添加新窗口跳转属性？
+
+ 除了 onload 事件，还有哪些事件可以在 HTML 中使用 JavaScript 来操作页面元素？

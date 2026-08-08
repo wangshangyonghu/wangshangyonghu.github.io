@@ -1,0 +1,17 @@
+@网上用户
+
+<p>正常文字，<span style="color:red;">这段是红色</span>，继续正常文字</p>
+
+<style>
+.red-text {
+  color: red;
+}
+</style>
+
+<p class="red-text">红色字体</p>
+<span class="red-text">局部红字</span>
+
+
+<p style="color:red;">红色文字</p>
+<p style="color:#ff0000;">红色文字</p>
+<p style="color:rgb(255,0,0);">红色文字</p>

@@ -1,0 +1,71 @@
+@网上用户
+
+<TITLE>收藏夹</TITLE>
+<!--居中-->
+<style type="text/css">
+body {
+max-width: 800px;
+margin: 0 auto;
+padding: 20px;
+line-height: 1.7;
+background-color: #f8f9fa;
+color: #333;
+}
+a {
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    margin: 8px 0;
+    font-weight: bold;
+}
+hr {
+border: none;
+border-top: 1px solid #ddd;
+margin: 10px 0;
+}
+</style>
+
+<script>
+window.onload = function () {
+    const links = document.querySelectorAll('a');
+    links.forEach(item => {
+        item.target = '_blank';
+        item.rel = 'noopener noreferrer';
+        // 每个a标签后面插入分割线hr
+        const hr = document.createElement('hr');
+        item.after(hr);
+    })
+}
+</script>
+
+<H1>收藏夹</H1>
+
+
+
+
+# 60 浏览器导出收藏 HTML 美化页面（纯 CSS + 原生 JS，本地打开即用，无外网依赖）
+
+## 完整代码说明
+
+1. 直接把 360 导出的收藏 HTML 源码替换进下方代码主体区域
+2. 自带分类折叠、卡片布局、深色 / 浅色切换、搜索框、适配手机电脑
+3. 全部样式内嵌 CSS，无需外部文件，保存为 `.html` 双击本地就能打开
+
+## 使用步骤（超简单）
+
+1. 用 360 浏览器：书签管理 → 导出书签 → 保存为 `360收藏2026年8月1日.html`
+2. 用记事本打开这个导出文件，**复制`<body>`和`</body>`中间全部内容**
+3. 粘贴到上面代码中标注 `把360导出HTML里内容粘贴到这里` 的中间区域
+4. 全部保存，双击打开文件即可查看美化后的书签
+
+## 美化后自带功能
+
+✅ 网格卡片排版，不再是密密麻麻原始列表
+✅ 文件夹一键折叠 / 展开
+✅ 顶部搜索框，快速查找书签
+✅ 浅色 / 暗黑双主题切换
+✅ 手机、电脑自适应布局
+✅ 鼠标悬浮高亮链接
+✅ 纯本地运行，不上传任何数据，隐私安全
+
+需要我根据你书签数量，再微调卡片大小、列数、配色吗？

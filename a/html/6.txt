@@ -1,0 +1,41 @@
+@网上用户
+
+
+### 一、h.css 文件内容（单独样式文件）
+
+新建 `h.css`，写入以下代码：
+
+```
+h1 { font-size: 32px; }
+h2 { font-size: 24px; }
+h3 { font-size: 20px; }
+h4 { font-size: 16px; }
+h5 { font-size: 14px; }
+h6 { font-size: 12px; }
+```
+
+### 二、HTML 代码（引入外部 css）
+
+```
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入外部 h.css 文件（同目录下） -->
+    <link rel="stylesheet" href="h.css">
+</head>
+<body>
+    <h1>一级标题</h1>
+    <h2>二级标题</h2>
+    <h3>三级标题</h3>
+    <h4>四级标题</h4>
+    <h5>五级标题</h5>
+    <h6>六级标题</h6>
+</body>
+</html>
+```
+
+### 补充说明
+
+1. 两个文件**放在同一个文件夹**，路径才会生效；
+2. 修改 `h.css` 里的 `px` 数值，即可改变标题字号。
