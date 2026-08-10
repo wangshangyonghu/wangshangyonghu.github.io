@@ -1,5 +1,11 @@
 <!doctype html><html lang="zh-cn">
 <head>
+
+
+ 
+
+
+
 <meta name="viewport" content="width=device-width,  user-scalable=yes" /><!--手机版本代码-->
 <meta http-equiv='content-language' content='zh-cn'><!--国家地区-->
 
@@ -16,10 +22,6 @@
 <style type="text/css">A{TEXT-DECORATION: none}</style><!--无下划线开始-->
 <span style="font-size: 18px;"><!--字体大小-->
 <strong><!--加粗-->
-
-<!--左上角-->&nbsp; &nbsp; <a href="/a/h/h1.jpg" target="_blank">
-<img src="/a/h/h1.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a>
-<a id="gpc234" href="/a/h/h1.html" target="_blank"><img src="/a/h/h2.jpg" alt="网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
 
 
 
@@ -113,157 +115,16 @@
 <a href="" target="_blank"></a>
 
 
-
-
-
-
-
-
-<!--文档内容结束......-->
-<!--结尾-->
-<hr color=0066FF>
-<a href="#top" target="_self">返回顶部</a>
-<hr color=0066FF>
-<p id="currentDateTime"></p>
-    <script>
-        const currentDateTimeElement = document.getElementById('currentDateTime');
-        const now = new Date();
-
-        const year = now.getFullYear();
-        const month = now.getMonth() + 1;
-        const day = now.getDate();
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        const seconds = now.getSeconds();
-
-        const formattedDateTime = `日期:${year}年${month}月${day}日${hours}:${minutes}:${seconds}`;
-
-        currentDateTimeElement.textContent = formattedDateTime;
-    </script>
-
-
-<hr color=0066FF>
-<center> <!--居中-->
-<head>
-<style>textarea#gpc234{width: 100%;height: 2%;}</style>
-</head>
-<textarea cols="40%" rows="1%" id="gpc234">
-
-
-搜索:网上用户,网上用户,上网用户,用户,公平村,,客家人
-搜索:网上用户,
-上网用户,
-网上用户微信一网上用户优惠券一网上用户红包码一网上用户邀请码一网上用户铆钉厂一网上用户斗车厂一网上用户牙科一网上用户手机报价一网上用户图片一网上用户淘宝一网上用户天猫一网上用户浏览器主页一网上用户领红包一网上用户SMT贴片厂一网上用户公平村一网上用户视频一网名张先生一行善者一行道者一萍水相逢
-终结目击者.一Azue一梦想一ZYL一念一静夜一平安喜乐一锦绣山河一静夜香水一源喜欢你亚一铃声随风一张良 一公平村
-头盔汤锅炒菜锅帐篷旋铆机全自动铆钉机休闲椅手机直播支架三脚架空调支架折叠床折叠椅躺椅沙滩床沙滩椅平垫片雪球夹smt贴片加工厂
-搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,上网用户,
-网络用户
-WiFi用户
-无线用户
-WLAN用户
-上网用户
-网上用户
-手机用户
-电脑用户
-
-wangshangyonghu
-</textarea>
-<!--内容结束-->
-<hr color=0000ff> <!--分界线-->
-   <hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
-<!--上下页-->
-  <a href="/" target="_blank">返回</a>
-   <a href="javascript:void(0)" onclick="goToPreviousPage()">上一页</a>
-<a href="javascript:void(0)" onclick="goToNextPage()">下一页</a>
-
-<script>
-// 提取文件名中的数字部分
-function getPageNumber() {
-    var currentPage = window.location.pathname.split('/').pop();
-    // 从文件名中提取数字
-    var numbers = currentPage.match(/\d+/);
-    if (numbers && numbers.length > 0) {
-        return parseInt(numbers[0]);
-    }
-    return null;
-}
-
-// 获取文件名中的前缀部分（数字前的内容）
-function getPagePrefix() {
-    var currentPage = window.location.pathname.split('/').pop();
-    // 匹配数字前的所有字符
-    var prefixMatch = currentPage.match(/^(\D*)\d+/);
-    if (prefixMatch && prefixMatch.length > 1) {
-        return prefixMatch[1];
-    }
-    return '';
-}
-
-function goToNextPage() {
-    var pageNumber = getPageNumber();
-    if (pageNumber !== null) {
-        var prefix = getPagePrefix();
-        var nextPageNumber = pageNumber + 1;
-        var nextPage = './' + prefix + nextPageNumber + '.html';
-        window.open(nextPage, '_blank'); // 在新窗口打开下一页
-    } else {
-        alert('无法识别当前页码');
-    }
-}
-
-function goToPreviousPage() {
-    var pageNumber = getPageNumber();
-    if (pageNumber !== null && pageNumber > 1) {
-        var prefix = getPagePrefix();
-        var previousPageNumber = pageNumber - 1;
-        var previousPage = './' + prefix + previousPageNumber + '.html';
-        window.open(previousPage, '_blank'); // 在新窗口打开上一页
-    } else {
-        alert('已经是第一页或无法识别当前页码');
-    }
-}
-</script><!--上下页-->
-<script>
-        function goToNextPage() {
-            // 获取当前页面的文件名
-            var currentPage = window.location.pathname.split('/').pop();
-            var pageNumber = parseInt(currentPage.replace(/\D/g, ''));
-            // 假设页面命名规律是数字递增
-            var nextPageNumber = pageNumber + 1;
-            var nextPage = './zy' + nextPageNumber + '.html';
-            window.location.href = nextPage;
-        }
-
-        function goToPreviousPage() {
-            // 获取当前页面的文件名
-            var currentPage = window.location.pathname.split('/').pop();
-            var pageNumber = parseInt(currentPage.replace(/\D/g, ''));
-            // 假设页面命名规律是数字递增
-            var previousPageNumber = pageNumber - 1;
-            var previousPage = './zy' + previousPageNumber + '.html';
-            window.location.href = previousPage;
-        }
-    </script>
-</head>
-<body> 
-    <button onclick="goToPreviousPage()">上一页</button>
-    <button onclick="goToNextPage()">下一页</button>
-   </body><!--上下页-->
-
-<!--底部显示-->
-<link rel="stylesheet" href="/a/js/bj.css"><!--全局页面样式-->
-<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
-<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
-<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
-<!-- 页脚脚本 放这里最完美 --><script src="/a/js/ico.js"></script>
-<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
-<script src="/a/js/sxy.js"></script><!-- 上下页 -->
-</body>
-</html>
-<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
-<!--内容结束-->
-</body><!--内容结束-->
-</center><!--居中-->
-</strong><!--加粗-->
-</span><!--字体大小-->
-</html><!--结束-->
+<!--居中--><style type="text/css">       
+      body {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          line-height: 1.7;
+          background-color: #f8f9fa;
+          color: #333;
+      }          
+       </style><!--居中-->
+<!-- yj2 -->
+<script src="/a/js/yj2.js"></script>
+ >

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+
+
+  
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial‑scale=1.0">
+    <title>搜索</title>
+ <!-- 标准浏览器图标 -->
+    <link rel="icon" href="ico.jpg" type="image/x-icon" alt="网上用户一网站图标">
+    <!-- 快捷方式图标（IE 兼容） -->
+    <link rel="shortcut icon" href="ico.jpg" type="image/x-icon" alt="网上用户一网站快捷图标"/>
+    <!-- 苹果设备触摸图标（添加到主屏幕时使用） -->
+    <link rel="apple-touch-icon" href="ico.jpg" alt="网上用户一苹果设备图标"/>
+    <!-- 苹果设备启动画面图标（应用启动时显示） -->
+    <link rel="apple-touch-startup-image" href="ico.jpg" alt="网上用户一苹果设备启动画面"/>
+    <!-- 高分辨率设备图标（如 Android 高dpi设备） -->
+    <link rel="icon" sizes="192x192" href="ico.jpg" alt="网上用户一高分辨率设备图标"/>
+    <!-- 定义图标遮罩（主要用于 Safari 等浏览器） -->
+    <link rel="icon" sizes="any" mask href="ico.jpg" alt="网上用户一图标遮罩" />
+    <!-- 苹果设备预合成图标（不添加系统默认光泽效果） -->
+    <link rel="apple-touch-icon-precomposed" href="ico.jpg" alt="网上用户一苹果设备预合成图标">
+
+
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+        body{
+            padding:40px 20px;
+            /* 删除垂直居中，只保留水平居中 */
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+        }
+        .tip{
+            width:100%;
+            max-width:900px;
+            color:#666;
+            font-size:14px;
+            margin-bottom:12px;
+        }
+        .wrap{display:flex;width:100%;max-width:900px}
+        input{
+            flex:1;
+            padding:18px 20px;
+            font-size:22px;
+            border:3px solid #0058ff;
+            border-radius:12px 0 0 12px;
+            border-right:none;
+            outline:none;
+            pointer-events: auto;
+        }
+        button{
+            padding:18px 36px;
+            font-size:22px;
+            background-color:#0058ff;
+            color:white;
+            border:3px solid #0058ff;
+            border-radius:0 12px 12px 0;
+            cursor:pointer;
+            border-left:0;
+        }
+    </style>
+</head>
+<body>
+    <div class="tip">
+        温馨提示：本工具仅为快捷跳转入口，搜索页面将会跳转至必应官网；关键词会自动添加英文双引号进行精确搜索，仅供个人自用，不用于商业用途
+    </div>
+    <div class="wrap">
+        <input type="text" placeholder="输入搜索关键词">
+        <button>搜索</button>
+    </div>
+    <script>
+        const inp = document.querySelector('input')
+        const btn = document.querySelector('button')
+        function search(){
+            let key = inp.value.trim()
+            if(!key)return
+            window.open(`https://cn.bing.com/search?q="${key}"`)
+        }
+        btn.onclick = search
+        inp.addEventListener("keydown",(e)=>{
+            if(e.key === "Enter"){
+                search()
+            }
+        })
+    </script>
+</body>
+</html>
+
+
+
+
