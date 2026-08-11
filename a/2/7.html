@@ -1,0 +1,33 @@
+<!-- 没一备注的html模版 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="zh-CN">
+
+    <title>网上用户</title>
+    <meta name="keywords" content="网上用户">
+    <meta name="description" content="网上用户专属内容介绍">
+</head>
+<body>
+    <h1>网上用户</h1>
+
+    <hr>
+
+<script>
+// 判断是否手机设备
+const ua = navigator.userAgent;
+const isPhone = /Android|iPhone|iOS/i.test(ua);
+
+if (isPhone) {
+    // 尝试唤起手机淘宝APP
+    window.location.href = "taobao://s.click.taobao.com/t?union_lens=lensId%3AOPT%401786407469%400b0d74b1_0d33_19fee2ec361_9b8d%4001%40eyJmbG9vcklkIjozODg1Mn0ie%3BeventPageId%3A20150318020016228&e=m%3D2%26s%3DZJ4BO5PZsNNw4vFB6t2Z2iperVdZeJviasFb3jPCdt85Rogii3YtH430ZFekjizv6HexMF%2FQ%2F09OS4pX4DGe7vnZ%2F2kQiHcP%2BXUMxN7TwYE4v9CZRT%2FQ1BL%2FmX7ARx4Sjnpta0X%2FYCKwYaRhatdffLrv%2Fl1gyhMGy0DxCSzwFgFd1le1%2FF%2FLHXyKwiqD2WK0Bmf7LSR66ahxYDtpEyeThuOxR437AHLZclNz5Cx6hNjfZwATwZMpRSfpIcsP14wkwkn3%2FLhIOAwLbn%2BIZeMoD2gFiCQX1HX6EtPT2Q5RdpwlP6ftLrc51DD8CNGWv4q%2BpwTjuhxcUsV1VXZzfN1D9OuODWg6ASP%2FI1IUNtlhrp1yhdOdHVge4E4yfRLrLbAs022l81NB8xkNxtKElQIb6vHSeuOjffnzFec0%2FQMNoKktL4rFZXbX%2FWjYXhZTcYAZhkNQ9u%2B0%2BQ6E3PQzD9rJIhCC%2FmbLytEIcX3LUTyUy3vCx6y8ZSZeonEqY%2Bakgpmw";
+    // 800毫秒打不开App，则跳转手机网页淘宝
+    setTimeout(()=>{
+        window.location.href = "https://s.click.taobao.com/t?union_lens=lensId%3AOPT%401786407469%400b0d74b1_0d33_19fee2ec361_9b8d%4001%40eyJmbG9vcklkIjozODg1Mn0ie%3BeventPageId%3A20150318020016228&e=m%3D2%26s%3DZJ4BO5PZsNNw4vFB6t2Z2iperVdZeJviasFb3jPCdt85Rogii3YtH430ZFekjizv6HexMF%2FQ%2F09OS4pX4DGe7vnZ%2F2kQiHcP%2BXUMxN7TwYE4v9CZRT%2FQ1BL%2FmX7ARx4Sjnpta0X%2FYCKwYaRhatdffLrv%2Fl1gyhMGy0DxCSzwFgFd1le1%2FF%2FLHXyKwiqD2WK0Bmf7LSR66ahxYDtpEyeThuOxR437AHLZclNz5Cx6hNjfZwATwZMpRSfpIcsP14wkwkn3%2FLhIOAwLbn%2BIZeMoD2gFiCQX1HX6EtPT2Q5RdpwlP6ftLrc51DD8CNGWv4q%2BpwTjuhxcUsV1VXZzfN1D9OuODWg6ASP%2FI1IUNtlhrp1yhdOdHVge4E4yfRLrLbAs022l81NB8xkNxtKElQIb6vHSeuOjffnzFec0%2FQMNoKktL4rFZXbX%2FWjYXhZTcYAZhkNQ9u%2B0%2BQ6E3PQzD9rJIhCC%2FmbLytEIcX3LUTyUy3vCx6y8ZSZeonEqY%2Bakgpmw";
+    },800)
+}else{
+    // 电脑端访问，跳转电脑版淘宝
+    window.location.href = "https://s.click.taobao.com/t?union_lens=lensId%3AOPT%401786407469%400b0d74b1_0d33_19fee2ec361_9b8d%4001%40eyJmbG9vcklkIjozODg1Mn0ie%3BeventPageId%3A20150318020016228&e=m%3D2%26s%3DZJ4BO5PZsNNw4vFB6t2Z2iperVdZeJviasFb3jPCdt85Rogii3YtH430ZFekjizv6HexMF%2FQ%2F09OS4pX4DGe7vnZ%2F2kQiHcP%2BXUMxN7TwYE4v9CZRT%2FQ1BL%2FmX7ARx4Sjnpta0X%2FYCKwYaRhatdffLrv%2Fl1gyhMGy0DxCSzwFgFd1le1%2FF%2FLHXyKwiqD2WK0Bmf7LSR66ahxYDtpEyeThuOxR437AHLZclNz5Cx6hNjfZwATwZMpRSfpIcsP14wkwkn3%2FLhIOAwLbn%2BIZeMoD2gFiCQX1HX6EtPT2Q5RdpwlP6ftLrc51DD8CNGWv4q%2BpwTjuhxcUsV1VXZzfN1D9OuODWg6ASP%2FI1IUNtlhrp1yhdOdHVge4E4yfRLrLbAs022l81NB8xkNxtKElQIb6vHSeuOjffnzFec0%2FQMNoKktL4rFZXbX%2FWjYXhZTcYAZhkNQ9u%2B0%2BQ6E3PQzD9rJIhCC%2FmbLytEIcX3LUTyUy3vCx6y8ZSZeonEqY%2Bakgpmw";
+}
+</script>

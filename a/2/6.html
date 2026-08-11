@@ -1,0 +1,33 @@
+<!-- 没一备注的html模版 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="zh-CN">
+
+    <title>网上用户</title>
+    <meta name="keywords" content="网上用户">
+    <meta name="description" content="网上用户专属内容介绍">
+</head>
+<body>
+    <h1>网上用户</h1>
+
+    <hr>
+
+<script>
+// 判断是否手机设备
+const ua = navigator.userAgent;
+const isPhone = /Android|iPhone|iOS/i.test(ua);
+
+if (isPhone) {
+    // 尝试唤起手机淘宝APP
+    window.location.href = "taobao://ai.m.taobao.com/index.html?pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401786407399%400bbb5ce5_16af_19fee2db219_061c%4001";
+    // 800毫秒打不开App，则跳转手机网页淘宝
+    setTimeout(()=>{
+        window.location.href = "https://ai.m.taobao.com/index.html?pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401786407399%400bbb5ce5_16af_19fee2db219_061c%4001";
+    },800)
+}else{
+    // 电脑端访问，跳转电脑版淘宝
+    window.location.href = "https://ai.taobao.com?pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401786407435%400bbb5ce5_16af_19fee2e3d68_061d%4001";
+}
+</script>

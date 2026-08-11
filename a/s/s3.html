@@ -104,18 +104,23 @@ body {
 <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
         body{
-            padding:40px 20px;
-            /* 删除垂直居中，只保留水平居中 */
+            padding:40px 16px;
             display:flex;
             flex-direction:column;
             align-items:center;
         }
       
-        .wrap{display:flex;width:100%;max-width:900px}
+        .wrap{
+            display:flex;
+            width:100%;
+            max-width:500px;
+            /* 手机左右留出间距，不会顶满屏幕 */
+            padding:0 10px;
+        }
         input{
             flex:1;
-            padding:18px 20px;
-            font-size:22px;
+            padding:14px 16px;
+            font-size:17px;
             border:3px solid #0058ff;
             border-radius:12px 0 0 12px;
             border-right:none;
@@ -123,14 +128,15 @@ body {
             pointer-events: auto;
         }
         button{
-            padding:18px 36px;
-            font-size:22px;
+            padding:14px 20px;
+            font-size:17px;
             background-color:#0058ff;
             color:white;
             border:3px solid #0058ff;
             border-radius:0 12px 12px 0;
             cursor:pointer;
             border-left:0;
+            white-space:nowrap;
         }
     </style>
 </head>
@@ -162,7 +168,7 @@ body {
 
 
 
-
+<br/><br/>
 
 
 

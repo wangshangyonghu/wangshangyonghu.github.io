@@ -1,0 +1,33 @@
+<!-- 没一备注的html模版 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="zh-CN">
+
+    <title>网上用户</title>
+    <meta name="keywords" content="网上用户">
+    <meta name="description" content="网上用户专属内容介绍">
+</head>
+<body>
+    <h1>网上用户</h1>
+
+    <hr>
+
+<script>
+// 判断是否手机设备
+const ua = navigator.userAgent;
+const isPhone = /Android|iPhone|iOS/i.test(ua);
+
+if (isPhone) {
+    // 尝试唤起手机淘宝APP
+    window.location.href = "taobao://s.click.taobao.com/t?e=m%3D2%26s%3Dc55tO7lch3IcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMTSS2LBYTsLBxq3IhSJN6GTEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GTh9G%2FvhWTBzMNPueRDzgzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401786407304%402166f819_16bd_19fee2c3bb4_05db%4001";
+    // 800毫秒打不开App，则跳转手机网页淘宝
+    setTimeout(()=>{
+        window.location.href = "https://s.click.taobao.com/t?e=m%3D2%26s%3Dc55tO7lch3IcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMTSS2LBYTsLBxq3IhSJN6GTEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GTh9G%2FvhWTBzMNPueRDzgzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401786407304%402166f819_16bd_19fee2c3bb4_05db%4001";
+    },800)
+}else{
+    // 电脑端访问，跳转电脑版淘宝
+    window.location.href = "https://s.click.taobao.com/t?e=m%3D2%26s%3Dc55tO7lch3IcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMTSS2LBYTsLBxq3IhSJN6GTEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6GTh9G%2FvhWTBzMNPueRDzgzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401786407304%402166f819_16bd_19fee2c3bb4_05db%4001";
+}
+</script>
