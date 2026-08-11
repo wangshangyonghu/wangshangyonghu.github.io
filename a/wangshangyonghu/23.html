@@ -1,0 +1,185 @@
+<!-- 没一备注的html模版 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="zh-CN">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/favicon.ico">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        body {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+    </style>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <title>网上用户</title>
+    <meta name="keywords" content="网上用户">
+    <meta name="description" content="网上用户专属内容介绍">
+</head>
+<body>
+<hr/>网上用户
+<hr/>	简洁直白款
+<hr/>	移动端常用 CSS 属性大全（带详细注释）
+<hr/>	全套前端基础 CSS 样式合集｜逐条备注
+<hr/>	常用 CSS 属性汇总（手机网页开发专用）
+<hr/>	收纳存档向（适合本地保存文档）
+<hr/>	CSS 常用样式速查手册（含完整注释）
+<hr/>	前端移动端布局 CSS 素材库
+<hr/>	自用 CSS 属性备忘录・全套带注解
+<hr/>	极简短标题
+<hr/>	CSS 样式速查表
+<hr/>	移动端 CSS 合集
+<hr/>	CSS 常用属性笔记
+<hr/>	偏向编程笔记文艺风
+<hr/>	移动端网页 CSS 布局全套收录
+<hr/>	前端基础 CSS 属性完整整理
+<hr/>	
+
+
+<hr/>	/* ========== 基础布局 宽高、居中、内外边距 ========== */
+<hr/>	max-width: 350px;          /* 限定内容区域最大宽度350px，大屏不会过宽，小屏自动收缩 */
+<hr/>	width: 100%;               /* 默认宽度占满父容器，配合max-width实现移动端响应式 */
+<hr/>	min-width: 280px;          /* 盒子最小宽度，屏幕再窄也不会小于280px */
+<hr/>	max-height: 600px;         /* 盒子最大高度，内容再多高度固定上限 */
+<hr/>	min-height: 100vh;         /* 盒子最小高度等于手机全屏可视高度，页面铺满屏幕 */
+<hr/>	height: auto;              /* 高度跟随内部内容自适应变化，不固定死高度 */
+<hr/>	height: 100%;              /* 高度完全继承父容器高度 */
+<hr/>	margin: 0 auto;            /* 上下外边距0px，左右自动均分，块元素水平居中 */
+<hr/>	margin: 20px auto;         /* 上下外边距20px，左右自动居中 */
+<hr/>	margin: 10px 5px;          /* 上下外边距10px，左右外边距5px */
+<hr/>	margin-top: 30px;          /* 单独设置上方外边距 */
+<hr/>	margin-bottom: 20px;       /* 单独设置下方外边距 */
+<hr/>	margin-left: auto;         /* 左侧外边距自动分配 */
+<hr/>	margin-right: auto;        /* 右侧外边距自动分配，配合实现水平居中 */
+<hr/>	padding: 20px;             /* 上下左右四边统一内边距20px，文字远离边框 */
+<hr/>	padding: 15px 20px;        /* 上下内边距15px，左右内边距20px */
+<hr/>	padding: 10px 15px 20px;   /* 上10px、左右15px、下20px内边距 */
+<hr/>	padding: 5px 10px 15px 20px;/* 顺时针：上5px、右10px、下15px、左20px四边内边距 */
+<hr/>	padding-top: 10px;         /* 单独上方内边距 */
+<hr/>	padding-bottom: 10px;      /* 单独下方内边距 */
+<hr/>	padding-left: 15px;        /* 单独左侧内边距 */
+<hr/>	padding-right: 15px;       /* 单独右侧内边距 */
+<hr/>	box-sizing: border-box;     /* 内边距、边框不会撑大盒子总宽度，移动端布局必备 */
+<hr/>	
+<hr/>	/* ========== 定位、弹性布局 ========== */
+<hr/>	display: block;             /* 块级元素，独占一行，可设置宽高边距 */
+<hr/>	display: inline;            /* 行内元素，同行排列，无法自定义宽高 */
+<hr/>	display: inline-block;      /* 行内块元素：同行摆放 + 支持宽高内外边距 */
+<hr/>	display: none;              /* 元素彻底隐藏，不占用页面任何空间 */
+<hr/>	display: flex;              /* 弹性布局，移动端主流排版方案 */
+<hr/>	justify-content: center;    /* flex布局：内部元素水平居中 */
+<hr/>	justify-content: space-between; /* 元素两端对齐，中间空隙自动均分 */
+<hr/>	align-items: center;        /* flex布局：内部元素垂直居中 */
+<hr/>	position: relative;         /* 相对定位，偏移后保留原有页面占位 */
+<hr/>	position: absolute;         /* 绝对定位，脱离文档流，参照父级摆放 */
+<hr/>	position: fixed;            /* 固定定位，永久悬浮在屏幕固定位置（导航栏常用） */
+<hr/>	top: 0px;                   /* 距离屏幕顶部距离 */
+<hr/>	left: 0px;                  /* 距离屏幕左侧距离 */
+<hr/>	right: 10px;                /* 距离屏幕右侧距离 */
+<hr/>	bottom: 15px;               /* 距离屏幕底部距离 */
+<hr/>	z-index: 99;                /* 层级数值越大，元素越靠上层，解决元素互相遮挡 */
+<hr/>	
+<hr/>	/* ========== 背景、透明度样式 ========== */
+<hr/>	background-color: #f8f9fa; /* 浅灰白柔和背景色，日常阅读护眼 */
+<hr/>	background-color: #ffffff; /* 纯白色背景 */
+<hr/>	background-color: #fff5f5; /* 淡浅红色温馨背景 */
+<hr/>	background-color: #1a1a1a; /* 深色模式暗黑背景 */
+<hr/>	background: #fff;          /* 简写方式设置背景颜色 */
+<hr/>	background-image: url("");  /* 引入背景图片 */
+<hr/>	background-repeat: no-repeat; /* 背景图片禁止重复平铺 */
+<hr/>	background-size: cover;     /* 背景图铺满整个盒子，自动裁剪适配尺寸 */
+<hr/>	background-position: center;/* 背景图片居中放置 */
+<hr/>	opacity: 0.9;               /* 元素整体透明度，取值0~1，数字越小越透明 */
+<hr/>	
+<hr/>	/* ========== 边框全套样式 ========== */
+<hr/>	border: 1px solid #e5e7eb; /* 全局统一1px浅灰色实线边框 */
+<hr/>	border-top: 1px solid #eee;    /* 仅添加上边框，做分割线 */
+<hr/>	border-bottom: 1px solid #eee; /* 仅添加下边框，分割线常用 */
+<hr/>	border-left: none;             /* 取消左侧边框 */
+<hr/>	border-right: none;            /* 取消右侧边框 */
+<hr/>	border-color: #dddddd;         /* 统一修改四边边框颜色 */
+<hr/>	border-width: 2px;             /* 统一设置四边边框粗细 */
+<hr/>	border-style: solid;            /* 实线边框；dashed虚线、dotted点状线 */
+<hr/>	
+<hr/>	/* ========== 圆角设置 ========== */
+<hr/>	border-radius: 8px;        /* 整体圆角8px，简约卡片风格 */
+<hr/>	border-radius: 12px;       /* 整体圆角12px，圆润柔和 */
+<hr/>	border-radius: 50%;         /* 正方形盒子设置后变为正圆形 */
+<hr/>	border-top-left-radius: 6px;  /* 仅左上角设置圆角 */
+<hr/>	border-top-right-radius: 6px;/* 仅右上角设置圆角 */
+<hr/>	border-bottom-left-radius: 6px;/*仅左下角设置圆角*/
+<hr/>	border-bottom-right-radius: 6px;/*仅右下角设置圆角*/
+<hr/>	
+<hr/>	/* ========== 阴影美化 ========== */
+<hr/>	box-shadow: 0 2px 10px rgba(0,0,0,0.08); /* 大范围柔和浅阴影，卡片悬浮效果 */
+<hr/>	box-shadow: 0 1px 3px rgba(0,0,0,0.1);   /* 细微淡阴影，极简简约风格 */
+<hr/>	
+<hr/>	/* ========== 文字字体、颜色、行间距排版 ========== */
+<hr/>	color: #333;               /* 深灰色正文，最适合长时间阅读 */
+<hr/>	color: #666;               /* 中灰色，次要说明文字 */
+<hr/>	color: #999;               /* 浅灰色，备注、提示小字 */
+<hr/>	color: #222;               /* 近黑色，标题加粗文字 */
+<hr/>	color: #eeeeee;            /* 浅色文字，适配深色模式背景 */
+<hr/>	color: inherit;            /* 文字颜色直接继承父元素样式 */
+<hr/>	line-height: 1.7;          /* 行高1.7倍，长篇文章阅读舒适度最高 */
+<hr/>	line-height: 1.5;          /* 紧凑行高，短句、卡片内容适用 */
+<hr/>	line-height: 2;            /* 宽松大间距行高，适合长辈大字阅读 */
+<hr/>	font-size: 16px;           /* 移动端标准正文字号 */
+<hr/>	font-size: 14px;           /* 小号辅助文字字号 */
+<hr/>	font-size: 18px;           /* 偏大舒适字号 */
+<hr/>	font-family: system-ui, -apple-system, sans-serif; /* 调用手机系统原生字体，安卓苹果通用顺滑 */
+<hr/>	font-weight: 400;          /* 常规字重，普通正文默认粗细 */
+<hr/>	font-weight: 600;          /* 加粗字重，用于标题强调文本 */
+<hr/>	font-style: italic;         /* 文字设置斜体 */
+<hr/>	font-style: normal;         /* 取消文字斜体效果 */
+<hr/>	letter-spacing: 0.5px;     /* 字间距拉开0.5px，小字不拥挤粘连 */
+<hr/>	text-align: left;          /* 文字左对齐（浏览器默认） */
+<hr/>	text-align: center;        /* 文字居中对齐 */
+<hr/>	text-align: right;         /* 文字右对齐 */
+<hr/>	text-indent: 2em;          /* 段落首行缩进两个汉字，文章正文排版专用 */
+<hr/>	vertical-align: middle;     /* 图片、行内文字垂直居中对齐 */
+<hr/>	
+<hr/>	/* ========== 文字装饰、大小写转换 ========== */
+<hr/>	text-decoration: underline; /* 文字添加下划线 */
+<hr/>	text-decoration: line-through; /* 文字中间删除线，商品划原价效果 */
+<hr/>	text-transform: uppercase;  /* 所有英文字母自动转为大写 */
+<hr/>	text-transform: lowercase;  /* 所有英文字母自动转为小写 */
+<hr/>	
+<hr/>	/* ========== 溢出滚动、长文本换行、文字省略 ========== */
+<hr/>	overflow-x: hidden;        /* 隐藏横向滚动条，禁止内容左右溢出屏幕 */
+<hr/>	overflow-y: auto;          /* 内容过高时，纵向自动出现滚动条 */
+<hr/>	overflow-y: scroll;         /* 垂直方向永久固定显示滚动条 */
+<hr/>	overflow-x: scroll;         /* 水平方向永久固定显示滚动条 */
+<hr/>	overflow: hidden;          /* 横竖方向溢出内容全部裁剪隐藏 */
+<hr/>	word-break: break-all;     /* 任意字符处强制换行，防止长网址撑开容器 */
+<hr/>	overflow-wrap: break-word; /* 现代浏览器换行兼容兜底 */
+<hr/>	word-wrap: break-word;     /* 老旧浏览器兼容换行属性 */
+<hr/>	white-space: normal;       /* 默认空白自动折叠，文字正常换行 */
+<hr/>	white-space: nowrap;       /* 文字强制单行不换行 */
+<hr/>	text-overflow: ellipsis;    /* 文字超出宽度末尾显示省略号 ... */
+<hr/>	
+<hr/>	/* ========== 鼠标光标样式、过渡动画 ========== */
+<hr/>	cursor: pointer;            /* 鼠标悬浮变为小手，代表可点击 */
+<hr/>	cursor: default;            /* 默认箭头光标样式 */
+<hr/>	cursor: not-allowed;        /* 禁止点击光标样式 */
+<hr/>	transition: all 0.3s ease;  /* 所有样式变化0.3秒顺滑过渡，hover交互必备 */
+<hr/>	
+<hr/>	/* ========== 浏览器默认样式全局重置 ========== */
+<hr/>	margin: 0;                 /* 清除所有标签默认外边距 */
+<hr/>	padding: 0;                /* 清除所有标签默认内边距 */
+<hr/>	list-style: none;          /* 清除ul/li列表默认圆点符号 */
+<hr/>	text-decoration: none;     /* 清除a链接自带默认蓝色下划线 */
+<hr/>	outline: none;             /* 取消输入框点击高亮外边框 */
+<hr/>	
+<!-- yj2 -->
+<script src="/a/js/yj2.js"></script>
