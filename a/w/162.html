@@ -1,0 +1,101 @@
+<!doctype html> <!-- 声明文档类型为 HTML5，这是 HTML5 标准的文档声明方式 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档的根元素，lang 属性指定页面主要语言为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据、样式、脚本等不直接显示在页面中的内容 -->
+    <!-- 设置视口参数，使页面在移动设备上正确显示
+         width=device-width: 视口宽度等于设备宽度
+         user-scalable=yes: 允许用户缩放页面（默认值，可省略）
+         建议添加 initial-scale=1.0 确保初始缩放比例正确 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+    <!-- 设置文档的语言编码，虽然 HTML5 中推荐使用 lang 属性，但保留此标签兼容旧浏览器 -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    
+    <!-- 网站图标设置区域 -->
+    <!-- 标准浏览器图标 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网站图标">
+    <!-- 快捷方式图标（IE 兼容） -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" alt="网站快捷图标"/>
+    <!-- 苹果设备触摸图标（添加到主屏幕时使用） -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="苹果设备图标"/>
+    <!-- 苹果设备启动画面图标（应用启动时显示） -->
+    <link rel="apple-touch-startup-image" href="/favicon.ico" alt="苹果设备启动画面"/>
+    <!-- 高分辨率设备图标（如 Android 高dpi设备） -->
+    <link rel="icon" sizes="192x192" href="/favicon.ico" alt="高分辨率设备图标"/>
+    <!-- 定义图标遮罩（主要用于 Safari 等浏览器） -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="图标遮罩" />
+    <!-- 苹果设备预合成图标（不添加系统默认光泽效果） -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="苹果设备预合成图标">
+    
+    <!-- 告知浏览器该页面适合作为移动端Web应用运行
+         添加到主屏幕后，会隐藏浏览器地址栏，更接近原生应用体验 -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    
+    <!-- DNS预解析，提前解析指定域名的IP地址，加快后续资源加载速度 -->
+    <link rel="dns-prefetch" href="//"/>    
+    
+    <!-- 设置文档的字符编码为UTF-8，确保页面文字正确显示，防止乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <!-- CSS样式定义部分开始 -->
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      A {
+        text-decoration: none; /* 去除a标签的下划线（建议使用小写属性名，符合CSS规范） */
+        font-weight: bold; /* 为a标签设置粗体样式 */
+        font-size: 32px; /* 为a标签设置字体大小为32像素 */
+      }
+    </style>
+    <!-- CSS样式定义部分结束 -->
+
+ <title>不会自动换行，它们会在同一行内连续显示一搜索:网上用户</title>
+<meta name="keywords" content=",搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+<meta name="description" content="" />
+</head> <!-- 文档头部结束 -->
+
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+<!--左上角-->&nbsp; &nbsp; <a href="../h/h1.jpg" target="_blank">
+<img src="../h/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../h/h1.html" target="_blank"><img src="../h/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+
+<hr color=0066FF> <!--分界线-->
+
+<center><!--居中-->
+<body><!--内容开始body-->
+<!--文档内容开始......-->
+<h1>查看源代码</h1>
+
+
+在 HTML 中，大多数块级元素（如 <p>、<div>、<h1> 等）会默认换行，而行内元素（inline elements） 则不会自动换行，它们会在同一行内连续显示，直到父容器宽度不足时才会折行。
+常用的不会自动换行的行内元素包括：
+<span>：最常用的通用行内容器，无特定语义
+html
+预览
+<span>这是一段</span> <span>不会自动换行的文本</span>
+
+<a>：超链接标签
+html
+预览
+<a href="#">链接1</a><a href="#">链接2</a> <!-- 两个链接会显示在同一行 -->
+
+<strong> 和 <em>：分别表示重要文本和强调文本
+html
+预览
+<strong>重要内容</strong><em>强调内容</em> <!-- 同一行显示 -->
+
+<code>：用于显示代码片段
+html
+预览
+<code>var a = 1;</code><code>var b = 2;</code> <!-- 同一行显示 -->
+
+<mark>：用于标记突出显示的文本
+html
+预览
+<mark>标记文本1</mark><mark>标记文本2</mark> <!-- 同一行显示 -->
+
+如果希望强制元素不换行（即使父容器宽度不足），可以通过 CSS 进一步控制：
+html
+预览
+<span style="white-space: nowrap;">这段文本即使很长也不会换行</span>
+行内元素的特性是 "同行显示"，适合用于构建连续的文本流或 inline 级别的内容组合。

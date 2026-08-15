@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="viewport" content="width=device-width,  user-scalable=yes" /><!--手机版本代码-->
+<meta charset="utf-8"><!--网页乱码修复-->
+<meta http-equiv='content-language' content='zh-cn'><!--国家地区-->
+<link  href="./favicon.ico" alt="网名张先生"  rel="shortcut icon" type="image/x-icon" /><!--图标-->
+
+<title>日历一网名张先生</title>
+<meta name="keywords" content=",网名张先生,网名张先生的个人主页,网名张先生的个人首页,网名张先生的个人空间,网名张先生的个人中心,网名张先生的个人档案,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,网号张先生" /><!--关键词-->
+<meta name="description" content="一网名张先生,网名张先生的个人主页,网名张先生的个人首页,网名张先生的个人空间,网名张先生的个人中心,网名张先生的个人档案,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,网号张先生" />
+
+</head>
+
+<style type="text/css">A{TEXT-DECORATION: none}</style><!--无下划线开始-->
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+
+<style>
+a#gpc234{ background-color: #0066FF; /*蓝色 */
+    border: none;
+    color: white;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 1px 1px;
+    cursor: pointer;
+box-shadow: 10px 10px 5px #888888;/*灰色 */
+}
+</style><!--css标题2024年7月16日-->
+
+
+<h1><a id="gpc234" href="./h1.html" target="_blank">网名张先生</a></h1>
+
+<hr color=0066FF> <!--分界线-->
+
+<center><!--居中-->
+<body><!--内容开始body-->
+
+
+
+<h3><a id="gpc234" href="https://cn.bing.com/search?q=日历" target="_blank">日历</a></h3>
+<hr color=0066FF>
+
+
+<!--文档内容......-->
+
+
+<p id="currentDateTime">当前日期时间：</p>
+
+
+
+       <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+      .calendar {
+            border: 1px solid #ccc;
+            padding: 10px;
+/* 设置日历整体宽度 */
+            width: 330px;
+        }
+
+      .calendar-header {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+      .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+      .calendar-cell {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+/* 设置日期字体大小 */
+            font-size: 14px;
+        }
+ /* 星期几的样式 */
+      .calendar-grid.calendar-cell:first-child:nth-last-child(7),
+      .calendar-grid.calendar-cell:first-child:nth-last-child(7) ~.calendar-cell {
+            font-weight: bold;
+ /* 星期几的字体大小 */
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calendar">
+        <div class="calendar-header">当前月份和年份</div>
+        <div class="calendar-grid">
+            <div class="calendar-cell">日</div>
+            <div class="calendar-cell">一</div>
+            <div class="calendar-cell">二</div>
+            <div class="calendar-cell">三</div>
+            <div class="calendar-cell">四</div>
+            <div class="calendar-cell">五</div>
+            <div class="calendar-cell">六</div>
+            <!-- 这里将填充日期 -->
+        </div>
+    </div>
+
+
+    <script>
+        // 获取当前日期
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const day = today.getDate();
+        let allDay = 0;
+
+        function count() {
+            if (month!== 2) {
+                if ((month === 4) || (month === 6) || (month === 9) || (month === 11)) {
+                    allDay = 30;
+                } else {
+                    allDay = 31;
+                }
+            } else {
+                if (((year % 4) === 0 && (year % 100)!== 0) || (year % 400) === 0) {
+                    allDay = 29;
+                } else {
+                    allDay = 28;
+                }
+            }
+        }
+
+        function showMonth() {
+            const year_month = year + "年" + month + "月";
+            document.querySelector('.calendar-header').innerHTML = year_month;
+        }
+
+        function showDate() {
+            showMonth();
+            count();
+            const firstDate = new Date(year, month - 1, 1);
+            const xiqi = firstDate.getDay();
+            const dateRow = document.querySelector('.calendar-grid');
+            dateRow.innerHTML = "";
+            // 添加星期几
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            for (let i = 0; i < 7; i++) {
+                const dayElement = document.createElement("div");
+                dayElement.className = "calendar-cell";
+                dayElement.innerHTML = weekdays[i];
+                dateRow.appendChild(dayElement);
+            }
+            if (xiqi!== 0) {
+                for (let i = 0; i < xiqi; i++) {
+                    const dayElement = document.createElement("div");
+                    dayElement.className = "calendar-cell";
+                    dateRow.appendChild(dayElement);
+                }
+            }
+            for (let j = 1; j <= allDay; j++) {
+                const dayElement = document.createElement("div");
+                dayElement.className = "calendar-cell";
+                dayElement.innerHTML = j + "";
+                if (j === day) {
+                    dayElement.style.color = "red";
+                }
+                dateRow.appendChild(dayElement);
+            }
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const formattedDateTime = now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日 " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+            document.getElementById('currentDateTime').innerHTML = "当前日期时间：" + formattedDateTime;
+        }
+
+        showDate();
+        setInterval(updateDateTime, 1000);
+    </script>
+
+
+
+
+<hr color=0066FF>
+<center> <!--居中-->
+
+<textarea cols="40%" rows="1%" id="biao1">网名张先生,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,张先生,123,234,0123456789网名张先生,网名张先生的个人主页,网名张先生的个人首页,网名张先生的个人空间,网名张先生的个人中心,网名张先生的个人档案,公平村张先生,铆钉厂张先生,客家人张先生,艺名张先生,账号张先生,铆钉厂,网号张先生生产铆钉不锈钢铆钉铁铆钉铝铆钉黄铜铆钉紫铜铆钉实心铆钉半空心铆钉斗车厂张先生</textarea>
+<!--内容结束-->
+<hr color=0000ff> <!--分界线-->
+   <hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+
+<a href="/">下一页</a>
+&nbsp; 	<a href="	./1.html	" target="_blank">1</a>	&nbsp; 
+	<a href="	./2.html	" target="_blank">2</a>	&nbsp; 
+	<a href="	./3.html	" target="_blank">3</a>	&nbsp; 
+	<a href="	./4.html	" target="_blank">4</a>	&nbsp; 
+	<a href="	./5.html	" target="_blank">5</a>	&nbsp; 
+	<a href="	./6.html	" target="_blank">6</a>	&nbsp; 
+	<a href="	./7.html	" target="_blank">7</a>	&nbsp; 
+	<a href="	./8.html	" target="_blank">8</a>	&nbsp; 
+	<a href="	./9.html	" target="_blank">9</a>	&nbsp; 
+	<a href="	./10.html	" target="_blank">10</a>	&nbsp; 
+	<a href="	./11.html	" target="_blank">11</a>	&nbsp; 
+	<a href="	./12.html	" target="_blank">12</a>	&nbsp; 
+	<a href="	./13.html	" target="_blank">13</a>	&nbsp; 
+	<a href="	./14.html	" target="_blank">14</a>	&nbsp; 
+	<a href="	./15.html	" target="_blank">15</a>	&nbsp; 
+	<a href="	./16.html	" target="_blank">16</a>	&nbsp; 
+	<a href="	./17.html	" target="_blank">17</a>	&nbsp; 
+	<a href="	./18.html	" target="_blank">18</a>	&nbsp; 
+	<a href="	./19.html	" target="_blank">19</a>	&nbsp; 
+	<a href="	./20.html	" target="_blank">20</a>	&nbsp; 
+	<a href="	./21.html	" target="_blank">21</a>	&nbsp; 
+	<a href="	./22.html	" target="_blank">22</a>	&nbsp; 
+	<a href="	./23.html	" target="_blank">23</a>	&nbsp; 
+        <a href="	./1.html	" target="_blank">→</a>	&nbsp; 
+
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+
+
+
+
+<!--内容结束-->
+
+</body><!--内容结束-->
+</center><!--居中-->
+<head><!--无下划线-->
+</strong><!--加粗-->
+</span><!--字体大小-->
+</html><!--结束-->
