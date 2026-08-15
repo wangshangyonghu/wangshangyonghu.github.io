@@ -5,12 +5,18 @@ Disallow: /admin/
 
 # 指定网站地图（XML 格式 - 集中归类，http/https 均保留）
 Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/txt1.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/txt2.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/txt3.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/txt4.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/txt5.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/txt6.xml
+
+Sitemap: https://wangshangyonghu.github.io/a/txt/1.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/2.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/3.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/4.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/5.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/6.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/7.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/8.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/9.xml
+Sitemap: https://wangshangyonghu.github.io/a/txt/10.xml
+
 
 # 指定网站地图（TXT 格式 - 集中归类，http/https 均保留，全条目无重复）
 

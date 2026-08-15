@@ -1,9 +1,8 @@
-<!--
-@网上用户
--->
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- TXT 文件：添加 type 声明，告诉搜索引擎这是纯 URL 列表 -->
+  <!-- 
+@网上用户 
+TXT 文件：添加 type 声明，告诉搜索引擎这是纯 URL 列表 -->
 
   <sitemap>
     <loc>https://wangshangyonghu.github.io/a/txt/1.txt</loc>
@@ -71,65 +70,34 @@
 
 
   <!-- XML Sitemap 文件：无需额外声明，保持原有格式即可 -->
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt1.xml</loc>
+ <sitemap>
+    <loc>https://wangshangyonghu.github.io/a/txt/1.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt2.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/2.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt3.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/3.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt4.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/4.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt5.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/5.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt6.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/6.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt7.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/7.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt8.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/8.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt9.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/9.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt10.xml</loc>
-  </sitemap>
-
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt1.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt2.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt3.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt4.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt5.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt6.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt7.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt8.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt9.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://wangshangyonghu.github.io/a/txt/txt10.xml</loc>
+    <loc>https://wangshangyonghu.github.io/a/txt/10.xml</loc>
   </sitemap>
 </sitemapindex>
