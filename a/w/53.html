@@ -1,0 +1,522 @@
+<!doctype html> <!-- 声明文档类型为 HTML5，这是 HTML5 标准的文档声明方式 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档的根元素，lang 属性指定页面主要语言为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据、样式、脚本等不直接显示在页面中的内容 -->
+    <!-- 设置视口参数，使页面在移动设备上正确显示
+         width=device-width: 视口宽度等于设备宽度
+         user-scalable=yes: 允许用户缩放页面（默认值，可省略）
+         建议添加 initial-scale=1.0 确保初始缩放比例正确 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <!-- 设置文档的语言编码，虽然 HTML5 中推荐使用 lang 属性，但保留此标签兼容旧浏览器 -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    
+    <!-- 网站图标设置区域 -->
+    <!-- 标准浏览器图标 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网站图标">
+    <!-- 快捷方式图标（IE 兼容） -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" alt="网站快捷图标"/>
+    <!-- 苹果设备触摸图标（添加到主屏幕时使用） -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="苹果设备图标"/>
+    <!-- 苹果设备启动画面图标（应用启动时显示） -->
+    <link rel="apple-touch-startup-image" href="/favicon.ico" alt="苹果设备启动画面"/>
+    <!-- 高分辨率设备图标（如 Android 高dpi设备） -->
+    <link rel="icon" sizes="192x192" href="/favicon.ico" alt="高分辨率设备图标"/>
+    <!-- 定义图标遮罩（主要用于 Safari 等浏览器） -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="图标遮罩" />
+    <!-- 苹果设备预合成图标（不添加系统默认光泽效果） -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="苹果设备预合成图标">
+    
+    <!-- 告知浏览器该页面适合作为移动端Web应用运行
+         添加到主屏幕后，会隐藏浏览器地址栏，更接近原生应用体验 -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    
+    <!-- DNS预解析，提前解析指定域名的IP地址，加快后续资源加载速度 -->
+    <link rel="dns-prefetch" href="//"/>    
+    
+    <!-- 设置文档的字符编码为UTF-8，确保页面文字正确显示，防止乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <!-- CSS样式定义部分开始 -->
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      A {
+        text-decoration: none; /* 去除a标签的下划线（建议使用小写属性名，符合CSS规范） */
+            }
+    </style>
+    <!-- CSS样式定义部分结束 -->
+
+ <title>全国车牌号对应地区查询</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS,上网用户," /><!--关键词-->
+<meta name="description" content="全国车牌号对应地区查询一网上用户." />
+</head> <!-- 文档头部结束 -->
+
+<span style="font-size: 18px;"><!--字体大小-->
+<strong><!--加粗-->
+
+
+
+    <style>
+        .btn-container {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            flex-wrap: wrap;
+            display: flex;
+        }
+        .btn {
+            margin: 5px;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-family: sans-serif;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+            transition: 0.3s;
+        }
+        .region-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin: 30px 0;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #007bff;
+            padding-left: 15px;
+            margin-top: 0;
+        }
+        .plate-info {
+            margin: 15px 0 0 20px;
+            line-height: 1.8;
+            color: #333;
+        }
+        .plate-info p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>全国车牌号首字及对应地区</h1>
+    
+    <!-- 跳转按钮容器 -->
+    <div class="btn-container">
+        <a class="btn" href="#京">京</a>
+        <a class="btn" href="#津">津</a>
+        <a class="btn" href="#沪">沪</a>
+        <a class="btn" href="#冀">冀</a>
+        <a class="btn" href="#豫">豫</a>
+        <a class="btn" href="#云">云</a>
+        <a class="btn" href="#辽">辽</a>
+        <a class="btn" href="#黑">黑</a>
+        <a class="btn" href="#湘">湘</a>
+        <a class="btn" href="#皖">皖</a>
+        <a class="btn" href="#鲁">鲁</a>
+        <a class="btn" href="#新">新</a>
+        <a class="btn" href="#苏">苏</a>
+        <a class="btn" href="#浙">浙</a>
+        <a class="btn" href="#赣">赣</a>
+        <a class="btn" href="#鄂">鄂</a>
+        <a class="btn" href="#桂">桂</a>
+        <a class="btn" href="#甘">甘</a>
+        <a class="btn" href="#晋">晋</a>
+        <a class="btn" href="#蒙">蒙</a>
+        <a class="btn" href="#陕">陕</a>
+        <a class="btn" href="#吉">吉</a>
+        <a class="btn" href="#闽">闽</a>
+        <a class="btn" href="#贵">贵</a>
+        <a class="btn" href="#粤">粤</a>
+        <a class="btn" href="#青">青</a>
+        <a class="btn" href="#藏">藏</a>
+        <a class="btn" href="#川">川</a>
+        <a class="btn" href="#宁">宁</a>
+        <a class="btn" href="#琼">琼</a>
+        <a class="btn" href="#渝">渝</a>
+    </div>
+
+    <!-- 北京市（京） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="京" class="anchor-con"> </div></div><!--定位-->
+        <h2>北京市（京）</h2>
+        <div class="plate-info">
+            <p>京A、京C、京E、京F：北京市（城区）</p>
+            <p>京G：北京市（远郊区）</p>
+            <p>京B：出租车</p>
+        </div>
+    </div>
+
+    <!-- 天津市（津） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="津" class="anchor-con"> </div></div><!--定位-->
+        <h2>天津市（津）</h2>
+        <div class="plate-info">
+            <p>津A、津B、津C：天津市（市区）</p>
+            <p>津E：出租车</p>
+        </div>
+    </div>
+
+    <!-- 上海市（沪） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="沪" class="anchor-con"> </div></div><!--定位-->
+        <h2>上海市（沪）</h2>
+        <div class="plate-info">
+            <p>沪A、沪B、沪D：上海市区</p>
+            <p>沪C：远郊区</p>
+        </div>
+    </div>
+
+    <!-- 河北省（冀） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="冀" class="anchor-con"> </div></div><!--定位-->
+        <h2>河北省（冀）</h2>
+        <div class="plate-info">
+            <p>冀A：石家庄 | 冀B：唐山 | 冀C：秦皇岛 | 冀D：邯郸 | 冀E：邢台</p>
+            <p>冀F：保定 | 冀G：张家口 | 冀H：承德 | 冀J：沧州 | 冀R：廊坊 | 冀T：衡水</p>
+        </div>
+    </div>
+
+    <!-- 河南省（豫） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="豫" class="anchor-con"> </div></div><!--定位-->
+        <h2>河南省（豫）</h2>
+        <div class="plate-info">
+            <p>豫A：郑州 | 豫B：开封 | 豫C：洛阳 | 豫D：平顶山 | 豫E：安阳 | 豫F：鹤壁</p>
+            <p>豫G：新乡 | 豫H：焦作 | 豫J：濮阳 | 豫K：许昌 | 豫L：漯河 | 豫M：三门峡</p>
+            <p>豫N：商丘 | 豫P：周口 | 豫Q：驻马店 | 豫R：南阳 | 豫S：信阳 | 豫U：济源</p>
+        </div>
+    </div>
+
+    <!-- 云南省（云） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="云" class="anchor-con"> </div></div><!--定位-->
+        <h2>云南省（云）</h2>
+        <div class="plate-info">
+            <p>云A：昆明 | 云B：东川 | 云C：昭通 | 云D：曲靖 | 云E：楚雄彝族自治州</p>
+            <p>云F：玉溪 | 云G：红河哈尼族彝族自治州 | 云H：文山壮族苗族自治州</p>
+            <p>云J：普洱（原思茅） | 云L：大理白族自治州 | 云K：西双版纳傣族自治州</p>
+            <p>云M：保山 | 云N：德宏傣族景颇族自治州 | 云P：丽江 | 云Q：怒江傈僳族自治州</p>
+            <p>云R：迪庆藏族自治州 | 云S：临沧</p>
+        </div>
+    </div>
+
+    <!-- 辽宁省（辽） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="辽" class="anchor-con"> </div></div><!--定位-->
+        <h2>辽宁省（辽）</h2>
+        <div class="plate-info">
+            <p>辽A：沈阳 | 辽B：大连 | 辽C：鞍山 | 辽D：抚顺 | 辽E：本溪 | 辽F：丹东</p>
+            <p>辽G：锦州 | 辽H：营口 | 辽J：阜新 | 辽K：辽阳 | 辽L：盘锦 | 辽M：铁岭</p>
+            <p>辽N：朝阳 | 辽P：葫芦岛 | 辽V：省直机关</p>
+        </div>
+    </div>
+
+    <!-- 黑龙江省（黑） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="黑" class="anchor-con"> </div></div><!--定位-->
+        <h2>黑龙江省（黑）</h2>
+        <div class="plate-info">
+            <p>黑A：哈尔滨 | 黑B：齐齐哈尔 | 黑C：牡丹江 | 黑D：佳木斯 | 黑E：大庆</p>
+            <p>黑F：伊春 | 黑G：鸡西 | 黑H：鹤岗 | 黑J：双鸭山 | 黑K：七台河</p>
+            <p>黑L：松花江地区（现并入哈尔滨） | 黑M：绥化 | 黑N：黑河 | 黑P：大兴安岭地区</p>
+        </div>
+    </div>
+
+    <!-- 湖南省（湘） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="湘" class="anchor-con"> </div></div><!--定位-->
+        <h2>湖南省（湘）</h2>
+        <div class="plate-info">
+            <p>湘A：长沙 | 湘B：株洲 | 湘C：湘潭 | 湘D：衡阳 | 湘E：邵阳 | 湘F：岳阳</p>
+            <p>湘G：张家界（原大庸） | 湘H：益阳 | 湘J：常德 | 湘K：娄底 | 湘L：郴州</p>
+            <p>湘M：永州（原零陵） | 湘N：怀化 | 湘P：湘西土家族苗族自治州</p>
+        </div>
+    </div>
+
+    <!-- 安徽省（皖） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="皖" class="anchor-con"> </div></div><!--定位-->
+        <h2>安徽省（皖）</h2>
+        <div class="plate-info">
+            <p>皖A：合肥 | 皖B：芜湖 | 皖C：蚌埠 | 皖D：淮南 | 皖E：马鞍山 | 皖F：淮北</p>
+            <p>皖G：铜陵 | 皖H：安庆 | 皖J：黄山 | 皖K：阜阳 | 皖L：宿州 | 皖M：滁州</p>
+            <p>皖N：六安 | 皖P：宣城 | 皖Q：巢湖（现并入合肥） | 皖R：池州</p>
+        </div>
+    </div>
+
+    <!-- 山东省（鲁） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="鲁" class="anchor-con"> </div></div><!--定位-->
+        <h2>山东省（鲁）</h2>
+        <div class="plate-info">
+            <p>鲁A：济南 | 鲁B：青岛 | 鲁C：淄博 | 鲁D：枣庄 | 鲁E：东营 | 鲁F：烟台</p>
+            <p>鲁G：潍坊 | 鲁H：济宁 | 鲁J：泰安 | 鲁K：威海 | 鲁L：日照 | 鲁M：莱芜（现并入济南）</p>
+            <p>鲁N：德州 | 鲁P：聊城 | 鲁Q：临沂 | 鲁R：菏泽 | 鲁U：青岛开发区</p>
+        </div>
+    </div>
+
+    <!-- 新疆维吾尔自治区（新） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="新" class="anchor-con"> </div></div><!--定位-->
+        <h2>新疆维吾尔自治区（新）</h2>
+        <div class="plate-info">
+            <p>新A：乌鲁木齐 | 新B：昌吉回族自治州 | 新C：石河子 | 新D：奎屯</p>
+            <p>新E：博尔塔拉蒙古自治州 | 新F：伊犁哈萨克自治州 | 新G：塔城地区 | 新H：阿勒泰地区</p>
+            <p>新J：克拉玛依 | 新K：吐鲁番地区 | 新L：哈密地区 | 新M：巴音郭楞蒙古自治州</p>
+            <p>新N：阿克苏地区 | 新P：克孜勒苏柯尔克孜自治州 | 新Q：喀什地区 | 新R：和田地区</p>
+        </div>
+    </div>
+
+    <!-- 江苏省（苏） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="苏" class="anchor-con"> </div></div><!--定位-->
+        <h2>江苏省（苏）</h2>
+        <div class="plate-info">
+            <p>苏A：南京 | 苏B：无锡 | 苏C：徐州 | 苏D：常州 | 苏E：苏州 | 苏F：南通</p>
+            <p>苏G：连云港 | 苏H：淮安（原淮阴） | 苏J：盐城 | 苏K：扬州 | 苏L：镇江</p>
+            <p>苏M：泰州 | 苏N：宿迁</p>
+        </div>
+    </div>
+
+    <!-- 浙江省（浙） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="浙" class="anchor-con"> </div></div><!--定位-->
+        <h2>浙江省（浙）</h2>
+        <div class="plate-info">
+            <p>浙A：杭州 | 浙B：宁波 | 浙C：温州 | 浙D：绍兴 | 浙E：湖州 | 浙F：嘉兴</p>
+            <p>浙G：金华 | 浙H：衢州 | 浙J：台州 | 浙K：丽水 | 浙L：舟山</p>
+        </div>
+    </div>
+
+    <!-- 江西省（赣） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="赣" class="anchor-con"> </div></div><!--定位-->
+        <h2>江西省（赣）</h2>
+        <div class="plate-info">
+            <p>赣A：南昌 | 赣B：赣州 | 赣C：宜春 | 赣D：吉安 | 赣E：上饶 | 赣F：抚州</p>
+            <p>赣G：九江 | 赣H：景德镇 | 赣J：萍乡 | 赣K：新余 | 赣L：鹰潭</p>
+        </div>
+    </div>
+
+    <!-- 湖北省（鄂） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="鄂" class="anchor-con"> </div></div><!--定位-->
+        <h2>湖北省（鄂）</h2>
+        <div class="plate-info">
+            <p>鄂A：武汉 | 鄂B：黄石 | 鄂C：十堰 | 鄂D：荆州（原沙市） | 鄂E：宜昌 | 鄂F：襄阳（原襄樊）</p>
+            <p>鄂G：鄂州 | 鄂H：荆门 | 鄂J：黄冈 | 鄂K：孝感 | 鄂L：咸宁 | 鄂M：荆州</p>
+            <p>鄂N：郧阳（现并入十堰） | 鄂P：宜昌 | 鄂Q：恩施土家族苗族自治州（原鄂西州）</p>
+        </div>
+    </div>
+
+    <!-- 广西壮族自治区（桂） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="桂" class="anchor-con"> </div></div><!--定位-->
+        <h2>广西壮族自治区（桂）</h2>
+        <div class="plate-info">
+            <p>桂A：南宁 | 桂B：柳州 | 桂C：桂林 | 桂D：梧州 | 桂E：北海</p>
+            <p>桂F：南宁地区（现并入南宁） | 桂G：柳州地区（现并入柳州） | 桂H：桂林地区（现并入桂林）</p>
+            <p>桂J：梧州地区（现并入梧州） | 桂K：玉林 | 桂M：河池 | 桂L：百色</p>
+            <p>桂N：钦州 | 桂P：防城港</p>
+        </div>
+    </div>
+
+    <!-- 甘肃省（甘） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="甘" class="anchor-con"> </div></div><!--定位-->
+        <h2>甘肃省（甘）</h2>
+        <div class="plate-info">
+            <p>甘A：兰州 | 甘B：嘉峪关 | 甘C：金昌 | 甘D：白银 | 甘E：天水 | 甘F：酒泉</p>
+            <p>甘G：张掖 | 甘H：武威 | 甘J：定西 | 甘K：陇南 | 甘L：平凉 | 甘M：庆阳</p>
+            <p>甘N：临夏回族自治州 | 甘P：甘南藏族自治州</p>
+        </div>
+    </div>
+
+    <!-- 山西省（晋） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="晋" class="anchor-con"> </div></div><!--定位-->
+        <h2>山西省（晋）</h2>
+        <div class="plate-info">
+            <p>晋A：太原 | 晋B：大同 | 晋C：阳泉 | 晋D：长治 | 晋E：晋城 | 晋F：朔州</p>
+            <p>晋G：雁北（现并入大同、朔州） | 晋H：忻州 | 晋J：吕梁 | 晋K：晋中 | 晋L：临汾 | 晋M：运城</p>
+        </div>
+    </div>
+
+    <!-- 内蒙古自治区（蒙） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="蒙" class="anchor-con"> </div></div><!--定位-->
+        <h2>内蒙古自治区（蒙）</h2>
+        <div class="plate-info">
+            <p>蒙A：呼和浩特 | 蒙B：包头 | 蒙C：乌海 | 蒙D：赤峰 | 蒙E：呼伦贝尔市（原呼伦贝尔盟）</p>
+            <p>蒙F：兴安盟 | 蒙G：锡林郭勒盟 | 蒙H：乌兰察布市（原乌兰察布盟）</p>
+            <p>蒙J：鄂尔多斯市（原伊克昭盟） | 蒙K：巴彦淖尔市（原巴彦淖尔盟） | 蒙L：阿拉善盟</p>
+        </div>
+    </div>
+
+    <!-- 陕西省（陕） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="陕" class="anchor-con"> </div></div><!--定位-->
+        <h2>陕西省（陕）</h2>
+        <div class="plate-info">
+            <p>陕A：西安 | 陕B：铜川 | 陕C：宝鸡 | 陕D：咸阳 | 陕E：渭南 | 陕F：汉中</p>
+            <p>陕G：安康 | 陕H：商洛 | 陕J：延安 | 陕K：榆林 | 陕U：省直机关</p>
+        </div>
+    </div>
+
+    <!-- 吉林省（吉） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="吉" class="anchor-con"> </div></div><!--定位-->
+        <h2>吉林省（吉）</h2>
+        <div class="plate-info">
+            <p>吉A：长春 | 吉B：吉林市 | 吉C：四平 | 吉D：辽源 | 吉E：通化 | 吉F：白山</p>
+            <p>吉G：白城 | 吉H：延边朝鲜族自治州</p>
+        </div>
+    </div>
+
+    <!-- 福建省（闽） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="闽" class="anchor-con"> </div></div><!--定位-->
+        <h2>福建省（闽）</h2>
+        <div class="plate-info">
+            <p>闽A：福州 | 闽B：莆田 | 闽C：泉州 | 闽D：厦门 | 闽E：漳州 | 闽F：龙岩</p>
+            <p>闽G：三明 | 闽H：南平 | 闽J：宁德 | 闽K：省直机关</p>
+        </div>
+    </div>
+
+    <!-- 贵州省（贵） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="贵" class="anchor-con"> </div></div><!--定位-->
+        <h2>贵州省（贵）</h2>
+        <div class="plate-info">
+            <p>贵A：贵阳 | 贵B：六盘水 | 贵C：遵义 | 贵D：铜仁 | 贵E：黔西南布依族苗族自治州</p>
+            <p>贵F：毕节 | 贵G：安顺 | 贵H：黔东南苗族侗族自治州 | 贵J：黔南布依族苗族自治州</p>
+        </div>
+    </div>
+
+    <!-- 广东省（粤） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="粤" class="anchor-con"> </div></div><!--定位-->
+        <h2>广东省（粤）</h2>
+        <div class="plate-info">
+            <p>粤A：广州 | 粤B：深圳 | 粤C：珠海 | 粤D：汕头 | 粤E：佛山 | 粤F：韶关</p>
+            <p>粤G：湛江 | 粤H：肇庆 | 粤J：江门 | 粤K：茂名 | 粤L：惠州 | 粤M：梅州</p>
+            <p>粤N：汕尾 | 粤P：河源 | 粤Q：阳江 | 粤R：清远 | 粤S：东莞 | 粤T：中山</p>
+            <p>粤U：潮州 | 粤V：揭阳 | 粤W：云浮 | 粤X：顺德（现属佛山） | 粤Y：南海（现属佛山）</p>
+            <p>粤Z：港澳进入内地车辆</p>
+        </div>
+    </div>
+
+    <!-- 青海省（青） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="青" class="anchor-con"> </div></div><!--定位-->
+        <h2>青海省（青）</h2>
+        <div class="plate-info">
+            <p>青A：西宁 | 青B：海东市 | 青C：海北藏族自治州 | 青D：黄南藏族自治州</p>
+            <p>青E：海南藏族自治州 | 青F：果洛藏族自治州 | 青G：玉树藏族自治州 | 青H：海西蒙古族藏族自治州</p>
+        </div>
+    </div>
+
+    <!-- 西藏自治区（藏） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="藏" class="anchor-con"> </div></div><!--定位-->
+        <h2>西藏自治区（藏）</h2>
+        <div class="plate-info">
+            <p>藏A：拉萨 | 藏B：昌都 | 藏C：山南 | 藏D：日喀则 | 藏E：那曲 | 藏F：阿里 | 藏G：林芝</p>
+        </div>
+    </div>
+
+    <!-- 四川省（川） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="川" class="anchor-con"> </div></div><!--定位-->
+        <h2>四川省（川）</h2>
+        <div class="plate-info">
+            <p>川A：成都 | 川B：绵阳 | 川C：自贡 | 川D：攀枝花 | 川E：泸州 | 川F：德阳</p>
+            <p>川H：广元 | 川J：遂宁 | 川K：内江 | 川L：乐山 | 川Q：宜宾 | 川R：南充</p>
+            <p>川S：达州（原达县） | 川T：雅安 | 川U：阿坝藏族羌族自治州 | 川V：甘孜藏族自治州</p>
+            <p>川W：凉山彝族自治州</p>
+        </div>
+    </div>
+
+    <!-- 宁夏回族自治区（宁） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="宁" class="anchor-con"> </div></div><!--定位-->
+        <h2>宁夏回族自治区（宁）</h2>
+        <div class="plate-info">
+            <p>宁A：银川 | 宁B：石嘴山 | 宁C：吴忠（原银南） | 宁D：固原</p>
+        </div>
+    </div>
+
+    <!-- 海南省（琼） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="琼" class="anchor-con"> </div></div><!--定位-->
+        <h2>海南省（琼）</h2>
+        <div class="plate-info">
+            <p>琼A：海口 | 琼B：三亚 | 琼C：琼北地区（文昌、琼海等）</p>
+        </div>
+    </div>
+
+    <!-- 重庆市（渝） -->
+    <div class="region-section">
+         <!--定位--> </div><div id="渝" class="anchor-con"> </div></div><!--定位-->
+        <h2>重庆市（渝）</h2>
+        <div class="plate-info">
+            <p>渝A：重庆市区（江南） | 渝B：重庆市区（江北） | 渝C：永川区 | 渝F：万州区</p>
+            <p>渝G：涪陵区 | 渝H：黔江区</p>
+        </div>
+    </div>
+
+<center><!--居中-->
+<hr color=0066ff>
+<!--左上角-->&nbsp; &nbsp; <a href="../h/h1.jpg" target="_blank">
+<img src="../h/h1.jpg" alt="网上用户" width="" height="35" title="" align="" /></a>
+<a id="gpc234" href="../h/h1.html" target="_blank"><img src="../h/h2.jpg" alt="搜索:网上用户" width="" height="35" title="" align="" /></a><!--左上角-->
+
+
+
+<hr color=0066ff>
+<!--上下页-->
+<head>
+    <script>
+        function goToNextPage() {
+            var currentPage = window.location.pathname.split('/').pop();
+            var pageNumber = parseInt(currentPage.replace(/\D/g, ''));
+            var nextPageNumber = pageNumber + 1;
+            var nextPage = './sy' + nextPageNumber + '.html';
+            window.open(nextPage, '_blank'); // 在新窗口打开下一页
+        }
+
+        function goToPreviousPage() {
+            var currentPage = window.location.pathname.split('/').pop();
+            var pageNumber = parseInt(currentPage.replace(/\D/g, ''));
+            var previousPageNumber = pageNumber - 1;
+            var previousPage = './sy' + previousPageNumber + '.html';
+            window.open(previousPage, '_blank'); // 在新窗口打开上一页
+        }
+    </script>
+</head>
+<body>
+    <a href="/" target="_blank">返回</a>
+    <a href="javascript:void(0)" onclick="goToPreviousPage()">上一页</a>
+    <a href="javascript:void(0)" onclick="goToNextPage()">下一页</a>
+</body>
+<!--上下页-->
+<!--底下显示-->
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+    <div id="gpczxs"></div>
+    <!-- 引用外部JavaScript文件 -->
+    <script src="../js/a.js"></script>
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<!--底下显示-->
+
+
+
+</body>
+</html>

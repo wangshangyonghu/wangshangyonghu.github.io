@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加IIS服务防火墙允许规则教程一搜索:网上用户</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+<meta name="description" content="" />
+</head> <!-- 文档头部结束 -->
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .step-box {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        .step-box:last-child {
+            border-bottom: none;
+            margin-bottom: 10px;
+            padding-bottom: 0;
+        }
+        .step-title {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .step-content {
+            color: #34495e;
+            font-size: 16px;
+            margin-top: 8px;
+            padding-left: 42px;
+        }
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #f39c12;
+            padding: 12px 15px;
+            margin: 15px 0;
+            color: #e67e22;
+            font-size: 14px;
+        }
+        .port-info {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>在防火墙“高级设置”中添加IIS服务允许规则</h1>
+
+        <!-- 步骤1：打开控制面板 -->
+        <div class="step-box">
+            <h3><span class="step-title">1</span>打开控制面板</h3>
+            <div class="step-content">
+                按下键盘上的 <strong>Win + R</strong> 组合键，弹出“运行”窗口。<br>
+                在“运行”窗口的输入框中，输入 <strong>control panel</strong>，然后按下 <strong>Enter</strong> 键，即可打开“控制面板”。
+            </div>
+        </div>
+
+        <!-- 步骤2：进入Windows Defender防火墙 -->
+        <div class="step-box">
+            <h3><span class="step-title">2</span>进入Windows Defender防火墙</h3>
+            <div class="step-content">
+                在“控制面板”界面中，找到并点击 <strong>系统和安全</strong> 选项。<br>
+                在“系统和安全”页面中，继续选择并点击 <strong>Windows Defender 防火墙</strong>。
+            </div>
+        </div>
+
+        <!-- 步骤3：打开高级设置 -->
+        <div class="step-box">
+            <h3><span class="step-title">3</span>打开高级设置</h3>
+            <div class="step-content">
+                进入“Windows Defender 防火墙”主界面后，在左侧的菜单列表中，点击 <strong>高级设置</strong> 选项。<br>
+                点击后会弹出“高级安全 Windows 防火墙”窗口，此窗口用于配置更细致的防火墙规则。
+            </div>
+        </div>
+
+        <!-- 步骤4：选择入站规则 -->
+        <div class="step-box">
+            <h3><span class="step-title">4</span>选择入站规则</h3>
+            <div class="step-content">
+                在“高级安全 Windows 防火墙”窗口的左侧栏中，找到并选择 <strong>入站规则</strong> 选项。<br>
+                选择后，右侧栏会显示当前系统中已有的入站规则列表。
+            </div>
+        </div>
+
+        <!-- 步骤5：新建入站规则 -->
+        <div class="step-box">
+            <h3><span class="step-title">5</span>启动新建规则向导</h3>
+            <div class="step-content">
+                在“入站规则”界面的右侧栏中，点击 <strong>新建规则</strong> 按钮。<br>
+                点击后会弹出“新建入站规则向导”窗口，后续将通过该向导配置IIS服务的允许规则。
+            </div>
+        </div>
+
+        <!-- 步骤6：选择规则类型（端口） -->
+        <div class="step-box">
+            <h3><span class="step-title">6</span>选择规则类型并设置端口</h3>
+            <div class="step-content">
+                在“新建入站规则向导”窗口中，规则类型选择 <strong>端口</strong>，然后点击 <strong>下一步</strong>。<br>
+                进入端口设置页面后，选中 <strong>TCP</strong> 协议，同时勾选 <strong>特定本地端口</strong>。<br>
+                在“特定本地端口”对应的文本框中，输入IIS服务需要开放的端口号：
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li>HTTP协议默认端口：<span class="port-info">80</span></li>
+                    <li>HTTPS协议默认端口：<span class="port-info">443</span>（若使用HTTPS需同时添加）</li>
+                </ul>
+                输入完成后，点击 <strong>下一步</strong>。
+            </div>
+            <div class="note">
+                提示：若同时使用HTTP和HTTPS，可在文本框中用英文逗号分隔两个端口号，如“80,443”。
+            </div>
+        </div>
+
+        <!-- 步骤7：选择连接操作（允许连接） -->
+        <div class="step-box">
+            <h3><span class="step-title">7</span>选择允许连接</h3>
+            <div class="step-content">
+                进入“操作”设置页面后，选中 <strong>允许连接</strong> 选项（此选项表示允许符合规则的网络连接通过防火墙）。<br>
+                选中后点击 <strong>下一步</strong>，进入规则应用场景设置。
+            </div>
+        </div>
+
+        <!-- 步骤8：设置规则应用场景 -->
+        <div class="step-box">
+            <h3><span class="step-title">8</span>设置规则应用场景</h3>
+            <div class="step-content">
+                在“配置文件”页面中，系统会列出规则可应用的场景（域、专用、公用），一般保持默认的全选状态即可（适用于大多数使用场景）。<br>
+                确认选择后，点击 <strong>下一步</strong>，进入规则命名环节。
+            </div>
+        </div>
+
+        <!-- 步骤9：命名并完成规则 -->
+        <div class="step-box">
+            <h3><span class="step-title">9</span>命名规则并完成配置</h3>
+            <div class="step-content">
+                在“名称”输入框中，填入该规则的名称，建议使用便于识别的名称，如 <strong>IIS服务端口允许规则</strong> 或直接输入 <strong>IIS</strong>。<br>
+                若需要添加规则说明（如“开放IIS的80和443端口”），可在“描述”输入框中补充。<br>
+                信息填写完成后，点击 <strong>完成</strong> 按钮，即可成功添加IIS服务的防火墙允许规则。
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<!--底下显示-->
+<a href="/" target="_blank">友情链接:gpc234</a>
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+ <script src="/gpc234/wangshangyonghu/js/tua.js"></script>
+<div id="gpczxstua"></div>
+<hr style=" height:5px;border:none;border-top:2px dotted #ff3844;" />
+<!--底下显示-->

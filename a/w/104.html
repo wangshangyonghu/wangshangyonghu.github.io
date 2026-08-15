@@ -1,0 +1,150 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义HTML文档的根元素，语言为中文（中国大陆） -->
+<head>
+    <!-- 配置视口，确保移动端页面自适应，允许用户缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <!-- 指定页面内容语言为中文（中国大陆） -->
+    <meta http-equiv="content-language" content="zh-cn">
+    <!-- 设置文档的字符编码为UTF-8 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <!-- CSS样式定义部分 -->
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      a {
+        text-decoration: none; /* 去除a标签的下划线 */
+        font-weight: bold; /* 为a标签设置粗体样式 */
+        font-size: 18px; /* 为a标签设置字体大小为18像素 */
+      }
+    </style>
+    
+    <title>中文大写:¥ 壹 贰 叁 肆 伍 陆 柒 捌 玖 拾 佰 仟 万 亿 兆 圆 角 分 零 整一搜索:网上用户</title>
+    <meta name="keywords" content=",搜索:网上用户,网上用户,上网用户,用户,公平村,GPC234,GPCZXS" /><!--关键词-->
+    <meta name="description" content="中文大写:¥ 壹 贰 叁 肆 伍 陆 柒 捌 玖 拾 佰 仟 万 亿 兆 圆 角 分 零 整" />
+</head> <!-- 文档头部结束 -->
+
+
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            padding: 20px;
+            line-height: 1.8;
+            text-align: center;
+        }
+        
+        .control-panel {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        button {
+            padding: 8px 16px;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        button:active {
+            background-color: #3d8b40;
+        }
+        
+        .size-display {
+            margin: 0 15px;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 18px;
+        }
+        
+        .chinese-number {
+            display: inline-block;
+            margin: 8px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: font-size 0.2s ease; /* 平滑过渡效果 */
+            font-size: 32px; /* 初始大小 */
+        }
+    </style>
+</head>
+<body>
+    <div class="control-panel">
+<span class="size-display">当前大小: <span id="current-size">px</span></span>
+<br/>
+        <button id="decrease-btn">减小字体</button>
+        
+        <button id="increase-btn">增大字体</button>
+    </div>
+  
+    <div class="numbers-container"> 
+ 中文大写:<br/>
+        <span class="chinese-number">¥</span>
+        <span class="chinese-number">壹</span>
+        <span class="chinese-number">贰</span>
+        <span class="chinese-number">叁</span>
+        <span class="chinese-number">肆</span>
+        <span class="chinese-number">伍</span>
+        <span class="chinese-number">陆</span>
+        <span class="chinese-number">柒</span>
+        <span class="chinese-number">捌</span>
+        <span class="chinese-number">玖</span>
+        <span class="chinese-number">拾</span>
+        <span class="chinese-number">佰</span>
+        <span class="chinese-number">仟</span>
+        <span class="chinese-number">万</span>
+        <span class="chinese-number">亿</span>
+        <span class="chinese-number">兆</span>
+        <span class="chinese-number">圆</span>
+        <span class="chinese-number">角</span>
+        <span class="chinese-number">分</span>
+        <span class="chinese-number">零</span>
+        <span class="chinese-number">整</span>
+    </div>
+
+    <script>
+        // 获取元素
+        const chineseNumbers = document.querySelectorAll('.chinese-number');
+        const sizeDisplay = document.getElementById('current-size');
+        const increaseBtn = document.getElementById('increase-btn');
+        const decreaseBtn = document.getElementById('decrease-btn');
+        
+        // 初始字体大小
+        let currentSize = 32;
+        
+        // 更新字体大小
+        function updateFontSize() {
+            chineseNumbers.forEach(element => {
+                element.style.fontSize = `${currentSize}px`;
+            });
+            sizeDisplay.textContent = `${currentSize}px`;
+        }
+        
+        // 增大字体按钮事件
+        increaseBtn.addEventListener('click', () => {
+            if (currentSize < 900) { // 最大限制
+                currentSize += 2;
+                updateFontSize();
+            }
+        });
+        
+        // 减小字体按钮事件
+        decreaseBtn.addEventListener('click', () => {
+            if (currentSize > 12) { // 最小限制
+                currentSize -= 2;
+                updateFontSize();
+            }
+        });
+    </script>
+</body>
+</html>
