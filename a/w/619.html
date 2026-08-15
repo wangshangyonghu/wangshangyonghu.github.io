@@ -1,0 +1,89 @@
+<!doctype html> <!-- 声明文档类型为 HTML5 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档，语言设置为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据等信息 -->
+    <!-- 设置视口，适用于手机等移动设备，允许用户缩放页面 -->
+    <meta name="viewport" content=" user-scalable=yes">
+    <!-- 设置文档的语言为中文（中国大陆） -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    <!-- 设置网站的图标，适用于普通浏览器 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
+    <!-- 设置支持任意尺寸的图标 -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
+    <!-- 设置网站的快捷图标 -->
+    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
+    <!-- 设置苹果设备主屏幕上的预合成图标 -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
+    <!-- 设置苹果设备主屏幕上的图标 -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
+    <!-- 设置文档的字符编码为 UTF-8，防止网页出现乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <!-- 设置所有链接无下划线样式，并添加粗体样式 -->
+<!-- css样式定义部分开始 -->
+<style type="text/css">A{text-decoration: none;}</style> <!-- 设置所有链接无下划线样式-->
+<style type="text/css">A{font-weight: bold; }</style> <!-- 设置所有链接为所有 a 标签添加粗体样式-->
+<!-- css样式定义部分结束 --> 
+
+
+ <title>9x9乘法表一可以横屏显示一搜索:网上用户</title>
+<meta name="keywords" content="替换,搜索:网上用户,网上用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,GPC234,GPCZXS" /><!--关键词-->
+<meta name="description" content="" />
+
+
+
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        table {
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: left;
+            margin: 20px 0 20px 20px;
+        }
+
+       .content {
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+
+        <table id="multiplicationTable"></table>
+    </div>
+    <script>
+        const table = document.getElementById('multiplicationTable');
+        for (let i = 1; i <= 9; i++) {
+            const row = document.createElement('tr');
+            for (let j = 1; j <= i; j++) {
+                const cell = document.createElement('td');
+                cell.textContent = `${j} × ${i} = ${i * j}`;
+                row.appendChild(cell);
+            }
+            table.appendChild(row);
+        }
+    </script>
+</body>
+</html>
+    
