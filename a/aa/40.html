@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>微信公众号:网上用户</title>
+<meta name="keywords" content="搜索:网上用户,网上用户,wangshangyonghu,上网用户,用户,公平村,客家人" /><!--关键词-->
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Microsoft YaHei",sans-serif;background:#f5f7fa;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.container{width:100%;max-width:400px;background:#fff;border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.1);padding:30px 20px;text-align:center;}
+.logo{width:80px;height:80px;background:#1677ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:#fff;font-size:24px;font-weight:bold;}
+h1{font-size:26px;color:#1a1a1a;margin-bottom:30px;}
+.qrcode-box{width:100%;max-width:300px;margin:0 auto 25px;border:8px solid #fff;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.08);overflow:hidden;}
+.qrcode-box img{width:100%;height:auto;display:block;}
+.tip{font-size:15px;color:#333;line-height:1.6;margin-bottom:25px;}
+.btn{display:inline-block;width:100%;max-width:280px;padding:14px 0;background:#1677ff;color:#fff;font-size:16px;font-weight:500;border-radius:50px;text-decoration:none;border:none;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(22,119,255,0.3);}
+.btn:hover{background:#4096ff;transform:translateY(-2px);}
+.footer{margin-top:30px;font-size:12px;color:#999;}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="logo">网</div>
+<h1>网上用户</h1>
+
+<div class="qrcode-box">
+<img src="40.jpg" alt="网上用户的公众号二维码">
+</div>
+
+<p class="tip">
+长按识别二维码关注<br>
+或复制名称去微信搜索
+</p>
+
+<button class="btn" onclick="copyText()">点这个一键复制:网上用户</button>
+
+<div class="footer">© 2026 网上用户</div>
+</div>
+
+<script>
+function copyText(){
+  const text="网上用户";
+  const input=document.createElement("input");
+  input.value=text;
+  document.body.appendChild(input);
+  input.select();
+  document.execCommand("copy");
+  document.body.removeChild(input);
+  alert("复制成功："+text);
+}
+</script>
+
+<!--底部显示-->
+<a href="/" target="_blank" style="color: #999; font-size: 12px;">下一页</a>
+ <script src="/a/js/tua.js"></script>
+<div id="gpczxstua"></div>
+<!--底下显示-->
+</body>
+</html>
