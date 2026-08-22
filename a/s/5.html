@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>临时输入框@网上用户</title>
+<meta name="keywords" content="网上用户,临时输入框">
+<meta name="description" content="网上用户专属内容介绍:临时输入框">
+<style>
+html,body{
+    height:100%;
+    margin:0;
+    padding-left:10px;
+    padding-right:10px;
+    box-sizing: border-box;
+}
+textarea{
+    width: 100%;
+    height: 90vh;
+    font-size: 18px;
+    box-sizing: border-box;
+    display:block;
+    margin:0 auto;
+}
+.btns{
+    margin-bottom:10px;
+}
+button{
+    padding:6px 12px;
+    margin-right:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+    <div class="btns">
+        <button onclick="widthAdd()">调大宽度</button>
+        <button onclick="widthSub()">调小宽度</button>
+        <button onclick="widthReset()">重置100%</button>
+        <button onclick="heightAdd()">调大高度</button>
+        <button onclick="heightSub()">调小高度</button>
+        <button onclick="heightReset()">重置高度90%</button>
+        <button onclick="clearCache()">清空缓存内容</button>
+    </div>
+    <textarea id="gpc234" placeholder="输入框"></textarea>
+
+<script>
+let wPercent = 100;
+let hPercent = 90;
+const step = 10;
+const ta = document.getElementById('gpc234');
+const storageKey = "tempTextData";
+
+//页面加载，读取缓存恢复文字
+ta.value = localStorage.getItem(storageKey) || "";
+
+//打字实时自动保存
+ta.addEventListener('input',function(){
+    localStorage.setItem(storageKey,ta.value);
+});
+
+//宽度控制
+function widthAdd(){
+    wPercent += step;
+    ta.style.width = wPercent + '%';
+}
+function widthSub(){
+    wPercent -= step;
+    if(wPercent < 10) wPercent = 10;
+    ta.style.width = wPercent + '%';
+}
+function widthReset(){
+    wPercent = 100;
+    ta.style.width = '100%';
+}
+
+//高度控制
+function heightAdd(){
+    hPercent += step;
+    ta.style.height = hPercent + 'vh';
+}
+function heightSub(){
+    hPercent -= step;
+    if(hPercent < 10) hPercent = 10;
+    ta.style.height = hPercent + 'vh';
+}
+function heightReset(){
+    hPercent = 90;
+    ta.style.height = '90vh';
+}
+//清空缓存按钮
+function clearCache(){
+    ta.value = "";
+    localStorage.removeItem(storageKey);
+}
+</script>
+<script src="/a/js/ico.js"></script>
+</body>
+</html>
