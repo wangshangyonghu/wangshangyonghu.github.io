@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户蟑螂药分享</title>
+    <meta name="keywords" content="网上用户蟑螂药分享,蟑螂药,杀蟑胶饵,蟑螂药全窝端,家用灭蟑螂,厨房除小强,饭店蟑螂杀虫剂" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：杀蟑胶饵全窝端）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+    <!-- 蟑螂药关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 蟑螂药相关关键词
+        const categoryKeywords = {
+            "蟑螂消杀用品全品类": [
+                "蟑螂药", "杀蟑胶饵", "蟑螂药全窝端", "一窝端蟑螂药", "灭小强神器",
+                "家用蟑螂药", "厨房除蟑螂", "饭店蟑螂药", "酒店灭蟑螂", "出租屋除蟑螂",
+                "德国小蠊专杀药", "美洲大蠊灭杀药", "大小蟑螂通杀饵剂", "连环传染蟑螂药", "引蟑回巢毒饵",
+                "呋虫胺蟑螂药", "茚虫威杀蟑胶饵", "氟虫腈灭蟑饵剂", "吡虫啉蟑螂颗粒药", "硼酸灭蟑螂粉",
+                "蟑螂屋", "蟑螂捕捉盒", "强力粘蟑板", "蟑螂诱捕器", "物理捕蟑螂贴",
+                "蟑螂喷雾", "杀虫剂灭蟑螂喷雾", "无味蟑螂喷射药水", "下水道除蟑喷剂", "缝隙杀虫喷雾",
+                "蟑螂饵盒", "杀蟑饵剂盒子", "贴墙蟑螂药盒", "厨房边角灭蟑盒", "家用方便贴蟑螂药",
+                "蟑螂药粉剂", "灭蟑杀虫粉", "墙角撒施蟑螂粉", "缝隙驱虫药粉", "长效防虫粉",
+                "蟑螂烟熏剂", "灭蟑烟雾弹", "全屋熏蟑螂药", "密闭熏杀小强烟雾", "厨房仓库除蟑烟剂",
+                "孕婴家庭蟑螂药", "宠物家庭灭蟑胶饵", "安全低毒蟑螂药", "卧室可用除小强药", "无味无刺激蟑螂饵剂",
+                "蟑螂药针剂", "针管式杀蟑胶饵", "点涂蟑螂药", "缝隙点药胶饵", "支装家用灭蟑药",
+                "晔康杀蟑胶饵", "拜灭士蟑螂药", "科凌虫控蟑螂药", "厚生杀蟑饵剂", "卫将蟑螂药",
+                "蟑螂药套装", "家用灭蟑螂全套组合", "胶饵+蟑螂屋套餐", "厨房全屋除蟑套装", "餐厅消杀蟑螂工具包",
+                "蟑螂药批发", "整箱杀蟑胶饵", "饭店批量蟑螂药", "物业小区除蟑耗材", "宾馆采购灭蟑螂用品",
+                "车载蟑螂药", "汽车除蟑螂药", "车内灭小强饵剂", "驾驶室驱虫药盒", "客车除蟑螂神器",
+                "蟑螂驱避剂", "驱赶蟑螂药", "防蟑螂长效药剂", "橱柜防虫药包", "下水道蟑螂预防药",
+                "蟑螂卵灭杀药", "虫卵双杀蟑螂药", "杀死蟑螂幼虫药剂", "根除蟑螂繁殖药", "一窝端成虫幼虫全灭",
+                "蟑螂药5g支装", "10克杀蟑胶饵", "大支装家用蟑螂药", "大容量餐厅灭蟑胶饵", "多支实惠装蟑螂药",
+                "蟑螂诱饵", "诱蟑螂饵料", "引诱小强食物诱饵", "捕蟑屋专用诱食", "饵剂添加引诱剂",
+                "办公室蟑螂药", "写字楼除小强胶饵", "茶水间灭蟑螂药", "公司食堂蟑螂消杀药", "商铺门店蟑螂药",
+                "仓库蟑螂药", "库房灭蟑螂饵剂", "地下室除小强药剂", "杂物间防蟑螂长效药", "工厂车间蟑螂杀虫剂",
+                "蟑螂药饵颗粒", "颗粒杀蟑饵剂", "撒施型灭蟑螂颗粒", "大面积投放蟑螂药粒", "室外院子除蟑颗粒",
+                "蟑螂贴", "粘蟑螂贴纸", "强力粘捕蟑螂板", "厨房墙角粘虫板", "可折叠蟑螂粘板",
+                "除蟑螂魔盒", "缓释蟑螂药魔盒", "免点涂灭蟑魔盒", "橱柜摆放除小强盒", "卫生间防虫魔盒",
+                "民宿蟑螂药", "公寓除蟑螂胶饵", "火锅店灭蟑螂药", "快餐店消杀小强饵剂", "夜宵店厨房蟑螂药",
+                "蟑螂药家庭囤货装", "多房全屋灭蟑螂套餐", "老房子根治蟑螂药", "反复爆发蟑螂专用药", "老旧小区除小强神器",
+                "蟑螂清理工具", "蟑螂夹镊子", "缝隙给药工具", "除蟑点药器", "蟑螂尸体清扫工具"
+            ]
+        };
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

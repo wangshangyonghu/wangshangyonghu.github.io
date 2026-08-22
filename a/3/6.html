@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户洗发水分享</title>
+    <meta name="keywords" content="网上用户洗发水分享,洗发水,控油洗发水,去屑洗发水,防脱洗发水,柔顺洗发水,无硅油洗发露" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：控油去屑洗发水）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+    <!-- 洗发水关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 洗发水相关关键词
+        const categoryKeywords = {
+            "洗发水洗护用品全品类": [
+                "洗发水", "洗发露", "洗头膏", "控油洗发水", "去屑洗发水",
+                "防脱洗发水", "生发洗发水", "止痒洗发水", "柔顺洗发水", "保湿洗发水",
+                "无硅油洗发水", "氨基酸洗发水", "植物洗发水", "草本洗发水", "生姜洗发水",
+                "何首乌洗发水", "茶籽洗发水", "侧柏叶洗发水", "艾草洗发水", "迷迭香洗发水",
+                "男士洗发水", "男士控油洗发露", "去油洗头膏", "古龙香洗发水", "清爽男士洗发水",
+                "女士洗发水", "留香洗发水", "香氛洗发露", "修护洗发水", "滋养洗发水",
+                "儿童洗发水", "宝宝洗发露", "婴儿洗发水", "温和无泪洗发水", "小孩专用洗头膏",
+                "干枯毛躁洗发水", "烫染修护洗发水", "受损发质洗发露", "补水顺滑洗发水", "护发洗发水",
+                "蓬松洗发水", "高颅顶洗发水", "塌头发质洗发露", "丰盈洗发水", "发根蓬松洗发膏",
+                "止痒控油洗发水", "头油头屑洗发水", "脂溢性洗发水", "头皮清洁洗发水", "深层洁净洗发露",
+                "去油洗发水", "大油头洗发露", "长效控油洗头膏", "清爽去油洗发水", "油性发质洗发水",
+                "修护受损洗发水", "染后护色洗发水", "烫头发质洗发露", "分叉修复洗发水", "柔顺亮泽洗发膏",
+                "生姜防脱洗发水", "增发密发洗发露", "固发洗发水", "养发洗发水", "育发洗头膏",
+                "洗发水大瓶家庭装", "大容量洗发露", "实惠装洗发水", "家用囤货洗发水", "多效洗发套装",
+                "洗发水护发素套装", "洗护二合一", "洗沐二合一", "洗发水沐浴露套装", "洗护三件套",
+                "洗发水小样", "旅行装洗发水", "便携小袋洗发水", "一次性洗发露", "酒店洗发水",
+                "洗发水批发", "整箱洗发水", "理发店大桶洗发水", "民宿宾馆洗发水", "商用洗发露",
+                "花香洗发水", "玫瑰洗发水", "茉莉洗发水", "桂花香洗发露", "薰衣草洗发水",
+                "椰子油洗发水", "橄榄油洗发水", "羊奶洗发水", "牛奶洗发水", "蜂蜜滋养洗发水",
+                "无硫酸盐洗发水", "温和洗发水", "敏感头皮洗发露", "弱酸洗发水", "孕妇可用洗发水",
+                "去螨虫洗发水", "除螨头皮洗发露", "毛囊清洁洗发水", "头皮止痒除螨洗头膏", "清爽除螨洗发水",
+                "白黑客洗发水", "黑发洗发水", "植物黑发洗发露", "养黑发洗头膏", "自然黑发洗发水",
+                "洗发水补充装", "袋装替换装洗发露", "袋装洗发水", "实惠替换洗头膏", "大容量补充液",
+                "洗发水留香持久", "香水型洗发水", "高级香氛洗发露", "持久香味洗头膏", "男女留香洗发水",
+                "干枯发质洗发水", "干性头皮洗发露", "滋润保湿洗发水", "补水养发洗头膏", "营养滋养洗发水",
+                "洗发水去油止痒", "头痒头油洗发露", "头皮清爽洗发水", "去油脂洗头膏", "深层控油洗发露",
+                "青少年洗发水", "学生洗发水", "初高中学生洗发露", "男孩女孩洗头膏", "青少年控油去屑洗发水",
+                "中老年洗发水", "中年养发洗发露", "老年人洗头膏", "滋养发根洗发水", "柔顺保湿洗发露",
+                "洗发水无硅油控油", "无硅油去屑洗发露", "无硅油蓬松洗发水", "无硅油男士洗发膏", "无硅油女士洗发水",
+                "氨基酸控油洗发水", "氨基酸柔顺洗发露", "氨基酸去屑洗发水", "氨基酸儿童洗发膏", "氨基酸修护洗发水"
+            ]
+        };
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

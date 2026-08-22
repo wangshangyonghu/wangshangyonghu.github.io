@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户香皂分享</title>
+    <meta name="keywords" content="网上用户香皂分享,香皂,手工皂,沐浴皂,洗脸皂,精油皂,硫磺皂,抑菌香皂,保湿香皂" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：抑菌香皂）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+    <!-- 香皂关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 香皂相关关键词
+        const categoryKeywords = {
+            "香皂清洁用品全品类": [
+                "香皂", "洗手香皂", "沐浴香皂", "洗脸香皂", "洁面皂",
+                "抑菌香皂", "杀菌香皂", "清洁香皂", "留香香皂", "保湿香皂",
+                "手工皂", "冷制皂", "天然手工香皂", "植物手工皂", "精油手工皂",
+                "精油皂", "薰衣草精油皂", "玫瑰精油皂", "茶树精油皂", "洋甘菊精油皂",
+                "硫磺皂", "硫磺香皂", "除螨硫磺皂", "背部祛痘硫磺皂", "清爽硫磺皂",
+                "香皂批发", "整箱香皂", "酒店香皂", "宾馆一次性香皂", "民宿小香皂",
+                "儿童香皂", "宝宝香皂", "婴儿香皂", "温和儿童沐浴皂", "小孩洗手香皂",
+                "男士香皂", "男士控油香皂", "古龙香皂", "清爽男士皂", "运动香皂",
+                "女士香皂", "香氛香皂", "花香香皂", "润肤香皂", "美白香皂",
+                "羊奶皂", "牛奶香皂", "蜂蜜香皂", "橄榄油香皂", "椰子油香皂",
+                "竹炭香皂", "活性炭洁面皂", "控油竹炭皂", "深层清洁香皂", "黑头香皂",
+                "海盐皂", "沐浴海盐皂", "清洁毛孔香皂", "全身用香皂", "清爽海盐皂",
+                "香皂套装", "香皂礼盒", "手工皂礼盒", "伴手礼香皂", "组合装香皂",
+                "透明香皂", "水晶香皂", "透明手工皂", "彩色香皂", "造型香皂",
+                "卡通香皂", "动物造型香皂", "水果香皂", "花朵香皂", "可爱儿童香皂",
+                "洗澡香皂", "沐浴肥皂", "润肤皂", "身体清洁香皂", "留香沐浴皂",
+                "洗手肥皂", "家用香皂", "家庭装香皂", "宿舍香皂", "学生香皂",
+                "除螨香皂", "背部祛痘香皂", "控油香皂", "清洁毛孔香皂", "改善出油香皂",
+                "滋润香皂", "干皮香皂", "护肤香皂", "柔嫩香皂", "补水香皂",
+                "香皂小包装", "便携香皂", "旅行香皂", "一次性香皂片", "随身香皂纸",
+                "香皂片", "便携香皂片", "洗手香皂片", "儿童香皂片", "旅行清洁香皂片",
+                "起泡网香皂", "香皂起泡网", "打泡网香皂", "泡沫丰富香皂", "细腻泡沫香皂",
+                "香皂盒", "带盖香皂盒", "旅行香皂盒", "沥水香皂盒", "便携香皂盒",
+                "香皂架", "肥皂架", "浴室香皂架", "免打孔香皂架", "沥水肥皂盒",
+                "香皂挂钩", "肥皂吸盘架", "壁挂香皂盒", "卫生间香皂架", "创意香皂盒",
+                "蜂蜜牛奶香皂", "玫瑰香皂", "茉莉香皂", "桂花香皂", "艾草香皂",
+                "薄荷香皂", "清凉香皂", "夏季香皂", "冰爽香皂", "清爽洗脸皂",
+                "祛痘香皂", "粉刺香皂", "控油洁面皂", "深层清洁洁面皂", "温和洁面皂",
+                "敏感肌香皂", "温和香皂", "低敏香皂", "无刺激香皂", "弱酸香皂",
+                "孕妇香皂", "孕期香皂", "产后香皂", "哺乳期香皂", "温和沐浴香皂",
+                "宠物香皂", "狗狗香皂", "猫咪香皂", "宠物沐浴香皂", "猫狗清洁香皂",
+                "洗衣香皂", "肥皂洗衣", "内衣香皂", "内裤香皂", "手洗香皂",
+                "老式香皂", "怀旧香皂", "国货香皂", "国产香皂", "经典香皂",
+                "香皂补充装", "替换装香皂", "家庭实惠装香皂", "大包装香皂", "囤货香皂",
+                "酒店小香皂批发", "宾馆客房香皂", "民宿洗漱香皂", "酒店一次性香皂", "旅馆小肥皂",
+                "儿童卡通香皂", "宝宝洗澡香皂", "婴儿温和香皂", "幼儿园洗手香皂", "儿童抑菌香皂",
+                "男士古龙香皂", "男士沐浴香皂", "男士洗脸香皂", "男士控油洁面皂", "男士清爽香皂",
+                "女士香氛香皂", "女士留香香皂", "女士护肤香皂", "女士沐浴香皂", "女士洁面香皂",
+                "手工皂批发", "手工皂定制", "手工皂伴手礼", "手工皂礼盒装", "天然手工香皂",
+                "冷制手工皂", "植物手工香皂", "天然洁面皂", "温和清洁皂", "保湿手工皂",
+                "精油香皂批发", "香氛精油皂", "薰衣草香皂", "玫瑰香皂", "茶树香皂",
+                "硫磺皂批发", "除螨硫磺香皂", "清洁硫磺皂", "洗澡硫磺皂", "洗手硫磺皂",
+                "竹炭手工皂", "竹炭洁面皂", "控油竹炭香皂", "深层清洁竹炭皂", "黑头清洁皂",
+                "羊奶手工皂", "牛奶手工皂", "蜂蜜手工皂", "橄榄油手工皂", "椰子油手工皂",
+                "海盐手工皂", "沐浴海盐皂", "清洁毛孔手工皂", "全身清洁手工皂", "清爽海盐手工皂",
+                "透明手工皂", "水晶手工皂", "透明香皂", "彩色手工皂", "造型手工皂",
+                "香皂片批发", "便携香皂片批发", "洗手香皂片", "旅行香皂片", "儿童香皂片",
+                "一次性香皂片", "随身香皂片", "迷你香皂片", "口袋香皂片", "外出香皂片",
+                "香皂盒批发", "旅行香皂盒", "带盖香皂盒", "沥水香皂盒", "便携香皂盒",
+                "香皂架批发", "肥皂架批发", "浴室香皂架", "免打孔香皂架", "壁挂香皂盒",
+                "香皂批发整箱", "家用香皂批发", "酒店香皂批发", "宾馆香皂批发", "民宿香皂批发",
+                "家庭装香皂批发", "大包装香皂批发", "实惠装香皂批发", "囤货香皂批发", "一次性香皂批发"
+            ]
+        };
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

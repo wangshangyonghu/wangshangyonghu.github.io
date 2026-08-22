@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户红火蚁药分享</title>
+    <meta name="keywords" content="网上用户红火蚁药分享,红火蚁药,杀红火蚁饵剂,红火蚁全窝端,红蚂蚁药,户外灭红火蚁,菜地红火蚁杀虫剂" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：红火蚁药全窝端）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+    <!-- 红火蚁药关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 红火蚁药相关关键词
+        const categoryKeywords = {
+            "红火蚁防治药品全品类": [
+                "红火蚁药", "红火蚁饵剂", "杀红火蚁药", "红火蚁全窝端", "红火蚁一窝端",
+                "红蚂蚁药", "户外红火蚁药", "菜地红火蚁药", "花园灭红火蚁", "草坪红火蚁杀虫剂",
+                "茚虫威红火蚁饵剂", "呋虫胺杀蚁饵剂", "氟蚁腙红火蚁药", "吡虫啉红火蚁颗粒", "高效氯氰菊酯红火蚁粉剂",
+                "舒绝红火蚁药", "大功达红火蚁饵剂", "火舒净红火蚁粉剂", "红刻杀蚁饵剂", "达豪红火蚁药",
+                "红火蚁颗粒饵剂", "红火蚁诱杀颗粒", "传染灭杀红火蚁药", "连环灭红火蚁饵剂", "引蚁回巢杀蚁药",
+                "红火蚁粉剂", "红火蚁杀虫粉", "触杀型红火蚁药粉", "蚁巢撒施粉剂", "红火蚁专用灭蚁粉",
+                "红火蚁喷雾", "红火蚁杀虫剂喷雾", "灌巢药水", "稀释浇灌蚁巢药液", "红蚂蚁喷射药剂",
+                "家用红火蚁药", "庭院红火蚁饵剂", "农村菜地红火蚁药", "果园灭红火蚁", "绿化带红火蚁防治药",
+                "红火蚁药100g袋装", "红火蚁饵剂500克大包装", "1kg红火蚁颗粒", "大容量红火蚁药", "整箱批发红火蚁饵剂",
+                "红火蚁克星", "红火蚁专用灭杀药", "灭红火蚁特效药", "根除红火蚁药剂", "消灭红火蚁巢穴药",
+                "低毒红火蚁饵剂", "人畜安全红火蚁药", "户外低毒灭蚁颗粒", "小区绿化红火蚁药", "公园红火蚁消杀药剂",
+                "红火蚁撒播器", "饵剂投放工具", "电动撒药机", "红火蚁防治工具箱", "蚁巢监测工具",
+                "农田红火蚁药", "菜园专用红火蚁饵剂", "果树地灭红火蚁", "花卉苗圃红火蚁杀虫剂", "庄稼地红火蚁灭杀颗粒",
+                "预防红火蚁药", "红火蚁驱避药剂", "长效红火蚁防治颗粒", "一季防护红火蚁药", "户外长效灭蚁饵剂",
+                "红火蚁药批发", "农用红火蚁饵剂批量采购", "物业小区消杀红火蚁药", "村镇红火蚁统防统治饵剂", "园林绿化红火蚁药品",
+                "红火蚁灌巢药剂", "水淹蚁巢杀虫药水", "高渗透红火蚁药液", "灭杀蚁后药水", "根除地下蚁巢药剂",
+                "红火蚁咬人消肿药膏", "红火蚁叮咬止痒膏", "红火蚁咬伤皮肤消毒药", "户外防红火蚁用品", "红火蚁防护手套",
+                "红火蚁饵剂小袋装", "单包红火蚁药", "家庭少量蚁巢用药", "阳台花园红火蚁饵剂", "楼顶菜园灭红火蚁颗粒",
+                "野外红火蚁药", "荒地红火蚁灭杀饵剂", "山林红火蚁防治药", "工地红火蚁消杀药剂", "乡村道路红火蚁颗粒",
+                "红火蚁连环毒饵", "工蚁带毒回巢药", "一窝灭杀蚁后饵剂", "全巢覆灭红火蚁药", "根除蚁后红火蚁饵剂",
+                "颗粒型红火蚁药", "缓释红火蚁饵剂", "耐雨水红火蚁颗粒饵剂", "晴天投放红火蚁药", "雨天防水红火蚁药剂",
+                "红火蚁专用杀虫剂", "外来入侵红火蚁灭杀药", "红火蚁防控饵剂", "红火蚁消杀药品", "红蚁巢穴根除剂",
+                "小区物业红火蚁药", "学校操场灭红火蚁饵剂", "幼儿园户外红火蚁防治药", "厂区绿化带红火蚁颗粒", "工业园红火蚁消杀药剂",
+                "红火蚁饵剂套装", "家用红火蚁防治组合", "蚁巢处理全套药品", "户外灭红火蚁工具包", "红火蚁防治家庭套装",
+                "大袋实惠装红火蚁饵剂", "囤货红火蚁药", "多蚁巢大面积灭蚁颗粒", "庭院大面积红火蚁药", "果园整片红火蚁灭杀饵剂",
+                "红火蚁粉剂瓶装", "瓶装红火蚁杀虫粉", "摇晃撒施红火蚁粉", "瓶口撒粉红火蚁药", "便携瓶装红火蚁粉剂"
+            ]
+        };
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

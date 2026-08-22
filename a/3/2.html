@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户碘伏分享</title>
+    <meta name="keywords" content="网上用户碘伏分享,碘伏消毒液,医用碘伏,碘伏棉棒,碘伏棉签,碘伏喷雾,伤口消毒,皮肤消毒液" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：碘伏消毒液）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+    <!-- 碘伏关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+        // 碘伏消毒相关关键词
+        const categoryKeywords = {
+            "碘伏消毒用品全品类": [
+                "碘伏消毒液", "医用碘伏", "碘伏液", "小瓶碘伏", "大桶碘伏",
+                "碘伏棉签", "碘伏棉棒", "一次性碘伏棒", "独立包装碘伏棉签", "折断式碘伏棉棒",
+                "碘伏喷雾", "碘伏喷剂", "喷雾型碘伏消毒液", "按压喷壶碘伏", "家用碘伏喷雾",
+                "碘伏棉球", "无菌碘伏棉球", "罐装碘伏棉花球", "医用脱脂碘伏棉", "伤口清洁棉球",
+                "碘伏棉片", "一次性消毒棉片", "碘伏消毒湿巾", "独立单片碘伏湿巾", "便携消毒湿巾",
+                "0.5%碘伏", "1%碘伏消毒液", "0.2%碘伏", "皮肤专用碘伏", "黏膜可用碘伏",
+                "婴儿碘伏", "宝宝肚脐碘伏", "新生儿脐带消毒碘伏", "儿童伤口碘伏", "小孩专用碘伏棉棒",
+                "伤口消毒碘伏", "擦伤消毒碘伏", "割伤消毒药水", "破皮伤口消毒液", "外伤清洁碘伏",
+                "医用无菌碘伏", "诊所碘伏消毒液", "医院同款碘伏", "家用大瓶装碘伏", "家庭常备碘伏",
+                "便携碘伏", "迷你碘伏小瓶", "随身碘伏棉签", "口袋装碘伏棒", "旅行碘伏消毒套装",
+                "碘伏套装", "碘伏镊子棉球套装", "伤口护理包", "户外急救碘伏包", "家用消毒组合",
+                "不含酒精碘伏", "无刺激碘伏消毒液", "温和碘伏", "不疼碘伏", "低敏碘伏",
+                "碘伏纱布", "碘伏消毒纱布块", "无菌碘伏敷料", "伤口包扎碘伏纱布", "清创纱布",
+                "耳洞消毒碘伏", "打耳洞碘伏棉棒", "耳钉消毒碘伏", "穿刺伤口消毒", "耳眼清洁碘伏",
+                "妇科碘伏", "私处冲洗碘伏", "外阴消毒碘伏", "产后伤口碘伏", "顺产侧切碘伏消毒液",
+                "宠物碘伏", "狗狗伤口碘伏", "猫咪皮肤消毒碘伏", "宠物擦伤消毒液", "动物专用碘伏棉棒",
+                "碘伏批发", "整箱碘伏棉签", "大批量碘伏消毒液", "工厂采购碘伏棉棒", "实惠装碘伏",
+                "翻盖碘伏瓶", "挤压式碘伏", "带喷头碘伏", "碘伏罐装棉花", "碘伏酒精二合一棉棒",
+                "伤口结痂消毒碘伏", "换药碘伏消毒液", "清创消毒药水", "破皮杀菌碘伏", "抑菌碘伏消毒液",
+                "碘伏小支装", "一次性独立碘伏", "单支碘伏棉棒", "急救包碘伏配件", "车载碘伏消毒用品",
+                "幼儿园碘伏棉签", "学校伤口碘伏", "住校学生消毒碘伏", "工地外伤碘伏消毒液", "户外作业碘伏棉棒",
+                "碘伏消毒水", "医用杀菌碘伏", "皮肤伤口抑菌液", "表皮消毒碘伏", "小伤口清洁碘伏",
+                "脱脂棉碘伏棒", "空心折断碘伏棉签", "自流出液碘伏棉棒", "无菌密封碘伏棒", "盒装碘伏棉签50支",
+                "碘伏100ml", "碘伏500ml", "碘伏250ml", "大容量桶装碘伏", "医用消毒液大桶碘伏",
+                "碘伏换药包", "清创套装碘伏", "伤口清理工具碘伏", "居家急救碘伏棉签套装", "出差便携碘伏消毒包",
+                "儿童肚脐消毒棉棒", "新生儿脐带护理碘伏", "婴儿破皮擦伤碘伏", "宝宝蚊虫抓破碘伏", "婴幼儿温和碘伏消毒液",
+                "碘伏皮肤消毒液", "黏膜消毒碘伏", "口腔碘伏棉签", "口腔黏膜消毒碘伏", "牙龈伤口碘伏",
+                "碘伏换药棉球", "无菌消毒棉花碘伏", "一次性清创棉球", "伤口杀菌棉", "消毒脱脂棉球碘伏",
+                "碘伏喷雾小瓶", "随身便携碘伏喷瓶", "按压式消毒喷雾碘伏", "皮肤杀菌喷剂碘伏", "旅行碘伏喷雾消毒液",
+                "碘伏棉棒盒装", "独立包装碘伏棒", "一次性折断碘伏棉签", "随身消毒碘伏棒", "急救碘伏棉签棒",
+                "碘伏医用消毒液", "医用级碘伏", "诊所家用碘伏水", "外伤杀菌碘伏消毒液", "皮肤创面消毒碘伏",
+                "碘伏无酒精配方", "温和不刺激碘伏", "伤口不痛碘伏消毒液", "敏感皮肤碘伏", "孕妇可用碘伏消毒液",
+                "宠物伤口碘伏棉棒", "猫狗皮肤碘伏喷雾", "宠物真菌碘伏消毒水", "动物擦伤碘伏", "猫咪狗狗消毒碘伏",
+                "碘伏耳洞护理套装", "新打耳洞消毒棉棒", "耳洞发炎碘伏", "穿刺部位碘伏消毒液", "耳饰消毒碘伏棉片",
+                "碘伏整箱批发棉签", "大批量采购碘伏消毒液", "医用耗材碘伏棉球", "诊所常备碘伏用品", "卫生院碘伏消毒液",
+                "碘伏纱布敷料", "无菌碘伏纱布块", "伤口覆盖碘伏纱布", "术后换药碘伏纱布", "外科清创碘伏纱布",
+                "碘伏组合套装", "碘伏酒精棉棒套装", "家用外伤消毒全套", "户外急救碘伏用品", "家庭药箱碘伏常备品",
+                "碘伏消毒湿巾单片", "独立碘伏湿纸巾", "皮肤清洁消毒湿巾碘伏", "便携杀菌湿巾碘伏", "随身消毒湿棉碘伏",
+                "碘伏翻盖瓶子", "塑料瓶装碘伏消毒液", "密封碘伏小瓶", "防漏碘伏瓶", "家用碘伏储存瓶",
+                "碘伏换药工具", "伤口清理碘伏套装", "居家清创碘伏用品", "小伤口处理碘伏消毒液", "破皮愈合碘伏消毒水"
+            ]
+        };
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>
