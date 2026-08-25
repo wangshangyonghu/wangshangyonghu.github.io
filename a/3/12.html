@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户垫片平垫分享</title>
+    <meta name="keywords" content="网上用户垫片平垫分享,平垫,金属垫片,不锈钢垫片,铜垫片,铝垫片,弹簧垫圈,密封垫片,五金垫圈" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：不锈钢平垫）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 垫片平垫关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 200个垫片平垫垫圈关键词
+        const categoryKeywords = {
+            "垫片平垫全品类": [
+                "平垫", "垫片", "垫圈", "金属垫片", "五金垫片", "圆形平垫", "方形平垫", "异形垫片", "超薄垫片", "加厚平垫",
+                "304不锈钢平垫", "316不锈钢垫片", "不锈钢垫圈", "铁平垫", "碳钢垫片", "镀锌平垫", "镀镍垫片", "发黑垫圈", "彩锌平垫", "达克罗垫片",
+                "紫铜垫片", "黄铜平垫", "铜垫圈", "纯铜垫片", "导电铜垫", "铝垫片", "铝合金平垫", "铝垫圈", "钛垫片", "无磁平垫",
+                "弹簧垫圈", "弹垫", "开口弹垫", "重型弹簧垫圈", "防松弹垫", "齿形垫圈", "外齿垫片", "内齿垫圈", "内外齿平垫", "防滑齿垫",
+                "波形垫片", "波型垫圈", "波浪弹垫", "碟形垫片", "蝶形垫圈", "碗型垫片", "鞍型弹垫", "弹性垫片", "多层波垫", "耐高温波形垫",
+                "橡胶垫片", "硅胶垫圈", "氟橡胶垫片", "四氟垫片", "PTFE垫圈", "塑料平垫", "尼龙垫片", "PVC垫圈", "绝缘垫片", "硬质塑料垫",
+                "密封垫片", "防水垫圈", "耐油垫片", "耐腐蚀密封垫", "管道垫片", "法兰垫片", "石棉垫片", "非石棉垫圈", "石墨垫片", "金属缠绕垫",
+                "M1平垫", "M1.2垫片", "M1.4垫圈", "M1.6平垫", "M2垫片", "M2.5垫圈", "M3平垫", "M4垫片", "M5垫圈", "M6平垫",
+                "M8垫片", "M10垫圈", "M12平垫", "M14垫片", "M16垫圈", "M20平垫", "M24垫片", "M30垫圈", "微型平垫", "精密小垫片",
+                "加大平垫", "加宽垫片", "大外径垫圈", "窄边平垫", "标准平垫", "国标垫片", "非标垫圈", "定制异形垫片", "冲压平垫", "车床精密垫片",
+                "轴承垫片", "轴用垫圈", "间隙调整垫片", "调整薄垫片", "卡位垫片", "限位垫圈", "挡圈垫片", "平垫组合件", "螺丝配套垫片", "螺栓垫圈套装",
+                "电机垫片", "设备平垫", "机床调整垫", "机械密封垫片", "阀门垫圈", "水泵垫片", "空压机密封垫", "液压垫片", "气动垫圈", "油管密封垫",
+                "汽车垫片", "电动车平垫", "摩托车垫圈", "发动机垫片", "排气管垫片", "水箱密封垫", "车灯防水垫圈", "底盘减震垫片", "刹车片垫片", "油底壳垫片",
+                "光伏垫片", "太阳能平垫", "幕墙垫圈", "门窗垫片", "铝合金门窗平垫", "塑钢垫圈", "家具垫片", "橱柜平垫", "货架垫圈", "五金连接件垫片",
+                "电子垫片", "电路板平垫", "绝缘垫圈", "导电垫片", "散热铜垫片", "笔记本垫片", "机箱平垫", "仪器调整垫片", "眼镜小垫片", "数码设备垫圈",
+                "耐高温金属垫", "耐低温垫片", "户外防锈平垫", "海水耐腐蚀垫片", "食品级硅胶垫圈", "医用垫片", "环保无油垫片", "阻燃塑料垫圈", "高压密封垫片", "低压平垫",
+                "彩色垫片", "黑色平垫", "金色铜垫", "银色不锈钢垫", "喷漆垫片", "电泳垫圈", "抛光平垫", "磨砂垫片", "光亮垫圈", "防锈处理垫片",
+                "散装平垫", "盒装垫片套装", "混合垫圈包", "垫片收纳盒", "分类垫片盒", "垫片托盘", "垫片分装盒", "螺丝垫片组合包", "维修垫片包", "工业垫片整包",
+                "方形调整垫片", "长方形金属垫", "U型垫片", "L型垫圈", "梅花垫片", "锯齿平垫", "防滑垫片", "减震垫圈", "缓冲垫片", "降噪金属垫",
+                "法兰平垫", "管道法兰垫圈", "锅炉垫片", "暖气密封垫", "水管橡胶垫圈", "水龙头垫片", "卫浴防水垫圈", "热水器密封垫", "燃气垫片", "煤气管道垫圈",
+                "骑马卡垫片", "管卡平垫", "桥架垫圈", "配电柜垫片", "机柜平垫", "服务器绝缘垫", "空调固定垫片", "洗衣机减震垫", "冰箱密封垫圈", "电视挂架垫片",
+                "手拧螺丝垫片", "加厚防滑垫圈", "薄款调整垫片", "多层叠加垫片", "复合垫片", "金属橡胶复合垫", "石墨金属垫片", "四氟包覆垫片", "缠绕密封垫圈", "平垫弹垫组合垫"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

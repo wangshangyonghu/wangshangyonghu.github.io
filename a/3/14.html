@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户卫生巾分享</title>
+    <meta name="keywords" content="网上用户卫生巾分享,纯棉卫生巾,日用姨妈巾,超长夜用,安睡裤,产妇卫生巾,医用级护垫,经期护理" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：纯棉卫生巾）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 卫生巾关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 200个卫生巾经期护理关键词
+        const categoryKeywords = {
+            "卫生巾经期护理全品类": [
+                "卫生巾", "姨妈巾", "卫生棉", "经期垫", "女性护理垫", "日用卫生巾", "240mm姨妈巾", "245mm棉柔巾", "超薄日用", "轻薄透气卫生巾",
+                "夜用卫生巾", "290mm夜用", "350mm加长夜用", "420mm超长夜用", "大流量夜用", "防漏夜用姨妈巾", "安睡裤", "裤型卫生巾", "经期安心裤", "高腰安睡裤",
+                "迷你卫生巾", "180mm迷你巾", "量少专用巾", "护垫", "卫生护垫", "150mm护垫", "透气小护垫", "无香护垫", "弱酸护垫", "抑菌护垫",
+                "纯棉卫生巾", "全棉表层姨妈巾", "有机棉卫生巾", "棉柔卫生巾", "干爽网面卫生巾", "液体卫生巾", "竹纤维卫生巾", "艾草卫生巾", "负离子卫生巾", "竹炭抑菌姨妈巾",
+                "医用级卫生巾", "械字号姨妈巾", "无菌消毒卫生巾", "敏感肌专用", "少女学生卫生巾", "初中生姨妈巾", "高中生经期垫", "平价学生卫生巾", "大容量吸收巾", "瞬吸防反渗卫生巾",
+                "产妇卫生巾", "月子专用垫", "计量型产妇巾", "产后排恶露垫", "加大产褥垫", "产妇安睡裤", "孕妇卫生巾", "剖腹产专用垫", "产后组合装", "月子护理套装",
+                "独立包装卫生巾", "单片密封姨妈巾", "便携小包装", "随身迷你包", "组合装卫生巾", "日夜组合套装", "日夜护垫三件套", "整箱批发卫生巾", "散装姨妈巾", "家庭实惠装",
+                "无荧光剂卫生巾", "0甲醛姨妈巾", "无香精护垫", "无刺激经期垫", "弱酸亲肤卫生巾", "透气底膜姨妈巾", "加宽护翼卫生巾", "加高防漏边", "防侧漏姨妈巾", "后漏加长尾翼",
+                "超薄款卫生巾", "薄款无感姨妈巾", "厚款大容量垫", "加长加宽卫生巾", "大扇尾夜用巾", "立体护围姨妈巾", "不闷汗经期垫", "夏季透气卫生巾", "冰感清凉姨妈巾", "暖宫艾草垫",
+                "运动专用卫生巾", "健身防移位姨妈巾", "游泳卫生棉条", "导管式棉条", "内置卫生棉棒", "隐形经期棉条", "可水洗布卫生巾", "重复使用姨妈垫", "漏尿专用卫生巾", "老人失禁护垫",
+                "草本抑菌卫生巾", "中药艾草姨妈巾", "止痒舒缓护垫", "去异味经期垫", "平衡私处PH卫生巾", "抑菌透气姨妈巾", "远红外护理垫", "暖贴卫生巾", "经期暖宫贴", "痛经舒缓贴",
+                "小包装便携卫生巾", "旅行装姨妈巾", "出差随身护垫", "口袋迷你巾", "独立无菌单片", "高颜值少女卫生巾", "彩色包装姨妈巾", "网红轻薄安睡裤", "高弹裤型姨妈巾", "弹力腰围安心裤",
+                "加大码安睡裤", "XL码经期裤", "大体重安心裤", "无痕安睡裤", "柔软棉柔安睡裤", "干爽网面安心裤", "整夜防漏裤", "产后安睡裤", "夜安裤组合", "一次性经期裤",
+                "加长护垫", "加长迷你巾", "无护翼卫生巾", "有护翼姨妈巾", "加宽吸收芯", "高分子锁水芯", "绒毛浆卫生巾", "全芯体姨妈巾", "双层吸收垫", "多层锁水经期巾",
+                "国产平价卫生巾", "国货纯棉姨妈巾", "进口有机棉垫", "高端抑菌卫生巾", "性价比整箱姨妈巾", "工厂批发卫生巾", "电商专供组合装", "美容院专用护理垫", "诊所无菌姨妈巾", "医院产妇专用垫",
+                "私处护理湿巾", "经期抑菌湿巾", "弱酸私处洗液", "经期清洗液", "内裤清洗皂", "内衣专用洗衣液", "一次性经期内裤", "纯棉生理内裤", "防漏安全裤", "经期隔尿垫",
+                "车载便携卫生巾", "宿舍囤货姨妈巾", "住校学生组合装", "办公室备用护垫", "户外出行经期垫", "长途旅行卫生巾", "夜班专用超长巾", "熬夜大流量姨妈巾", "经期暖宝宝", "私处护理凝胶",
+                "大流量日用卫生巾", "量大日用加长巾", "少量经期迷你垫", "经期收尾护垫", "排卵期专用护垫", "白带护理垫", "孕期分泌物护垫", "产后少量恶露垫", "中老年漏尿护垫", "轻度失禁卫生巾",
+                "轻薄液体姨妈巾", "弹力贴身卫生巾", "不磨腿经期垫", "柔软表层姨妈巾", "透气不闷热护垫", "快速吸收姨妈巾", "不反渗锁水垫", "干爽不黏腻经期巾", "加宽尾部防漏巾", "加高侧边防漏垫"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>

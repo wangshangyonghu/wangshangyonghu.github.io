@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上用户内裤分享</title>
+    <meta name="keywords" content="网上用户内裤分享,纯棉内裤,男士平角裤,女士三角内裤,无痕冰丝内裤,少女学生内裤,高腰收腹内裤,抗菌抑菌内裤,大码宽松内裤" />
+    <style>
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .search-form {
+            display: flex;
+            height: 44px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 0 15px;
+            border: 1px solid #ff4400;
+            border-right: none;
+            outline: none;
+            font-size: 14px;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+        }
+        .search-btn {
+            min-width: 80px;
+            background-color: #ff4400;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #f53f00;
+        }
+        .keyword-category {
+            margin: 25px 0;
+        }
+        .category-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-left: 3px solid #ff4400;
+            padding-left: 8px;
+        }
+        .keyword-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-btn {
+            padding: 6px 14px;
+            background-color: #fff;
+            border: 1px solid #ff4400;
+            color: #ff4400;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .keyword-btn:hover {
+            background-color: #ff4400;
+            color: #fff;
+        }
+        .btn-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .app-btn {
+            display: inline-block;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .app-btn:hover {
+            background-color: #bae7ff;
+            color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 搜索框区域 -->
+    <div class="search-wrapper">
+        <form class="search-form" id="searchForm">
+            <input type="search" class="search-input" name="q" placeholder="请输入搜索关键词（如：纯棉无痕内裤）" required>
+            <button type="submit" class="search-btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 店铺按钮容器 -->
+    <div class="btn-container">
+        <a href="/" target="_blank" class="app-btn"></a>
+    </div>
+
+    <!-- 内裤关键词区域 -->
+    <div style="max-width: 700px; margin: 0 auto;">
+        <div id="linkContainer"></div>
+    </div>
+
+    <script>
+        // 统一设备判断
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 顶部搜索跳转链接
+        const urls = {
+            // mobileApp 手机端唤起淘宝APP链接
+            mobileApp: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // mobileWeb 手机浏览器网页链接
+            mobileWeb: "https://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcWeb 电脑PC端网页链接
+            pcWeb: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 关键词跳转链接
+        const linksConfig = {
+            // mobileBase 关键词跳转-手机唤起淘宝APP链接
+            mobileBase: "taobao://ai.m.taobao.com/search.html?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781582035%402103e876_1697_19ece907902_04ff%4001&q=",
+            // pcBase 关键词跳转-电脑PC端网页链接
+            pcBase: "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401781581630%400b11d4cc_15e6_19ece8a4d26_050d%4001&key="
+        };
+
+        // 150个内裤全品类关键词
+        const categoryKeywords = {
+            "内裤全品类大全": [
+                "内裤", "内衣裤", "三角裤", "平角裤", "四角内裤", "无痕内裤", "纯棉内裤", "冰丝内裤", "莫代尔内裤", "蕾丝内裤",
+                "男士内裤", "男士平角裤", "宽松四角裤", "紧身男士内裤", "冰丝男内裤", "纯棉抑菌男裤", "运动速干男内裤", "中腰男士内裤", "高腰大码男裤", "低腰潮流男内裤",
+                "女士内裤", "女士三角裤", "高腰收腹内裤", "中腰透气女裤", "低腰性感内裤", "无痕冰丝女内裤", "蕾丝花边内裤", "纯色棉柔女裤", "少女简约内裤", "大码胖mm内裤",
+                "少女学生内裤", "初中生内裤", "高中生棉质内裤", "发育期少女内裤", "无束缚少女裤", "纯色简约少女内裤", "浅色系学生内裤", "小清新印花内裤", "透气薄款少女裤", "平价学生内裤",
+                "儿童内裤", "男童平角内裤", "女童三角内裤", "宝宝纯棉内裤", "无骨儿童内裤", "卡通印花童裤", "中大童透气内裤", "婴幼儿宽松内裤", "不夹臀儿童内裤", "四季薄款童内裤",
+                "高腰收腹内裤", "产后束腰内裤", "提臀塑形内裤", "收小肚子内裤", "产后修复内裤", "高弹塑形内裤", "不卷边高腰内裤", "大肚腩专用内裤", "产后月子收腹裤", "紧身塑形三角裤",
+                "抗菌抑菌内裤", "艾草抑菌内裤", "银离子抗菌内裤", "弱酸养护内裤", "纯棉抑菌底裆", "透气除味内裤", "妇科护理内裤", "敏感肌专用内裤", "无荧光抑菌内裤", "无痕养护内裤",
+                "无痕冰丝内裤", "一片式无痕内裤", "不卷边冰丝裤", "超薄裸感内裤", "夏天清凉冰丝裤", "西装无痕打底裤", "婚纱隐形内裤", "超薄不闷冰丝内裤", "高弹贴合无痕裤", "纯色冰丝内裤",
+                "纯棉透气内裤", "新疆棉内裤", "精梳棉内裤", "全棉底裆内裤", "吸汗透气棉内裤", "四季纯棉内裤", "薄款网眼棉内裤", "加厚保暖棉内裤", "无刺激亲肤棉裤", "水洗不变形棉内裤",
+                "大码宽松内裤", "加肥加大内裤", "200斤胖人内裤", "中老年宽松内裤", "不勒腰大码内裤", "高弹加大四角裤", "孕妇宽松托腹内裤", "产后加大码内裤", "肥佬透气内裤", "宽边不勒肉内裤",
+                "孕妇托腹内裤", "孕期高腰托腹裤", "可调节松紧内裤", "产后月子内裤", "不勒肚子孕妇裤", "透气纯棉托腹裤", "孕晚期加大内裤", "轻薄冰丝孕妇内裤", "宽松无束缚孕妇裤", "产妇专用一次性内裤",
+                "一次性内裤", "旅行免洗内裤", "出差独立包装内裤", "月子一次性内裤", "无菌消毒一次性裤", "酒店便携一次性内裤", "纯棉一次性内裤", "旅游囤货内裤", "独立单片包装内裤", "产后待产一次性内裤",
+                "运动速干内裤", "健身透气内裤", "跑步不闷速干裤", "骑行弹力内裤", "篮球男士运动内裤", "瑜伽无痕打底内裤", "排汗速干四角裤", "紧身低阻运动内裤", "户外徒步透气内裤", "高弹不夹臀运动裤",
+                "中老年宽松内裤", "老人不勒腰内裤", "松口高腰老年裤", "透气纯棉老年内裤", "加大宽松四角裤", "纯色简约老年内裤", "柔软不磨肤内裤", "中老年人抑菌内裤", "秋冬加厚保暖内裤", "夏季薄款老年内裤",
+                "性感蕾丝内裤", "镂空透视蕾丝裤", "低腰花边内裤", "法式轻奢蕾丝内裤", "网纱薄款性感裤", "蝴蝶结装饰内裤", "透明冰丝蕾丝裤", "纯色温柔蕾丝内裤", "小众设计感蕾丝裤", "约会氛围感内裤",
+                "四季薄款内裤", "夏季清凉超薄内裤", "网眼透气薄内裤", "空调房薄款棉内裤", "裸感无感薄内裤", "不闷汗浅薄内裤", "春秋百搭薄款内裤", "纯色简约薄内裤", "冰丝清凉超薄裤", "透气网纱薄内裤",
+                "秋冬保暖内裤", "加绒加厚内裤", "德绒保暖内裤", "厚款纯棉保暖裤", "中老年防寒内裤", "居家加厚四角裤", "高腰护肚保暖内裤", "柔软加厚亲肤裤", "东北防寒厚内裤", "恒温保暖德绒内裤",
+                "量贩组合内裤", "五条装女士内裤", "十条装男士内裤", "家庭混装内裤套装", "男女情侣内裤组合", "儿童四季组合内裤", "整箱批发平价内裤", "多色混搭套装内裤", "囤货实惠组合内裤", "独立包装礼盒内裤",
+                "情侣配对内裤", "情侣印花内裤", "简约纯色情侣裤", "可爱卡通情侣内裤", "网红ins情侣套装", "夫妻成对四角三角裤", "礼盒装情侣内裤", "小众设计情侣内裤", "温柔浅色系情侣裤", "纪念日送礼情侣内裤",
+                "功能专用内裤", "防走光打底内裤", "经期防漏生理内裤", "测排卵护理内裤", "痔疮宽松四角内裤", "久坐透气办公内裤", "舞蹈隐形打底内裤", "出差便携一次性内裤", "术后宽松护理内裤", "户外徒步速干内裤",
+                "纯色基础内裤", "黑色百搭内裤", "白色简约内裤", "灰色日常内裤", "米色温柔内裤", "藏青通勤内裤", "浅粉少女纯色裤", "纯色无图案基础裤", "耐脏深色内裤", "浅色系百搭内裤",
+                "低腰潮流内裤", "男生低腰四角裤", "女生低腰三角内裤", "潮流街头低腰裤", "紧身贴合低腰内裤", "冰丝超薄低腰裤", "年轻简约低腰内裤", "不闷低腰透气裤", "网红低腰无痕内裤", "休闲百搭低腰内裤"
+            ]
+        };
+
+        // 生成关键词按钮
+        function generateLinks() {
+            const container = document.getElementById("linkContainer");
+            if (!container) return;
+            const baseUrl = isMobileDevice() ? linksConfig.mobileBase : linksConfig.pcBase;
+            Object.entries(categoryKeywords).forEach(([category, keywords]) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "keyword-category";
+                const titleElement = document.createElement("div");
+                titleElement.className = "category-title";
+                titleElement.textContent = category;
+                categoryDiv.appendChild(titleElement);
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "keyword-buttons";
+                const uniqueKeywords = [...new Set(keywords)].filter(k => k.trim());
+                uniqueKeywords.forEach(keyword => {
+                    const link = document.createElement("a");
+                    link.href = baseUrl + encodeURIComponent(keyword);
+                    link.target = "_blank";
+                    link.textContent = keyword;
+                    link.className = "keyword-btn";
+                    buttonsDiv.appendChild(link);
+                });
+                categoryDiv.appendChild(buttonsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            // 搜索框聚焦
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            // 渲染关键词
+            generateLinks();
+
+            // 搜索表单提交事件
+            const searchForm = document.getElementById('searchForm');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputValue = searchInput.value.trim();
+                if (!inputValue) {
+                    alert('请输入搜索关键词');
+                    return;
+                }
+                const encodedKeyword = encodeURIComponent(inputValue);
+                const isMobile = isMobileDevice();
+                if (isMobile) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = urls.mobileApp + encodedKeyword;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        window.location.href = urls.mobileWeb + encodedKeyword;
+                    }, 300);
+                } else {
+                    window.location.href = urls.pcWeb + encodedKeyword;
+                }
+            });
+
+            // 店铺链接自动切换淘宝APP协议
+            document.querySelectorAll('.app-btn').forEach(link => {
+                if (isMobileDevice()) {
+                    link.href = link.href.replace('https://', 'taobao://');
+                }
+            });
+        });
+    </script>
+
+    <!-- 外部样式与脚本 -->
+    <link rel="stylesheet" href="/a/js/bj.css">
+    <link rel="stylesheet" href="/a/js/xhx.css">
+    <link rel="stylesheet" href="/a/js/h.css">
+
+    <script src="/a/js/ico.js"></script>
+</body>
+</html>
