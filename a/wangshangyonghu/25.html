@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五华县 镇‑村名录</title>
+    <style>
+        *{box-sizing: border-box;margin:0;padding:0;}
+        body{background:#f5f7fa;padding:15px;max-width:1000px;margin:0 auto;}
+        h1{text-align:center;color:#2c3e50;margin-bottom:15px;font-size:22px;}
+        .btn-group{text-align:center;margin-bottom:20px;gap:10px;display:flex;justify-content:center;flex-wrap:wrap;}
+        .ctrl-btn{
+            background:#007bff;
+            color:#fff;
+            border:none;
+            padding:10px 20px;
+            border-radius:5px;
+            font-size:16px;
+            cursor:pointer;
+        }
+        .ctrl-btn:hover{background:#005dc1;}
+        .town-item{margin-bottom:8px;}
+        .town-title{
+            display:block;
+            width:100%;
+            background:#2575d9;
+            color:#fff;
+            border:none;
+            text-align:left;
+            padding:12px 16px;
+            font-size:17px;
+            border-radius:6px;
+            cursor:pointer;
+            transition: background 0.2s;
+        }
+        .town-title:hover{background:#1d5fb3;}
+        .village-box{
+            padding:12px 18px;
+            background:#ffffff;
+            border:1px solid #ddd;
+            border-top:none;
+            border-radius:0 0 6px 6px;
+            display:none;
+        }
+        .village-box.open{display:block;}
+        .village-item{
+            display:inline-block;
+            background:#ecf2f9;
+            padding:5px 10px;
+            margin:4px 3px;
+            border-radius:4px;
+            font-size:15px;
+        }
+        .community-item{
+            display:inline-block;
+            background:#ffe9cc;
+            padding:5px 10px;
+            margin:4px 3px;
+            border-radius:4px;
+            font-size:15px;
+        }
+        .div-line{
+            margin:12px 0 6px 0;
+            border:0;
+            border-top:1px solid #dddddd;
+        }
+        .tip{
+            text-align:center;
+            color:#666;
+            margin-bottom:15px;
+            font-size:14px;
+        }
+        .data-info{
+            margin-top:40px;
+            padding:15px;
+            background:#fff;
+            border:1px solid #ddd;
+            border-radius:6px;
+            color:#555;
+            font-size:14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>广东省梅州市五华县 村镇列表</h1>
+    <div class="tip">点击镇名展开/收起下属村庄、社区</div>
+    <div class="btn-group">
+        <button class="ctrl-btn" id="expandAll">一键全部展开</button>
+        <button class="ctrl-btn" id="collapseAll">一键全部收起</button>
+    </div>
+    <div class="town-item">
+        <button class="town-title">河东镇(43个村+3个社区)</button>
+        <div class="village-box">
+            <span class="village-item">走马村</span>
+            <span class="village-item">下一村</span>
+            <span class="village-item">下陶村</span>
+            <span class="village-item">三田村</span>
+            <span class="village-item">林石村</span>
+            <span class="village-item">增塘村</span>
+            <span class="village-item">下二村</span>
+            <span class="village-item">大嵩村</span>
+            <span class="village-item">桂田村</span>
+            <span class="village-item">枫林村</span>
+            <span class="village-item">苑河村</span>
+            <span class="village-item">高榕村</span>
+            <span class="village-item">洋坑村</span>
+            <span class="village-item">蝉塘村</span>
+            <span class="village-item">黎塘村</span>
+            <span class="village-item">苑堂村</span>
+            <span class="village-item">黄湖村</span>
+            <span class="village-item">万华村</span>
+            <span class="village-item">平西村</span>
+            <span class="village-item">澄塘村</span>
+            <span class="village-item">河口村</span>
+            <span class="village-item">化裕村</span>
+            <span class="village-item">黄坑村</span>
+            <span class="village-item">东溪村</span>
+            <span class="village-item">牛石村</span>
+            <span class="village-item">和民村</span>
+            <span class="village-item">黄泥寨村</span>
+            <span class="village-item">太和村</span>
+            <span class="village-item">赛洞村</span>
+            <span class="village-item">高车塘村</span>
+            <span class="village-item">桂岭村</span>
+            <span class="village-item">沙渴村</span>
+            <span class="village-item">布头村</span>
+            <span class="village-item">再新村</span>
+            <span class="village-item">联岭村</span>
+            <span class="village-item">宝瑞村</span>
+            <span class="village-item">油新村</span>
+            <span class="village-item">浮湖村</span>
+            <span class="village-item">平东村</span>
+            <span class="village-item">下村村</span>
+            <span class="village-item">油田村</span>
+            <span class="village-item">再坑村</span>
+            <span class="village-item">罗塘村</span>
+            <hr class="div-line">
+            <span class="community-item">河东社区</span>
+            <span class="community-item">油田社区</span>
+            <span class="community-item">平南社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">安流镇(42个村+4个社区)</button>
+        <div class="village-box">
+            <span class="village-item">三江村</span>
+            <span class="village-item">大同村</span>
+            <span class="village-item">福陂村</span>
+            <span class="village-item">龙中村</span>
+            <span class="village-item">半径村</span>
+            <span class="village-item">双福村</span>
+            <span class="village-item">大和村</span>
+            <span class="village-item">福龙村</span>
+            <span class="village-item">学园村</span>
+            <span class="village-item">吉程村</span>
+            <span class="village-item">楼江村</span>
+            <span class="village-item">胜利村</span>
+            <span class="village-item">福华村</span>
+            <span class="village-item">学少村</span>
+            <span class="village-item">葵樟村</span>
+            <span class="village-item">双径村</span>
+            <span class="village-item">福西村</span>
+            <span class="village-item">大九村</span>
+            <span class="village-item">长江村</span>
+            <span class="village-item">联新村</span>
+            <span class="village-item">完塘村</span>
+            <span class="village-item">福江村</span>
+            <span class="village-item">里江村</span>
+            <span class="village-item">联和村</span>
+            <span class="village-item">低坑村</span>
+            <span class="village-item">青江村</span>
+            <span class="village-item">福岭村</span>
+            <span class="village-item">石门村</span>
+            <span class="village-item">蓝田村</span>
+            <span class="village-item">东礼村</span>
+            <span class="village-item">五联村</span>
+            <span class="village-item">红山村</span>
+            <span class="village-item">樟潭村</span>
+            <span class="village-item">洑溪村</span>
+            <span class="village-item">文葵村</span>
+            <span class="village-item">上布村</span>
+            <span class="village-item">龙楼村</span>
+            <span class="village-item">半田村</span>
+            <span class="village-item">丰联村</span>
+            <span class="village-item">河沿村</span>
+            <span class="village-item">万塘村</span>
+            <span class="village-item">吉水村</span>
+            <hr class="div-line">
+            <span class="community-item">安镇社区</span>
+            <span class="community-item">司前社区</span>
+            <span class="community-item">文葵社区</span>
+            <span class="community-item">大都社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">龙村镇(37个村+3个社区)</button>
+        <div class="village-box">
+            <span class="village-item">龙村村</span>
+            <span class="village-item">湖中村</span>
+            <span class="village-item">榕溪村</span>
+            <span class="village-item">南口村</span>
+            <span class="village-item">金龙村</span>
+            <span class="village-item">三湖村</span>
+            <span class="village-item">吉祥村</span>
+            <span class="village-item">柏溪村</span>
+            <span class="village-item">梧溪村</span>
+            <span class="village-item">宫前村</span>
+            <span class="village-item">先河村</span>
+            <span class="village-item">新艳村</span>
+            <span class="village-item">樟华村</span>
+            <span class="village-item">洞口村</span>
+            <span class="village-item">留畲村</span>
+            <span class="village-item">云溪村</span>
+            <span class="village-item">潭溪村</span>
+            <span class="village-item">大坑村</span>
+            <span class="village-item">黄洞村</span>
+            <span class="village-item">南洞村</span>
+            <span class="village-item">石溪村</span>
+            <span class="village-item">睦贤村</span>
+            <span class="village-item">营田村</span>
+            <span class="village-item">南中村</span>
+            <span class="village-item">翻新村</span>
+            <span class="village-item">登畲村</span>
+            <span class="village-item">老田村</span>
+            <span class="village-item">梅蓄新村</span>
+            <span class="village-item">公联村</span>
+            <span class="village-item">兴民村</span>
+            <span class="village-item">硝芳村</span>
+            <span class="village-item">杜坑村</span>
+            <span class="village-item">下滩村</span>
+            <span class="village-item">水南村</span>
+            <span class="village-item">塘湖村</span>
+            <span class="village-item">大梧村</span>
+            <span class="village-item">水口村</span>
+            <hr class="div-line">
+            <span class="community-item">龙村社区</span>
+            <span class="community-item">硝芳社区</span>
+            <span class="community-item">登畲社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">横陂镇(35个村+3个社区)</button>
+        <div class="village-box">
+            <span class="village-item">红光村</span>
+            <span class="village-item">西湖村</span>
+            <span class="village-item">近江村</span>
+            <span class="village-item">兴华村</span>
+            <span class="village-item">班鱼村</span>
+            <span class="village-item">东山村</span>
+            <span class="village-item">石下村</span>
+            <span class="village-item">老楼村</span>
+            <span class="village-item">坝头村</span>
+            <span class="village-item">桐树村</span>
+            <span class="village-item">联长村</span>
+            <span class="village-item">叶湖村</span>
+            <span class="village-item">罗陂村</span>
+            <span class="village-item">田布村</span>
+            <span class="village-item">双联村</span>
+            <span class="village-item">新联村</span>
+            <span class="village-item">新寨村</span>
+            <span class="village-item">湖塘村</span>
+            <span class="village-item">小都村</span>
+            <span class="village-item">横陂村</span>
+            <span class="village-item">杨恩村</span>
+            <span class="village-item">长塘村</span>
+            <span class="village-item">贵人村</span>
+            <span class="village-item">崇文村</span>
+            <span class="village-item">超群村</span>
+            <span class="village-item">东升村</span>
+            <span class="village-item">长兴村</span>
+            <span class="village-item">章联村</span>
+            <span class="village-item">夏阜村</span>
+            <span class="village-item">增华村</span>
+            <span class="village-item">安全村</span>
+            <span class="village-item">江南村</span>
+            <span class="village-item">华阁村</span>
+            <span class="village-item">坑口村</span>
+            <span class="village-item">增大村</span>
+            <hr class="div-line">
+            <span class="community-item">横陂社区</span>
+            <span class="community-item">锡坑社区</span>
+            <span class="community-item">小都社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">华城镇(34个村+3个社区)</button>
+        <div class="village-box">
+            <span class="village-item">董源村</span>
+            <span class="village-item">南方村</span>
+            <span class="village-item">高竹村</span>
+            <span class="village-item">城镇村</span>
+            <span class="village-item">洋田村</span>
+            <span class="village-item">河子口村</span>
+            <span class="village-item">黄金村</span>
+            <span class="village-item">万子村</span>
+            <span class="village-item">新一村</span>
+            <span class="village-item">新亨村</span>
+            <span class="village-item">河亨村</span>
+            <span class="village-item">黄埔村</span>
+            <span class="village-item">观源村</span>
+            <span class="village-item">新二村</span>
+            <span class="village-item">铁炉村</span>
+            <span class="village-item">湖田村</span>
+            <span class="village-item">塔岗村</span>
+            <span class="village-item">新建村</span>
+            <span class="village-item">葵富村</span>
+            <span class="village-item">西林村</span>
+            <span class="village-item">城东村</span>
+            <span class="village-item">新四村</span>
+            <span class="village-item">满堂村</span>
+            <span class="village-item">兴一村</span>
+            <span class="village-item">齐乐村</span>
+            <span class="village-item">新五村</span>
+            <span class="village-item">红星村</span>
+            <span class="village-item">兴中村</span>
+            <span class="village-item">维新村</span>
+            <span class="village-item">华安村</span>
+            <span class="village-item">高华村</span>
+            <span class="village-item">新兴村</span>
+            <span class="village-item">维西村</span>
+            <span class="village-item">民主村</span>
+            <hr class="div-line">
+            <span class="community-item">东区社区</span>
+            <span class="community-item">西区社区</span>
+            <span class="community-item">新桥社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">棉洋镇(26个村+2个社区)</button>
+        <div class="village-box">
+            <span class="village-item">黎洞村</span>
+            <span class="village-item">联西村</span>
+            <span class="village-item">平安村</span>
+            <span class="village-item">唐纯村</span>
+            <span class="village-item">富强村</span>
+            <span class="village-item">竹坑村</span>
+            <span class="village-item">荣华村</span>
+            <span class="village-item">美田村</span>
+            <span class="village-item">绿水村</span>
+            <span class="village-item">大光村</span>
+            <span class="village-item">棉洋村</span>
+            <span class="village-item">洛阳村</span>
+            <span class="village-item">美光村</span>
+            <span class="village-item">桥江村</span>
+            <span class="village-item">罗城村</span>
+            <span class="village-item">阳光村</span>
+            <span class="village-item">葵岭村</span>
+            <span class="village-item">溜沙村</span>
+            <span class="village-item">福城村</span>
+            <span class="village-item">中新村</span>
+            <span class="village-item">红星村</span>
+            <span class="village-item">水湖村</span>
+            <span class="village-item">群星村</span>
+            <span class="village-item">新光村</span>
+            <span class="village-item">琴江村</span>
+            <span class="village-item">双璜村</span>
+            <hr class="div-line">
+            <span class="community-item">棉洋社区</span>
+            <span class="community-item">桥江社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">长布镇(25个村+2个社区)</button>
+        <div class="village-box">
+            <span class="village-item">石础村</span>
+            <span class="village-item">长生村</span>
+            <span class="village-item">太平村</span>
+            <span class="village-item">大径村</span>
+            <span class="village-item">樟村村</span>
+            <span class="village-item">粘坑村</span>
+            <span class="village-item">长安村</span>
+            <span class="village-item">横江村</span>
+            <span class="village-item">中心村</span>
+            <span class="village-item">蓝塘村</span>
+            <span class="village-item">琴塘村</span>
+            <span class="village-item">梅塘村</span>
+            <span class="village-item">大坑村</span>
+            <span class="village-item">金华村</span>
+            <span class="village-item">北洋村</span>
+            <span class="village-item">嶂下村</span>
+            <span class="village-item">五彩村</span>
+            <span class="village-item">源潭村</span>
+            <span class="village-item">栋岭村</span>
+            <span class="village-item">青岗村</span>
+            <span class="village-item">福兴村</span>
+            <span class="village-item">红旗村</span>
+            <span class="village-item">栋新村</span>
+            <span class="village-item">大客村</span>
+            <span class="village-item">高福村</span>
+            <hr class="div-line">
+            <span class="community-item">长布社区</span>
+            <span class="community-item">大田社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">岐岭镇(25个村+2个社区)</button>
+        <div class="village-box">
+            <span class="village-item">罗经村</span>
+            <span class="village-item">荣福村</span>
+            <span class="village-item">清溪村</span>
+            <span class="village-item">荷梅村</span>
+            <span class="village-item">双山村</span>
+            <span class="village-item">凤凰村</span>
+            <span class="village-item">黄福村</span>
+            <span class="village-item">孔目村</span>
+            <span class="village-item">黄塔村</span>
+            <span class="village-item">朝阳村</span>
+            <span class="village-item">鲁占村</span>
+            <span class="village-item">王化村</span>
+            <span class="village-item">塔星村</span>
+            <span class="village-item">皇华村</span>
+            <span class="village-item">合水村</span>
+            <span class="village-item">龙岭村</span>
+            <span class="village-item">礤下村</span>
+            <span class="village-item">北源村</span>
+            <span class="village-item">联安村</span>
+            <span class="village-item">龙水村</span>
+            <span class="village-item">赤水村</span>
+            <span class="village-item">荣贵村</span>
+            <span class="village-item">龙寨村</span>
+            <span class="village-item">华源村</span>
+            <span class="village-item">大蒲村</span>
+            <hr class="div-line">
+            <span class="community-item">岐岭社区</span>
+            <span class="community-item">双头社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">水寨镇(24个村+6个社区)</button>
+        <div class="village-box">
+            <span class="village-item">协和村</span>
+            <span class="village-item">员瑾村</span>
+            <span class="village-item">大湖村</span>
+            <span class="village-item">中洞村</span>
+            <span class="village-item">河尾村</span>
+            <span class="village-item">大岭村</span>
+            <span class="village-item">莲洞村</span>
+            <span class="village-item">善坑村</span>
+            <span class="village-item">良美村</span>
+            <span class="village-item">罗湖村</span>
+            <span class="village-item">七都村</span>
+            <span class="village-item">榕树村</span>
+            <span class="village-item">黄井村</span>
+            <span class="village-item">大布村</span>
+            <span class="village-item">平湖村</span>
+            <span class="village-item">岗阳村</span>
+            <span class="village-item">上坝村</span>
+            <span class="village-item">犁滩村</span>
+            <span class="village-item">大沙村</span>
+            <span class="village-item">坝心村</span>
+            <span class="village-item">坝美村</span>
+            <span class="village-item">澄湖村</span>
+            <span class="village-item">高车村</span>
+            <span class="village-item">黄狮新村</span>
+            <hr class="div-line">
+            <span class="community-item">府前社区</span>
+            <span class="community-item">西河社区</span>
+            <span class="community-item">公园社区</span>
+            <span class="community-item">大坝社区</span>
+            <span class="community-item">园岭社区</span>
+            <span class="community-item">新城社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">周江镇(22个村+2个社区)</button>
+        <div class="village-box">
+            <span class="village-item">新良村</span>
+            <span class="village-item">狮潭村</span>
+            <span class="village-item">溪口村</span>
+            <span class="village-item">红源村</span>
+            <span class="village-item">利洋村</span>
+            <span class="village-item">甘茶村</span>
+            <span class="village-item">兰鱼村</span>
+            <span class="village-item">黄华村</span>
+            <span class="village-item">中兴村</span>
+            <span class="village-item">龙洞村</span>
+            <span class="village-item">冰坎村</span>
+            <span class="village-item">联太村</span>
+            <span class="village-item">良宁村</span>
+            <span class="village-item">利河村</span>
+            <span class="village-item">早成村</span>
+            <span class="village-item">蓝坑村</span>
+            <span class="village-item">峎头村</span>
+            <span class="village-item">三河村</span>
+            <span class="village-item">龙堵村</span>
+            <span class="village-item">黄布村</span>
+            <span class="village-item">桂子村</span>
+            <span class="village-item">增洞村</span>
+            <hr class="div-line">
+            <span class="community-item">周江社区</span>
+            <span class="community-item">中兴社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">转水镇(21个村+1个社区)</button>
+        <div class="village-box">
+            <span class="village-item">蛇塘村</span>
+            <span class="village-item">枫林塘村</span>
+            <span class="village-item">下潭村</span>
+            <span class="village-item">益塘村</span>
+            <span class="village-item">长源村</span>
+            <span class="village-item">黄梅村</span>
+            <span class="village-item">新华村</span>
+            <span class="village-item">五星村</span>
+            <span class="village-item">新丰村</span>
+            <span class="village-item">輋柯村</span>
+            <span class="village-item">新民村</span>
+            <span class="village-item">矮车村</span>
+            <span class="village-item">维龙村</span>
+            <span class="village-item">里塘村</span>
+            <span class="village-item">青西村</span>
+            <span class="village-item">黄龙村</span>
+            <span class="village-item">輋维村</span>
+            <span class="village-item">旱塘村</span>
+            <span class="village-item">三源村</span>
+            <span class="village-item">流洞村</span>
+            <span class="village-item">青塘村</span>
+            <hr class="div-line">
+            <span class="community-item">转水社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">潭下镇(21个村+1个社区)</button>
+        <div class="village-box">
+            <span class="village-item">汶水村</span>
+            <span class="village-item">百安村</span>
+            <span class="village-item">中村村</span>
+            <span class="village-item">龙田村</span>
+            <span class="village-item">文安村</span>
+            <span class="village-item">杞水村</span>
+            <span class="village-item">光华村</span>
+            <span class="village-item">金石村</span>
+            <span class="village-item">乐道村</span>
+            <span class="village-item">上围村</span>
+            <span class="village-item">大玉村</span>
+            <span class="village-item">柏洋村</span>
+            <span class="village-item">品畲村</span>
+            <span class="village-item">南华村</span>
+            <span class="village-item">福灵村</span>
+            <span class="village-item">模石村</span>
+            <span class="village-item">锡坪村</span>
+            <span class="village-item">文里村</span>
+            <span class="village-item">新田村</span>
+            <span class="village-item">布坪村</span>
+            <span class="village-item">竹梅村</span>
+            <hr class="div-line">
+            <span class="community-item">潭下社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">梅林镇(18个村+1个社区)</button>
+        <div class="village-box">
+            <span class="village-item">新成村</span>
+            <span class="village-item">梅北村</span>
+            <span class="village-item">上磜村</span>
+            <span class="village-item">三乐村</span>
+            <span class="village-item">尖山村</span>
+            <span class="village-item">福新村</span>
+            <span class="village-item">琴口村</span>
+            <span class="village-item">华光村</span>
+            <span class="village-item">优河村</span>
+            <span class="village-item">宣优村</span>
+            <span class="village-item">金坑村</span>
+            <span class="village-item">新塘村</span>
+            <span class="village-item">招田村</span>
+            <span class="village-item">梅林村</span>
+            <span class="village-item">福塘村</span>
+            <span class="village-item">黄沙村</span>
+            <span class="village-item">梅南村</span>
+            <span class="village-item">梅东村</span>
+            <hr class="div-line">
+            <span class="community-item">梅林社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">双华镇(16个村+1个社区)</button>
+        <div class="village-box">
+            <span class="village-item">黄径村</span>
+            <span class="village-item">矮畲村</span>
+            <span class="village-item">苏区村</span>
+            <span class="village-item">华南村</span>
+            <span class="village-item">禾沙村</span>
+            <span class="village-item">富美村</span>
+            <span class="village-item">公平村</span>
+            <span class="village-item">虎石村</span>
+            <span class="village-item">大陂村</span>
+            <span class="village-item">军营村</span>
+            <span class="village-item">华东村</span>
+            <span class="village-item">福全村</span>
+            <span class="village-item">双华村</span>
+            <span class="village-item">冰塘村</span>
+            <span class="village-item">华拔村</span>
+            <span class="village-item">竹山村</span>
+            <hr class="div-line">
+            <span class="community-item">双华社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">华阳镇(13个村+1个社区)</button>
+        <div class="village-box">
+            <span class="village-item">坪南村</span>
+            <span class="village-item">叶新村</span>
+            <span class="village-item">华阳村</span>
+            <span class="village-item">莲高村</span>
+            <span class="village-item">陂坑村</span>
+            <span class="village-item">太坪村</span>
+            <span class="village-item">红洞村</span>
+            <span class="village-item">华南村</span>
+            <span class="village-item">大拔村</span>
+            <span class="village-item">高塘村</span>
+            <span class="village-item">小拔村</span>
+            <span class="village-item">华新村</span>
+            <span class="village-item">社径村</span>
+            <hr class="div-line">
+            <span class="community-item">华阳社区</span>
+        </div>
+    </div>
+    <div class="town-item">
+        <button class="town-title">郭田镇(12个村+1个社区)</button>
+        <div class="village-box">
+            <span class="village-item">湖华村</span>
+            <span class="village-item">硿南村</span>
+            <span class="village-item">横塘村</span>
+            <span class="village-item">三坑村</span>
+            <span class="village-item">礤下村</span>
+            <span class="village-item">龙潭村</span>
+            <span class="village-item">双光村</span>
+            <span class="village-item">蕉州村</span>
+            <span class="village-item">布美村</span>
+            <span class="village-item">郭田村</span>
+            <span class="village-item">坪上村</span>
+            <span class="village-item">石团村</span>
+            <hr class="div-line">
+            <span class="community-item">郭田社区</span>
+        </div>
+    </div>
+    <div class="data-info">
+        <strong>数据仅供参考，非官方来源；内容来源于网络，由 AI 整理，无法保证 100% 准确。行政区划相关信息建议前往民政部门官网查询最新权威资料。</strong><br>
+        声明：本页面所有数据仅供参考，不作为官方依据。素材取自网络，经 AI 整理生成，内容正确性不作百分百承诺。如需获取最新、准确的行政区划信息，请以民政部门官方网站发布内容为准。<br>
+        数据仅供参考｜来源网络‑AI 整理｜非官方，不保证完全准确，行政区划请查阅民政官网最新资料。<br/>
+        全域总计：<strong>450个村（社区）</strong>
+    </div>
+<script>
+let btns = document.querySelectorAll('.town-title');
+btns.forEach(btn=>{
+    btn.onclick=function(){
+        let box=this.nextElementSibling;
+        box.classList.toggle('open');
+    }
+})
+document.getElementById('expandAll').onclick=function(){
+    document.querySelectorAll('.village-box').forEach(item=>{
+        item.classList.add('open');
+    })
+}
+document.getElementById('collapseAll').onclick=function(){
+    document.querySelectorAll('.village-box').forEach(item=>{
+        item.classList.remove('open');
+    })
+}
+</script>
+</body>
+</html>

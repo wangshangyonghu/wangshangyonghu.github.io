@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可编辑作息表</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .control-bar{
+            margin-bottom:20px;
+        }
+        .control-bar button{
+            padding: 10px 20px;
+            font-size:18px;
+            margin-right:10px;
+            cursor:pointer;
+        }
+        .box{
+            width:100%;
+            margin: 8px 0;
+        }
+        .box input{
+            width: 100%;
+            font-size: 32px;
+            font-weight:bold;
+            padding:15px;
+            border:2px solid black;
+            /*无font‑family，浏览器默认字体，无版权风险*/
+        }
+        .blue-input{
+            background-color:#0066FF;
+            color:#ffffff;
+        }
+        .white-input{
+            background-color:#ffffff;
+            color:#000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="control-bar">
+        <button id="fontMinus">字体 -</button>
+        <button id="fontReset">重置</button>
+        <button id="fontPlus">字体 +</button>
+    </div>
+
+    <div class="box">
+        <input class="white-input" value="上学:7:30-7:50">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="下学:11:20">
+    </div>
+    <div class="box">
+        <input class="white-input" value="上学:14:10-14:30">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="下学:16:00">
+    </div>
+    <div class="box">
+        <input class="white-input" value="">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="">
+    </div>
+    <div class="box">
+        <input class="white-input" value="">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="">
+    </div>
+    <div class="box">
+        <input class="white-input" value="">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="">
+    </div>
+    <div class="box">
+        <input class="white-input" value="">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="">
+    </div>
+    <div class="box">
+        <input class="white-input" value="">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="">
+    </div>
+    <div class="box">
+        <input class="white-input" value="">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="">
+    </div>
+    <div class="box">
+        <input class="white-input" value="">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="">
+    </div>
+    <div class="box">
+        <input class="white-input" value="">
+    </div>
+    <div class="box">
+        <input class="blue-input" value="">
+    </div>
+
+<script>
+    let currentFontSize=32;
+    const step=5;
+    const inputs=document.querySelectorAll('.box input');
+
+    //放大
+    document.getElementById('fontPlus').onclick=function(){
+        currentFontSize+=step;
+        setFont();
+    }
+    //缩小
+    document.getElementById('fontMinus').onclick=function(){
+        if(currentFontSize>20){
+            currentFontSize-=step;
+            setFont();
+        }
+    }
+    //重置
+    document.getElementById('fontReset').onclick=function(){
+        currentFontSize=32;
+        setFont();
+    }
+    function setFont(){
+        inputs.forEach(item=>{
+            item.style.fontSize=currentFontSize+'px';
+        })
+    }
+</script>
+
+<script src="/a/js/yj2.js"></script>
+</body>
+</html>
