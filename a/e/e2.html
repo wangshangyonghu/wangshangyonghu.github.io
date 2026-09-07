@@ -58,17 +58,32 @@
 
 <!--页面放大-->
 <style>
-@media (min-width: 769px) {
-    html {
-        transform: scale(1.3);
-        transform-origin: top center;
-        width: 100%;
-        overflow-x: auto;
+@media (max-width: 768px) {
+    body {
+        padding-left: 15px;
+    }
+    .search-row{
+        display:flex;
+        gap:0;
+    }
+    #searchInput {
+        flex: 1;
+        height: 50px;
+        font-size: 16px;
+    }
+    .search-btn {
+        height: 50px;
+        width: 100px;
+        padding: 0 8px;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+    .link-container {
+        justify-content: center;
     }
 }
 </style>
 <!--页面放大-->
-
 <!--搜索-->
 <style>
 :root {
@@ -80,71 +95,68 @@
     --btn-hover: #0055DD;
     --container-width: 1200px;
 }
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Microsoft YaHei", Arial, sans-serif;
 }
-
 body {
     color: var(--text-color);
     line-height: 1.6;
     padding: 20px 15px;
 }
-
 .container {
     max-width: var(--container-width);
     margin: 0 auto;
 }
-
 .search-section {
     text-align: center;
     margin-bottom: 30px;
 }
-
+.search-row{
+    display:flex;
+    gap:0;
+    justify-content:center;
+    align-items:center;
+}
 #searchInput {
-    width: 60%;
-    min-width: 30%;
-    height: 100px;
+    flex:1;
+    max-width:600px;
+    height: 60px;
     padding: 0 15px;
     border: 2px solid var(--primary-color);
     border-radius: 8px 0 0 8px;
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
     outline: none;
     transition: border-color 0.3s;
 }
-
 #searchInput:focus {
     border-color: var(--btn-hover);
 }
-
 .search-btn {
+    width: 100px;
     height: 60px;
-    padding: 0 25px;
+    padding: 0 10px;
     border: none;
     border-radius: 0 8px 8px 0;
     background-color: var(--primary-color);
     color: #fff;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+    flex-shrink:0;
 }
-
 .search-btn:hover {
     background-color: var(--btn-hover);
 }
-
 #result {
     margin-top: 10px;
     font-size: 16px;
     color: var(--primary-color);
     font-weight: bold;
 }
-
 .category-title {
     display: inline-block;
     background: linear-gradient(to bottom, var(--primary-color), #0099ff);
@@ -155,7 +167,6 @@ body {
     border-radius: 8px;
     margin-bottom: 15px;
 }
-
 .link-container {
     display: flex;
     flex-wrap: wrap;
@@ -167,7 +178,6 @@ body {
     background-color: #f9f9f9;
     margin-bottom: 25px;
 }
-
 .link-btn {
     display: inline-flex;
     align-items: center;
@@ -182,66 +192,31 @@ body {
     transition: all 0.3s;
     cursor: pointer;
 }
-
 .link-btn:hover {
     background-color: var(--primary-color);
     color: #fff;
     border-color: var(--primary-color);
 }
-
-@media (max-width: 768px) {
-    body {
-        padding-left: 15px;
-    }
-    #searchInput {
-        width: 70%;
-        height: 50px;
-        font-size: 16px;
-    }
-    .search-btn {
-        height: 50px;
-        padding: 0 6px;
-        font-size: 16px;
-    }
-    .link-container {
-        justify-content: center;
-    }
-}
 </style>
-
-<style>
-#searchInput, .search-btn {
-  vertical-align: middle;
-  height: 80px;
-  box-sizing: border-box;
-}
-.search-section {
-  font-size: 0;
-}
-#searchInput, .search-btn {
-  font-size: 12px;
-}
-</style>
-
 <style>
 #searchInput::placeholder {
-    font-size: 6px;
+    font-size: 14px;
 }
 #searchInput::-webkit-input-placeholder {
-    font-size: 6px;
+    font-size: 14px;
 }
 #searchInput::-moz-placeholder {
-    font-size: 6px;
+    font-size: 14px;
 }
 #searchInput:-ms-input-placeholder {
-    font-size: 6px;
+    font-size: 14px;
 }
 </style>
-
 </head>
 <body>
 <div class="container">
 <section id="搜索" class="search-section">
+    <div class="search-row">
     <input 
         type="text" 
         id="searchInput" 
@@ -249,32 +224,35 @@ body {
         onkeyup="handleKeyUp(event)"
     >
     <button class="search-btn" id="mainSearchBtn">搜索</button>
-<p style="font-size: 8px;">🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)</p>
+    </div>
+<p style="font-size: 8px; margin-top:8px;">🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)</p>
     <div id="result"></div>
-
     <div class="link-container" style="margin-top: 15px;">
+
+搜索:
+
+
 
 <!--给内容加""-->
  <button id="quoteBtn" onclick="addQuote()">给内容加""</button>
-
     <script>
         // 原键盘事件（保留你原有逻辑）
         function handleKeyUp(event) {
             console.log("键盘触发",event.key)
         }
-        // 给输入框内容包裹双引号核心函数
+        // 切换：有加号就移除，没有就添加
         function addQuote() {
             const input = document.getElementById("searchInput");
-            let val = input.value.trim();
-            if(!val) return; // 空内容不处理
-            // 包裹双引号
-            input.value = `"${val}"`;
-            // 光标放到末尾
+            let val = input.value;
+            if(val.startsWith('"') && val.endsWith('"')){
+                input.value = val.slice(1,-1);
+            }else{
+                input.value = `"${val.trim()}"`;
+            }
             input.focus();
             input.setSelectionRange(input.value.length, input.value.length);
         }
     </script>
-
 <style>
        /* 给内容加""按钮样式：统一沿用页面链接按钮设计规范，保持视觉风格一致 */
 #quoteBtn {
@@ -291,20 +269,15 @@ body {
     cursor: pointer; /* 鼠标悬浮显示手型，标识可点击 */
     margin-top:10px; /* 按钮上方外边距，和顶部输入框拉开间距 */
 }
-
 /* 按钮鼠标悬浮交互样式：hover效果与页面内所有链接按钮完全统一 */
 #quoteBtn:hover {
     background-color: var(--primary-color); /* 悬浮背景切换为主色调 */
     color: #fff; /* 悬浮文字变为白色 */
     border-color: var(--primary-color); /* 悬浮边框同步切换为主色调 */
 }
-
     </style>
-
 <!--给内容加""-->
 
-
-搜索:
         <button class="link-btn" data-engine="baidu">百度搜索</button>
         <button class="link-btn" data-engine="bing">必应搜索</button>
         <button class="link-btn" data-engine="toutiao">今日头条搜索</button>
@@ -320,7 +293,6 @@ body {
         <button class="link-btn" data-engine="taobao">爱淘宝</button>
         <button class="link-btn" data-engine="bing-quote">必应精准匹配</button>
     </div>
-
     <div class="link-container">
 图片搜索:
         <button class="link-btn" data-engine="bing-image">必应图片</button>
@@ -329,7 +301,6 @@ body {
         <button class="link-btn" data-engine="360-image">360图片</button>
         <button class="link-btn" data-engine="taobao-image">淘宝图片</button>
     </div>
-
     <div class="link-container">
 翻译工具:
         <button class="link-btn" data-engine="baidu-trans">百度翻译</button>
@@ -338,11 +309,9 @@ body {
     </div>
 </section>
 </div>
-
 <script>
 const chineseNumber = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
 const chineseUnit = ["", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"];
-
 function convertToChinese(num) {
     if (!num || isNaN(num)) return "零元整";
     let numStr = num.toString().trim();
@@ -396,7 +365,6 @@ function convertToChinese(num) {
     }
     return result || "零元整";
 }
-
 function calculateMathExpression(expression) {
     const validChars = /^[0-9+\-*/%().\s]+$/;
     if (!validChars.test(expression)) return null;
@@ -410,7 +378,6 @@ function calculateMathExpression(expression) {
         return null;
     }
 }
-
 function handleKeyUp(event) {
     const inputValue = document.getElementById("searchInput").value.trim();
     const resultElement = document.getElementById("result");
@@ -428,7 +395,6 @@ function handleKeyUp(event) {
         document.getElementById("mainSearchBtn").click();
     }
 }
-
 const searchEngines = {
     baidu: "https://www.baidu.com/s?wd=",
     bing: "https://www.bing.com/search?q=",
@@ -452,7 +418,6 @@ const searchEngines = {
     "sogou-trans": "https://fanyi.sogou.com/text?keyword=",
     "bing-trans": "https://cn.bing.com/translator/?ref&text="
 };
-
 document.getElementById("mainSearchBtn").addEventListener("click", () => {
     const keyword = document.getElementById("searchInput").value;
     if (keyword) {
@@ -460,7 +425,6 @@ document.getElementById("mainSearchBtn").addEventListener("click", () => {
         window.open(searchEngines.bing + encodeURIComponent(quoteKey), "_blank");
     }
 });
-
 document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
     btn.addEventListener("click", () => {
         const engine = btn.getAttribute("data-engine");
@@ -477,6 +441,7 @@ document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
 });
 </script>
 <!--搜索-->
+
 
 
 <style>

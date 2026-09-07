@@ -645,8 +645,6 @@ footer {
     </style>
 
 
-
-
 <!-- 搜索区域 -->
 <section id="搜索" class="search-section">
     <input 
@@ -656,35 +654,30 @@ footer {
         onkeyup="handleKeyUp(event)"
     >
     <button class="search-btn" id="mainSearchBtn">搜索</button>
-
     <p style="font-size: 12px;">🔎 输入关键词搜索(点击下方按钮搜索)（支持数字转中文大写）(输入数字带+-*/%自动计算)</p>
-
     <div id="result"></div>
-
     <!-- 多搜索引擎 -->
     <div class="link-container" style="margin-top: 15px;">
-
 <!--给内容加""-->
  <button id="quoteBtn" onclick="addQuote()">给内容加""</button>
-
     <script>
         // 原键盘事件（保留你原有逻辑）
         function handleKeyUp(event) {
             console.log("键盘触发",event.key)
         }
-        // 给输入框内容包裹双引号核心函数
+        // 切换：无引号添加，有引号移除
         function addQuote() {
             const input = document.getElementById("searchInput");
-            let val = input.value.trim();
-            if(!val) return; // 空内容不处理
-            // 包裹双引号
-            input.value = `"${val}"`;
-            // 光标放到末尾
+            let val = input.value;
+            if(val.startsWith('"') && val.endsWith('"')){
+                input.value = val.slice(1,-1);
+            }else{
+                input.value = `"${val.trim()}"`;
+            }
             input.focus();
             input.setSelectionRange(input.value.length, input.value.length);
         }
     </script>
-
 <style>
        /* 给内容加""按钮样式：统一沿用页面链接按钮设计规范，保持视觉风格一致 */
 #quoteBtn {
@@ -701,20 +694,14 @@ footer {
     cursor: pointer; /* 鼠标悬浮显示手型，标识可点击 */
     margin-top:10px; /* 按钮上方外边距，和顶部输入框拉开间距 */
 }
-
 /* 按钮鼠标悬浮交互样式：hover效果与页面内所有链接按钮完全统一 */
 #quoteBtn:hover {
     background-color: var(--primary-color); /* 悬浮背景切换为主色调 */
     color: #fff; /* 悬浮文字变为白色 */
     border-color: var(--primary-color); /* 悬浮边框同步切换为主色调 */
 }
-
-
     </style>
-
 <!--给内容加""-->
-
-
 搜索:
         <button class="link-btn" data-engine="baidu">百度搜索</button>
         <button class="link-btn" data-engine="bing">必应搜索</button>
@@ -731,7 +718,6 @@ footer {
         <button class="link-btn" data-engine="taobao">爱淘宝</button>
         <button class="link-btn" data-engine="bing-quote">必应精准匹配</button>
     </div>
-
     <!-- 图片搜索 -->
     <div class="link-container">
 图片搜索:
@@ -741,7 +727,6 @@ footer {
         <button class="link-btn" data-engine="360-image">360图片</button>
         <button class="link-btn" data-engine="taobao-image">淘宝图片</button>
     </div>
-
     <!-- 购物搜索 -->
     <div class="link-container">
 图片搜索:
@@ -749,16 +734,13 @@ footer {
         <button class="link-btn" data-engine="tb">淘宝</button>
         <button class="link-btn" data-engine="yp">小米有品</button>
         <button class="link-btn" data-engine="dd">当当</button>
-
         <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D%2B1xvab%2BWJVgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMejTarIx5m0g5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401766803415%400bbb5ce5_21f4_19b5db0a2b5_0691%4001" target="_blank">淘工厂</a>
         <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3D%2B1xvab%2BWJVgcQipKwQzePDAVflQIoZepK7Vc7tFgwiFRAdhuF14FMejTarIx5m0g5x%2BIUlGKNpXEqtgWIPmU2gJ3zi7%2FqTJhfZG3diF7L%2BskExoEMjye6NTSyiYJPde8%2FlTNlJVgXlzGDF1NzTQoPw%3D%3D&union_lens=lensId%3APUB%401766803415%400bbb5ce5_21f4_19b5db0a2b5_0691%4001" target="_blank">天天特卖工厂</a>
         <a href="#购物"" target="_blank">购物</a>
         <a href="https://wangshangyonghu.github.io/a/x/x21.html"" target="_blank">商品搜索</a>
         <button class="link-btn" data-engine=""></button>
     
-
     </div>
-
     <!-- 翻译工具 -->
     <div class="link-container">
 翻译工具:
@@ -767,7 +749,6 @@ footer {
         <button class="link-btn" data-engine="bing-trans">必应翻译</button>
     </div>
 </section>
-
 <script>
     // 日期时间显示
     function updateDateTime() {
@@ -788,11 +769,9 @@ footer {
     }
     updateDateTime();
     setInterval(updateDateTime, 1000);
-
     // 数字转中文大写 - 支持元角分
     const chineseNumber = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
     const chineseUnit = ["", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"];
-
     function convertToChinese(num) {
         // 处理空值和非数字
         if (!num || isNaN(num)) return "零元整";
@@ -855,7 +834,6 @@ footer {
         
         return result || "零元整";
     }
-
     // 处理百分号并转换为小数
     function processPercentage(expr) {
         // 匹配数字+%的模式，例如 40% 转换为 0.4
@@ -863,7 +841,6 @@ footer {
             return (parseFloat(num) / 100).toString();
         });
     }
-
     // 安全计算数学表达式（支持百分号）
     function calculateExpression(expr) {
         // 仅允许数字、小数点、四则运算符、括号、空格和百分号
@@ -888,16 +865,13 @@ footer {
             return null;
         }
     }
-
     function handleKeyUp(event) {
         const inputValue = document.getElementById("searchInput").value.trim();
         const resultElement = document.getElementById("result");
         resultElement.innerHTML = "";
-
         if (inputValue === "") {
             return;
         }
-
         // 第一步：尝试计算数学表达式（支持百分号）
         const calculationResult = calculateExpression(inputValue);
         if (calculationResult!== null && !isNaN(calculationResult)) {
@@ -930,13 +904,11 @@ footer {
                 resultElement.innerHTML = `<div style="color: #e67e22; font-weight: bold;">${inputValue} = ${chineseResult}</div>`;
             }
         }
-
         // 回车键触发搜索
         if (event.keyCode === 13 || event.key === 'Enter') {
             document.getElementById("mainSearchBtn").click();
         }
     }
-
     // 搜索引擎配置（补充完整）
     const searchEngines = {
         baidu: "https://www.baidu.com/s?wd=",
@@ -966,7 +938,6 @@ footer {
         "taobao": "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=",
         "deepl-trans": "https://www.deepl.com/translator#auto/zh/",
 //购物
-
    "atb": "https://ai.taobao.com/search/index.htm?&pid=mm_5518923388_3058500304_116069600003&union_lens=lensId%3APUB%401760747866%4021048906_131d_199f4c04abe_0551%4001&key=",
    "tb": "https://s.taobao.com/search?page=1&pvid=d0f2ec2810bcec0d5a16d5283ce59f67&q=",
    "yp": "https://www.xiaomiyoupin.com/search?keyword=",
@@ -981,12 +952,7 @@ footer {
    "": "",
    "": "",
    "": "",
-   "": "",
-
-
-
     };
-
     // 搜索按钮点击事件
 document.getElementById("mainSearchBtn").addEventListener("click", () => {
     const keyword = document.getElementById("searchInput").value;
@@ -1011,7 +977,6 @@ document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
         window.open(url, "_blank");
     });
 });
-
     // 返回顶部按钮 - 增加存在性检查
     const backToTopBtn = document.getElementById("backToTop");
     if (backToTopBtn) {
@@ -1022,7 +987,6 @@ document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
                 backToTopBtn.style.display = "none";
             }
         });
-
         backToTopBtn.addEventListener("click", () => {
             window.scrollTo({
                 top: 0,
@@ -1030,12 +994,10 @@ document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
             });
         });
     }
-
     // 显示当前URL - 增加存在性检查
     if (document.getElementById("currentUrl")) {
         document.getElementById("currentUrl").textContent = window.location.href;
     }
-
     // 平滑滚动
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -1049,6 +1011,7 @@ document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
         });
     });
 </script>
+<!--搜索-->
 
 
 
@@ -1087,6 +1050,23 @@ document.querySelectorAll(".link-btn[data-engine]").forEach(btn => {
         <a href="#友情链接">友情链接</a>
 </div>
 <hr color=0066ff><br/>
+
+
+
+        <!-- 置顶 -->
+<section id="置顶" class="category-nav">
+            <div class="category-title">置顶</div>
+            <div class="link-container">
+ 
+
+            </div>
+        </section>
+
+
+
+
+
+
 
 
 
