@@ -1,0 +1,201 @@
+<!doctype html> <!-- 声明文档类型为 HTML5，这是 HTML5 标准的文档声明方式 -->
+<html lang="zh-cn"> <!-- 定义 HTML 文档的根元素，lang 属性指定页面主要语言为中文（中国大陆） -->
+<head> <!-- 文档头部开始，用于包含元数据、样式、脚本等不直接显示在页面中的内容 -->
+    <!-- 设置视口参数，使页面在移动设备上正确显示
+         width=device-width: 视口宽度等于设备宽度
+         user-scalable=yes: 允许用户缩放页面（默认值，可省略）
+         建议添加 initial-scale=1.0 确保初始缩放比例正确 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+    <!-- 设置文档的语言编码，虽然 HTML5 中推荐使用 lang 属性，但保留此标签兼容旧浏览器 -->
+    <meta http-equiv='content-language' content='zh-cn'>
+    
+    <!-- 网站图标设置区域 -->
+    <!-- 标准浏览器图标 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网站图标">
+    <!-- 快捷方式图标（IE 兼容） -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" alt="网站快捷图标"/>
+    <!-- 苹果设备触摸图标（添加到主屏幕时使用） -->
+    <link rel="apple-touch-icon" href="/favicon.ico" alt="苹果设备图标"/>
+    <!-- 苹果设备启动画面图标（应用启动时显示） -->
+    <link rel="apple-touch-startup-image" href="/favicon.ico" alt="苹果设备启动画面"/>
+    <!-- 高分辨率设备图标（如 Android 高dpi设备） -->
+    <link rel="icon" sizes="192x192" href="/favicon.ico" alt="高分辨率设备图标"/>
+    <!-- 定义图标遮罩（主要用于 Safari 等浏览器） -->
+    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="图标遮罩" />
+    <!-- 苹果设备预合成图标（不添加系统默认光泽效果） -->
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="苹果设备预合成图标">
+    
+    <!-- 告知浏览器该页面适合作为移动端Web应用运行
+         添加到主屏幕后，会隐藏浏览器地址栏，更接近原生应用体验 -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    
+    <!-- DNS预解析，提前解析指定域名的IP地址，加快后续资源加载速度 -->
+    <link rel="dns-prefetch" href="//"/>    
+    
+    <!-- 设置文档的字符编码为UTF-8，确保页面文字正确显示，防止乱码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <!-- CSS样式定义部分开始 -->
+    <style type="text/css">
+      /* 为所有的a标签设置样式 */
+      A {
+        text-decoration: none; /* 去除a标签的下划线（建议使用小写属性名，符合CSS规范） */
+        font-weight: bold; /* 为a标签设置粗体样式 */
+        font-size: 32px; /* 为a标签设置字体大小为32像素 */
+      }
+    </style>
+    <!-- CSS样式定义部分结束 -->
+
+ <title>支付宝扫码领红包</title>
+<meta name="keywords" content=",搜索:网上用户,网上用户,上网用户,用户,公平村" /><!--关键词-->
+</head> <!-- 文档头部结束 -->
+
+<h1><a href="tu.html" target="_blank">支付宝红包码</a></h1>
+
+
+<center><!--居中-->
+
+
+
+<!--自动随机图片-->
+<!-- 第1张随机图片 -->
+<a href="" class="download-link" download="保存的图片1.jpg">
+  <img id="randomJpg1" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
+</a>
+
+<script>
+// 1. 生成指定范围的随机数（工具函数）
+const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+// 2. 完整配置项（保留原代码所有目录、域名，无任何省略）
+const baseConfig = {
+  imageSources: [ // 基础域名/根目录（一级源）
+    '/',    // 只留这个也能正常生效！
+
+
+
+'http://localhost',
+'http://127.0.0.1',
+'http://192.168.0.188:223',
+'http://192.168.0.188',
+
+
+
+
+
+  ],
+
+  folderPaths: [  // 完整保留所有原始图片目录
+    '/tu/jpg1/',
+  ],
+
+  numberRange: {  // 图片编号范围
+    original: [1, 1000], // 主编号范围
+    fallback: [6, 12]    // 备用编号范围（现在100%生效）
+  },
+  maxRetry: 50,   // 最大重试次数
+  retryDelay: 500 // 重试间隔（毫秒）
+};
+
+// 3. 核心逻辑：初始化单张图片的随机加载（已修复路径BUG + 备用编号生效）
+function initSingleRandomImage(imgId, baseConfig) {
+  const img = document.getElementById(imgId);
+  if (!img) {
+    console.error('未找到图片元素，ID:', imgId);
+    return;
+  }
+
+  const downloadLink = img.parentElement;
+  let triedCombinations = new Set();
+  let usingFallbackNumber = false;
+  let retryCount = 0;
+
+  // ✅ 修复核心：统一路径拼接，只留 / 也能正常工作
+  function getRandomImageUrl() {
+    const totalCombinations = baseConfig.imageSources.length * baseConfig.folderPaths.length;
+    if (triedCombinations.size >= totalCombinations) {
+      triedCombinations.clear();
+      usingFallbackNumber = false;
+      retryCount = 0;
+      return null;
+    }
+
+    while (true) {
+      const randomSource = baseConfig.imageSources[getRandomNumber(0, baseConfig.imageSources.length - 1)];
+      const randomFolder = baseConfig.folderPaths[getRandomNumber(0, baseConfig.folderPaths.length - 1)];
+      const combinationKey = `${randomSource}|${randomFolder}`;
+
+      if (!triedCombinations.has(combinationKey)) {
+        triedCombinations.add(combinationKey);
+
+        const [minNum, maxNum] = usingFallbackNumber
+          ? baseConfig.numberRange.fallback
+          : baseConfig.numberRange.original;
+        const randomNum = getRandomNumber(minNum, maxNum);
+
+        // ========== 统一拼接逻辑 ==========
+        let cleanSource = randomSource.replace(/\/$/, ''); // 去掉末尾斜杠
+        let cleanFolder = randomFolder.replace(/^\//, ''); // 去掉开头斜杠
+        let imageUrl = `${cleanSource}/${cleanFolder}${randomNum}.jpg`;
+
+        return imageUrl;
+      }
+    }
+  }
+
+  // 加载图片（含失败重试逻辑）
+  function loadImage() {
+    if (retryCount >= baseConfig.maxRetry) {
+      img.src = '';
+      img.alt = '网上用户的图片（加载失败）';
+      console.warn('已达最大重试次数，停止加载');
+      return;
+    }
+
+    const imageUrl = getRandomImageUrl();
+    if (!imageUrl) {
+      retryCount++;
+      setTimeout(loadImage, baseConfig.retryDelay);
+      return;
+    }
+
+    img.src = imageUrl;
+    downloadLink.href = imageUrl;
+    console.log(`尝试加载（${retryCount + 1}/${baseConfig.maxRetry}）:`, imageUrl);
+  }
+
+  // 加载成功
+  img.addEventListener('load', () => {
+    img.alt = '网上用户的图片,搜索:网上用户,公平村';
+    downloadLink.href = img.src;
+    console.log('✅ 图片加载成功:', img.src);
+    triedCombinations.clear();
+    usingFallbackNumber = false;
+    retryCount = 0;
+  });
+
+  // 加载失败：✅ 修复备用编号生效逻辑
+  img.addEventListener('error', () => {
+    console.error('❌ 加载失败:', img.src);
+    retryCount++;
+
+    // 第一次失败立刻切换备用编号
+    if (!usingFallbackNumber) {
+      usingFallbackNumber = true;
+      triedCombinations.clear(); // 清空已尝试组合，强制使用新编号
+      console.log('🔄 已切换到备用编号范围：' + baseConfig.numberRange.fallback.join('~'));
+    }
+
+    setTimeout(loadImage, baseConfig.retryDelay);
+  });
+
+  loadImage();
+}
+
+// 4. 批量初始化
+const imageIds = ['randomJpg1']; // 对应你的img id
+imageIds.forEach(imgId => {
+  initSingleRandomImage(imgId, baseConfig);
+});
+</script>
+<!--自动随机图片-->
