@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深圳市润博达五金制品有限公司 - 导航复制</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+        body{
+            background:#f5f7fa;
+            padding:40px 20px;
+        }
+        .box{
+            max-width:520px;
+            margin:0 auto;
+            background:#fff;
+            border-radius:12px;
+            padding:30px 24px;
+            box-shadow:0 2px 12px rgba(0,0,0,0.08);
+        }
+        .title{
+            font-size:20px;
+            text-align:center;
+            margin-bottom:24px;
+            color:#222;
+        }
+        .copy-text{
+            background:#f1f3f6;
+            padding:16px;
+            border-radius:8px;
+            font-size:17px;
+            margin-bottom:20px;
+            word-break:break-all;
+        }
+        .btn-copy{
+            width:100%;
+            padding:14px;
+            background:#1677ff;
+            color:#fff;
+            border:none;
+            border-radius:8px;
+            font-size:17px;
+            cursor:pointer;
+        }
+        .tip{
+            margin-top:16px;
+            text-align:center;
+            color:#666;
+            font-size:14px;
+        }
+        .success{
+            color:#00b42a;
+            display:none;
+            text-align:center;
+            margin-top:12px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="title">复制名称，打开导航APP搜索</div>
+    <div class="copy-text" id="textVal">深圳市润博达五金制品有限公司</div>
+    <button class="btn-copy" id="copyBtn">一键复制</button>
+    <div class="success" id="successTip">✅复制成功！去高德/百度/腾讯地图粘贴搜索</div>
+    <div class="tip">复制完成后，打开高德、百度、腾讯导航，直接粘贴搜索即可定位</div>
+</div>
+
+<script>
+const copyBtn = document.getElementById('copyBtn');
+const textVal = document.getElementById('textVal').innerText;
+const successTip = document.getElementById('successTip');
+
+copyBtn.addEventListener('click',async ()=>{
+    try{
+        await navigator.clipboard.writeText(textVal);
+        successTip.style.display='block';
+        setTimeout(()=>{
+            successTip.style.display='none';
+        },2200);
+    }catch(e){
+        //兼容低版本浏览器
+        const input = document.createElement('textarea');
+        input.value = textVal;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        successTip.style.display='block';
+        setTimeout(()=>{
+            successTip.style.display='none';
+        },2200);
+    }
+})
+</script>
+</body>
+</html>

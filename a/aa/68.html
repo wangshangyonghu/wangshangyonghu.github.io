@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>深圳市润博达五金制品有限公司 - 导航搜索</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    color: #333;
+  }
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    padding: 32px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .logo-icon {
+    width: 64px; height: 64px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, #ff9a3c, #ff5f2e);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+  }
+  h1 {
+    font-size: 20px;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    word-break: break-all;
+    color: #222;
+  }
+  .sub {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 28px;
+  }
+  .company-box {
+    background: #f7f7f7;
+    border: 1px dashed #ddd;
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    user-select: all;
+    word-break: break-all;
+    color: #222;
+  }
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-align: center;
+    text-decoration: none;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-copy {
+    background: linear-gradient(135deg, #ff9a3c, #ff5f2e);
+    box-shadow: 0 6px 20px rgba(255,95,46,0.4);
+  }
+  .btn-gaode  { background: linear-gradient(135deg, #2e8bff, #1a5fd0); box-shadow: 0 6px 20px rgba(46,139,255,0.35); }
+  .btn-baidu  { background: linear-gradient(135deg, #3f7fff, #2456d6); box-shadow: 0 6px 20px rgba(63,127,255,0.35); }
+  .btn-tencent{ background: linear-gradient(135deg, #37c96a, #1f9d4d); box-shadow: 0 6px 20px rgba(55,201,106,0.35); }
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0 18px;
+    color: #bbb;
+    font-size: 12px;
+  }
+  .divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+  }
+  .tips {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.9;
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .tips b { color: #ff5f2e; }
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s;
+    z-index: 99;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  footer {
+    margin-top: 24px;
+    font-size: 12px;
+    color: #bbb;
+    text-align: center;
+  }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<div class="card">
+  <div class="logo-icon">📍</div>
+  <h1>深圳市润博达五金制品有限公司</h1>
+  <div class="sub">点击下方按钮复制公司名称，或一键打开导航搜索</div>
+
+  <div class="company-box" id="companyName">深圳市润博达五金制品有限公司</div>
+
+  <button class="btn btn-copy" id="copyBtn">📋 一键复制公司名称</button>
+
+  <div class="divider">复制后去导航软件搜索</div>
+
+  <a class="btn btn-gaode"   href="https://uri.amap.com/search?keyword=%E6%B7%B1%E5%9C%B3%E5%B8%82%E6%B6%A6%E5%8D%9A%E8%BE%BE%E4%BA%94%E9%87%91%E5%88%B6%E5%93%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&callnative=1">🗺️ 打开高德地图搜索</a>
+  <a class="btn btn-baidu"   href="https://api.map.baidu.com/geocoder?address=%E6%B7%B1%E5%9C%B3%E5%B8%82%E6%B6%A6%E5%8D%9A%E8%BE%BE%E4%BA%94%E9%87%91%E5%88%B6%E5%93%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&output=html">🧭 打开百度地图搜索</a>
+  <a class="btn btn-tencent" href="https://apis.map.qq.com/uri/v1/search?keyword=%E6%B7%B1%E5%9C%B3%E5%B8%82%E6%B6%A6%E5%8D%9A%E8%BE%BE%E4%BA%94%E9%87%91%E5%88%B6%E5%93%81%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&referer=runboda">🌏 打开腾讯地图搜索</a>
+
+  <div class="tips">
+    <b>使用方法：</b><br>
+    ① 点击「一键复制」按钮复制公司名称<br>
+    ② 打开 <b>高德 / 百度 / 腾讯</b> 任意一款地图App<br>
+    ③ 在搜索框中<b>粘贴</b>，即可搜索导航到本公司
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ 复制成功，去地图App粘贴搜索吧！</div>
+
+<footer>深圳市润博达五金制品有限公司 · 欢迎来访</footer>
+
+<script>
+  var NAME = "深圳市润博达五金制品有限公司";
+  var toast = document.getElementById("toast");
+  var timer = null;
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(timer);
+    timer = setTimeout(function () { toast.classList.remove("show"); }, 2200);
+  }
+
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(NAME).then(function () {
+        showToast("✅ 复制成功，去地图App粘贴搜索吧！");
+      }).catch(function () { fallbackCopy(); });
+    } else {
+      fallbackCopy();
+    }
+  });
+
+  function fallbackCopy() {
+    var ta = document.createElement("textarea");
+    ta.value = NAME;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    ta.style.top = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+      var ok = document.execCommand("copy");
+      showToast(ok ? "✅ 复制成功，去地图App粘贴搜索吧！" : "⚠️ 复制失败，请长按文字手动复制");
+    } catch (e) {
+      showToast("⚠️ 复制失败，请长按文字手动复制");
+    }
+    document.body.removeChild(ta);
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+<hr/>
+<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
+<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
+<!-- ico 放这里最完美 --><script src="/a/js/ico.js"></script>
+<!-- yj2 放这里最完美 --><script src="/a/js/yj2.js"></script>
+
+<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
+<!-- 公平村 --><script src="/a/js/gpc.js"></script>
+
+
+</body>
+</html>
