@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快递费计算器@网上用户</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f7fa;padding:20px;max-width:500px;margin:30px auto}
+.box{background:#fff;padding:25px;border-radius:12px;box-shadow:0 2px 8px #00000015}
+h2{text-align:center;margin-bottom:10px;color:#222;font-size:22px}
+.tip{text-align:center;font-size:13px;color:#888;margin-bottom:25px}
+.item{margin-bottom:18px}
+label{display:block;margin-bottom:6px;font-size:15px}
+input{width:100%;padding:12px;border:1px solid #ddd;border-radius:6px;font-size:16px}
+button{width:100%;padding:13px;background:#1f76d1;color:#fff;border:none;border-radius:6px;font-size:16px;cursor:pointer;margin-top:8px}
+button:hover{background:#1962b0}
+.result{margin-top:22px;padding:15px;background:#eef5ff;border-radius:8px;font-size:17px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="box">
+    <h2>快递费计算器</h2>
+    <div class="tip">计算结果仅供参考，实际费用以快递公司报价为准</div>
+    <div class="item">
+        <label>首重费用(元)</label>
+        <input type="number" id="shouzhong" placeholder="例：23" value="23">
+    </div>
+    <div class="item">
+        <label>续重单价(元/公斤)</label>
+        <input type="number" id="xuzhong" placeholder="例：10" value="10">
+    </div>
+    <div class="item">
+        <label>货物总重量(公斤)</label>
+        <input type="number" id="weight" step="0.01" placeholder="例：3.2">
+    </div>
+    <button onclick="calc()">计算运费</button>
+    <div class="result" id="res"></div>
+</div>
+
+<script>
+function calc(){
+    let s = parseFloat(document.getElementById('shouzhong').value);
+    let x = parseFloat(document.getElementById('xuzhong').value);
+    let w = parseFloat(document.getElementById('weight').value);
+    if(isNaN(s)||isNaN(x)||isNaN(w)||w<=0){
+        document.getElementById('res').innerText="请填写全部有效数字，重量大于0";
+        return;
+    }
+    // 首重1公斤，超出部分算续重；不足1公斤按1公斤进位
+    let extra = w - 1;
+    if(extra<0) extra=0;
+    let addKg = Math.ceil(extra);
+    let total = s + addKg*x;
+    let html = `总重量：${w} kg<br>
+超出首重部分：${extra.toFixed(2)} kg<br>
+续重计费重量(向上取整)：${addKg} kg<br>
+运费合计：<strong style="color:#d02020">${total.toFixed(2)} 元</strong><br>
+<span style="font-size:14px;color:#666">*结果仅供参考</span>`;
+    document.getElementById('res').innerHTML=html;
+}
+</script>
+</body>
+</html>
+
+
+<!-- yj2 -->
+<script src="/a/js/yj2.js"></script>

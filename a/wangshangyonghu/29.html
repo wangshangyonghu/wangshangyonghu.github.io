@@ -14,33 +14,32 @@ button {
 }
 body {
   font-family: Arial, sans-serif;
+  margin:0;
+  padding:8px;
+  box-sizing: border-box;
+  height:100vh;
 }
 p {
   margin-top: 12px;
 }
 .wrap{
-  width:100%;
-  display:flex;
-  justify-content:center;
+  height:calc(100vh - 180px);
 }
 textarea{
-  resize: both;
-  height:100vh;
+  width: 100%;
+  height:85%;
+  resize:both;
+  box-sizing: border-box;
 }
 #myInput {
   font-weight: bold;
-  font-size: 100px;
+  font-size: 12px;
   text-align: center;
-  width:100%;
 }
 </style>
-
-
-<!--输入框缓存结束-->
-
-<title>大字体输入框一增大字体一缩小字体一通过网页按钮控制字体大小的输入框一增大字体一 缩小字体 左对齐 居中 右对齐 切换字体粗细@网上用户</title>
-<meta name="keywords" content="大字体输入框一网上用户,大字体输入框,增大字体一缩小字体一通过网页按钮控制字体大小的输入框,网上用户,公平村,张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,网络用户" />
-<meta name="description" content="@网上用户,大字体输入框一网上用户,增大字体一缩小字体一通过网页按钮控制字体大小的输入框一居中显示一增大字体一 缩小字体 左对齐 居中 右对齐 切换字体粗细" />
+<title>增大缩小字体输入框一增大字体一缩小字体一通过网页按钮控制字体大小的输入框一增大字体一 缩小字体 左对齐 居中 右对齐 切换字体粗细一网上用户</title>
+<meta name="keywords" content="增大缩小字体输入框,大字体输入框一网上用户,大字体输入框,增大字体一缩小字体一通过网页按钮控制字体大小的输入框,网上用户,公平村,张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,网络用户" />
+<meta name="description" content="搜索:网上用户,增大缩小字体输入框,大字体输入框一网上用户,增大字体一缩小字体一通过网页按钮控制字体大小的输入框一居中显示一增大字体一 缩小字体 左对齐 居中 右对齐 切换字体粗细" />
 </head>
 <body>
 
@@ -75,107 +74,86 @@ textarea{
 
 <br/><br/>
 
-<!--字号、对齐、粗细、输入框宽度按钮-->
-<button onclick="increaseFontSize()">增大字体</button>
-<button onclick="decreaseFontSize()">缩小字体</button>
-<button onclick="widenBox()">增宽输入框</button>
-<button onclick="narrowBox()">缩窄输入框</button>
+<!--字号、对齐、粗细按钮-->
+<button onclick="increaseFontSize()">增大</button>
+<button onclick="decreaseFontSize()">缩小</button>
 <button onclick="setTextAlign('left')">左对齐</button>
 <button onclick="setTextAlign('center')">居中</button>
 <button onclick="setTextAlign('right')">右对齐</button>
 <button onclick="toggleFontWeight()">切换粗细</button>
-<button onclick="clearCache()">清空缓存</button>
-<button onclick="selectAll()">全选文字</button>
 
 <br/><br/>
-
 <div class="wrap">
 <textarea id="myInput" placeholder="请输入内容"></textarea>
 </div>
 
 <script>
-const storageKey = "bigtext_input_content";
-var textarea = document.getElementById("myInput");
-
-// 页面加载：读取缓存
-window.onload = function(){
-  let savedText = localStorage.getItem(storageKey);
-  if(savedText !== null){
-    textarea.value = savedText;
-  }
-}
-
-// 输入时自动保存到localStorage
-textarea.addEventListener('input', function(){
-  localStorage.setItem(storageKey, this.value);
-})
-
-// 全选文本函数
-function selectAll(){
-  textarea.select();
-}
-
 // 修改输入框背景色
 function changeBackgroundColor(color) {
-  textarea.style.backgroundColor = color;
+  var textElement = document.getElementById("myInput");
+  textElement.style.backgroundColor = color;
 }
 
 // 修改文字颜色
 function changeTextColor(color) {
-  textarea.style.color = color;
+  var textElement = document.getElementById("myInput");
+  textElement.style.color = color;
 }
 
 // 对齐方式
 function setTextAlign(align) {
+  var textarea = document.getElementById('myInput');
   textarea.style.textAlign = align;
 }
 
 // 字体粗细切换
 function toggleFontWeight() {
+  var textarea = document.getElementById('myInput');
   textarea.style.fontWeight = (textarea.style.fontWeight === 'bold') ? 'normal' : 'bold';
 }
 
-// 放大字号（只改文字大小，不改动textarea容器尺寸）
+// 放大字号：每次+2
 function increaseFontSize() {
-  var currentSize = parseInt(window.getComputedStyle(textarea).fontSize) || 60;
+  var textarea = document.getElementById('myInput');
+  var currentSize = parseInt(window.getComputedStyle(textarea).fontSize) || 12;
   if (currentSize < 8000) {
     textarea.style.fontSize = (currentSize + 2) + 'px';
   }
 }
 
-// 缩小字号（只改文字大小，不改动textarea容器尺寸）
+// 缩小字号：每次-2
 function decreaseFontSize() {
-  var currentSize = parseInt(window.getComputedStyle(textarea).fontSize);
+  var textarea = document.getElementById('myInput');
+  var currentSize = parseInt(window.getComputedStyle(textarea).fontSize) || 12;
   if (currentSize > 2) {
     textarea.style.fontSize = (currentSize - 2) + 'px';
   }
 }
-
-// 输入框增宽
-function widenBox(){
-  let w = parseInt(window.getComputedStyle(textarea).width);
-  textarea.style.width = (w + 50) + "px";
-}
-// 输入框缩窄
-function narrowBox(){
-  let w = parseInt(window.getComputedStyle(textarea).width);
-  if(w>100){
-    textarea.style.width = (w - 50) + "px";
-  }
-}
-
-// 清空缓存按钮函数
-function clearCache(){
-  localStorage.removeItem(storageKey);
-  textarea.value = '';
-}
 </script>
 
-<hr/>
-<link rel="stylesheet" href="/a/js/h.css">
+<!--输入框缓存开始-->
+<script>
+const textarea = document.getElementById('myInput');
+// 页面加载读取localStorage缓存
+window.onload = function(){
+  const saveText = localStorage.getItem('textarea_save');
+  if(saveText !== null){
+    textarea.value = saveText;
+  }
+}
+// 输入实时保存到本地缓存
+textarea.addEventListener('input',function(){
+  localStorage.setItem('textarea_save',this.value);
+})
+</script>
+<!--输入框缓存结束-->
 
+
+
+<script src="/a/js/seo.js"></script>
 
 <script src="/a/js/ico.js"></script>
-
+<!-- yj2 -->
+<script src="/a/js/yj2.js"></script>
 </body>
 </html>
