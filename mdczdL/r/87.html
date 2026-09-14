@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>铆钉厂张东良 - 五金紧固件生产厂家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #1e293b;
+            --text: #334155;
+            --text-light: #64748b;
+            --bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: #fff;
+        }
+
+        /* 导航 */
+        .navbar {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            height: 70px;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 0 22px;
+            font-size: 15px;
+            height: 70px;
+            line-height: 70px;
+            display: block;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 50%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            color: #fff;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Banner */
+        .banner {
+            margin-top: 70px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+            color: #fff;
+            padding: 100px 30px 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .banner-tag {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.2);
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            color: #93c5fd;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .banner h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .banner h1 span { color: #93c5fd; }
+
+        .banner-subtitle {
+            font-size: 20px;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 30px;
+        }
+
+        .banner-desc {
+            font-size: 16px;
+            line-height: 2;
+            opacity: 0.7;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .banner-btns {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.45);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid rgba(255,255,255,0.25);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: #93c5fd;
+        }
+
+        /* 通用 */
+        .section { padding: 90px 30px; }
+        .section-container { max-width: 1200px; margin: 0 auto; }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            color: var(--secondary);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .section-header .subtitle {
+            color: var(--text-light);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-header .line {
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 关于我们 */
+        .about-section { background: #fff; }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 26px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            line-height: 2;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            background: var(--bg);
+            border-radius: 10px;
+        }
+
+        .highlight-icon {
+            width: 40px; height: 40px; min-width: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .highlight-text h4 {
+            font-size: 15px;
+            color: var(--secondary);
+            margin-bottom: 3px;
+        }
+
+        .highlight-text p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .about-visual { position: relative; }
+
+        .about-visual-main {
+            background: linear-gradient(135deg, var(--secondary), #334155);
+            border-radius: 20px;
+            padding: 45px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-visual-main::before {
+            content: '';
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 150px; height: 150px;
+            background: rgba(37, 99, 235, 0.12);
+            border-radius: 50%;
+        }
+
+        .about-visual-main h4 {
+            font-size: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-size: 34px;
+            font-weight: 700;
+            color: #93c5fd;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .about-visual-sub {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .sub-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+        }
+
+        .sub-card .num {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .sub-card .label {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* 产品中心 */
+        .products-section { background: var(--bg); }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 35px 22px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: all 0.4s;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .product-card:hover::before { transform: scaleX(1); }
+
+        .product-icon {
+            width: 68px; height: 68px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 26px;
+            color: #fff;
+            transition: all 0.4s;
+        }
+
+        .product-card:hover .product-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .product-card h3 {
+            font-size: 17px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .product-tag {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        /* 定制服务 */
+        .custom-section {
+            background: linear-gradient(135deg, var(--secondary) 0%, #334155 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .custom-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10S10 15.523 10 10zM50 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zM10 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .custom-section .section-header h2,
+        .custom-section .section-header .subtitle { color: #fff; }
+        .custom-section .section-header .line { background: var(--primary); }
+
+        .custom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .custom-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 40px 28px;
+            text-align: center;
+            transition: all 0.4s;
+            backdrop-filter: blur(5px);
+        }
+
+        .custom-card:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-5px);
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        .custom-card .icon {
+            width: 58px; height: 58px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 24px;
+        }
+
+        .custom-card h3 {
+            font-size: 19px;
+            margin-bottom: 14px;
+        }
+
+        .custom-card p {
+            opacity: 0.75;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .custom-card .highlight-text {
+            color: #93c5fd;
+            font-weight: 600;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* 行业应用 */
+        .industry-section { background: #fff; }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 18px;
+        }
+
+        .industry-item {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 28px 12px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .industry-item:hover {
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transform: translateY(-5px);
+        }
+
+        .industry-item .icon {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .industry-item h4 {
+            font-size: 14px;
+            color: var(--secondary);
+        }
+
+        /* 生产实力 */
+        .factory-section { background: var(--bg); }
+
+        .factory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .factory-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .factory-card h3 {
+            font-size: 22px;
+            color: var(--secondary);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .factory-card h3 .icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .factory-list { list-style: none; }
+
+        .factory-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .factory-list li:last-child { border-bottom: none; }
+
+        .factory-list li .check {
+            color: var(--primary);
+            font-weight: bold;
+            min-width: 20px;
+        }
+
+        /* 经营理念 */
+        .philosophy-section { background: #fff; }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .philosophy-card {
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            border-top: 4px solid transparent;
+        }
+
+        .philosophy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top-color: var(--primary);
+        }
+
+        .philosophy-card .icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 26px;
+            color: #fff;
+        }
+
+        .philosophy-card h3 {
+            font-size: 20px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .philosophy-card p {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* 市场覆盖 */
+        .market-section {
+            background: linear-gradient(135deg, var(--secondary) 0%, #334155 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .market-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .market-section .section-header h2,
+        .market-section .section-header .subtitle { color: #fff; }
+        .market-section .section-header .line { background: var(--primary); }
+
+        .market-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .market-text p {
+            color: rgba(255,255,255,0.75);
+            font-size: 16px;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .market-text .highlight {
+            color: #93c5fd;
+            font-weight: 600;
+        }
+
+        .market-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .market-stat-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .market-stat-card:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-3px);
+        }
+
+        .market-stat-card .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .market-stat-card h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .market-stat-card p {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* 联系我们 */
+        .contact-section {
+            background: linear-gradient(135deg, var(--secondary) 0%, #334155 100%);
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .contact-container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .contact-section > .section-container > p {
+            font-size: 18px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 500px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-box .wechat-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+        }
+
+        .contact-box .label {
+            font-size: 16px;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        .contact-box .wechat-id {
+            font-size: 32px;
+            font-weight: 700;
+            color: #93c5fd;
+            letter-spacing: 3px;
+            background: rgba(37, 99, 235, 0.15);
+            padding: 15px 40px;
+            border-radius: 12px;
+            display: inline-block;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+        }
+
+        .contact-box .tip {
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        /* 备注 */
+        .notes-section {
+            background: #f1f5f9;
+            padding: 35px 30px;
+        }
+
+        .notes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .notes-title {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .notes-list { list-style: none; }
+
+        .notes-list li {
+            color: #94a3b8;
+            font-size: 13px;
+            padding: 5px 0;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .notes-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #cbd5e1;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: #0f172a;
+            color: #64748b;
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+        }
+
+        /* 动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .custom-grid, .philosophy-grid { grid-template-columns: repeat(2, 1fr); }
+            .industry-grid { grid-template-columns: repeat(3, 1fr); }
+            .market-content { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px; left: 0; right: 0;
+                background: var(--secondary);
+                flex-direction: column;
+                padding: 10px 0;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a { height: 50px; line-height: 50px; padding: 0 30px; }
+            .mobile-menu-btn { display: block; }
+
+            .banner h1 { font-size: 30px; }
+            .banner-subtitle { font-size: 16px; }
+
+            .about-grid, .factory-grid { grid-template-columns: 1fr; }
+            .products-grid, .custom-grid, .culture-grid, .philosophy-grid { grid-template-columns: 1fr; }
+            .industry-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-highlights { grid-template-columns: 1fr; }
+            .market-stats { grid-template-columns: 1fr; }
+
+            .banner-btns { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-outline { width: 100%; max-width: 280px; }
+
+            .section { padding: 60px 20px; }
+            .section-header h2 { font-size: 28px; }
+
+            .contact-box { padding: 30px 20px; }
+            .contact-box .wechat-id { font-size: 24px; padding: 12px 25px; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">🔩</div>
+                铆钉厂张东良
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#products">产品中心</a></li>
+                <li><a href="#custom">定制服务</a></li>
+                <li><a href="#factory">生产实力</a></li>
+                <li><a href="#philosophy">经营理念</a></li>
+                <li><a href="#market">市场覆盖</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <div class="banner-tag">五金紧固件生产厂家</div>
+            <h1>铆钉厂<span>张东良</span></h1>
+            <p class="banner-subtitle">自有五金生产工厂 · 主营铆钉及各类五金制品</p>
+            <p class="banner-desc">
+                主营铆钉、半空心铆钉、空心鸡眼、各类紧固件、冷镦件、拉伸件等五金制品；<br>
+                自有生产产能充足，采购量大可享优惠，产品销往海外多地。
+            </p>
+            <div class="banner-btns">
+                <a href="#contact" class="btn-primary">立即咨询</a>
+                <a href="#products" class="btn-outline">了解产品</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="section about-section" id="about">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <h2>关于我们</h2>
+                <p class="subtitle">专注五金制造，用心服务客户</p>
+                <div class="line"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-text fade-in">
+                    <h3>自有五金生产工厂</h3>
+                    <p>铆钉厂张东良自有五金生产工厂，主营铆钉、半空心铆钉、空心鸡眼、各类紧固件、冷镦件、拉伸件等五金制品。自有生产产能充足，采购量大可享优惠，产品销往海外多地。</p>
+                    <p>当下行业市场竞争加剧，客户对产品品质、加工精度要求持续提升，本厂持续优化生产工艺，依托多年实操生产经验，坚持工艺改良、提升加工精度，以精工生产标准匹配市场各类采购需求。</p>
+                    <p>铆钉厂张东良专注为各地采购商家提供高性价比五金货源，产品覆盖东南亚、欧美多个国家与地区，收获海内外众多客商认可与复购。</p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🏭</div>
+                            <div class="highlight-text">
+                                <h4>自有工厂</h4>
+                                <p>自有五金生产工厂</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">⚙️</div>
+                            <div class="highlight-text">
+                                <h4>产能充足</h4>
+                                <p>自有生产产能充足</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🌍</div>
+                            <div class="highlight-text">
+                                <h4>销往海外</h4>
+                                <p>产品销往海外多地</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🤝</div>
+                            <div class="highlight-text">
+                                <h4>量大优惠</h4>
+                                <p>采购量大可享优惠</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual fade-in">
+                    <div class="about-visual-main">
+                        <h4>企业核心数据</h4>
+                        <div class="stat-row">
+                            <div class="stat-item">
+                                <div class="stat-number">自有</div>
+                                <div class="stat-label">五金生产工厂</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">充足</div>
+                                <div class="stat-label">自有生产产能</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">海外</div>
+                                <div class="stat-label">产品销往多地</div>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-item">
+                                <div class="stat-number">优惠</div>
+                                <div class="stat-label">量大采购优惠</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">多年</div>
+                                <div class="stat-label">实操生产经验</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">精工</div>
+                                <div class="stat-label">生产标准匹配</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-visual-sub">
+                        <div class="sub-card">
+                            <div class="num">铆钉</div>
+                            <div class="label">主营产品</div>
+                        </div>
+                        <div class="sub-card">
+                            <div class="num">紧固件</div>
+                            <div class="label">品类齐全</div>
+                        </div>
+                        <div class="sub-card">
+                            <div class="num">冷镦件</div>
+                            <div class="label">工艺覆盖</div>
+                        </div>
+                        <div class="sub-card">
+                            <div class="num">销轴</div>
+                            <div class="label">五金制品</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品中心 -->
+    <section class="section products-section" id="products">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <h2>产品中心</h2>
+                <p class="subtitle">主营铆钉及各类五金制品，品类齐全</p>
+                <div class="line"></div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card fade-in">
+                    <div class="product-icon">🔩</div>
+                    <h3>铆钉</h3>
+                    <p>各类标准及非标铆钉产品，适配多种装配场景</p>
+                    <span class="product-tag">量大优惠</span>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-icon">📐</div>
+                    <h3>半空心铆钉</h3>
+                    <p>半空心结构设计，易于铆接操作</p>
+                    <span class="product-tag">量大优惠</span>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-icon">🔘</div>
+                    <h3>空心鸡眼</h3>
+                    <p>空心鸡眼制品，广泛应用于箱包、服饰等行业</p>
+                    <span class="product-tag">量大优惠</span>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-icon">🔗</div>
+                    <h3>各类紧固件</h3>
+                    <p>螺丝、螺母、销轴等紧固件产品，规格齐全</p>
+                    <span class="product-tag">量大优惠</span>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-icon">⚙️</div>
+                    <h3>冷镦件</h3>
+                    <p>冷镦工艺加工件，精度高、一致性好、成本低</p>
+                    <span class="product-tag">量大优惠</span>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-icon">🔧</div>
+                    <h3>拉伸件</h3>
+                    <p>拉伸工艺五金制品，满足各类形状加工需求</p>
+                    <span class="product-tag">量大优惠</span>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-icon">🛠️</div>
+                    <h3>非标定制件</h3>
+                    <p>根据客户需求定制各类非标异形五金加工件</p>
+                    <span class="product-tag">来图定制</span>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-icon">📦</div>
+                    <h3>五金制品</h3>
+                    <p>各类五金制品加工，配套完善的生产工艺体系</p>
+                    <span class="product-tag">品类齐全</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 定制服务 -->
+    <section class="section custom-section" id="custom">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <h2>定制服务</h2>
+                <p class="subtitle">同步搭建线上货源对接渠道，可供应各类五金加工件</p>
+                <div class="line"></div>
+            </div>
+            <div class="custom-grid">
+                <div class="custom-card fade-in">
+                    <div class="icon">📋</div>
+                    <h3>来图来样定制</h3>
+                    <p>根据客户提供的图纸或样品进行定制生产，满足个性化需求</p>
+                    <div class="highlight-text">支持非标异形件定制</div>
+                </div>
+                <div class="custom-card fade-in">
+                    <div class="icon">⚡</div>
+                    <h3>线上货源对接</h3>
+                    <p>同步搭建线上货源对接渠道，可供应各类铆钉、紧固件、冷镦件、拉伸件等五金加工件</p>
+                    <div class="highlight-text">线上线下同步服务</div>
+                </div>
+                <div class="custom-card fade-in">
+                    <div class="icon">💰</div>
+                    <h3>量大优惠</h3>
+                    <p>自有生产产能充足，采购量大可享优惠，为客户提供高性价比五金货源</p>
+                    <div class="highlight-text">批量采购价格更优</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 行业应用 -->
+    <section class="section industry-section">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <h2>行业应用</h2>
+                <p class="subtitle">产品广泛应用于多个行业领域</p>
+                <div class="line"></div>
+            </div>
+            <div class="industry-grid">
+                <div class="industry-item fade-in">
+                    <div class="icon">🚗</div>
+                    <h4>汽车配件</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🚲</div>
+                    <h4>自行车</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🔒</div>
+                    <h4>锁具</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🔪</div>
+                    <h4>刀具</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🎣</div>
+                    <h4>渔具</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">📺</div>
+                    <h4>电器</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🧳</div>
+                    <h4>箱包</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🚪</div>
+                    <h4>门窗五金</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🏭</div>
+                    <h4>机械设备</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">✏️</div>
+                    <h4>文具</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🧸</div>
+                    <h4>玩具</h4>
+                </div>
+                <div class="industry-item fade-in">
+                    <div class="icon">🛋️</div>
+                    <h4>家具</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 生产实力 -->
+    <section class="section factory-section" id="factory">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <h2>生产实力</h2>
+                <p class="subtitle">持续优化生产工艺，提升加工精度</p>
+                <div class="line"></div>
+            </div>
+            <div class="factory-grid">
+                <div class="factory-card fade-in">
+                    <h3><span class="icon">🏭</span>生产能力</h3>
+                    <ul class="factory-list">
+                        <li><span class="check">✓</span>自有五金生产工厂，产能充足</li>
+                        <li><span class="check">✓</span>多年实操生产经验，工艺成熟</li>
+                        <li><span class="check">✓</span>持续优化生产工艺，提升加工精度</li>
+                        <li><span class="check">✓</span>以精工生产标准匹配市场采购需求</li>
+                        <li><span class="check">✓</span>覆盖冷镦、车削、冲压等多种工艺</li>
+                        <li><span class="check">✓</span>配套钻孔、攻牙、铣扁等二次加工</li>
+                    </ul>
+                </div>
+                <div class="factory-card fade-in">
+                    <h3><span class="icon">🔬</span>品质管控</h3>
+                    <ul class="factory-list">
+                        <li><span class="check">✓</span>原材料采购自正规供应商，把控原料品质</li>
+                        <li><span class="check">✓</span>配备盐雾测试仪、硬度检测仪等检测设备</li>
+                        <li><span class="check">✓</span>影像筛选机自动检测，保障产品精度</li>
+                        <li><span class="check">✓</span>针对产品精度、表面光洁度逐项检测</li>
+                        <li><span class="check">✓</span>严控出厂品质，匹配客户品质要求</li>
+                        <li><span class="check">✓</span>持续工艺改良，提升产品加工精度</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 经营理念 -->
+    <section class="section philosophy-section" id="philosophy">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <h2>经营理念</h2>
+                <p class="subtitle">服务为本、严控品质、诚信经营</p>
+                <div class="line"></div>
+            </div>
+            <div class="philosophy-grid">
+                <div class="philosophy-card fade-in">
+                    <div class="icon">🤝</div>
+                    <h3>服务为本</h3>
+                    <p>本厂恪守"服务为本、严控品质、诚信经营"的企业经营理念，始终以贴心配套服务、稳定生产实力、实惠供货价为经营准则，稳步打造口碑优良的五金供货品牌。</p>
+                </div>
+                <div class="philosophy-card fade-in">
+                    <div class="icon">🤲</div>
+                    <h3>合作共赢</h3>
+                    <p>我们秉持诚信合作、互利共赢、协同发展的合作理念，热忱欢迎各界客户莅临厂区参观考察、交流指导、洽谈合作订单。</p>
+                </div>
+                <div class="philosophy-card fade-in">
+                    <div class="icon">📈</div>
+                    <h3>持续精进</h3>
+                    <p>当下行业市场竞争加剧，客户对产品品质、加工精度要求持续提升，本厂持续优化生产工艺，依托多年实操生产经验，坚持工艺改良、提升加工精度。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 市场覆盖 -->
+    <section class="section market-section" id="market">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <h2>市场覆盖</h2>
+                <p class="subtitle">产品覆盖东南亚、欧美多个国家与地区</p>
+                <div class="line"></div>
+            </div>
+            <div class="market-content">
+                <div class="market-text fade-in">
+                    <p>铆钉厂张东良专注为各地采购商家提供<span class="highlight">高性价比五金货源</span>，产品覆盖<span class="highlight">东南亚、欧美</span>多个国家与地区，收获海内外众多客商认可与复购。</p>
+                    <p>铆钉厂张东良同步搭建<span class="highlight">线上货源对接渠道</span>，可供应各类铆钉、紧固件、冷镦件、拉伸件等五金加工件，方便各地客户便捷采购。</p>
+                    <p>我们热忱欢迎各界客户莅临厂区<span class="highlight">参观考察、交流指导、洽谈合作</span>，期待与您建立长期稳定的合作关系。</p>
+                </div>
+                <div class="market-stats fade-in">
+                    <div class="market-stat-card">
+                        <div class="icon">🌏</div>
+                        <h4>东南亚</h4>
+                        <p>产品覆盖多个国家</p>
+                    </div>
+                    <div class="market-stat-card">
+                        <div class="icon">🌍</div>
+                        <h4>欧美</h4>
+                        <p>销往欧美多个国家</p>
+                    </div>
+                    <div class="market-stat-card">
+                        <div class="icon">🔄</div>
+                        <h4>复购认可</h4>
+                        <p>收获众多客商认可</p>
+                    </div>
+                    <div class="market-stat-card">
+                        <div class="icon">💻</div>
+                        <h4>线上对接</h4>
+                        <p>同步搭建线上渠道</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="section contact-section" id="contact">
+        <div class="section-container">
+            <div class="contact-container">
+                <h2>联系我们</h2>
+                <p>热忱欢迎各界客户莅临厂区参观考察、交流指导、洽谈合作</p>
+                <div class="contact-box fade-in">
+                    <div class="wechat-icon">💬</div>
+                    <div class="label">联系微信</div>
+                    <div class="wechat-id">mdczdL</div>
+                    <div class="tip">添加微信，获取产品报价与采购咨询</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 备注 -->
+    <section class="notes-section">
+        <div class="notes-container">
+            <div class="notes-title">补充说明</div>
+            <ul class="notes-list">
+                <li>具体产品价格以双方沟通确认为准；</li>
+                <li>样品物流运费供需双方协商确定；</li>
+                <li>特殊材质、特殊工艺订单，交付周期以双方沟通确认为准；</li>
+                <li>本页面信息仅供参考，不构成任何形式的承诺或保证。</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>© 2026 铆钉厂张东良 | 五金紧固件生产厂家 | 产品销往海外多地</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 70;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    document.getElementById('navLinks').classList.remove('active');
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(30, 41, 59, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(30, 41, 59, 0.95)';
+            }
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -60px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
