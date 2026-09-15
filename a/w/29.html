@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>路由器有线中继与无线中继完整设置教程一网上用户</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Microsoft Yahei,sans-serif;}
+body{padding:20px;line-height:1.8;color:#333;background:#f5f5f5;}
+.box{max-width:800px;margin:0 auto;background:#fff;padding:30px;border-radius:8px;}
+h1{font-size:22px;text-align:center;margin-bottom:25px;color:#222;}
+h2{font-size:18px;margin:20px 0 10px;border-left:4px solid #0066cc;padding-left:10px;}
+p{margin:10px 0;}
+.warn{background:#fff2f2;color:#d93025;padding:10px;border-radius:4px;margin:10px 0;}
+ul{padding-left:25px;margin:10px 0;}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>路由器有线中继与无线中继完整设置教程，全屋WiFi无死角</h1>
+
+<h2>一、两种中继模式区别</h2>
+<ul>
+<li><strong>无线中继（不用网线）</strong>
+<p>副路由接收主路由WiFi信号再转发，不用布线。</p>
+<p>缺点：网速会损耗一半，隔墙多容易掉线。</p>
+<p>适用：没法拉网线的房间。</p>
+</li>
+
+<li><strong>有线中继（LAN口对接，网速无损）</strong>
+<p>网线对接主副路由器局域网，带宽不衰减，网络稳定。</p>
+<p>适用：可以布设网线的全屋组网，优先选这种。</p>
+</li>
+</ul>
+
+<h2>二、有线中继（LAN对LAN）设置步骤【首选方案】</h2>
+<p>1.接线：网线一头接主路由器LAN口，另一头接副路由器LAN口。</p>
+<p class="warn">⚠️严禁插入副路由器WAN口。</p>
+<p class="warn">⚠️严禁插入副路由器 WAN 口。一旦接WAN口，网络会被分割成两个独立网段，手机不能自动漫游，电脑、监控、打印机无法互相访问，还会出现游戏联机失败、下载限速、IP冲突掉线。</p>
+
+<p>2.修改管理IP</p>
+<p>主路由地址：192.168.1.1</p>
+<p>把副路由后台地址改成同网段不冲突，例如：192.168.1.2</p>
+
+<p>3.关键设置：关闭副路由器的DHCP服务器，防止IP冲突断网。</p>
+
+<p>4.WiFi漫游设置</p>
+<p>副路由WiFi名称、密码、加密方式和主路由保持完全一致，手机自动切换网络。</p>
+
+<p><strong>最终效果</strong></p>
+<p>所有设备处于同一个局域网，文件共享、智能家居都能互相访问，网速几乎无损失。</p>
+
+<h2>三、无线中继（WDS无线放大）设置步骤</h2>
+<p>1.进入副路由后台，上网模式选择：无线中继/WDS中继。</p>
+<p>2.搜索并选中主路由WiFi，填写WiFi密码完成配对。</p>
+<p>3.副路由WiFi名称密码和主路由统一。</p>
+<p>4.可选：关闭DHCP服务，合并为同一个局域网。</p>
+
+<p class="warn">缺点提醒：无线一收一发，带宽减半，千兆宽带跑不满，远距离容易卡顿。</p>
+
+<h2>四、避坑总结</h2>
+<ul>
+<li>LAN接WAN = 二级路由，分成两个内网，设备不能互访，不推荐组网使用。</li>
+<li>能拉网线优先做有线LAN对LAN中继，稳定不掉速。</li>
+<li>双路由务必关闭副路由DHCP，否则整网网络瘫痪。</li>
+<li>同名WiFi才能实现无缝漫游。</li>
+</ul>
+
+</div>
+</body>
+</html>
