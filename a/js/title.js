@@ -1,11 +1,8 @@
-window.addEventListener('load', function() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/a/js/yj.html', true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      document.body.insertAdjacentHTML('beforeend', xhr.responseText);
+// 页面标题自动追加 @网上用户，等待DOM就绪再执行
+document.addEventListener('DOMContentLoaded', function(){
+    const suffix = '@网上用户';
+    let title = document.title.trim();
+    if(!title.endsWith(suffix)){
+        document.title = title + suffix;
     }
-  };
-  xhr.send();
 });
-
