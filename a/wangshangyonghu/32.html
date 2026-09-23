@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="不重复抽签工具：设置总签数后随机抽取，已抽出的签不会重复">
+<title>抽签系统@网上用户</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+  }
+  .container {
+    width: 100%;
+    max-width: 800px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    padding: 24px 20px 28px;
+    height: fit-content;
+  }
+  .title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #8a8f98;
+    margin-bottom: 22px;
+  }
+
+  /* ===== 设置区 ===== */
+  .setup { display: block; }
+  .field-row { display: flex; gap: 10px; align-items: center; }
+  .field-label { font-size: 14px; color: #333; white-space: nowrap; }
+  .field-row input[type="number"] {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    padding: 0 12px;
+    font-size: 16px;
+    border: 1px solid #d4d7dd;
+    border-radius: 10px;
+    outline: none;
+    background: #fafbfc;
+  }
+  .field-row input[type="number"]:focus { border-color: #2563eb; background: #fff; }
+  .btn {
+    height: 44px;
+    padding: 0 20px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary { background: #2563eb; color: #fff; }
+  .btn-primary:active { background: #1d4ed8; }
+  .btn-ghost { background: #f0f2f5; color: #555; }
+  .btn-ghost:active { background: #e4e7eb; }
+  .btn-danger { background: #fee2e2; color: #b91c1c; }
+  .btn-danger:active { background: #fecaca; }
+
+  /* ===== 抽签区 ===== */
+  .draw-area { display: none; }
+  .stats { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 24px; font-weight: 700; color: #2563eb; }
+  .stat-label { font-size: 12px; color: #8a8f98; }
+  .stat-item.done .stat-num { color: #f59e0b; }
+  .result-box {
+    border: 2px dashed #d4d7dd;
+    border-radius: 16px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background: #fafbfc;
+    overflow: hidden;
+  }
+  .result-num { font-size: 96px; font-weight: 800; color: #2563eb; line-height: 1; }
+  .result-empty { font-size: 18px; color: #a6abb4; }
+  .result-done { font-size: 28px; font-weight: 700; color: #f59e0b; }
+  .actions { display: flex; gap: 12px; }
+  .actions .btn { flex: 1; }
+
+  /* ===== 历史区 ===== */
+  .history-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 26px 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .history-title .count { font-size: 13px; color: #8a8f98; font-weight: 400; }
+  .history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 40px;
+  }
+  .chip {
+    background: #eef2ff;
+    color: #2563eb;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+  .history-empty { font-size: 13px; color: #a6abb4; }
+
+  /* ===== 提示条 ===== */
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%) translateY(80px);
+    background: rgba(0,0,0,0.78);
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 99;
+    max-width: 90%;
+    text-align: center;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 420px) {
+    body { padding: 10px; }
+    .container { padding: 18px 14px 22px; border-radius: 12px; }
+    .title { font-size: 19px; }
+    .result-num { font-size: 76px; }
+    .result-box { height: 170px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">抽签系统</h1>
+    <p class="subtitle">设置总签数后开始抽取，已抽出的签不会重复</p>
+
+    <!-- ===== 视图：设置总签数 ===== -->
+    <div id="setupView" class="setup">
+      <div class="field-row">
+        <label class="field-label" for="totalInput">总签数</label>
+        <input type="number" id="totalInput" min="1" max="99999" placeholder="请输入签的总数" inputmode="numeric">
+        <button class="btn btn-primary" id="startBtn">开始</button>
+      </div>
+    </div>
+
+    <!-- ===== 视图：抽签 ===== -->
+    <div id="drawView" class="draw-area">
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-num" id="remainNum">0</div>
+          <div class="stat-label">剩余签数</div>
+        </div>
+        <div class="stat-item done">
+          <div class="stat-num" id="drawnNum">0</div>
+          <div class="stat-label">已抽签数</div>
+        </div>
+      </div>
+
+      <div class="result-box" id="resultBox">
+        <div class="result-empty" id="resultEmpty">点击下方按钮抽取</div>
+        <div class="result-num" id="resultNum" style="display:none"></div>
+        <div class="result-done" id="resultDone" style="display:none">所有签已抽完</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="drawBtn">抽 签</button>
+        <button class="btn btn-ghost" id="resetBtn">重新设置</button>
+      </div>
+    </div>
+
+    <!-- ===== 历史区 ===== -->
+    <div id="historyWrap" class="history-title" style="display:none">
+      <span>已抽出的签</span>
+      <span class="count" id="historyCount"></span>
+    </div>
+    <div class="history-list" id="historyList">
+      <span class="history-empty">暂无记录</span>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  var state = {
+    total: 0,
+    remaining: [],   // 尚未抽出的签
+    drawn: []        // 已抽出的签（顺序记录）
+  };
+
+  var el = {
+    setupView: document.getElementById('setupView'),
+    drawView: document.getElementById('drawView'),
+    totalInput: document.getElementById('totalInput'),
+    startBtn: document.getElementById('startBtn'),
+    drawBtn: document.getElementById('drawBtn'),
+    resetBtn: document.getElementById('resetBtn'),
+    remainNum: document.getElementById('remainNum'),
+    drawnNum: document.getElementById('drawnNum'),
+    resultBox: document.getElementById('resultBox'),
+    resultEmpty: document.getElementById('resultEmpty'),
+    resultNum: document.getElementById('resultNum'),
+    resultDone: document.getElementById('resultDone'),
+    historyWrap: document.getElementById('historyWrap'),
+    historyCount: document.getElementById('historyCount'),
+    historyList: document.getElementById('historyList'),
+    toast: document.getElementById('toast')
+  };
+
+  function showToast(msg) {
+    el.toast.textContent = msg;
+    el.toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function () {
+      el.toast.classList.remove('show');
+    }, 1800);
+  }
+
+  function render() {
+    el.remainNum.textContent = state.remaining.length;
+    el.drawnNum.textContent = state.drawn.length;
+
+    if (state.remaining.length === 0 && state.drawn.length > 0) {
+      el.resultEmpty.style.display = 'none';
+      el.resultNum.style.display = 'none';
+      el.resultDone.style.display = 'block';
+    } else if (state.remaining.length > 0) {
+      el.resultEmpty.style.display = 'block';
+      el.resultNum.style.display = 'none';
+      el.resultDone.style.display = 'none';
+    }
+
+    // 历史记录
+    el.historyList.innerHTML = '';
+    if (state.drawn.length === 0) {
+      el.historyList.innerHTML = '<span class="history-empty">暂无记录</span>';
+      el.historyWrap.style.display = 'none';
+    } else {
+      el.historyWrap.style.display = 'flex';
+      el.historyCount.textContent = '共 ' + state.drawn.length + ' 个';
+      var frag = document.createDocumentFragment();
+      state.drawn.forEach(function (n, i) {
+        var c = document.createElement('span');
+        c.className = 'chip';
+        c.textContent = '第' + (i + 1) + '签 · ' + n;
+        frag.appendChild(c);
+      });
+      el.historyList.appendChild(frag);
+    }
+  }
+
+  function startDraw() {
+    var v = parseInt(el.totalInput.value, 10);
+    if (!isFinite(v) || v < 1) {
+      showToast('请输入正确的总签数（大于 0 的整数）');
+      return;
+    }
+    if (v > 99999) {
+      showToast('总签数不能超过 99999');
+      return;
+    }
+    state.total = v;
+    state.remaining = [];
+    for (var i = 1; i <= v; i++) { state.remaining.push(i); }
+    state.drawn = [];
+
+    el.setupView.style.display = 'none';
+    el.drawView.style.display = 'block';
+    render();
+  }
+
+  function drawOne() {
+    if (state.remaining.length === 0) {
+      showToast('所有签已抽完');
+      return;
+    }
+    var idx = Math.floor(Math.random() * state.remaining.length);
+    var num = state.remaining.splice(idx, 1)[0];
+    state.drawn.push(num);
+
+    el.resultEmpty.style.display = 'none';
+    el.resultDone.style.display = 'none';
+    el.resultNum.style.display = 'block';
+    el.resultNum.textContent = num;
+
+    render();
+  }
+
+  function reset() {
+    state.total = 0;
+    state.remaining = [];
+    state.drawn = [];
+    el.drawView.style.display = 'none';
+    el.setupView.style.display = 'block';
+    el.totalInput.value = '';
+    el.resultNum.style.display = 'none';
+    el.resultEmpty.style.display = 'block';
+    el.resultDone.style.display = 'none';
+    render();
+  }
+
+  el.startBtn.addEventListener('click', startDraw);
+  el.totalInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { startDraw(); }
+  });
+  el.drawBtn.addEventListener('click', drawOne);
+  el.resetBtn.addEventListener('click', reset);
+
+  // 初始态：设置区可见
+  el.drawView.style.display = 'none';
+  el.setupView.style.display = 'block';
+})();
+</script>
+</body>
+</html>
