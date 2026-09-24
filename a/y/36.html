@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8">
+<meta http-equiv='content-language' content='zh-cn'>
+
+<title>统计多少个字一网上用户@网上用户</title>
+<meta name="keywords" content="统计多少个字,输入框输入的字统计数量一字数统计,网上用户">
+<meta name="description" content="统计多少个字,计算多少个字一输入框输入的字统计数量一字数统计">
+
+<style type="text/css">
+a{TEXT-DECORATION: none}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{width:100%;height:100vh;display:flex;flex-direction:column;}
+#count{font-size:18px;padding:10px;}
+textarea{flex:1;width:100%;border:1px solid #ccc;padding:10px;overflow:auto;}
+</style>
+
+</head>
+
+<body>
+<p id="count">字数：0</p>
+<textarea id="gpc234" placeholder="输入框"></textarea>
+
+<script>
+const textarea = document.getElementById('gpc234');
+const countDisplay = document.getElementById('count');
+const storageKey = "textContentCache";
+// 最大字号与最小字号
+let maxFontSize = 16;
+let minFontSize = 10;
+
+// 读取缓存
+if(localStorage.getItem(storageKey)){
+    textarea.value = localStorage.getItem(storageKey);
+    countDisplay.textContent = '字数：' + textarea.value.length;
+    autoFontSize();
+}
+
+// 自动缩放字体函数
+function autoFontSize(){
+    let len = textarea.value.length;
+    // 文字越多字号越小
+    let size = maxFontSize - len / 300;
+    if(size < minFontSize) size = minFontSize;
+    textarea.style.fontSize = size + "px";
+}
+
+textarea.addEventListener('input', function () {
+    const text = textarea.value;
+    const length = text.length;
+    countDisplay.textContent = '字数：' + length;
+    localStorage.setItem(storageKey, text);
+    autoFontSize();
+});
+</script>
+</body>
+</html>

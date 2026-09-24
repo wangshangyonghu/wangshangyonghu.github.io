@@ -1,12 +1,212 @@
-<link rel="stylesheet" href="/a/js/bj.css"><!--全局页面样式-->
-<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
-<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
-<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
-<!-- 页脚脚本 放这里最完美 --><script src="/a/js/ico.js"></script>
-<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
-<script src="/a/js/sxy.js"></script><!-- 上下页 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多行计算器一网上用户一多行算式自动计算器</title>
+
+<style>
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          line-height: 1.7;
+      }      
+.wrap{
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #222;
+    padding: 12px;
+}
+#clearBtn{
+    width: 100%;
+    margin-bottom:15px;
+    padding:10px;
+    font-size:18px;
+    background:#f44336;
+    color:#fff;
+    border:none;
+    border-radius:4px;
+}
+.line{
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+    border-bottom: 1px solid #666;
+    align-items: flex-start;
+}
+.line textarea{
+    flex: 1;
+    margin-right: 15px;
+    border: none;
+    font-size: 18px;
+    outline: 0;
+    padding: 2px 0;
+    background: transparent;
+    overflow: hidden;
+    resize: none;
+    white-space: normal;
+    word-break: break-all;
+    line-height: 24px;
+}
+.num{
+    white-space: pre-wrap;
+    word-break: break-all;
+    padding-top: 2px;
+}
+.total{
+    margin-top: 12px;
+    font-size: 22px;
+    font-weight: bold;
+}
+.bottom-title{
+    text-align: center;
+    font-size: 28px;
+    margin-top: 25px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <!-- 清空按钮挪到最上方 -->
+    <button id="clearBtn">清空所有数据</button>
+<hr/>
+    <!-- 共30组输入行 -->
+    <div class="line"><textarea class="exp" rows="1"placeholder="输入数字带+-*/%自动计算"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+    <div class="line"><textarea class="exp" rows="1"></textarea><span class="num">0</span></div>
+
+    <div class="total">合计:<span id="sum">0</span></div>
+</div>
+
+<div class="bottom-title">输入数字带+-*/%自动计算</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    function calculate(str){
+        if(!str.trim()) return 0;
+        let s = str.replace(/\n/g,"");
+        s = s.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
+        if(!/^[\d+\-*/.()\s]*$/.test(s)) return 0;
+        try{
+            let res = new Function('"use strict";return ('+s+')')();
+            return Number(res.toFixed(10));
+        }catch(err){
+            return 0;
+        }
+    }
+
+    function adaptField(ta){
+        const maxFont = 18;
+        const minFont = 10;
+        ta.style.fontSize = maxFont + "px";
+        while(ta.scrollWidth > ta.clientWidth && parseFloat(ta.style.fontSize) > minFont){
+            ta.style.fontSize = parseFloat(ta.style.fontSize) - 0.6 + "px";
+        }
+        ta.style.height = "auto";
+        ta.style.height = ta.scrollHeight + "px";
+    }
+
+    const inputs = document.querySelectorAll('.exp');
+    const nums = document.querySelectorAll('.num');
+    const totalBox = document.getElementById('sum');
+    const storageKey = "calcData";
+
+    function loadCache(){
+        let dataStr = localStorage.getItem(storageKey);
+        if(!dataStr) return;
+        let arr = JSON.parse(dataStr);
+        inputs.forEach((inp,idx)=>{
+            if(arr[idx] !== undefined){
+                inp.value = arr[idx];
+                adaptField(inp);
+            }
+        })
+        refresh();
+    }
+
+    function saveCache(){
+        let arr = [];
+        inputs.forEach(inp=>arr.push(inp.value));
+        localStorage.setItem(storageKey, JSON.stringify(arr));
+    }
+
+    function refresh(){
+        let total = 0;
+        inputs.forEach((inp,idx)=>{
+            adaptField(inp);
+            let val = calculate(inp.value);
+            nums[idx].textContent = val;
+            total += val;
+        })
+        totalBox.textContent = Number(total.toFixed(10));
+        saveCache();
+    }
+
+    document.getElementById("clearBtn").addEventListener('click', function(){
+        inputs.forEach(inp=>{
+            inp.value = "";
+            inp.style.fontSize = "18px";
+            inp.style.height = "24px";
+        })
+        localStorage.removeItem(storageKey);
+        refresh();
+    })
+
+    inputs.forEach((input, index)=>{
+        input.addEventListener('input', refresh);
+        input.addEventListener('propertychange', function(e){
+            if(e.propertyName === 'value') refresh();
+        });
+
+        input.addEventListener('keydown', function(e){
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                let next = inputs[index+1];
+                if(next) next.focus();
+            }
+        })
+    })
+
+    loadCache();
+})
+</script>
+
+<script src="/a/js/ym.js"></script>
+<script src="/a/js/ico.js"></script>
+
 </body>
 </html>
-
-
-<script>window.location.href='https://wangshangyonghu.web1337.net/';</script>

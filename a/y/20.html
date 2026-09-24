@@ -1,72 +1,332 @@
-
-<!-- 没一备注的html模版 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <meta http-equiv="content-language" content="zh-CN">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>克到公斤换算一网上用户@网上用户</title>
+    <script>
+        // Tailwind CSS v3 核心功能
+        const tailwind = {
+            config: {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: '#3B82F6',
+                            secondary: '#10B981',
+                            neutral: '#F3F4F6',
+                            dark: '#1F2937'
+                        },
+                        fontFamily: {
+                            inter: ['Inter', 'sans-serif'],
+                        },
+                    }
+                }
+            },
+            utilities: {
+                'content-auto': 'content-visibility: auto;',
+                'shadow-soft': 'box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);',
+                'transition-input': 'transition: all 0.3s ease;'
+            }
+        };
 
-    <meta name="mobile-web-app-capable" content="yes">
+        // 简化版 Tailwind CSS 实现
+        function applyTailwindClasses(element) {
+            const classList = Array.from(element.classList);
+            const styleMap = {
+                'w-full': 'width: 100%;',
+                'px-4': 'padding-left: 1rem; padding-right: 1rem;',
+                'py-3': 'padding-top: 0.75rem; padding-bottom: 0.75rem;',
+                'rounded-lg': 'border-radius: 0.5rem;',
+                'border': 'border: 1px solid #e5e7eb;',
+                'border-gray-300': 'border-color: #d1d5db;',
+                'focus:border-primary': 'focus: border-color: #3B82F6;',
+                'focus:ring-2': 'focus: ring-width: 2px;',
+                'focus:ring-primary/30': 'focus: ring-color: rgba(59, 130, 246, 0.3);',
+                'outline-none': 'outline: none;',
+                'shadow-sm': 'box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);',
+                'text-3xl': 'font-size: 1.875rem; line-height: 2.25rem;',
+                'font-bold': 'font-weight: 700;',
+                'text-primary': 'color: #3B82F6;',
+                'bg-white': 'background-color: #ffffff;',
+                'rounded-2xl': 'border-radius: 1rem;',
+                'shadow-xl': 'box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);',
+                'transform': 'transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));',
+                'transition-all': 'transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms;',
+                'duration-300': 'transition-duration: 300ms;',
+                'hover:scale-[1.01]': 'hover: transform: scale(1.01);',
+                'bg-primary': 'background-color: #3B82F6;',
+                'text-white': 'color: #ffffff;',
+                'mb-2': 'margin-bottom: 0.5rem;',
+                'flex': 'display: flex;',
+                'items-center': 'align-items: center;',
+                'text-[clamp(1.8rem,4vw,2.5rem)]': 'font-size: clamp(1.8rem, 4vw, 2.5rem);',
+                'font-bold': 'font-weight: 700;',
+                'text-blue-100': 'color: #dbeafe;',
+                'opacity-90': 'opacity: 0.9;',
+                'p-6': 'padding: 1.5rem;',
+                'mb-8': 'margin-bottom: 2rem;',
+                'block': 'display: block;',
+                'text-gray-700': 'color: #374151;',
+                'font-medium': 'font-weight: 500;',
+                'mt-8': 'margin-top: 2rem;',
+                'bg-blue-50': 'background-color: #eff6ff;',
+                'p-4': 'padding: 1rem;',
+                'rounded-lg': 'border-radius: 0.5rem;',
+                'border-l-4': 'border-left-width: 4px;',
+                'border-primary': 'border-color: #3B82F6;',
+                'text-sm': 'font-size: 0.875rem; line-height: 1.25rem;',
+                'text-center': 'text-align: center;',
+                'text-gray-500': 'color: #6b7280;',
+                'bg-neutral': 'background-color: #F3F4F6;',
+                'p-5': 'padding: 1.25rem;',
+                'scale-110': 'transform: scale(1.1);',
+                'text-red-500': 'color: #ef4444;',
+                'hover:scale-[1.02]': 'hover: transform: scale(1.02);',
+                'grid': 'display: grid;',
+                'grid-cols-1': 'grid-template-columns: 1fr;',
+                'md:grid-cols-2': 'md: grid-template-columns: repeat(2, 1fr);',
+                'gap-4': 'gap: 1rem;',
+                'mt-4': 'margin-top: 1rem;',
+                'text-2xl': 'font-size: 1.5rem; line-height: 2rem;',
+                'text-secondary': 'color: #10B981;'
+            };
 
-    <title>网上用户</title>
-    <meta name="keywords" content="网上用户">
-    <meta name="description" content="网上用户专属内容介绍">
+            let customStyles = '';
+            classList.forEach(className => {
+                if (styleMap[className]) {
+                    customStyles += styleMap[className];
+                }
+            });
+
+            if (customStyles) {
+                element.style.cssText += customStyles;
+            }
+        }
+
+        // 应用到所有元素
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('*').forEach(el => applyTailwindClasses(el));
+        });
+    </script>
+    <style>
+        /* 自定义工具类 */
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .shadow-soft {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            .transition-input {
+                transition: all 0.3s ease;
+            }
+        }
+
+        /* 基础样式 */
+        body {
+            background: linear-gradient(to bottom right, #e0f2fe, #e0e7ff);
+            min-height: 100vh;
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        /* 动画效果 */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* 字体图标 - 简化版 */
+        .fa {
+            display: inline-block;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+
+        .fa-balance-scale:before { content: "⚖️"; }
+        .fa-weight-hanging:before { content: "🏋️"; }
+        .fa-weight:before { content: "⚖️"; }
+        .fa-info-circle:before { content: "ℹ️"; }
+        .fa-calculator:before { content: "🧮"; }
+        .fa-boxes:before { content: "📦"; }
+    </style>
+
 </head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-inter text-dark">
+    <div class="container mx-auto px-4 py-12 max-w-2xl">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.01]">
+            <div class="bg-primary p-6 text-white">
+                <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-2 flex items-center">
+                    <i class="fa fa-balance-scale mr-3"></i>克到公斤换算
+                </h1>
+                <p class="text-blue-100 opacity-90">输入单重和数量，自动计算总重量</p>
+            </div>
+            
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <div>
+                        <label for="grams" class="block text-gray-700 font-medium mb-2">
+                            <i class="fa fa-weight-hanging mr-2"></i>单重 (g)
+                        </label>
+                        <input 
+                            type="text" 
+                            id="grams" 
+                            placeholder="请输入单重" 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-input shadow-sm"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="quantity" class="block text-gray-700 font-medium mb-2">
+                            <i class="fa fa-boxes mr-2"></i>数量
+                        </label>
+                        <input 
+                            type="number" 
+                            id="quantity" 
+                            value="1" 
+                            min="0" 
+                            step="1"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-input shadow-sm"
+                        >
+                    </div>
+                </div>
+                
+                <div class="bg-neutral p-5 rounded-xl shadow-soft mb-4">
+                    <h3 class="text-gray-700 font-medium mb-2 flex items-center">
+                        <i class="fa fa-weight mr-2"></i>单重 (kg)
+                    </h3>
+                    <div id="unitResult" class="text-3xl font-bold text-primary">0</div>
+                </div>
+                
+                <div class="bg-green-50 p-5 rounded-xl shadow-soft">
+                    <h3 class="text-gray-700 font-medium mb-2 flex items-center">
+                        <i class="fa fa-calculator mr-2"></i>总重量 (kg)
+                    </h3>
+                    <div id="totalResult" class="text-2xl font-bold text-secondary">0</div>
+                </div>
+                
+                <div class="mt-8 bg-blue-50 p-4 rounded-lg border-l-4 border-primary">
+                    <p class="text-gray-700 text-sm">
+                        <i class="fa fa-info-circle mr-2"></i>1 公斤 = 1000 克 | 1 克 = 0.001 公斤
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="mt-8 text-center text-gray-500 text-sm">
+            <p>© 2025 单位换算工具 | 设计与开发</p>
+        </footer>
+    </div>
 
-<!--页脚-->
-网上用户专属内容介绍
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const gramsInput = document.getElementById('grams');
+            const quantityInput = document.getElementById('quantity');
+            const unitResultElement = document.getElementById('unitResult');
+            const totalResultElement = document.getElementById('totalResult');
+            
+            // 初始计算
+            calculateResults();
+            
+            // 监听输入变化
+            gramsInput.addEventListener('input', calculateResults);
+            quantityInput.addEventListener('input', calculateResults);
+            
+            function calculateResults() {
+                // 获取单重输入
+                const gramsValue = gramsInput.value.trim();
+                const isValidWeight = /^-?\d*\.?\d+$/.test(gramsValue.replace(/[，。]/g, '.'));
+                
+                // 获取数量输入
+                const quantity = Number(quantityInput.value) || 0;
+                
+                // 验证输入
+                if (!isValidWeight || quantity < 0) {
+                    // 闪烁效果提示错误
+                    totalResultElement.classList.add('text-red-500');
+                    setTimeout(() => {
+                        totalResultElement.classList.remove('text-red-500');
+                    }, 500);
+                    
+                    unitResultElement.textContent = gramsValue === '' ? '0' : '输入错误';
+                    totalResultElement.textContent = '输入错误';
+                    return;
+                }
+                
+                // 处理单重输入
+                const sanitizedGrams = parseFloat(gramsValue.replace(/[，。]/g, '.'));
+                const unitKilograms = sanitizedGrams / 1000;
+                
+                // 计算总重量
+                const totalKilograms = unitKilograms * quantity;
 
-<br/>
-<br/>
-<br/>
-<br/>
-
-
-
-<hr/>
-<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
-<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
-<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
-<!-- ico 放这里最完美 --><script src="/a/js/ico.js"></script>
-<!-- yj2 放这里最完美 --><script src="/a/js/yj2.js"></script>
-
-<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
-
-<title>网上用户</title>
-<!-- seo 放这里最完美 --><script src="/a/js/seo.js"></script>
-
-
-<script src="/a/js/sxy.js"></script><!-- 上下页 -->
-<link rel="stylesheet" href="/a/js/bj.css"><!--全局页面样式-->
+                // 解决JS浮点数精度问题
+                function formatNumber(n) {
+                    return Number(n.toFixed(12)).toString();
+                }
+                
+                // 显示结果
+                unitResultElement.textContent = formatNumber(unitKilograms);
+                totalResultElement.textContent = formatNumber(totalKilograms);
+                
+                // 添加结果变化动画
+                unitResultElement.classList.add('scale-110');
+                totalResultElement.classList.add('scale-110');
+                
+                setTimeout(() => {
+                    unitResultElement.classList.remove('scale-110');
+                    totalResultElement.classList.remove('scale-110');
+                }, 300);
+            }
+            
+            // 为输入框添加焦点效果
+            gramsInput.addEventListener('focus', function() {
+                this.parentElement.classList.add('hover:scale-[1.02]');
+            });
+            
+            gramsInput.addEventListener('blur', function() {
+                this.parentElement.classList.remove('hover:scale-[1.02]');
+            });
+            
+            quantityInput.addEventListener('focus', function() {
+                this.parentElement.classList.add('hover:scale-[1.02]');
+            });
+            
+            quantityInput.addEventListener('blur', function() {
+                this.parentElement.classList.remove('hover:scale-[1.02]');
+            });
+        });
+    </script>
 </body>
 </html>
 
 
-看了这么多快手，还是「网上用户」最好玩了！ 复制此消息，打开【快手】直接观看！
-
-
-
-<script>
-// 在这里添加你要随机跳转的所有网址
-var urls = [
-'/a/aa/64.html#网上用户',
-'https://v.kuaishou.com/KnJwN1SR#网上用户',
-'https://v.kuaishou.com/KSQGveb5#网上用户',
-'https://v.kuaishou.com/nqE1eUuz#网上用户',
-'https://live.kuaishou.com/profile/wangshangyonghu#网上用户',
-
-
-  '/'
-];
-
-
-
-
-// 随机选一个并跳转
-window.location.href = urls[Math.floor(Math.random() * urls.length)];
-</script>
-
-
-
-随机跳转的所有网址
+    
+<!-- yj2 -->
+<script src="/a/js/yj2.js"></script>
+<!--居中--><style type="text/css">       
+      body {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          line-height: 1.7;
+          background-color: #f8f9fa;
+          color: #333;
+      }          
+       </style><!--居中-->

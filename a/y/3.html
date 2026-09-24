@@ -1,11 +1,182 @@
-<link rel="stylesheet" href="/a/js/bj.css"><!--全局页面样式-->
-<link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
-<link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
-<!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
-<!-- 页脚脚本 放这里最完美 --><script src="/a/js/ico.js"></script>
-<!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
-<script src="/a/js/sxy.js"></script><!-- 上下页 -->
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=yes" />
+<meta http-equiv='content-language' content='zh-cn'>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+A{TEXT-DECORATION: none}
+button {
+  padding: 5px 5px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-right: 0px;
+}
+body {
+  font-family: Arial, sans-serif;
+}
+p {
+  margin-top: 12px;
+}
+.wrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+textarea{
+  resize: both;
+  height:100vh;
+}
+#myInput {
+  font-weight: bold;
+  font-size: 100px;
+  text-align: center;
+  width:100%;
+}
+</style>
+
+
+<!--输入框缓存结束-->
+
+<title>大字体输入框一增大字体一缩小字体一通过网页按钮控制字体大小的输入框一增大字体一 缩小字体 左对齐 居中 右对齐 切换字体粗细@网上用户</title>
+<meta name="keywords" content="大字体输入框一网上用户,大字体输入框,增大字体一缩小字体一通过网页按钮控制字体大小的输入框,网上用户,公平村,张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,网络用户" />
+<meta name="description" content="@网上用户,大字体输入框一网上用户,增大字体一缩小字体一通过网页按钮控制字体大小的输入框一居中显示一增大字体一 缩小字体 左对齐 居中 右对齐 切换字体粗细" />
+
+</head>
+<body>
+
+<!--输入框背景颜色按钮-->
+<p>背景颜色:</p>
+<button onclick="changeBackgroundColor('#0066ff')">蓝</button>
+<button onclick="changeBackgroundColor('#ff0000')">红</button>
+<button onclick="changeBackgroundColor('#ffff00')">黄</button>
+<button onclick="changeBackgroundColor('#00ffff')">青</button>
+<button onclick="changeBackgroundColor('#33ff00')">绿</button>
+<button onclick="changeBackgroundColor('green')">绿</button>
+<button onclick="changeBackgroundColor('#000000')">黑</button>
+<button onclick="changeBackgroundColor('white')">白</button>
+<button onclick="changeBackgroundColor('orange')">橙</button>
+<button onclick="changeBackgroundColor('blue')">蓝</button>
+<button onclick="changeBackgroundColor('indigo')">靛</button>
+<button onclick="changeBackgroundColor('violet')">紫</button>
+
+<br/><br/>
+
+<!--字体颜色按钮-->
+<p>字体颜色:</p>
+<button onclick="changeTextColor('#0066ff')">蓝</button>
+<button onclick="changeTextColor('white')">白</button>
+<button onclick="changeTextColor('black')">黑</button>
+<button onclick="changeTextColor('blue')">蓝</button>
+<button onclick="changeTextColor('red')">红</button>
+<button onclick="changeTextColor('#33ff00')">绿</button>
+<button onclick="changeTextColor('green')">绿</button>
+<button onclick="changeTextColor('yellow')">黄</button>
+<button onclick="changeTextColor('#800080')">紫</button>
+
+<br/><br/>
+
+<!--字号、对齐、粗细、输入框宽度按钮-->
+<button onclick="increaseFontSize()">增大字体</button>
+<button onclick="decreaseFontSize()">缩小字体</button>
+<button onclick="widenBox()">增宽输入框</button>
+<button onclick="narrowBox()">缩窄输入框</button>
+<button onclick="setTextAlign('left')">左对齐</button>
+<button onclick="setTextAlign('center')">居中</button>
+<button onclick="setTextAlign('right')">右对齐</button>
+<button onclick="toggleFontWeight()">切换粗细</button>
+<button onclick="clearCache()">清空缓存</button>
+<button onclick="selectAll()">全选文字</button>
+
+<br/><br/>
+
+<div class="wrap">
+<textarea id="myInput" placeholder="请输入内容"></textarea>
+</div>
+
+<script>
+const storageKey = "bigtext_input_content";
+var textarea = document.getElementById("myInput");
+
+// 页面加载：读取缓存
+window.onload = function(){
+  let savedText = localStorage.getItem(storageKey);
+  if(savedText !== null){
+    textarea.value = savedText;
+  }
+}
+
+// 输入时自动保存到localStorage
+textarea.addEventListener('input', function(){
+  localStorage.setItem(storageKey, this.value);
+})
+
+// 全选文本函数
+function selectAll(){
+  textarea.select();
+}
+
+// 修改输入框背景色
+function changeBackgroundColor(color) {
+  textarea.style.backgroundColor = color;
+}
+
+// 修改文字颜色
+function changeTextColor(color) {
+  textarea.style.color = color;
+}
+
+// 对齐方式
+function setTextAlign(align) {
+  textarea.style.textAlign = align;
+}
+
+// 字体粗细切换
+function toggleFontWeight() {
+  textarea.style.fontWeight = (textarea.style.fontWeight === 'bold') ? 'normal' : 'bold';
+}
+
+// 放大字号（只改文字大小，不改动textarea容器尺寸）
+function increaseFontSize() {
+  var currentSize = parseInt(window.getComputedStyle(textarea).fontSize) || 60;
+  if (currentSize < 8000) {
+    textarea.style.fontSize = (currentSize + 2) + 'px';
+  }
+}
+
+// 缩小字号（只改文字大小，不改动textarea容器尺寸）
+function decreaseFontSize() {
+  var currentSize = parseInt(window.getComputedStyle(textarea).fontSize);
+  if (currentSize > 2) {
+    textarea.style.fontSize = (currentSize - 2) + 'px';
+  }
+}
+
+// 输入框增宽
+function widenBox(){
+  let w = parseInt(window.getComputedStyle(textarea).width);
+  textarea.style.width = (w + 50) + "px";
+}
+// 输入框缩窄
+function narrowBox(){
+  let w = parseInt(window.getComputedStyle(textarea).width);
+  if(w>100){
+    textarea.style.width = (w - 50) + "px";
+  }
+}
+
+// 清空缓存按钮函数
+function clearCache(){
+  localStorage.removeItem(storageKey);
+  textarea.value = '';
+}
+</script>
+
+<hr/>
+<link rel="stylesheet" href="/a/js/h.css">
+
+
+<script src="/a/js/ico.js"></script>
+
 </body>
 </html>
-
-<script>window.location.href='https://wangshangyonghu.netlify.app';</script>
