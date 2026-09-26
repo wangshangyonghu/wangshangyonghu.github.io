@@ -1,0 +1,6 @@
+/*页面主体居中，最大宽度888px*/body{max-width:888px;margin:0 auto;}
+/*页面左右留白10px*/body{padding-left:10px;padding-right:10px;}
+/*图片自适应，不超出容器不变形*/img{max-width:100%;height:auto;display:block;}
+/*链接去掉下划线*/a{text-decoration:none;}
+/*图标自适应，小图标不会被强制拉成块，保持行内显示*/.icon{max-width:100%;height:auto;display:inline-block;}
+/*统一h1~h6字号12px*/h1,h2,h3,h4,h5,h6{font-size:12px;}
