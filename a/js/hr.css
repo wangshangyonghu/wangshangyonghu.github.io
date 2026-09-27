@@ -1,0 +1,6 @@
+hr {
+    margin:1px 0;        /* 分割线上下外边距1px，左右外边距0，左右贴边 */
+    border: none;        /* 清除hr标签浏览器默认自带边框 */
+    height:1px;          /* 线条高度1px */
+    background-color:#000000; /* 背景填充纯黑，比border更黑 */
+}
