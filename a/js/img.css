@@ -1,1 +1,6 @@
-/*图片自适应，不超出容器不变形*/img{max-width:100%;height:auto;display:block;}
+/*图片自适应，不超出容器不变形，不强制单独一行*/
+img{
+  max-width:100%; /* 最大宽度不超过父容器，大图自动缩小 */
+  height:auto;    /* 高度随宽度自动缩放，防止图片变形 */
+  vertical-align: middle; /* 消除图片底部自带的基线空白缝隙 */
+}
