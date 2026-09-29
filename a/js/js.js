@@ -7,6 +7,7 @@ const cssList = [
     "h.css",
     "xhx.css",
     "img.css",
+    "zd.css",
     "p.css"
 ];
 cssList.forEach(href=>{
@@ -31,6 +32,7 @@ const jsList = [
     "sxy.js",
     "tel.js",
     "title.js",
+    "zd.js",
     "tj.js",
 
 ];
@@ -63,7 +65,6 @@ window.addEventListener('load', function() {
   };
   xhr.send();
 });
-
 
 
 
