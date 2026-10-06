@@ -1,159 +1,252 @@
-<!doctype html>
-<html lang="zh-cn">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <meta name="viewport" content="width=device-width, user-scalable=yes" />
-    <meta http-equiv='content-language' content='zh-cn'>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" alt="网上用户">
-    <link rel="icon" sizes="any" mask href="/favicon.ico" alt="网上用户" />
-    <link rel="shortcut icon" href="/favicon.ico" alt="网上用户" type="image/x-icon">
-    <link rel="apple-touch-icon-precomposed" href="/favicon.ico" alt="网上用户">
-    <link rel="apple-touch-icon" href="/favicon.ico" alt="网上用户">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/a/js/bj.css">
+    <title>铆钉帽子材料长度计算器一半空心铆钉用料长度计算器@网上用户</title>
+    <meta name="keywords" content="网上用户,半空心铆钉用料长度计算器,铆钉帽子材料长度计算器">
+    <meta name="description" content="网上用户专属内容介绍:半空心铆钉原材料线材长度计算，支持分段单独计算,铆钉帽子材料长度计算器">
     <style type="text/css">
         A {
             TEXT-DECORATION: none;
             font-weight: bold;
-            font-size: 32px;
+            font-size: 12px;
         }
         .calculator-container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 8px;
+            box-sizing: border-box;
         }
-  input[type="number"] {
-    width: 100%;           /* 输入框宽度占满容器 */
-    height: 50px;          /* 高度固定为50px */
-    margin: 2px 0;        /* 上下外边距10px */
-    padding: 0 10px;       /* 左右内边距10px */
-    font-size: 18px;       /* 输入文字大小18px */
-}
-
+        .item-line{
+            margin:2px 0;
+            display:flex;
+            align-items:center;
+            gap:4px;
+        }
+        .label-text{
+            font-size:15px;
+            white-space:nowrap;
+            flex-shrink:0;
+        }
+        .raw-label{
+            color:#dd2222;
+        }
+        .cap-label{
+            color:#0066cc;
+        }
+        .rod-label{
+            color:#222222;
+        }
+        .hole-label{
+            color:#9933cc;
+        }
+        input[type="number"] {
+            flex:1;
+            height: 25px;
+            margin:1px 0;
+            padding:0 6px;
+            font-size:15px;
+            box-sizing: border-box;
+        }
+        .result-line{
+            margin:2px 0;
+            display:flex;
+            align-items:center;
+            gap:4px;
+            font-size:15px;
+        }
         #steps {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            font-size: 16px;
-            line-height: 1.6;
+            margin:8px 0;
+            padding:8px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            background-color:#f9f9f9;
+            font-size:13px;
+            line-height:1.3;
         }
         button {
-            font-size: 52px;
-            margin: 20px 0;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            padding:6px;
+            background-color:#4CAF50;
+            color:#fff;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            width:100%;
+            box-sizing:border-box;
+            font-size:16px;
         }
         button:hover {
-            background-color: #45a049;
+            background-color:#45a049;
         }
-        h1 {
-            color: #333;
-        }
-    </style>
-    <title>铆钉帽子材料长度计算器@网上用户</title>
-    <meta name="keywords" content="铆钉帽子材料长度计算器,搜索:网上用户,网上用户,上网用户,公平村,张先生,网名张先生,公平村张先生,网上用户的图片,网上用户的个人主页,网上用户的个人首页,网上用户的个人中心,网上用户的档案,公平村张先生,艺名张先生,网民张先生,网号张先生,用户名张先生,账号张先生,客家人张先生,网名张先生,上网用户" />
-    <meta name="description" content="铆钉帽子材料长度计算器一搜索:网上用户" />
-
+           </style>
 </head>
-
 <body>
+
 <center>
     <div class="calculator-container">
-    
-        
-        <input type="number" id="num1" oninput="calculate()" placeholder="输入帽经:(毫米)" />
-
-        <input type="number" id="num2" oninput="calculate()" placeholder="输入帽厚:(毫米)"/>
-
-        <input type="number" id="num3" oninput="calculate()" placeholder="输入原材料线径:(毫米)" />
-
-
-        <input type="number" id="nums" style="font-size: 18px;" readonly placeholder="自动计算线长:(毫米)"/>
-        <br/><br/>
-        
-        <div id="steps"></div>
-        
+        <div class="item-line">
+            <span class="label-text raw-label">原料线径:</span>
+            <input type="number" id="num7" oninput="calculate()" placeholder="线径(mm)原料线径" onkeydown="nextInput(event,'num1')" />
+        </div>
+        <div class="item-line">
+            <span class="label-text cap-label">帽径:</span>
+            <input type="number" id="num1" oninput="calculate()" placeholder="铆钉的帽径(mm)" onkeydown="nextInput(event,'num2')" />
+        </div>
+        <div class="item-line">
+            <span class="label-text cap-label">帽厚:</span>
+            <input type="number" id="num2" oninput="calculate()" placeholder="铆钉的帽厚(mm)" onkeydown="nextInput(event,'num3')"/>
+        </div>
+        <div class="item-line">
+            <span class="label-text rod-label">杆外径:</span>
+            <input type="number" id="num3" oninput="calculate()" placeholder="铆钉的杆径(mm)" onkeydown="nextInput(event,'num4')" />
+        </div>
+        <div class="item-line">
+            <span class="label-text rod-label">杆长:</span>
+            <input type="number" id="num4" oninput="calculate()" placeholder="铆钉的杆长(mm)" onkeydown="nextInput(event,'num5')" />
+        </div>
+        <div class="item-line">
+            <span class="label-text hole-label">内孔直径:</span>
+            <input type="number" id="num5" oninput="calculate()" placeholder="铆钉的孔径(mm)" onkeydown="nextInput(event,'num6')" />
+        </div>
+        <div class="item-line">
+            <span class="label-text hole-label">孔深:</span>
+            <input type="number" id="num6" oninput="calculate()" placeholder="铆钉的孔深(mm)" onkeydown="nextInput(event,'num7')" />
+        </div>
+        <div class="result-line">
+            <span class="cap-label">帽子线长：</span>
+            <span id="outCap"></span>
+        </div>
+        <div class="result-line">
+            <span class="rod-label">杆部线长：</span>
+            <span id="outRod"></span>
+        </div>
+        <div class="result-line">
+            <span class="hole-label">减去孔线长：</span>
+            <span id="outHole"></span>
+        </div>
+        <div class="result-line">
+            <span>总线长：</span>
+            <span id="outTotal"></span>
+        </div>
         <button onclick="resetInput()">清零</button>
-        
-
-         </div>
+        <div id="steps"></div>
+    </div>
 </center>
-
 <script>
-// 页面加载时读取本地缓存回填输入框
+//回车循环跳转
+function nextInput(e,targetId){
+    if(e.key === 'Enter'){
+        e.preventDefault();
+        document.getElementById(targetId).focus();
+    }
+}
+//读取本地缓存
 window.onload = function(){
     const cache1 = localStorage.getItem('rivet_num1');
     const cache2 = localStorage.getItem('rivet_num2');
     const cache3 = localStorage.getItem('rivet_num3');
+    const cache4 = localStorage.getItem('rivet_num4');
+    const cache5 = localStorage.getItem('rivet_num5');
+    const cache6 = localStorage.getItem('rivet_num6');
+    const cache7 = localStorage.getItem('rivet_num7');
     if(cache1) document.getElementById("num1").value = cache1;
     if(cache2) document.getElementById("num2").value = cache2;
     if(cache3) document.getElementById("num3").value = cache3;
+    if(cache4) document.getElementById("num4").value = cache4;
+    if(cache5) document.getElementById("num5").value = cache5;
+    if(cache6) document.getElementById("num6").value = cache6;
+    if(cache7) document.getElementById("num7").value = cache7;
     calculate();
 }
-
 function calculate() {
-    var capDiameter = parseFloat(document.getElementById("num1").value) || 0;
-    var capThickness = parseFloat(document.getElementById("num2").value) || 0;
-    var wireDiameter = parseFloat(document.getElementById("num3").value) || 0;
-    var stepsElement = document.getElementById("steps");
-    var resultElement = document.getElementById("nums");
-
-    // 实时保存当前输入值到本地缓存
-    localStorage.setItem('rivet_num1', capDiameter);
-    localStorage.setItem('rivet_num2', capThickness);
-    localStorage.setItem('rivet_num3', wireDiameter);
-    
-    // 清空之前的结果和步骤
-    resultElement.value = "";
+    //读取输入，空则null
+    var dRaw = document.getElementById("num7").value ? parseFloat(document.getElementById("num7").value) : null;
+    var D = document.getElementById("num1").value ? parseFloat(document.getElementById("num1").value) : null;
+    var H = document.getElementById("num2").value ? parseFloat(document.getElementById("num2").value) : null;
+    var dRod = document.getElementById("num3").value ? parseFloat(document.getElementById("num3").value) : null;
+    var LRod = document.getElementById("num4").value ? parseFloat(document.getElementById("num4").value) : null;
+    var dHole = document.getElementById("num5").value ? parseFloat(document.getElementById("num5").value) : null;
+    var deepHole = document.getElementById("num6").value ? parseFloat(document.getElementById("num6").value) : null;
+    const outCap = document.getElementById("outCap");
+    const outRod = document.getElementById("outRod");
+    const outHole = document.getElementById("outHole");
+    const outTotal = document.getElementById("outTotal");
+    const stepsElement = document.getElementById("steps");
+    //保存缓存
+    if(D!==null)localStorage.setItem('rivet_num1',D);else localStorage.removeItem('rivet_num1');
+    if(H!==null)localStorage.setItem('rivet_num2',H);else localStorage.removeItem('rivet_num2');
+    if(dRod!==null)localStorage.setItem('rivet_num3',dRod);else localStorage.removeItem('rivet_num3');
+    if(LRod!==null)localStorage.setItem('rivet_num4',LRod);else localStorage.removeItem('rivet_num4');
+    if(dHole!==null)localStorage.setItem('rivet_num5',dHole);else localStorage.removeItem('rivet_num5');
+    if(deepHole!==null)localStorage.setItem('rivet_num6',deepHole);else localStorage.removeItem('rivet_num6');
+    if(dRaw!==null)localStorage.setItem('rivet_num7',dRaw);else localStorage.removeItem('rivet_num7');
+    //清空输出
+    outCap.textContent = "";
+    outRod.textContent = "";
+    outHole.textContent = "";
+    outTotal.textContent = "";
     stepsElement.innerHTML = "";
-    
-    // 优化后的计算公式 (圆柱体体积比计算线长)
-    if (capDiameter > 0 && capThickness > 0 && wireDiameter > 0) {
-        // 计算帽体积 = π × (帽经/2)² × 帽厚
-        var radius = capDiameter / 2;
-        var capVolume = Math.PI * Math.pow(radius, 2) * capThickness;
-        
-        // 计算线横截面积 = π × (线径/2)²
-        var wireRadius = wireDiameter / 2;
-        var wireArea = Math.PI * Math.pow(wireRadius, 2);
-        
-        // 计算线长 = 帽体积 / 线横截面积
-        var wireLength = capVolume / wireArea;
-        
-        // 显示结果，保留两位小数
-        resultElement.value = wireLength.toFixed(2);
-        
-        // 显示详细计算步骤
-        stepsElement.innerHTML = `
-            <h3>计算步骤：</h3>
-            <p>1. 计算帽子半径：帽径 ÷ 2 = ${capDiameter} ÷ 2 = ${radius.toFixed(2)} 毫米</p>
-            <p>2. 计算帽子体积：π × (半径)² × 帽厚 = 3.1416 × (${radius.toFixed(2)})² × ${capThickness} ≈ ${capVolume.toFixed(2)} 立方毫米</p>
-            <p>3. 计算线材半径：线径 ÷ 2 = ${wireDiameter} ÷ 2 = ${wireRadius.toFixed(2)} 毫米</p>
-            <p>4. 计算线材横截面积：π × (线材半径)² = 3.1416 × (${wireRadius.toFixed(2)})² ≈ ${wireArea.toFixed(2)} 平方毫米</p>
-            <p>5. 计算所需线材长度：帽子体积 ÷ 线材横截面积 = ${capVolume.toFixed(2)} ÷ ${wireArea.toFixed(2)} ≈ ${wireLength.toFixed(2)} 毫米</p>
-        `;
+    if(dRaw===null || dRaw <=0) return;
+    var areaRaw = Math.PI * Math.pow(dRaw/2,2);
+    var lenCap = 0;
+    var lenRod = 0;
+    var lenHole = 0;
+    var lenTotal = 0;
+    let htmlStep = `<h3>半空心铆钉用料计算</h3>`;
+    //1. 帽部分：帽径+帽厚同时输入，自动算帽子线长
+    if(D!==null && H!==null && D>0 && H>0){
+        var volCap = Math.PI * Math.pow(D/2,2) * H;
+        lenCap = volCap / areaRaw;
+        htmlStep += `<p>帽子线材长度 = ${lenCap.toFixed(2)} mm</p>`;
     }
+    //2. 杆部分：杆外径+杆长同时输入，自动算杆部线长
+    if(dRod!==null && LRod!==null && dRod>0 && LRod>0){
+        var volRodAll = Math.PI * Math.pow(dRod/2,2) * LRod;
+        lenRod = volRodAll / areaRaw;
+        htmlStep += `<p>杆部线材长度 = ${lenRod.toFixed(2)} mm</p>`;
+    }
+    //3. 孔部分：内孔直径+孔深同时输入，自动算减去孔线长
+    if(dHole!==null && deepHole!==null && dHole>0 && deepHole>0){
+        var volHole = Math.PI * Math.pow(dHole/2,2) * deepHole;
+        lenHole = volHole / areaRaw;
+        htmlStep += `<p>减去孔对应的线材长度 = ${lenHole.toFixed(2)} mm</p>`;
+    }
+    lenTotal = lenCap + lenRod - lenHole;
+    htmlStep += `<p>总线长 = 帽(${lenCap.toFixed(2)}) + 杆(${lenRod.toFixed(2)}) − 孔(${lenHole.toFixed(2)}) = ${lenTotal.toFixed(2)} mm</p>
+    <p style="color:#c00;">提示：理论参考值，生产下料建议额外加0.2~1mm余量。</p>`;
+    if(lenCap>0) outCap.textContent = lenCap.toFixed(2)+" mm";
+    if(lenRod>0) outRod.textContent = lenRod.toFixed(2)+" mm";
+    if(lenHole>0) outHole.textContent = lenHole.toFixed(2)+" mm";
+    outTotal.textContent = lenTotal.toFixed(2)+" mm";
+    stepsElement.innerHTML = htmlStep;
 }
-
-// 清零功能
+//清零
 function resetInput() {
     document.getElementById("num1").value = "";
     document.getElementById("num2").value = "";
     document.getElementById("num3").value = "";
-    document.getElementById("nums").value = "";
+    document.getElementById("num4").value = "";
+    document.getElementById("num5").value = "";
+    document.getElementById("num6").value = "";
+    document.getElementById("num7").value = "";
+    document.getElementById("outCap").textContent = "";
+    document.getElementById("outRod").textContent = "";
+    document.getElementById("outHole").textContent = "";
+    document.getElementById("outTotal").textContent = "";
     document.getElementById("steps").innerHTML = "";
-    // 清空本地缓存数据
     localStorage.removeItem('rivet_num1');
     localStorage.removeItem('rivet_num2');
     localStorage.removeItem('rivet_num3');
+    localStorage.removeItem('rivet_num4');
+    localStorage.removeItem('rivet_num5');
+    localStorage.removeItem('rivet_num6');
+    localStorage.removeItem('rivet_num7');
 }
 </script>
+<a href="" target="_blank">铆钉帽子材料长度计算器</a>
+<a href="" target="_blank">半空心铆钉用料长度计算器</a>
+
 </body>
 </html>
