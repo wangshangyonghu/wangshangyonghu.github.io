@@ -1,4 +1,6 @@
+@charset "UTF-8";
+
+
 body {
-    padding-left: 10px;  /* 页面左侧留白10px */
-    padding-right: 10px; /* 页面右侧留白10px */
+  padding: 10px 10px; /* 上下10px，左右10px */
 }
