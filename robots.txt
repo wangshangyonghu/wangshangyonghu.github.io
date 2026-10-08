@@ -2,46 +2,37 @@
 # 禁止所有爬虫抓取 /admin/ 目录
 User-agent: *
 Disallow: /admin/
-
-# 指定网站地图（XML 格式 - 集中归类，http/https 均保留）
-Sitemap: https://wangshangyonghu.github.io/a/txt/sitemap.xml
-
-Sitemap: https://wangshangyonghu.github.io/a/txt/1.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/2.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/3.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/4.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/5.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/6.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/7.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/8.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/9.xml
-Sitemap: https://wangshangyonghu.github.io/a/txt/10.xml
-
-
-# 指定网站地图（TXT 格式 - 集中归类，http/https 均保留，全条目无重复）
-
-Sitemap: https://wangshangyonghu.github.io/a/txt/robots.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/1.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/2.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/3.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/4.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/5.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/6.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/7.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/8.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/9.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/10.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/11.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/12.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/13.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/14.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/15.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/16.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/17.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/18.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/19.txt
-Sitemap: https://wangshangyonghu.github.io/a/txt/20.txt
-
-
-
-
+# 指定网站地图（XML 格式 - 集中归类，http/https 自动适配）
+Sitemap: /a/txt/sitemap.xml
+Sitemap: /a/txt/1.xml
+Sitemap: /a/txt/2.xml
+Sitemap: /a/txt/3.xml
+Sitemap: /a/txt/4.xml
+Sitemap: /a/txt/5.xml
+Sitemap: /a/txt/6.xml
+Sitemap: /a/txt/7.xml
+Sitemap: /a/txt/8.xml
+Sitemap: /a/txt/9.xml
+Sitemap: /a/txt/10.xml
+# 指定网站地图（TXT 格式 - 集中归类，http/https 自动适配，全条目无重复）
+Sitemap: /a/txt/robots.txt
+Sitemap: /a/txt/1.txt
+Sitemap: /a/txt/2.txt
+Sitemap: /a/txt/3.txt
+Sitemap: /a/txt/4.txt
+Sitemap: /a/txt/5.txt
+Sitemap: /a/txt/6.txt
+Sitemap: /a/txt/7.txt
+Sitemap: /a/txt/8.txt
+Sitemap: /a/txt/9.txt
+Sitemap: /a/txt/10.txt
+Sitemap: /a/txt/11.txt
+Sitemap: /a/txt/12.txt
+Sitemap: /a/txt/13.txt
+Sitemap: /a/txt/14.txt
+Sitemap: /a/txt/15.txt
+Sitemap: /a/txt/16.txt
+Sitemap: /a/txt/17.txt
+Sitemap: /a/txt/18.txt
+Sitemap: /a/txt/19.txt
+Sitemap: /a/txt/20.txt
