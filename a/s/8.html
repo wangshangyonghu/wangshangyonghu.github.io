@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三大运营商移动数据短信指令大全@网上用户</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f5f7fa;color:#333;line-height:1.6;padding:16px;max-width:888px;margin:0 auto;}
+.card{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;border:1px solid #e5e7eb;}
+h1{font-size:22px;margin-bottom:16px;text-align:center;}
+h2{font-size:18px;margin:14px 0 8px;padding-left:8px;border-left:4px solid #409eff;}
+.warn{background:#fff2f2;border-left:4px solid #f56c6c;padding:12px;border-radius:4px;margin:12px 0;}
+.tip{background:#ecf8ff;border-left:4px solid #409eff;padding:12px;border-radius:4px;margin:12px 0;}
+.green{border-left-color:#67c23a;}
+.blue{border-left-color:#409eff;}
+.yellow{border-left-color:#e6a23c;}
+code{background:#f4f4f4;padding:2px 6px;border-radius:4px;font-family:monospace;}
+ul{padding-left:22px;margin:8px 0;}
+li{margin:6px 0;}
+.copy-row{display:flex;gap:8px;align-items:center;margin:6px 0;}
+.copy-btn{padding:4px 10px;background:#409eff;color:#fff;border:none;border-radius:4px;cursor:pointer;}
+.copy-btn:active{background:#2b85e4;}
+.footer{margin-top:24px;font-size:13px;color:#666;text-align:center;}
+</style>
+</head>
+<body>
+<h1>三大运营商移动数据短信指令大全</h1>
+<div class="warn">
+⚠️ 重要提醒：联通、电信没有全国统一短信代码（各省不一样），短信提交失败就直接拨打客服人工关闭上网权限。
+</div>
+
+<div class="card">
+<h2 class="green">中国移动（发送到 10086）</h2>
+<div class="tip">✅ 临时暂停上网：套餐保留，月租正常扣，可接打电话收短信（推荐短期禁用）</div>
+<ul>
+<li class="copy-row">暂停上网：<code>ZTSJLL</code> <button class="copy-btn" onclick="copyText('ZTSJLL')">复制</button></li>
+<li class="copy-row">恢复上网：<code>HFSJLL</code> <button class="copy-btn" onclick="copyText('HFSJLL')">复制</button></li>
+</ul>
+<div class="tip">⚠️ 彻底关闭上网功能：会取消流量包，谨慎操作</div>
+<ul>
+<li class="copy-row">关闭上网：<code>GBSJLL</code> <button class="copy-btn" onclick="copyText('GBSJLL')">复制</button></li>
+<li class="copy-row">开通上网：<code>KTSJLL</code> <button class="copy-btn" onclick="copyText('KTSJLL')">复制</button></li>
+</ul>
+<p>老指令（部分地区可用）：ZTGPRS / HFGPRS</p>
+<p>查询流量：<code>CXLL</code> 发送至10086 <button class="copy-btn" onclick="copyText('CXLL')">复制</button></p>
+</div>
+
+<div class="card">
+<h2 class="blue">中国联通（发送到10010，各省指令不统一）</h2>
+<p>很多省份无短信指令，优先人工10010</p>
+<p>老通用GPRS指令，部分省份有效：</p>
+<ul>
+<li class="copy-row">暂停：<code>ZTGPRS</code> <button class="copy-btn" onclick="copyText('ZTGPRS')">复制</button></li>
+<li class="copy-row">恢复：<code>HFGPRS</code> <button class="copy-btn" onclick="copyText('HFGPRS')">复制</button></li>
+</ul>
+<p>短信提交失败，直接打10010人工：关闭本机移动数据上网功能</p>
+<p>查询流量：<code>CXLL</code> 发送至10010 <button class="copy-btn" onclick="copyText('CXLL')">复制</button></p>
+</div>
+
+<div class="card">
+<h2 class="yellow">中国电信（发送到10001，无全国统一短信码）</h2>
+<div class="tip">✅ 电信没有统一短信代码开关上网，短信办理不稳定</div>
+<p>办理方式：</p>
+<ul>
+<li>拨打 10000 人工，直接说：关闭本机移动数据上网功能</li>
+<li>或者电信APP业务办理页操作</li>
+</ul>
+<p>查询流量：<code>108</code> 发送至10001 <button class="copy-btn" onclick="copyText('108')">复制</button></p>
+</div>
+
+<div class="card">
+<h2>区分2种模式</h2>
+<ul>
+<li>1. 临时暂停：套餐还在，只是不能上网，随时恢复（适合短期禁用）</li>
+<li>2. 彻底关闭上网权限：上网功能直接关掉，部分流量包会被取消，需要人工重开</li>
+</ul>
+</div>
+有效期:2026年10月8日前有效
+<div class="footer">
+来源：网络 你自己打电话给客服问最新的
+</div>
+
+<script>
+function copyText(txt){
+    navigator.clipboard.writeText(txt).then(()=>{
+        alert('已复制：'+txt);
+    }).catch(e=>{
+        var input = document.createElement('input');
+        input.value = txt;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        alert('已复制：'+txt);
+    });
+}
+</script>
+</body>
+</html>
