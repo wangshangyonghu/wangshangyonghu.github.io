@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>图片转ICO图标@网上用户</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%238b5cf6'/%3E%3Ctext x='16' y='23' font-size='17' text-anchor='middle' fill='%23fff'%3EICO%3C/text%3E%3C/svg%3E">
+<style type="text/css">
+* { box-sizing: border-box; }
+body { max-width: 888px; margin: 0 auto; padding: 14px; background: #f2f4f7; color: #1f2937; line-height: 1.6; }
+header { text-align: center; padding: 10px 0 14px; }
+h1 { font-size: 24px; margin: 0 0 4px; }
+.sub { color: #6b7280; font-size: 13px; margin: 0; }
+.card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.card h2 { font-size: 16px; margin: 0 0 12px; }
+.drop-zone { border: 2px dashed #d8b4fe; border-radius: 10px; padding: 26px 12px; text-align: center; cursor: pointer; background: #faf5ff; transition: background .15s, border-color .15s; }
+.drop-zone.hover { border-color: #8b5cf6; background: #f5f3ff; }
+.dz-main { font-size: 16px; margin: 0 0 4px; }
+.dz-sub { font-size: 12px; color: #6b7280; margin: 0; }
+.env { font-size: 12px; color: #6b7280; margin-top: 10px; text-align: center; }
+.form-grid { display: grid; gap: 12px; }
+label.fld { display: block; font-size: 14px; }
+label.fld .tip { color: #6b7280; font-size: 12px; }
+input[type=text], input[type=number], select { width: 100%; padding: 9px 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 15px; margin-top: 4px; background: #fff; }
+input:focus, select:focus { outline: none; border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,.12); }
+.check { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.check input { width: 18px; height: 18px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #e5e7eb; background: #f9fafb; border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer; user-select: none; }
+.chip input { margin: 0; }
+.chip.on { border-color: #8b5cf6; background: #f5f3ff; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+button { border: 0; border-radius: 8px; padding: 11px 18px; font-size: 15px; cursor: pointer; }
+button:disabled { opacity: .55; cursor: not-allowed; }
+.btn-primary { background: #8b5cf6; color: #fff; flex: 1; min-width: 140px; }
+.btn-ghost { background: #e5e7eb; color: #374151; }
+.preview-row { display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; padding: 8px 0; }
+.pv-item { text-align: center; }
+.pv-item .px { font-size: 12px; color: #6b7280; margin-top: 4px; }
+.pv-box { border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; display: inline-flex; align-items: center; justify-content: center; box-shadow: inset 0 0 0 1px #f3f4f6; }
+.pv-box img { display: block; image-rendering: auto; }
+.ico-preview { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: #faf5ff; border: 1px dashed #d8b4fe; border-radius: 10px; padding: 14px; }
+.ico-big { flex-shrink: 0; }
+.ico-big img { width: 128px; height: 128px; border-radius: 8px; background: #fff; border: 1px solid #e5e7eb; }
+.ico-meta { font-size: 13px; color: #374151; }
+.ico-meta .t { font-size: 15px; font-weight: bold; color: #1f2937; }
+.result-note { font-size: 12px; color: #6b7280; margin-top: 6px; }
+.card details summary { cursor: pointer; font-size: 15px; font-weight: bold; color: #6d28d9; }
+.card details h3 { font-size: 14px; margin: 14px 0 6px; }
+.card details ol, .card details ul { margin: 6px 0; padding-left: 22px; font-size: 14px; }
+.card details li { margin: 3px 0; }
+.card details table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0; }
+.card details th, .card details td { border: 1px solid #e5e7eb; padding: 6px 8px; text-align: left; }
+.card details th { background: #f8fafc; }
+.card details code { background: #f3f4f6; border-radius: 4px; padding: 0 5px; font-size: 12px; }
+.hidden { display: none !important; }
+footer { text-align: center; font-size: 12px; color: #9ca3af; padding: 8px 0 20px; }
+footer a { color: #6b7280; }
+</style>
+</head>
+<body>
+<header>
+  <h1>图片转ICO图标@网上用户</h1>
+  <p class="sub">纯本地处理 · 图片不会上传到任何服务器 · 无需安装，打开即用 · 可生成多尺寸 Windows 图标</p>
+</header>
+
+<div class="card">
+  <div class="drop-zone" id="dropZone">
+    <p class="dz-main">点击选择图片，或将图片拖到这里</p>
+    <p class="dz-sub">支持 PNG / JPG / WebP / GIF / BMP，建议正方形图效果最佳</p>
+    <input type="file" id="fileInput" accept="image/*" style="display:none">
+  </div>
+  <div class="env">运行模式：纯本地（浏览器生成 ICO）　·　透明通道：<span id="alphaState">检测中…</span></div>
+</div>
+
+<div class="card hidden" id="editCard">
+  <h2>图标设置</h2>
+  <div class="form-grid">
+    <label class="fld">包含尺寸
+      <span class="tip">（勾选需要打包进 .ico 的尺寸，生成的 ico 将含全部勾选尺寸）</span>
+      <div class="chips" id="sizeChips"></div>
+    </label>
+    <label class="check"><input type="checkbox" id="square"> 裁剪为正方形（多余部分按背景色填充）</label>
+    <label class="check"><input type="checkbox" id="transparent"> 保留透明背景（PNG 透明区，勾选后不使用填充色）</label>
+  </div>
+
+  <h2 style="margin-top:18px;">生成预览</h2>
+  <div class="ico-preview">
+    <div class="ico-big"><img id="previewImg" alt="预览"></div>
+    <div class="ico-meta">
+      <div class="t" id="previewName">未命名.ico</div>
+      <div id="previewInfo">—</div>
+      <div id="previewSizes" style="margin-top:4px;"></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary" id="genBtn" type="button">重新生成 ICO</button>
+    <button class="btn-ghost" id="dlBtn" type="button" disabled>下载 .ico</button>
+    <button class="btn-ghost" id="dlZipBtn" type="button" disabled>下载各尺寸 PNG（ZIP）</button>
+  </div>
+  <div class="result-note" id="genNote"></div>
+</div>
+
+<!-- 使用说明（已并入本页，单文件版） -->
+<div class="card">
+  <details>
+    <summary>使用说明（点击展开）</summary>
+
+    <h3>使用方法</h3>
+    <ol>
+      <li>点击上方上传区域，或把图片拖进来。</li>
+      <li>勾选需要的图标尺寸（16 / 32 / 48 / 64 / 128 / 256 等，可多选）。</li>
+      <li>选择是否需要「裁剪为正方形」与「保留透明背景」。</li>
+      <li>点「重新生成 ICO」，预览各尺寸效果，再点「下载 .ico」保存。</li>
+    </ol>
+
+    <h3>设置项说明</h3>
+    <table>
+      <tr><th>设置项</th><th>说明</th></tr>
+      <tr><td>包含尺寸</td><td>最终 .ico 文件里打包的尺寸，Windows 会自动挑选合适大小显示</td></tr>
+      <tr><td>裁剪为正方形</td><td>非正方形图会居中放入正方形画布，多余部分用背景色填充</td></tr>
+      <tr><td>保留透明背景</td><td>源图有透明区域时保留；关闭时背景填白</td></tr>
+    </table>
+
+    <h3>注意事项</h3>
+    <ul>
+      <li><b>推荐 256px 或更高分辨率源图</b>，小图放大后会模糊。</li>
+      <li><b>透明背景</b>：PNG 透明区会被保留；JPG 无透明，自动填背景色。</li>
+      <li><b>兼容性</b>：生成的 ICO 使用 PNG 编码，Windows Vista 及以后的系统均支持。</li>
+      <li><b>隐私</b>：图片全程在浏览器本地处理，不上传任何服务器，断网也能用。</li>
+      <li><b>结果保存</b>：生成结果在浏览器内存中，刷新或关闭页面即消失，请及时下载。</li>
+    </ul>
+
+    <p style="font-size:12px;color:#6b7280;">说明来源：本工具自带说明（非官方资料）</p>
+  </details>
+</div>
+
+<!--页脚--><script src="/a/js/yj.js"></script><!--页脚-->
+
+<script>
+(function () {
+  'use strict';
+
+  var MAX_FILE = 60 * 1024 * 1024;
+  var DEFAULT_SIZES = [16, 32, 48, 64, 128, 256];
+  var EXTRA_SIZES = [8, 24, 72, 96, 192, 512];
+
+  var fileInput = document.getElementById('fileInput');
+  var dropZone = document.getElementById('dropZone');
+  var editCard = document.getElementById('editCard');
+  var sizeChips = document.getElementById('sizeChips');
+  var squareBox = document.getElementById('square');
+  var transBox = document.getElementById('transparent');
+  var previewImg = document.getElementById('previewImg');
+  var previewName = document.getElementById('previewName');
+  var previewInfo = document.getElementById('previewInfo');
+  var previewSizes = document.getElementById('previewSizes');
+  var genBtn = document.getElementById('genBtn');
+  var dlBtn = document.getElementById('dlBtn');
+  var dlZipBtn = document.getElementById('dlZipBtn');
+  var genNote = document.getElementById('genNote');
+
+  var src = null;        /* { img, w, h, name } 原始图 */
+  var selected = {};     /* 尺寸 -> true/false */
+  var icoBlob = null;    /* 生成的 ico */
+  var pngMap = {};       /* 尺寸 -> {blob, url} */
+
+  /* ---------- 工具 ---------- */
+
+  function fmtBytes(n) {
+    if (n >= 1048576) return (n / 1048576).toFixed(2) + ' MB';
+    if (n >= 1024) return (n / 1024).toFixed(1) + ' KB';
+    return n + ' B';
+  }
+
+  function safeBase(name) {
+    var b = String(name).replace(/[\\\/:*?"<>|\x00-\x1F]/g, '_').trim();
+    var dot = b.lastIndexOf('.');
+    if (dot > 0) b = b.slice(0, dot);
+    b = b.replace(/[._\s]+$/g, '');
+    return b || 'icon';
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined && text !== null) e.textContent = text;
+    return e;
+  }
+
+  function renderChips() {
+    sizeChips.innerHTML = '';
+    var all = DEFAULT_SIZES.concat(EXTRA_SIZES);
+    all.forEach(function (s) {
+      var lbl = el('label', 'chip');
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = !!selected[s];
+      cb.addEventListener('change', function () {
+        selected[s] = cb.checked;
+        lbl.classList.toggle('on', cb.checked);
+        regenerate();
+      });
+      lbl.appendChild(cb);
+      lbl.appendChild(document.createTextNode(s + 'px'));
+      sizeChips.appendChild(lbl);
+      if (selected[s]) lbl.classList.add('on');
+    });
+  }
+
+  function initSelected() {
+    selected = {};
+    DEFAULT_SIZES.forEach(function (s) { selected[s] = true; });
+  }
+
+  /* ---------- 图片加载 ---------- */
+
+  function loadImage(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () { resolve({ img: img, url: url, w: img.naturalWidth, h: img.naturalHeight }); };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('无法解码该图片')); };
+      img.src = url;
+    });
+  }
+
+  /* ---------- 生成各尺寸 PNG ---------- */
+
+  function renderSize(img, w, h, size) {
+    var c = document.createElement('canvas');
+    c.width = size;
+    c.height = size;
+    var ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, size, size);
+    if (!squareBox.checked && !transBox.checked) {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, size, size);
+    }
+    /* 按 contain 方式等比缩放并居中 */
+    var scale = Math.min(size / w, size / h);
+    var dw = w * scale, dh = h * scale;
+    ctx.drawImage(img, (size - dw) / 2, (size - dh) / 2, dw, dh);
+    return c;
+  }
+
+  function canvasToPng(c) {
+    return new Promise(function (resolve, reject) {
+      c.toBlob(function (b) {
+        if (b) resolve(b); else reject(new Error('PNG 编码失败'));
+      }, 'image/png');
+    });
+  }
+
+  /* ---------- 打包 ICO（PNG 编码，Windows Vista+ 支持） ---------- */
+
+  function buildIco(entries) {
+    /* entries: [{size, data(Uint8Array)}] */
+    var count = entries.length;
+    var headerSize = 6 + 16 * count;
+    var offset = headerSize;
+    var chunks = [];
+    var header = new DataView(new ArrayBuffer(headerSize));
+    header.setUint16(0, 0, true);        /* reserved */
+    header.setUint16(2, 1, true);        /* type: 1 = icon */
+    header.setUint16(4, count, true);    /* image count */
+    entries.forEach(function (en, i) {
+      var p = 6 + i * 16;
+      header.setUint8(p, en.size >= 256 ? 0 : en.size);   /* width，0 表示 256 */
+      header.setUint8(p + 1, en.size >= 256 ? 0 : en.size);/* height */
+      header.setUint8(p + 2, 0);          /* color count */
+      header.setUint8(p + 3, 0);          /* reserved */
+      header.setUint16(p + 4, 1, true);   /* planes */
+      header.setUint16(p + 6, 32, true);  /* bit count */
+      header.setUint32(p + 8, en.data.length, true);   /* bytes in res */
+      header.setUint32(p + 12, offset, true);          /* image offset */
+      offset += en.data.length;
+    });
+    chunks.push(new Uint8Array(header.buffer));
+    entries.forEach(function (en) { chunks.push(en.data); });
+    var total = 0;
+    chunks.forEach(function (c) { total += c.length; });
+    var out = new Uint8Array(total);
+    var pos = 0;
+    chunks.forEach(function (c) { out.set(c, pos); pos += c.length; });
+    return new Blob([out], { type: 'image/x-icon' });
+  }
+
+  async function regenerate() {
+    if (!src) return;
+    var sizes = Object.keys(selected).filter(function (s) { return selected[s]; }).map(Number);
+    if (!sizes.length) {
+      genNote.textContent = '请至少勾选一个尺寸。';
+      icoBlob = null; pngMap = {};
+      dlBtn.disabled = true; dlZipBtn.disabled = true;
+      return;
+    }
+    sizes.sort(function (a, b) { return a - b; });
+
+    pngMap = {};
+    var entries = [];
+    for (var i = 0; i < sizes.length; i++) {
+      var s = sizes[i];
+      var c = renderSize(src.img, src.w, src.h, s);
+      var b = await canvasToPng(c);
+      var url = URL.createObjectURL(b);
+      if (pngMap[s] && pngMap[s].url) URL.revokeObjectURL(pngMap[s].url);
+      pngMap[s] = { blob: b, url: url };
+      var data = new Uint8Array(await b.arrayBuffer());
+      entries.push({ size: s, data: data });
+    }
+
+    icoBlob = buildIco(entries);
+
+    /* 预览：256 大图 + 各尺寸缩略 */
+    var big = pngMap[256] || pngMap[sizes[sizes.length - 1]];
+    previewImg.src = big.url;
+    previewName.textContent = safeBase(src.name) + '.ico';
+    previewInfo.textContent = fmtBytes(icoBlob.size) + '（含 ' + sizes.length + ' 个尺寸）';
+    var chips = [];
+    sizes.forEach(function (s) { chips.push(s + 'px'); });
+    previewSizes.textContent = chips.join(' · ');
+
+    genNote.textContent = '已生成 ' + fmtBytes(icoBlob.size) + '，可点下方按钮下载。';
+    dlBtn.disabled = false;
+    dlZipBtn.disabled = false;
+  }
+
+  /* ---------- 下载 ---------- */
+
+  function dlBlob(blob, name) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  }
+
+  function dlIco() {
+    if (icoBlob) dlBlob(icoBlob, safeBase(src.name) + '.ico');
+  }
+
+  /* ---------- ZIP 打包（零依赖，Store 模式） ---------- */
+
+  var crcTable = (function () {
+    var t = [];
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+
+  function crc32(buf) {
+    var c = 0xFFFFFFFF;
+    for (var i = 0; i < buf.length; i++) c = crcTable[(c ^ buf[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  function makeZip(entries) {
+    var enc = new TextEncoder();
+    var parts = [];
+    var central = [];
+    var offset = 0;
+    entries.forEach(function (en) {
+      var nameBytes = enc.encode(en.name);
+      var crc = crc32(en.data);
+      var lh = new DataView(new ArrayBuffer(30));
+      lh.setUint32(0, 0x04034b50, true);
+      lh.setUint16(4, 20, true);
+      lh.setUint16(6, 0x0800, true);
+      lh.setUint16(8, 0, true);
+      lh.setUint32(14, crc, true);
+      lh.setUint32(18, en.data.length, true);
+      lh.setUint32(22, en.data.length, true);
+      lh.setUint16(26, nameBytes.length, true);
+      parts.push(lh.buffer, nameBytes, en.data);
+      var ch = new DataView(new ArrayBuffer(46));
+      ch.setUint32(0, 0x02014b50, true);
+      ch.setUint16(4, 20, true);
+      ch.setUint16(6, 20, true);
+      ch.setUint16(8, 0x0800, true);
+      ch.setUint32(16, crc, true);
+      ch.setUint32(20, en.data.length, true);
+      ch.setUint32(24, en.data.length, true);
+      ch.setUint16(28, nameBytes.length, true);
+      ch.setUint32(42, offset, true);
+      central.push({ buf: ch.buffer, name: nameBytes });
+      offset += 30 + nameBytes.length + en.data.length;
+    });
+    var centralStart = offset;
+    var centralParts = [];
+    central.forEach(function (c) { centralParts.push(c.buf, c.name); });
+    var cdSize = central.reduce(function (s, c) { return s + 46 + c.name.length; }, 0);
+    var eocd = new DataView(new ArrayBuffer(22));
+    eocd.setUint32(0, 0x06054b50, true);
+    eocd.setUint16(8, entries.length, true);
+    eocd.setUint16(10, entries.length, true);
+    eocd.setUint32(12, cdSize, true);
+    eocd.setUint32(16, centralStart, true);
+    return new Blob(parts.concat(centralParts, [eocd.buffer]), { type: 'application/zip' });
+  }
+
+  async function dlZip() {
+    var base = safeBase(src.name);
+    var names = Object.keys(pngMap).map(Number).sort(function (a, b) { return a - b; });
+    var entries = [];
+    for (var i = 0; i < names.length; i++) {
+      var s = names[i];
+      var data = new Uint8Array(await pngMap[s].blob.arrayBuffer());
+      entries.push({ name: base + '_' + s + 'px.png', data: data });
+    }
+    var zip = makeZip(entries);
+    dlBlob(zip, base + '_各尺寸.png.zip');
+  }
+
+  /* ---------- 事件 ---------- */
+
+  function setFile(file) {
+    if (!/^image\//.test(file.type)) { alert('请选择图片文件'); return; }
+    if (file.size > MAX_FILE) { alert('单张图片不能超过 60M'); return; }
+    loadImage(file).then(function (r) {
+      src = { img: r.img, w: r.w, h: r.h, name: file.name, url: r.url };
+      squareBox.checked = !(r.w === r.h);
+      transBox.checked = true;
+      editCard.classList.remove('hidden');
+      regenerate();
+    }).catch(function () {
+      alert('图片解码失败，文件可能已损坏');
+    });
+  }
+
+  dropZone.addEventListener('click', function () { fileInput.click(); });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.add('hover'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.remove('hover'); });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files && fileInput.files.length) setFile(fileInput.files[0]);
+    fileInput.value = '';
+  });
+
+  squareBox.addEventListener('change', regenerate);
+  transBox.addEventListener('change', regenerate);
+  genBtn.addEventListener('click', regenerate);
+  dlBtn.addEventListener('click', dlIco);
+  dlZipBtn.addEventListener('click', dlZip);
+
+  /* 透明通道能力检测 */
+  (function () {
+    var c = document.createElement('canvas');
+    c.width = 1; c.height = 1;
+    var ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, 1, 1);
+    var d = ctx.getImageData(0, 0, 1, 1).data;
+    var ok = d[3] === 0;
+    document.getElementById('alphaState').textContent = ok ? '支持' : '不支持（透明区将填背景色）';
+    document.getElementById('alphaState').style.color = ok ? '#16a34a' : '#dc2626';
+  })();
+
+  initSelected();
+  renderChips();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>点击任意位置写字黑板 @网上用户</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;}
+/* 顶部颜色选择栏 */
+.color-bar{
+  position:fixed;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:12px;
+  z-index:999;
+  background:rgba(30,30,30,0.5);
+  padding:8px 16px;
+  border-radius:99px;
+}
+.color-circle{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  cursor:pointer;
+  border:2px solid #fff;
+}
+.eraser-btn{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  cursor:pointer;
+  border:2px solid #fff;
+  background:#ddd;
+  color:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:bold;
+}
+.clear-btn{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  cursor:pointer;
+  border:2px solid #fff;
+  background:#f44;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:bold;
+}
+.text-item{
+  position:absolute;
+  background:transparent;
+  border:none;
+  font-size:24px;
+  font-weight:bold;
+  outline:none;
+  font-family:unset;
+  /* 核心：文字碰到屏幕右边界自动换行 */
+  max-width:calc(100vw - 10px);
+  word-break:break-all;
+}
+</style>
+</head>
+<body>
+<div class="color-bar">
+  <div class="color-circle" style="background:#000" data-color="#000"></div>
+  <div class="color-circle" style="background:#fff" data-color="#fff"></div>
+  <div class="color-circle" style="background:#ff0" data-color="#ff0"></div>
+  <div class="color-circle" style="background:#00f" data-color="#00f"></div>
+  <div class="color-circle" style="background:#f00" data-color="#f00"></div>
+  <div class="color-circle" style="background:#0f0" data-color="#0f0"></div>
+  <div class="eraser-btn">擦</div>
+  <div class="clear-btn">清</div>
+</div>
+
+<script>
+let currentColor = "#fff";
+let eraserMode = false;
+const storageKey = "blackboardTextData";
+
+// 保存所有文字到localStorage
+function saveData(){
+  const list = [];
+  document.querySelectorAll('.text-item').forEach(div=>{
+    list.push({
+      x: parseFloat(div.style.left),
+      y: parseFloat(div.style.top),
+      color: div.style.color,
+      text: div.innerText
+    })
+  })
+  localStorage.setItem(storageKey, JSON.stringify(list));
+}
+
+// 从缓存读取并恢复文字
+function loadData(){
+  const raw = localStorage.getItem(storageKey);
+  if(!raw) return;
+  const list = JSON.parse(raw);
+  list.forEach(item=>{
+    if(!item.text) return;
+    let div = document.createElement('div');
+    div.className = 'text-item';
+    div.contentEditable = true;
+    div.style.left = item.x + 'px';
+    div.style.top = item.y + 'px';
+    div.style.color = item.color;
+    div.innerText = item.text;
+    document.body.appendChild(div);
+
+    div.addEventListener('input',function(){
+      saveData();
+    })
+    div.addEventListener('blur',function(){
+      if(this.innerText.trim() === '') this.remove();
+      saveData();
+    })
+  })
+}
+
+// 页面加载读取缓存
+loadData();
+
+// 切换颜色，自动关闭橡皮擦
+document.querySelectorAll('.color-circle').forEach(el=>{
+  el.addEventListener('click',function(){
+    currentColor = this.dataset.color;
+    eraserMode = false;
+    document.querySelector('.eraser-btn').style.background="#ddd";
+  })
+})
+
+// 橡皮擦按钮切换
+document.querySelector('.eraser-btn').addEventListener('click',function(){
+  eraserMode = !eraserMode;
+  if(eraserMode){
+    this.style.background="#f44";
+  }else{
+    this.style.background="#ddd";
+  }
+})
+
+// 清屏按钮
+document.querySelector('.clear-btn').addEventListener('click',function(){
+  document.querySelectorAll('.text-item').forEach(item=>item.remove());
+  localStorage.removeItem(storageKey);
+})
+
+// 页面点击事件
+document.body.addEventListener('click',function(e){
+  // 点击控件直接跳过
+  if(e.target.classList.contains('text-item') || e.target.classList.contains('color-circle') || e.target.classList.contains('eraser-btn') || e.target.classList.contains('clear-btn')) return;
+
+  if(eraserMode){
+    // 橡皮擦模式，扩大20px容错
+    const allText = document.querySelectorAll('.text-item');
+    allText.forEach(item=>{
+      const rect = item.getBoundingClientRect();
+      const expand = 20;
+      if(
+        e.clientX >= rect.left - expand &&
+        e.clientX <= rect.right + expand &&
+        e.clientY >= rect.top - expand &&
+        e.clientY <= rect.bottom + expand
+      ){
+        item.remove();
+        saveData();
+      }
+    })
+  }else{
+    // 新建可编辑div
+    let div = document.createElement('div');
+    div.className = 'text-item';
+    div.contentEditable = true;
+    div.style.left = e.clientX + 'px';
+    div.style.top = e.clientY + 'px';
+    div.style.color = currentColor;
+    document.body.appendChild(div);
+    div.focus();
+
+    div.addEventListener('input',function(){
+      saveData();
+    })
+    div.addEventListener('blur',function(){
+      if(this.innerText.trim() === '') this.remove();
+      saveData();
+    })
+  }
+})
+</script>
+</body>
+</html>

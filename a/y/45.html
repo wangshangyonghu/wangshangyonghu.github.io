@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>点击写字+手写黑板 @网上用户</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;}
+
+/* 顶部工具栏：强制单行，缩小按钮，不换行 */
+.tool-bar{
+  position:fixed;
+  top:8px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:4px;
+  z-index:999;
+  background:rgba(30,30,30,0.5);
+  padding:4px 8px;
+  border-radius:99px;
+  align-items:center;
+  flex-wrap:nowrap;
+  max-width:calc(100% - 12px);
+}
+.tool-btn{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  cursor:pointer;
+  border:1px solid #fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:bold;
+  user-select:none;
+  color:#000;
+}
+.color-circle{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  cursor:pointer;
+  border:1px solid #fff;
+}
+.write-btn{ background:#0b0; color:#fff; }
+.draw-btn{ background:#08f; color:#fff; }
+.eraser-btn{ background:#ddd; color:#000; }
+.clear-btn{ background:#f44; color:#fff; }
+.active{ box-shadow:0 0 0 2px #ff0; }
+
+/* 手写画布 */
+#drawCanvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index:1;
+  touch-action:none;
+}
+
+/* 文字输入层 */
+.text-item{
+  position:absolute;
+  background:transparent;
+  border:none;
+  font-size:24px;
+  font-weight:bold;
+  outline:none;
+  font-family:unset;
+  color:#fff;
+  z-index:2;
+  white-space:pre-wrap;
+  word-break:break-all;
+  max-width:calc(100vw - 16px);
+}
+</style>
+</head>
+<body>
+
+<div class="tool-bar">
+  <div class="tool-btn write-btn" id="writeBtn">字</div>
+  <div class="tool-btn draw-btn" id="drawBtn">手</div>
+  <div class="color-circle" style="background:#000" data-color="#000"></div>
+  <div class="color-circle" style="background:#fff" data-color="#fff"></div>
+  <div class="color-circle" style="background:#ff0" data-color="#ff0"></div>
+  <div class="color-circle" style="background:#00f" data-color="#00f"></div>
+  <div class="color-circle" style="background:#f00" data-color="#f00"></div>
+  <div class="color-circle" style="background:#0f0" data-color="#0f0"></div>
+  <div class="tool-btn eraser-btn" id="eraserBtn">擦</div>
+  <div class="tool-btn clear-btn" id="clearBtn">清</div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+
+
+<script>
+let currentColor = "#fff";
+let mode;
+const storageKey = "blackboardTextData";
+
+// 判断设备：手机触屏默认手写draw；电脑非触屏默认打字write
+function isMobileTouch(){
+  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+}
+if(isMobileTouch()){
+  mode = "draw";
+}else{
+  mode = "write";
+}
+
+/* ========== 画布 ========== */
+const canvas = document.getElementById("drawCanvas");
+const ctx = canvas.getContext("2d");
+let drawing = false;
+let lastX = 0, lastY = 0;
+
+// 获取坐标：核心修复，把屏幕client坐标转为canvas内部坐标
+function getCanvasPos(e){
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  return {
+    x: (e.clientX - rect.left) * scaleX,
+    y: (e.clientY - rect.top) * scaleY
+  }
+}
+
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+function startDraw(e){
+  const p = getCanvasPos(e);
+  drawing = true;
+  lastX = p.x;
+  lastY = p.y;
+}
+function moveDraw(e){
+  if(!drawing) return;
+  const p = getCanvasPos(e);
+  ctx.beginPath();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = currentColor;
+  ctx.lineWidth = 6;
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(p.x, p.y);
+  ctx.stroke();
+  lastX = p.x;
+  lastY = p.y;
+}
+function endDraw(){
+  drawing = false;
+}
+
+/* ========== PointerEvents ========== */
+function enableDrawEvents(){
+  canvas.style.pointerEvents = "auto";
+  canvas.addEventListener("pointerdown", onPointerDown);
+  canvas.addEventListener("pointermove", onPointerMove);
+  canvas.addEventListener("pointerup", endDraw);
+  canvas.addEventListener("pointercancel", endDraw);
+}
+function disableDrawEvents(){
+  canvas.style.pointerEvents = "none";
+  canvas.removeEventListener("pointerdown", onPointerDown);
+  canvas.removeEventListener("pointermove", onPointerMove);
+  canvas.removeEventListener("pointerup", endDraw);
+  canvas.removeEventListener("pointercancel", endDraw);
+}
+
+function onPointerDown(e){
+  if(mode !== "draw") return;
+  e.preventDefault();
+  canvas.setPointerCapture(e.pointerId);
+  startDraw(e);
+}
+function onPointerMove(e){
+  if(mode !== "draw" || !drawing) return;
+  e.preventDefault();
+  moveDraw(e);
+}
+
+/* ========== 文字系统 ========== */
+function saveData(){
+  const list = [];
+  document.querySelectorAll(".text-item").forEach(div=>{
+    list.push({
+      x: parseFloat(div.style.left),
+      y: parseFloat(div.style.top),
+      color: div.style.color,
+      text: div.innerText
+    });
+  });
+  localStorage.setItem(storageKey, JSON.stringify(list));
+}
+
+function loadData(){
+  const raw = localStorage.getItem(storageKey);
+  if(!raw) return;
+  const list = JSON.parse(raw);
+  list.forEach(item=>{
+    if(!item.text) return;
+    if(item.x > window.innerWidth - 20) item.x = window.innerWidth - 20;
+    let div = document.createElement("div");
+    div.className = "text-item";
+    div.contentEditable = true;
+    div.style.left = item.x + "px";
+    div.style.top = item.y + "px";
+    div.style.color = item.color;
+    div.innerText = item.text;
+    document.body.appendChild(div);
+    div.addEventListener("input", saveData);
+    div.addEventListener("blur", function(){
+      if(this.innerText.trim() === "") this.remove();
+      saveData();
+    });
+  });
+}
+loadData();
+
+/* ========== 工具栏切换 ========== */
+const writeBtn = document.getElementById("writeBtn");
+const drawBtn = document.getElementById("drawBtn");
+const eraserBtn = document.getElementById("eraserBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+function setMode(newMode){
+  mode = newMode;
+  writeBtn.classList.remove("active");
+  drawBtn.classList.remove("active");
+  eraserBtn.classList.remove("active");
+
+  if(mode === "write"){
+    writeBtn.classList.add("active");
+    disableDrawEvents();
+  }
+  if(mode === "draw"){
+    drawBtn.classList.add("active");
+    enableDrawEvents();
+  }
+  if(mode === "eraser"){
+    eraserBtn.classList.add("active");
+    disableDrawEvents();
+  }
+}
+setMode(mode);
+
+writeBtn.addEventListener("click", ()=>setMode("write"));
+drawBtn.addEventListener("click", ()=>setMode("draw"));
+
+/* 颜色切换 */
+document.querySelectorAll(".color-circle").forEach(el=>{
+  el.addEventListener("click", function(){
+    currentColor = this.dataset.color;
+  });
+});
+
+/* 橡皮擦 */
+eraserBtn.addEventListener("click", function(){
+  if(mode === "eraser"){
+    setMode(isMobileTouch() ? "draw" : "write");
+  }else{
+    setMode("eraser");
+  }
+});
+
+document.body.addEventListener("click", function(e){
+  if(mode !== "eraser") return;
+  if(e.target.classList.contains("tool-btn") || e.target.classList.contains("color-circle")) return;
+  const rect = canvas.getBoundingClientRect();
+  const p = getCanvasPos(e);
+  document.querySelectorAll(".text-item").forEach(item=>{
+    const r = item.getBoundingClientRect();
+    const expand = 20;
+    if(
+      e.clientX >= r.left - expand &&
+      e.clientX <= r.right + expand &&
+      e.clientY >= r.top - expand &&
+      e.clientY <= r.bottom + expand
+    ){
+      item.remove();
+      saveData();
+    }
+  });
+  const eraseSize = 40;
+  ctx.clearRect(p.x - eraseSize/2, p.y - eraseSize/2, eraseSize, eraseSize);
+});
+
+/* 清屏按钮 */
+clearBtn.onclick = function(){
+  document.querySelectorAll(".text-item").forEach(item=>item.remove());
+  localStorage.removeItem(storageKey);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+};
+
+/* 文字点击输入 */
+document.body.addEventListener("click", function(e){
+  if(mode !== "write") return;
+  if(e.target.classList.contains("text-item") || e.target.classList.contains("tool-btn") || e.target.classList.contains("color-circle")) return;
+
+  let clickX = e.clientX;
+  const maxLeft = window.innerWidth - 20;
+  if(clickX > maxLeft) clickX = maxLeft;
+
+  let div = document.createElement("div");
+  div.className = "text-item";
+  div.contentEditable = true;
+  div.style.left = clickX + "px";
+  div.style.top = e.clientY + "px";
+  div.style.color = currentColor;
+  document.body.appendChild(div);
+  div.focus();
+
+  div.addEventListener("input", saveData);
+  div.addEventListener("blur", function(){
+    if(this.innerText.trim() === "") this.remove();
+    saveData();
+  });
+});
+</script>
+</body>
+</html>
