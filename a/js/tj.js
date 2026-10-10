@@ -25,7 +25,6 @@ var _hmt = _hmt || [];
 
 
 // 	百度统计wangshangyonghu.github.io
-<script>
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
