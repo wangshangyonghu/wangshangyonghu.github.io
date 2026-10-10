@@ -22,14 +22,14 @@ cssList.forEach(href=>{
 
 // 串行加载JS，保证加载顺序，增加onerror容错，单个js404不会阻塞后续脚本
 const jsList = [
+    "tj.js",
+    "dns.js",
     "a.js",
     "sl1.js",
     "sxy.js",
     "tel.js",
     "title.js",
-    "zd.js",
-    "dns.js",
-    "tj.js"
+    "zd.js"
 ];
 function loadScripts(scriptArray, index = 0) {
     if (index >= scriptArray.length) return;

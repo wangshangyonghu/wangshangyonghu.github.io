@@ -24,13 +24,13 @@ cssList.forEach(href=>{
 
 // ========= 串行加载JS，保证顺序，单个JS加载失败自动继续下一个 =========
 const jsList = [
+    "tj.js",
     "a.js",
     "sl1.js",
     "sxy.js",
     "tel.js",
     "title.js",
     "zd.js",
-    "tj.js",
     "dns.js"
 ];
 
