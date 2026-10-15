@@ -80,17 +80,17 @@
 
 <!--自动随机图片-->
 <!-- 第1张随机图片 -->
-<a href="" class="download-link" download="保存的图片1.jpg">
-  <img id="randomJpg1" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
+<a href="" class="download-link" download="保存的图片1.png">
+  <img id="randomPng1" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
 </a>
-<a href="" class="download-link" download="保存的图片2.jpg">
-  <img id="randomJpg2" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
+<a href="" class="download-link" download="保存的图片2.png">
+  <img id="randomPng2" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
 </a>
-<a href="" class="download-link" download="保存的图片3.jpg">
-  <img id="randomJpg3" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
+<a href="" class="download-link" download="保存的图片3.png">
+  <img id="randomPng3" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
 </a>
-<a href="" class="download-link" download="保存的图片4.jpg">
-  <img id="randomJpg4" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
+<a href="" class="download-link" download="保存的图片4.png">
+  <img id="randomPng4" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
 </a>
 <script>
 // 1. 生成指定范围的随机数（工具函数）
@@ -99,12 +99,9 @@ const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)
 const baseConfig = {
  imageSources: [ // 基础域名/根目录（一级源）
     '/',    // 网站根目录（已修复，可正常使用）
-
 // 其他基础域名（已去除/tupian）
-
 'https://wangshangyonghu.github.io',
 'https://wangshangyonghu.netlify.app',
-
 'http://wangshangyonghu.mx33.cn',
 'http://wangshangyonghu.web1337.net/',
 'https://wangshangyonghu.web1337.net/',
@@ -113,13 +110,11 @@ const baseConfig = {
 'http://wangshangyonghu.hostingem.ru/',
 'http://wangshangyonghu.totalh.net/',
 'http://wangshangyonghu.66ghz.com/BB/viewforum.php?f=2',
-
 'https://wangshangyonghu.github.io',
 'https://wangshangyonghu.66ghz.com',
 'https://wangshangyonghu.web1337.net',
 'http://wangshangyonghu.66ghz.com',
 'http://wangshangyonghu.web1337.net',
-
 'http://wangshangyonghu.mx33.cn',
 'http://wangshangyonghu.totalh.net',
 'http://wangshangyonghu.hostingem.ru',
@@ -127,32 +122,17 @@ const baseConfig = {
 'https://gpc234.freevar.com',
 'https://mdc.freevar.com',
 'http://wangshangyonghu.7749.org',
-'https://wangshangyonghu.42web.io/',
-'http://wangshangyonghu.42web.io/',
-'/',
-'/',
-'/',
-'/',
-'/',
 
+'https://wangshangyonghu.byethost7.com',
+'/',
+'/',
+'/',
+'/',
 'http://localhost',
 'http://127.0.0.1',
 'http://192.168.0.188:223',
 'http://192.168.0.188',
 'http://gpc234.w1.luyouxia.net',
-
-
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-
-
-
-
-
-
    '/',
    '/',
    '/',
@@ -174,13 +154,14 @@ const baseConfig = {
    '/',
    '/',
    '/',
-
-
+   '/',
+   '/',
+   '/',
+   '/',
    '/'  ],
-
-
   folderPaths: [  // 完整保留所有原始图片目录
-
+'/tu/png/',
+'/tu/jpg/',
 '/tu/jpg1/',
 '/tu/jpg2/',
 '/tu/jpg3/',
@@ -201,7 +182,6 @@ const baseConfig = {
 '/tu/jpg18/',
 '/tu/jpg19/',
 '/tu/jpg20/',
-
 '/mdczdL/mdjpg/',
 '/mdczdL/jpg/',
 '/mdczdL/1227/',
@@ -223,11 +203,8 @@ const baseConfig = {
 '/',
 '/',
  
-
-
    '/'   
   ],
-
  
   numberRange: {  // 图片编号范围
     original: [1, 1000], // 主编号范围
@@ -236,7 +213,6 @@ const baseConfig = {
   maxRetry: 50,   // 最大重试次数
   retryDelay: 500 // 重试间隔（毫秒）
 };
-
 // 3. 核心逻辑：初始化单张图片的随机加载（保留原修复逻辑）
 function initSingleRandomImage(imgId, baseConfig) {
   const img = document.getElementById(imgId);
@@ -244,14 +220,11 @@ function initSingleRandomImage(imgId, baseConfig) {
     console.error('未找到图片元素，ID:', imgId);
     return;
   }
-
   // 获取当前图片对应的a标签（下载链接）
   const downloadLink = img.parentElement;
-
   let triedCombinations = new Set(); // 记录已尝试的（源+目录）组合
   let usingFallbackNumber = false;   // 是否使用备用编号
   let retryCount = 0;  // 当前重试次数
-
   // 修复核心：正确拼接路径（处理根目录/域名场景，避免双斜杠）
   function getRandomImageUrl() {
     const totalCombinations = baseConfig.imageSources.length * baseConfig.folderPaths.length;
@@ -262,13 +235,11 @@ function initSingleRandomImage(imgId, baseConfig) {
       retryCount = 0;
       return null;
     }
-
     // 找到未尝试过的（源+目录）组合
     while (true) {
       const randomSource = baseConfig.imageSources[getRandomNumber(0, baseConfig.imageSources.length - 1)];
       const randomFolder = baseConfig.folderPaths[getRandomNumber(0, baseConfig.folderPaths.length - 1)];
       const combinationKey = `${randomSource}|${randomFolder}`;
-
       if (!triedCombinations.has(combinationKey)) {
  triedCombinations.add(combinationKey);
  // 选择编号范围（主/备用）
@@ -276,24 +247,20 @@ function initSingleRandomImage(imgId, baseConfig) {
    ? baseConfig.numberRange.fallback 
    : baseConfig.numberRange.original;
  const randomNum = getRandomNumber(minNum, maxNum);
-
  // 路径清洗：移除目录开头的斜杠，避免根目录拼接时出现双斜杠
  const cleanedFolder = randomFolder.startsWith('/') ? randomFolder.slice(1) : randomFolder;
  let imageUrl;
-
  if (randomSource === '/') {
-   // 根目录场景：正确拼接为 "/目录/编号.jpg"
-   imageUrl = `${randomSource}${cleanedFolder}${randomNum}.jpg`;
+   // 根目录场景：正确拼接为 "/目录/编号.png"
+   imageUrl = `${randomSource}${cleanedFolder}${randomNum}.png`;
  } else {
-   // 域名场景：移除域名结尾斜杠（若有），拼接为 "域名/目录/编号.jpg"
-   imageUrl = `${randomSource.replace(/\/$/, '')}/${cleanedFolder}${randomNum}.jpg`;
+   // 域名场景：移除域名结尾斜杠（若有），拼接为 "域名/目录/编号.png"
+   imageUrl = `${randomSource.replace(/\/$/, '')}/${cleanedFolder}${randomNum}.png`;
  }
-
  return imageUrl;
       }
     }
   }
-
   // 加载图片（含失败重试逻辑）
   function loadImage() {
     if (retryCount >= baseConfig.maxRetry) {
@@ -302,7 +269,6 @@ function initSingleRandomImage(imgId, baseConfig) {
       console.warn('已达最大重试次数，停止加载');
       return;
     }
-
     const imageUrl = getRandomImageUrl();
     if (!imageUrl) {
       retryCount++;
@@ -316,14 +282,12 @@ function initSingleRandomImage(imgId, baseConfig) {
       setTimeout(loadImage, baseConfig.retryDelay);
       return;
     }
-
     // 尝试加载图片
     img.src = imageUrl;
     // 同步更新下载链接的href
     downloadLink.href = imageUrl;
     console.log(`尝试加载（${retryCount + 1}/${baseConfig.maxRetry}）:`, imageUrl);
   }
-
   // 加载成功：重置状态
   img.addEventListener('load', () => {
     img.alt = '网上用户的图片,搜索:网上用户,公平村';
@@ -334,32 +298,28 @@ function initSingleRandomImage(imgId, baseConfig) {
     usingFallbackNumber = false;
     retryCount = 0;
   });
-
   // 加载失败：切换备用编号/组合重试
   img.addEventListener('error', () => {
     console.error('加载失败:', img.src);
     retryCount++;
-
     // 1次失败后切换备用编号范围
     if (!usingFallbackNumber && retryCount >= 1) {
       usingFallbackNumber = true;
       console.log('切换到备用编号范围（1-13）重试');
     }
-
     setTimeout(loadImage, baseConfig.retryDelay);
   });
-
   // 初始加载图片
   loadImage();
 }
-
 // 4. 批量初始化所有图片（需与上方<img>标签的id对应）
-const imageIds = ['randomJpg1', 'randomJpg2', 'randomJpg3', 'randomJpg4']; // 如需更多图片，在此处添加id（如'randomJpg4'）
+const imageIds = ['randomPng1', 'randomPng2', 'randomPng3', 'randomPng4'];
 imageIds.forEach(imgId => {
   initSingleRandomImage(imgId, baseConfig);
 });
 </script>
 <!--自动随机图片-->
+
 <hr/>
 
 
