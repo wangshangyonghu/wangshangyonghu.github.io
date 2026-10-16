@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>网页二维码识别 @网上用户</title>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{padding:16px;max-width:880px;margin:0 auto;}
+#canvas{display:none;}
+button,input{width:100%;padding:12px;margin:8px 0;font-size:16px;}
+#rawResultBox{
+  padding:10px;
+  border:1px solid #ccc;
+  background:#fff;
+  margin-bottom:12px;
+  white-space:normal;
+  word-break:break-all;
+}
+#funcBox{
+  padding:12px;
+  border:1px solid #ccc;
+  background:#fff;
+}
+#result a{
+  color:#0066cc;
+  text-decoration:none;
+  display:block;
+  margin:4px 0;
+}
+.wifi-info{background:#eef7ff;padding:10px;margin:10px 0;border-radius:4px;}
+.copy-line{margin:6px 0;}
+</style>
+</head>
+<body>
+<h3>二维码识别</h3>
+<input type="file" id="fileInput" accept="image/*">
+<button id="startCamBtn">打开相机扫码</button>
+<video id="video" style="max-width:100%;display:none;"></video>
+<canvas id="canvas"></canvas>
+
+<div id="rawResultBox">识别结果：</div>
+
+<div id="funcBox">
+  <div id="result"></div>
+
+  <div class="copy-line" id="phoneBox" style="display:none;">
+    <span>识别到手机号：<span id="phoneText"></span></span>
+    <button id="copyPhoneBtn">一键复制号码</button>
+  </div>
+  <div class="copy-line" id="wxBox" style="display:none;">
+    <span>可能是微信号：<span id="wxText"></span></span>
+    <button id="copyWxBtn">一键复制微信号</button>
+  </div>
+  <div class="wifi-info" id="wifiBox" style="display:none;">
+    <div>WiFi名称：<span id="wifiSsid"></span></div>
+    <div>WiFi密码：<span id="wifiPwd"></span></div>
+    <button id="copyPwdBtn" style="margin-top:8px;">一键复制WiFi密码</button>
+  </div>
+  <button id="copyBtn" style="display:none;">一键复制全部文本</button>
+</div>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const resultDom = document.getElementById('result');
+const rawResultBox = document.getElementById('rawResultBox');
+const video = document.getElementById('video');
+const startCamBtn = document.getElementById('startCamBtn');
+const copyBtn = document.getElementById('copyBtn');
+const wifiBox = document.getElementById('wifiBox');
+const wifiSsid = document.getElementById('wifiSsid');
+const wifiPwd = document.getElementById('wifiPwd');
+const copyPwdBtn = document.getElementById('copyPwdBtn');
+
+const phoneBox = document.getElementById('phoneBox');
+const phoneText = document.getElementById('phoneText');
+const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+const wxBox = document.getElementById('wxBox');
+const wxText = document.getElementById('wxText');
+const copyWxBtn = document.getElementById('copyWxBtn');
+
+let lastResultText = "";
+let wifiPassword = "";
+let scanLoop = null;
+let foundPhone = "";
+
+async function copyText(txt){
+  try{
+    await navigator.clipboard.writeText(txt);
+    alert("复制成功："+txt);
+  }catch(e){
+    alert("复制失败");
+  }
+}
+copyPhoneBtn.onclick = ()=>copyText(phoneText.innerText);
+copyWxBtn.onclick = ()=>copyText(wxText.innerText);
+
+function renderResult(rawText){
+  lastResultText = rawText;
+  wifiPassword = "";
+  foundPhone = "";
+  wifiBox.style.display = "none";
+  phoneBox.style.display = "none";
+  wxBox.style.display = "none";
+
+  rawResultBox.innerText = "识别结果：\n" + rawText;
+  resultDom.innerHTML = "";
+  copyBtn.style.display = "block";
+
+  const wifiReg = /WIFI:T:(.*?);S:(.*?);P:(.*?);;/i;
+  const wifiMatch = rawText.match(wifiReg);
+  if(wifiMatch){
+    const ssid = wifiMatch[2];
+    const pwd = wifiMatch[3];
+    wifiPassword = pwd;
+    wifiBox.style.display = "block";
+    wifiSsid.innerText = ssid;
+    wifiPwd.innerText = pwd;
+  }
+
+  const isMecard = rawText.startsWith("MECARD:");
+  if(isMecard){
+    const telReg = /TEL:([\d\s]+?);/i;
+    const telMatch = rawText.match(telReg);
+    if(telMatch){
+      foundPhone = telMatch[1].replace(/\s/g,'');
+      phoneText.innerText = foundPhone;
+      phoneBox.style.display = "block";
+    }
+  }else{
+    const phoneReg = /1[3-9]\d{9}/;
+    const phoneMatch = rawText.match(phoneReg);
+    if(phoneMatch){
+      foundPhone = phoneMatch[0];
+      phoneText.innerText = foundPhone;
+      phoneBox.style.display = "block";
+    }
+    const wxReg = /[a-zA-Z][-_a-zA-Z0-9]{5,19}/;
+    const wxMatch = rawText.match(wxReg);
+    if(wxMatch){
+      wxText.innerText = wxMatch[0];
+      wxBox.style.display = "block";
+    }
+  }
+
+  const urlReg = /^(http|https):\/\/.+$/i;
+  if(foundPhone){
+    const a = document.createElement('a');
+    a.href = `tel:${foundPhone}`;
+    a.innerText = "👉 点击拨打号码";
+    resultDom.appendChild(a);
+  }else if(urlReg.test(rawText)){
+    const a = document.createElement('a');
+    a.href = rawText;
+    a.target = "_blank";
+    a.innerText = "👉 点击打开网址";
+    resultDom.appendChild(a);
+  }
+}
+
+copyBtn.onclick = async function(){
+  try{
+    await navigator.clipboard.writeText(lastResultText);
+    alert("复制全部成功");
+  }catch(e){
+    alert("复制失败");
+  }
+}
+copyPwdBtn.onclick = async function(){
+  try{
+    await navigator.clipboard.writeText(wifiPassword);
+    alert("WiFi密码复制成功："+wifiPassword);
+  }catch(e){
+    alert("密码复制失败");
+  }
+}
+
+fileInput.onchange = async e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  rawResultBox.innerText = "识别结果：\n正在解析图片...";
+  resultDom.innerText = "";
+  copyBtn.style.display = "none";
+  wifiBox.style.display = "none";
+  phoneBox.style.display = "none";
+  wxBox.style.display = "none";
+  try{
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+    await new Promise((resolve, reject)=>{
+      img.onload = resolve;
+      img.onerror = reject;
+    });
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img,0,0);
+    const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    const code = jsQR(imageData.data,imageData.width,imageData.height);
+    if(code){
+      renderResult(code.data);
+    }else{
+      rawResultBox.innerText = "识别结果：";
+      resultDom.innerText = "未识别二维码，图片倾斜/反光会识别失败";
+      copyBtn.style.display = "none";
+    }
+  }catch(err){
+    rawResultBox.innerText = "识别结果：";
+    resultDom.innerText = "图片解析失败";
+    copyBtn.style.display = "none";
+    console.error(err);
+  }
+}
+
+startCamBtn.onclick = async ()=>{
+  rawResultBox.innerText = "识别结果：\n尝试打开摄像头...";
+  resultDom.innerText = "";
+  copyBtn.style.display = "none";
+  wifiBox.style.display = "none";
+  phoneBox.style.display = "none";
+  wxBox.style.display = "none";
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
+    video.srcObject = stream;
+    video.style.display="block";
+    await video.play();
+    scan();
+  }catch(err){
+    rawResultBox.innerText = "识别结果：";
+    if(err.name === "NotAllowedError"){
+      resultDom.innerText="⚠️ 相机功能需要HTTPS网站，本地打开html无法调用摄像头";
+    }else{
+      resultDom.innerText="打开相机失败："+err.name;
+    }
+    copyBtn.style.display = "none";
+  }
+}
+function scan(){
+  if(!video.srcObject) return;
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  ctx.drawImage(video,0,0);
+  const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+  const code = jsQR(imageData.data,imageData.width,imageData.height);
+  if(code){
+    cancelAnimationFrame(scanLoop);
+    video.srcObject.getTracks().forEach(t=>t.stop());
+    video.style.display="none";
+    renderResult(code.data);
+  }else{
+    scanLoop = requestAnimationFrame(scan);
+  }
+}
+</script>
+</body>
+</html>

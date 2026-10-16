@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>图片加自己的png水印批量PNG水印工具@网上用户</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f3f5f8;
+    color: #222;
+    padding: 12px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  .tip {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+
+  .upload-box {
+    border: 2px dashed #4080ff;
+    border-radius: 12px;
+    padding: 24px 12px;
+    text-align: center;
+    cursor: pointer;
+    background: #f7faff;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .upload-box.active {
+    background: #e4f0ff;
+    border-color: #2f6ae0;
+  }
+
+  .upload-box p {
+    font-size: 14px;
+    color: #333;
+  }
+
+  .upload-box .sub {
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  button {
+    flex: 1;
+    min-width: 120px;
+    background: #4080ff;
+    color: #fff;
+    border: none;
+    padding: 13px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  button.secondary {
+    background: #e5e7eb;
+    color: #333;
+  }
+
+  button:disabled {
+    background: #b8c4d6;
+    cursor: not-allowed;
+  }
+
+  .preview-title {
+    font-size: 15px;
+    margin: 14px 0 10px;
+    font-weight: 600;
+  }
+
+  .preview-scale {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  #previewImage {
+    width: 100%;
+    max-width: 420px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+
+  .list-title {
+    font-size: 15px;
+    margin: 16px 0 10px;
+    font-weight: 600;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+  }
+
+  .grid-item {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e3e7ee;
+    position: relative;
+  }
+
+  .grid-item img {
+    width: 100%;
+    display: block;
+  }
+
+  .grid-item .name {
+    font-size: 11px;
+    padding: 6px;
+    color: #555;
+    background: #fafbfd;
+    word-break: break-all;
+  }
+
+  .status {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #333;
+    text-align: center;
+    min-height: 20px;
+  }
+  .slider-wrap{margin:10px 0;}
+  .slider-wrap label{display:block;margin-bottom:4px;font-size:14px;}
+  #qualitySlider{width:100%}
+</style>
+</head>
+<body>
+
+<h1>批量PNG水印工具</h1>
+
+<div class="card">
+  <p class="tip">
+    上传透明PNG水印，再上传产品图。每张图都会处理成 <b>800×800正方形</b>，水印按整张PNG水印完整叠加并实时预览。
+  </div>
+  <div class="slider-wrap">
+    <label>图片压缩质量：<span id="qualityText">0.7</span>（越小文件越小，推荐0.4~0.8，导出JPG）</label>
+    <input type="range" id="qualitySlider" min="0.1" max="1.0" step="0.05" value="0.7">
+  </div>
+
+  <div class="upload-box" id="watermarkUpload">
+    <p>点击上传 PNG水印</p>
+    <p class="sub">建议透明底水印</p>
+    <input type="file" id="watermarkFile" accept="image/png" />
+  </div>
+
+  <div class="upload-box" id="imageUpload">
+    <p>点击上传产品图（可多选）</p>
+    <p class="sub">支持 JPG / PNG，批量处理</p>
+    <input type="file" id="imageFiles" accept="image/*" multiple />
+  </div>
+
+  <div class="btn-row">
+    <button id="previewBtn" disabled>预览水印效果</button>
+    <button id="downloadBtn" disabled>批量下载800×800 JPG</button>
+    <button id="clearBtn" class="secondary">清空</button>
+  </div>
+
+  <p class="status" id="statusText"></p>
+</div>
+
+<div class="card">
+  <div class="preview-title">实时预览</div>
+  <div class="preview-scale">预览为缩小显示，实际输出 800×800 正方形</div>
+  <img id="previewImage" alt="预览图" style="display:none;" />
+</div>
+
+<div class="card">
+  <div class="list-title">待处理列表</div>
+  <div class="grid" id="imageList"></div>
+</div>
+
+<script>
+  const watermarkUpload = document.getElementById('watermarkUpload');
+  const watermarkFile = document.getElementById('watermarkFile');
+  const imageUpload = document.getElementById('imageUpload');
+  const imageFiles = document.getElementById('imageFiles');
+  const previewBtn = document.getElementById('previewBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const previewImage = document.getElementById('previewImage');
+  const imageList = document.getElementById('imageList');
+  const statusText = document.getElementById('statusText');
+  const qualitySlider = document.getElementById('qualitySlider');
+  const qualityText = document.getElementById('qualityText');
+
+  let watermarkImg = null;
+  let imageListData = [];
+  const OUTPUT_SIZE = 800;
+  let jpgQuality = 0.7;
+
+  qualitySlider.oninput = function(){
+    jpgQuality = parseFloat(this.value);
+    qualityText.innerText = jpgQuality.toFixed(2);
+    tryPreview();
+  }
+
+  // 加载图片
+  function loadImage(file) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  // 上传框点击
+  watermarkUpload.addEventListener('click', () => watermarkFile.click());
+  imageUpload.addEventListener('click', () => imageFiles.click());
+
+  // 水印上传
+  watermarkFile.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    watermarkImg = await loadImage(file);
+    watermarkUpload.classList.add('active');
+    watermarkUpload.querySelector('p').textContent = '✓ PNG水印已上传';
+    updateButtons();
+    tryPreview();
+  });
+
+  // 产品图上传
+  imageFiles.addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files);
+    imageListData = [];
+    imageList.innerHTML = '';
+
+    for (const file of files) {
+      const img = await loadImage(file);
+      imageListData.push({ file, img, name: file.name });
+
+      const item = document.createElement('div');
+      item.className = 'grid-item';
+      item.innerHTML = `
+        <img src="${img.src}" />
+        <div class="name">${file.name}</div>
+      `;
+      imageList.appendChild(item);
+    }
+
+    updateButtons();
+    tryPreview();
+  });
+
+  // 更新按钮状态
+  function updateButtons() {
+    const ready = watermarkImg && imageListData.length > 0;
+    previewBtn.disabled = !ready;
+    downloadBtn.disabled = !ready;
+  }
+
+  // 绘制800×800正方形 + 水印
+  function drawWatermark(sourceImg, wmImg) {
+    const canvas = document.createElement('canvas');
+    canvas.width = OUTPUT_SIZE;
+    canvas.height = OUTPUT_SIZE;
+    const ctx = canvas.getContext('2d');
+
+    // 白底
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, OUTPUT_SIZE, OUTPUT_SIZE);
+
+    // 原图等比缩放居中铺满
+    const scale = Math.max(OUTPUT_SIZE / sourceImg.width, OUTPUT_SIZE / sourceImg.height);
+    const w = sourceImg.width * scale;
+    const h = sourceImg.height * scale;
+    const x = (OUTPUT_SIZE - w) / 2;
+    const y = (OUTPUT_SIZE - h) / 2;
+    ctx.drawImage(sourceImg, x, y, w, h);
+
+    // 水印完整叠加，水印自适应缩放到画布大小
+    ctx.drawImage(wmImg, 0, 0, OUTPUT_SIZE, OUTPUT_SIZE);
+
+    return canvas;
+  }
+
+  // 预览
+  function tryPreview() {
+    if (!watermarkImg || imageListData.length === 0) return;
+    const first = imageListData[0].img;
+    const canvas = drawWatermark(first, watermarkImg);
+    previewImage.src = canvas.toDataURL('image/jpeg', jpgQuality);
+    previewImage.style.display = 'block';
+  }
+
+  previewBtn.addEventListener('click', () => {
+    tryPreview();
+    statusText.textContent = '已预览第一张水印效果';
+  });
+
+  // 批量下载JPG，控制质量
+  downloadBtn.addEventListener('click', async () => {
+    if (!watermarkImg || imageListData.length === 0) return;
+
+    downloadBtn.disabled = true;
+    statusText.textContent = '正在处理，请稍候...';
+
+    for (let i = 0; i < imageListData.length; i++) {
+      const item = imageListData[i];
+      const canvas = drawWatermark(item.img, watermarkImg);
+
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `watermarked_${OUTPUT_SIZE}x${OUTPUT_SIZE}_${i + 1}.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }, 'image/jpeg', jpgQuality);
+
+      statusText.textContent = `已处理 ${i + 1} / ${imageListData.length}`;
+      await new Promise(r => setTimeout(r, 200));
+    }
+
+    statusText.textContent = `完成！共导出 ${imageListData.length} 张 ${OUTPUT_SIZE}×${OUTPUT_SIZE} JPG图片`;
+    downloadBtn.disabled = false;
+  });
+
+  // 清空
+  clearBtn.addEventListener('click', () => {
+    watermarkImg = null;
+    imageListData = [];
+    watermarkFile.value = '';
+    imageFiles.value = '';
+    previewImage.style.display = 'none';
+    imageList.innerHTML = '';
+    watermarkUpload.classList.remove('active');
+    watermarkUpload.querySelector('p').textContent = '点击上传 PNG水印';
+    statusText.textContent = '';
+    updateButtons();
+  });
+</script>
+
+</body>
+</html>

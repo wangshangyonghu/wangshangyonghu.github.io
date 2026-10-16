@@ -1,235 +1,216 @@
-<!doctype html>
-<html lang="zh-cn">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta http-equiv='content-language' content='zh-cn'>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" sizes="any" mask href="/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="/favicon.ico">
-<link rel="apple-touch-icon" href="/favicon.ico">
-<title>十二生肖岁数对照表-网上用户@网上用户</title>
-<meta name="keywords" content="网上用户,生肖对照表,12生肖岁数表,虚岁属相查询,每年自动更新生肖表,属相年份查询,鼠牛虎兔龙蛇马羊猴鸡狗猪" />
-<meta name="description" content="十二生肖虚岁对照表，自动获取当前年份，可手动切换年份查询1-132虚岁，适配手机浏览。" />
-<style type="text/css">
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-A{TEXT-DECORATION: none;color:#333;}
-body {
-    max-width: 700px;
-    margin: 20px auto;
-    /* 用padding控制左右留白，手机电脑统一20px，永不贴边缘 */
-    padding: 15px 20px;
-    font-size: 14px;
-}
-h3 {
-    text-align: center;
-    margin: 10px 0;
-    font-size: 22px;
-    line-height: 1.4;
-}
-h3 a{
-    margin-left:8px;
-    font-size:14px;
-    color:#0066cc;
-}
-.year-input-area {
-    margin: 15px 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-#inputYear {
-    width: 80px;
-    padding: 4px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-button {
-    padding: 4px 12px;
-    font-size: 14px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    cursor: pointer;
-}
-/* 表格外层滚动容器，防止表格撑破页面右移 */
-.table-wrap{
-    width:100%;
-    overflow-x:auto;
-    margin:10px 0;
-}
-table {
-    border-collapse: collapse;
-    min-width:100%;
-    text-align: center;
-}
-th, td {
-    padding: 4px 2px;
-    border: 1px solid #ccc;
-    white-space: nowrap;
-}
-th {
-    background-color: #f0f0f0;
-    font-size: 18px;
-}
-td {
-    font-size: 17px;
-}
-.target-zodiac {
-    color: red;
-    font-weight: bold;
-}
-.target-age {
-    color: red;
-    font-weight: bold;
-}
-.age-cell {
-    color: #0000ff;
-}
-hr {
-    margin:12px 0;
-}
-.info-text {
-    font-size: 16px;
-    line-height: 1.8;
-}
-/* 手机端微调间距，删除冲突width代码 */
-@media (max-width: 950px) {
-    body {
-        margin: 10px auto;
-        padding: 10px 15px;
-    }
-    h3{
-        font-size:18px;
-    }
-    th{
-        font-size:16px;
-    }
-    td{
-        font-size:15px;
-    }
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义位数加法练习</title>
+    <meta name="keywords" content="网上用户">
+    <!-- 页面描述 -->
+    <meta name="description" content="网上用户专属内容介绍">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            max-width: 540px;
+            margin: 30px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .select-box {
+            margin-bottom: 35px;
+        }
+        #digitSelect {
+            font-size: 20px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 2px solid #444;
+        }
+        .question-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-size: 48px;
+            margin-bottom: 40px;
+        }
+        #answerInput {
+            width: 160px;
+            height: 60px;
+            font-size: 48px;
+            text-align: center;
+            border: 2px solid #333;
+        }
+        .tip-text {
+            font-size: 22px;
+            height: 30px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .right {
+            color: #09b83e;
+        }
+        .wrong {
+            color: #f53f3f;
+        }
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 360px;
+            margin: 0 auto;
+        }
+        .key-btn {
+            height: 72px;
+            font-size: 32px;
+            border: 2px solid #666;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .key-btn:active {
+            background: #e8e8e8;
+        }
+    </style>
 </head>
 <body>
-    <h3>
-        <span id="currentYear"></span>年十二生肖虚岁对照表(手机版)
-        <a href="/" target="_blank">网上用户</a>
-    </h3>
-    
-    <div class="year-input-area">
-        <label for="inputYear">手动切换查询年份：</label>
-        <input type="number" id="inputYear" placeholder="输入年份">
-        <button onclick="updateYear()">一键更新表格</button>
-    </div>
-    <!-- 新增表格滚动容器，解决横向溢出靠右 -->
-    <div class="table-wrap">
-        <table>
-            <tr id="zodiacHeader"></tr>
-            <tbody id="tableContent">
-            </tbody>
-        </table>
+    <h1>自定义位数加法练习</h1>
+
+    <div class="select-box">
+        <select id="digitSelect">
+            <option value="1">1位加法练习</option>
+            <option value="2">2位加法练习</option>
+            <option value="3">3位加法练习</option>
+            <option value="4">4位加法练习</option>
+        </select>
     </div>
 
-    <h3>
-        <span id="currentYearFooter"></span>年生肖虚岁对照表
-        <a href="/" target="_blank">网上用户</a>
-    </h3>
+    <div class="question-box">
+        <span id="num1">8</span>
+        <span>+</span>
+        <span id="num2">5</span>
+        <span>=</span>
+        <input type="text" id="answerInput" readonly>
+    </div>
 
-<script>
-// 十二生肖固定顺序
-const zodiacList = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+    <div class="tip-text" id="tip"></div>
 
-// 根据公历年获取生肖，基准2026马年校准
-function getYearZodiac(y) {
-    const baseYear = 2026;
-    const baseIdx = 6; // 2026马，数组下标6
-    let diff = (y - baseYear) % 12;
-    if(diff < 0) diff += 12;
-    return zodiacList[(baseIdx + diff) % 12];
-}
+    <div class="keyboard">
+        <button class="key-btn" data-val="1">1</button>
+        <button class="key-btn" data-val="2">2</button>
+        <button class="key-btn" data-val="3">3</button>
+        <button class="key-btn" data-val="4">4</button>
+        <button class="key-btn" data-val="5">5</button>
+        <button class="key-btn" data-val="6">6</button>
+        <button class="key-btn" data-val="7">7</button>
+        <button class="key-btn" data-val="8">8</button>
+        <button class="key-btn" data-val="9">9</button>
+        <button class="key-btn" data-val="">清空</button>
+        <button class="key-btn" data-val="">确认</button>
+        <button class="key-btn" data-val="0">0</button>
+    </div>
 
-// 按目标年份排序生肖：当年生肖放第一列，往前倒推12年
-function getSortZodiac(targetY) {
-    let arr = [];
-    let tempY = targetY;
-    for(let i=0; i<12; i++){
-        arr.push(getYearZodiac(tempY));
-        tempY--;
-    }
-    return arr;
-}
+    <script>
+        const num1El = document.getElementById('num1');
+        const num2El = document.getElementById('num2');
+        const answerInput = document.getElementById('answerInput');
+        const tipEl = document.getElementById('tip');
+        const keyBtns = document.querySelectorAll('.key-btn');
+        const digitSelect = document.getElementById('digitSelect');
 
-// 刷新表头生肖（无首列，直接12个生肖表头）
-function renderHeader(targetY) {
-    const headerTr = document.getElementById('zodiacHeader');
-    headerTr.innerHTML = '';
-    const sortZod = getSortZodiac(targetY);
-    const nowZod = getYearZodiac(targetY);
-    sortZod.forEach(zod=>{
-        let th = document.createElement('th');
-        th.innerText = zod;
-        if(zod === nowZod) th.className = 'target-zodiac';
-        headerTr.appendChild(th);
-    })
-}
+        let n1, n2, correctAns;
+        let nowDigit = 1;
 
-// 渲染对照表，仅12列虚岁，无任何首列，虚岁1~132（11行）
-function buildTable(targetY) {
-    renderHeader(targetY);
-    const tbBody = document.getElementById('tableContent');
-    tbBody.innerHTML = '';
-    const sortZod = getSortZodiac(targetY);
+        // 获取N位数数字（首位不能为0）
+        function getNDigitNum(digit) {
+            const min = 10 ** (digit - 1);
+            const max = (10 ** digit) - 1;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
 
-    // 11行，每行12个虚岁，合计132岁
-    for(let group=0; group<11; group++){
-        let ageTr = document.createElement('tr');
-        sortZod.forEach((zod, idx)=>{
-            const ageNum = (idx+1) + group*12;
-            const birthY = targetY - ageNum + 1;
+        // 生成对应位数题目
+        function createNewQuestion() {
+            tipEl.textContent = '';
+            answerInput.value = '';
+            nowDigit = Number(digitSelect.value);
 
-            let aTd = document.createElement('td');
-            aTd.innerText = ageNum;
-            aTd.className = 'age-cell';
-            // 当前年份出生对应虚岁标红
-            if(birthY === targetY) aTd.classList.add('target-age');
-            ageTr.appendChild(aTd);
+            if (nowDigit === 1) {
+                // 1位：1~9 + 1~9
+                n1 = getNDigitNum(1);
+                n2 = getNDigitNum(1);
+            } else if (nowDigit === 2) {
+                // 2位模式：禁止1位+1位，三种题型随机
+                const type = Math.floor(Math.random() * 3);
+                if (type === 0) {
+                    n1 = getNDigitNum(2);
+                    n2 = getNDigitNum(1);
+                } else if (type === 1) {
+                    n1 = getNDigitNum(1);
+                    n2 = getNDigitNum(2);
+                } else {
+                    n1 = getNDigitNum(2);
+                    n2 = getNDigitNum(2);
+                }
+            } else {
+                // 3位 / 4位：两个数字都是对应位数
+                n1 = getNDigitNum(nowDigit);
+                n2 = getNDigitNum(nowDigit);
+            }
+
+            correctAns = n1 + n2;
+            num1El.textContent = n1;
+            num2El.textContent = n2;
+        }
+
+        // 数字键盘点击事件
+        keyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const val = btn.dataset.val;
+                const text = btn.textContent;
+                if (text === '清空') {
+                    answerInput.value = '';
+                } else if (text === '确认') {
+                    checkAnswer();
+                } else {
+                    // 限制最大输入位数：4位+4位最大9999+9999=19998 5位
+                    if (answerInput.value.length < 5) {
+                        answerInput.value += val;
+                    }
+                }
+            })
         })
-        tbBody.appendChild(ageTr);
-    }
 
-    document.getElementById('currentYear').innerText = targetY;
-    document.getElementById('currentYearFooter').innerText = targetY;
-    document.getElementById('inputYear').value = targetY;
-}
+        // 核对答案
+        function checkAnswer() {
+            const userAns = Number(answerInput.value);
+            if (isNaN(userAns)) {
+                tipEl.textContent = '请输入数字！';
+                tipEl.className = 'tip-text wrong';
+                return;
+            }
+            if (userAns === correctAns) {
+                tipEl.textContent = '回答正确！';
+                tipEl.className = 'tip-text right';
+                setTimeout(createNewQuestion, 1000);
+            } else {
+                tipEl.textContent = '答案错误，请重试';
+                tipEl.className = 'tip-text wrong';
+            }
+        }
 
-// 更新年份按钮事件
-function updateYear() {
-    let val = document.getElementById('inputYear').value.trim();
-    let y = parseInt(val);
-    if(isNaN(y) || y <= 0){
-        alert('请输入合法正整数年份');
-        const autoY = new Date().getFullYear();
-        document.getElementById('inputYear').value = autoY;
-        buildTable(autoY);
-        return;
-    }
-    buildTable(y);
-}
+        // 切换下拉框立刻换题型
+        digitSelect.addEventListener('change', createNewQuestion);
 
-// 页面加载自动读取系统当前年份（2026）
-window.onload = function(){
-    const autoCurrentYear = new Date().getFullYear();
-    buildTable(autoCurrentYear);
-}
-</script>
+        // 初始化加载题目
+        createNewQuestion();
+    </script>
 </body>
 </html>

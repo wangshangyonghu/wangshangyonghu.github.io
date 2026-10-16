@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电量计算器 @网上用户</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{max-width:880px;margin:20px auto;padding:0 15px;line-height:1.6;}
+.box{margin:20px 0;padding:16px;border:1px solid #ddd;border-radius:8px;}
+label{display:block;margin-bottom:6px;font-weight:bold;}
+input{width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;font-size:16px;margin-top:8px;}
+.result{margin-top:10px;padding:10px;background:#f7f7f8;border-radius:4px;color:#222;}
+.note{margin-top:30px;color:#666;font-size:14px;text-align:center;}
+</style>
+</head>
+<body>
+<h2>电量计算器（1度电=1kWh）</h2>
+
+<div class="box">
+  <label>共用功率输入（瓦 W）</label>
+  <input type="number" id="wInput" placeholder="输入瓦数，三个计算共用">
+</div>
+
+<div class="box">
+  <label>① 消耗1度电需要多少小时</label>
+  <div class="result" id="res1"></div>
+</div>
+
+<div class="box">
+  <label>② 输入使用时间(小时)，计算消耗多少度电</label>
+  <input type="number" id="timeInput" placeholder="使用小时">
+  <div class="result" id="res2"></div>
+</div>
+
+<div class="box">
+  <label>③ 输入电量(度)，计算可以使用多少小时</label>
+  <input type="number" id="elecInput" placeholder="电量度数">
+  <div class="result" id="res3"></div>
+</div>
+
+<div class="note">
+备注：计算结果仅供参考，设备铭牌标注功率和实际运行功耗存在差异，实际用电量以电表为准。
+</div>
+
+<script>
+const wInput = document.getElementById('wInput');
+const timeInput = document.getElementById('timeInput');
+const elecInput = document.getElementById('elecInput');
+const res1 = document.getElementById('res1');
+const res2 = document.getElementById('res2');
+const res3 = document.getElementById('res3');
+
+function calcAll(){
+  const w = parseFloat(wInput.value);
+  //计算1度电所需时间
+  if(!isNaN(w) && w>0){
+    const h = 1000 / w;
+    res1.textContent = `${w}瓦，消耗1度电需要 ${h.toFixed(2)} 小时`;
+  }else{
+    res1.textContent = "";
+  }
+
+  //输入时间算度数
+  const t = parseFloat(timeInput.value);
+  if(!isNaN(w) && w>0 && !isNaN(t) && t>0){
+    const e = w * t / 1000;
+    res2.textContent = `${w}瓦，使用${t}小时，耗电 ${e.toFixed(3)} 度`;
+  }else{
+    res2.textContent = "";
+  }
+
+  //输入度数算可用时间
+  const e = parseFloat(elecInput.value);
+  if(!isNaN(w) && w>0 && !isNaN(e) && e>0){
+    const useTime = e * 1000 / w;
+    res3.textContent = `${w}瓦，${e}度电可以使用 ${useTime.toFixed(2)} 小时`;
+  }else{
+    res3.textContent = "";
+  }
+}
+
+wInput.oninput = calcAll;
+timeInput.oninput = calcAll;
+elecInput.oninput = calcAll;
+</script>
+</body>
+</html>

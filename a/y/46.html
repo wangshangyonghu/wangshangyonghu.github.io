@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全品类家电能效标签计算器@网上用户</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{padding:20px;background:#f5f7fa;color:#333}
+.container{max-width:560px;margin:0 auto;background:#fff;padding:24px;border-radius:12px;box-shadow:0 2px 10px #00000015}
+h1{text-align:center;font-size:22px;margin-bottom:24px}
+.title-block{margin:24px 0 12px 0;font-weight:bold;font-size:18px;border-bottom:1px solid #ddd;padding-bottom:6px}
+.item{margin-bottom:16px}
+label{display:block;margin-bottom:6px;font-weight:500}
+input,select{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:16px}
+button{width:100%;padding:12px;border:none;border-radius:6px;font-size:17px;cursor:pointer;margin-top:8px}
+.btn-clear{background:#666;color:#fff;margin-top:12px}
+.result{margin-top:20px;padding:16px;background:#ecf4ff;border-radius:8px;line-height:1.8}
+.note{margin-top:16px;font-size:13px;color:#666;line-height:1.6}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>全品类家电能效标签计算器</h1>
+
+<div class="item">
+<label>电器品类</label>
+<select id="devType" onchange="changeDevice();calc()">
+<option value="acCool">单冷空调</option>
+<option value="acHeatCool">冷暖空调</option>
+<option value="fan">电风扇</option>
+<option value="fridge">家用电冰箱</option>
+<option value="wash">电动洗衣机</option>
+<option value="rangeHood">吸油烟机</option>
+<option value="led">LED室内灯具</option>
+<option value="microwave">微波炉</option>
+<option value="riceCooker">电饭锅</option>
+<option value="waterHeater">储水式电热水器</option>
+</select>
+</div>
+
+<!-- 空调 单冷/冷暖 -->
+<div id="acBlock">
+<div class="title-block">制冷参数</div>
+<div class="item">
+<label>能效等级</label>
+<input id="level" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>制冷季节能源消耗效率 SEI</label>
+<input id="sei" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定制冷量(W)</label>
+<input id="coolCapacity" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>制冷季节耗电量(kW·h)</label>
+<input id="seasonKwhCool" type="number" placeholder="" oninput="calc()">
+</div>
+
+<div class="title-block hide" id="heatTitle">制热参数</div>
+<div class="item hide" id="heatItemHspf">
+<label>制热季节能源消耗效率 HSPF</label>
+<input id="hspf" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item hide" id="heatItemHeatCap">
+<label>额定制热量(W)</label>
+<input id="heatCapacity" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item hide" id="heatItemHeatKwh">
+<label>制热季节耗电量(kW·h)</label>
+<input id="seasonKwhHeat" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<!-- 电风扇 -->
+<div id="fanBlock" class="hide">
+<div class="title-block">电风扇参数（能效标识）</div>
+<div class="item">
+<label>能效等级</label>
+<input id="fanLevel" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>能效值[m³/(min·W)]</label>
+<input id="fanEffiVal" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定输入功率(W)</label>
+<input id="fanPower" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<!-- 冰箱 -->
+<div id="fridgeBlock" class="hide">
+<div class="title-block">冰箱参数</div>
+<div class="item">
+<label>能效等级</label>
+<input id="fridgeLevel" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定日耗电量(kW·h/24h)</label>
+<input id="fridgeDayKwh" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>总容积(L)</label>
+<input id="fridgeVol" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<!-- 洗衣机 -->
+<div id="washBlock" class="hide">
+<div class="title-block">洗衣机参数</div>
+<div class="item">
+<label>能效等级</label>
+<input id="washLevel" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>洗净比</label>
+<input id="washCleanRatio" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>标准周期耗电量(kW·h/周期)</label>
+<input id="washKwhCycle" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定洗涤容量(kg)</label>
+<input id="washCap" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<!-- 油烟机 -->
+<div id="hoodBlock" class="hide">
+<div class="title-block">吸油烟机参数</div>
+<div class="item">
+<label>能效等级</label>
+<input id="hoodLevel" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>全压效率(%)</label>
+<input id="hoodEff" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定输入功率(W)</label>
+<input id="hoodPower" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<!-- LED灯 -->
+<div id="ledBlock" class="hide">
+<div class="title-block">LED室内灯具</div>
+<div class="item">
+<label>能效等级</label>
+<input id="ledLevel" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>光效(lm/W)</label>
+<input id="ledLmW" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定功率(W)</label>
+<input id="ledPower" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<!-- 微波炉 -->
+<div id="microwaveBlock" class="hide">
+<div class="title-block">微波炉参数</div>
+<div class="item">
+<label>能效等级</label>
+<input id="micLevel" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>微波效率(%)</label>
+<input id="micEff" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定输入功率(W)</label>
+<input id="micPower" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<!-- 电饭锅 -->
+<div id="riceBlock" class="hide">
+<div class="title-block">电饭锅参数</div>
+<div class="item">
+<label>能效等级</label>
+<input id="riceLevel" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>热效率(%)</label>
+<input id="riceEff" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定功率(W)</label>
+<input id="ricePower" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<!-- 储水式电热水器 新增 -->
+<div id="waterHeaterBlock" class="hide">
+<div class="title-block">储水式电热水器（能效标识）</div>
+<div class="item">
+<label>能效等级</label>
+<input id="whLevel" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>24小时固有能耗系数ε</label>
+<input id="whEpsilon" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>热水输出率μ(%)</label>
+<input id="whOutputRate" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>额定加热功率(W)</label>
+<input id="whPower" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>水箱容积(L)</label>
+<input id="whVolume" type="number" placeholder="" oninput="calc()">
+</div>
+</div>
+
+<div class="title-block">通用参数</div>
+<div class="item">
+<label>每日使用时长(小时)</label>
+<input id="hour" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>启停负载系数</label>
+<input id="rate" type="number" placeholder="" oninput="calc()">
+</div>
+<div class="item">
+<label>电价(元/度)</label>
+<input id="price" type="number" placeholder="" oninput="calc()">
+</div>
+
+<button class="btn-clear" onclick="clearAll()">清除全部</button>
+<div class="result" id="res"></div>
+<div class="note">
+说明：下拉选择电器，自动切换对应能效标识输入项，全部字段与实体标签保持一致。
+启停负载系数：定频空调0.6~0.9；风扇/LED/油烟机填1.0；冰箱固定默认持续运行。
+制冷国标测试时长1136小时；制热国标测试时长433小时。
+1度电=1kWh。缺小时/电价不影响功率、1度电时长计算，有数据自动算出。
+热水器参数严格按照国标GB21519：能耗系数+热水输出率+功率+容积。
+结果仅为理论估算，受环境、温度、使用模式影响。
+</div>
+</div>
+
+<script>
+function changeDevice(){
+  const val = document.getElementById('devType').value;
+  //全部隐藏
+  document.getElementById('acBlock').classList.add('hide');
+  document.getElementById('fanBlock').classList.add('hide');
+  document.getElementById('fridgeBlock').classList.add('hide');
+  document.getElementById('washBlock').classList.add('hide');
+  document.getElementById('hoodBlock').classList.add('hide');
+  document.getElementById('ledBlock').classList.add('hide');
+  document.getElementById('microwaveBlock').classList.add('hide');
+  document.getElementById('riceBlock').classList.add('hide');
+  document.getElementById('waterHeaterBlock').classList.add('hide');
+
+  //空调子项
+  document.getElementById('heatTitle').classList.add('hide');
+  document.getElementById('heatItemHspf').classList.add('hide');
+  document.getElementById('heatItemHeatCap').classList.add('hide');
+  document.getElementById('heatItemHeatKwh').classList.add('hide');
+
+  if(val === "acCool" || val === "acHeatCool"){
+    document.getElementById('acBlock').classList.remove('hide');
+    if(val === "acHeatCool"){
+      document.getElementById('heatTitle').classList.remove('hide');
+      document.getElementById('heatItemHspf').classList.remove('hide');
+      document.getElementById('heatItemHeatCap').classList.remove('hide');
+      document.getElementById('heatItemHeatKwh').classList.remove('hide');
+    }
+  }else if(val === "fan"){
+    document.getElementById('fanBlock').classList.remove('hide');
+  }else if(val === "fridge"){
+    document.getElementById('fridgeBlock').classList.remove('hide');
+  }else if(val === "wash"){
+    document.getElementById('washBlock').classList.remove('hide');
+  }else if(val === "rangeHood"){
+    document.getElementById('hoodBlock').classList.remove('hide');
+  }else if(val === "led"){
+    document.getElementById('ledBlock').classList.remove('hide');
+  }else if(val === "microwave"){
+    document.getElementById('microwaveBlock').classList.remove('hide');
+  }else if(val === "riceCooker"){
+    document.getElementById('riceBlock').classList.remove('hide');
+  }else if(val === "waterHeater"){
+    document.getElementById('waterHeaterBlock').classList.remove('hide');
+  }
+  calc();
+}
+
+function calc(){
+  const dev = document.getElementById('devType').value;
+  let html="";
+  const hour = parseFloat(document.getElementById('hour').value)||0;
+  const price = parseFloat(document.getElementById('price').value)||0;
+  const rate = parseFloat(document.getElementById('rate').value)||1;
+  const coolSeasonRunHour = 1136;
+  const heatSeasonRunHour = 433;
+
+  //空调计算部分不变
+  if(dev === "acCool" || dev === "acHeatCool"){
+    let level = parseFloat(document.getElementById('level').value)||0;
+    let sei = parseFloat(document.getElementById('sei').value)||0;
+    let coolCap = parseFloat(document.getElementById('coolCapacity').value)||0;
+    let seasonKwhCool = parseFloat(document.getElementById('seasonKwhCool').value)||0;
+    let hspf = parseFloat(document.getElementById('hspf').value)||0;
+    let heatCap = parseFloat(document.getElementById('heatCapacity').value)||0;
+    let seasonKwhHeat = parseFloat(document.getElementById('seasonKwhHeat').value)||0;
+
+    html = `【设备信息】${dev==='acHeatCool'?'冷暖空调':'单冷空调'}｜能效等级：${level>0?level:"未填写"}<br><br>`;
+    let coolRatedPower = sei>0 ? coolCap / sei : 0;
+    let coolRealPower = coolRatedPower * rate;
+    let coolAvgPower = seasonKwhCool / coolSeasonRunHour;
+    let coolTimePerKwhRated = coolRealPower>0 ? 1000 / coolRealPower : 0;
+    let coolTimePerKwhAvg = coolAvgPower>0 ? 1 / coolAvgPower : 0;
+    let coolDayRatedKwh = hour>0 ? coolRealPower/1000 * hour : 0;
+    let coolMonthRatedKwh = coolDayRatedKwh *30;
+    let coolDayAvgKwh = hour>0 ? coolAvgPower * hour :0;
+    let coolMonthAvgKwh = coolDayAvgKwh *30;
+
+    html += `<strong>===== 制冷计算 =====</strong><br>`;
+    if(sei>0 && coolCap>0){
+      html += `✅ 压缩机满负荷额定功率：${coolRatedPower.toFixed(1)} W<br>`;
+      html += `✅ 实际平均运行功率(带启停系数)：${coolRealPower.toFixed(1)} W<br>`;
+      if(coolTimePerKwhRated>0) html += `⚡1度电可连续使用：${coolTimePerKwhRated.toFixed(2)} 小时<br>`;
+    }
+    if(seasonKwhCool>0){
+      html += `✅ 制冷季节平均功率：${(coolAvgPower*1000).toFixed(1)} W<br>`;
+      if(coolTimePerKwhAvg>0) html += `⚡1度电可连续使用：${coolTimePerKwhAvg.toFixed(2)} 小时<br>`;
+    }
+    if(hour>0){
+      html += `<br>👉满负荷测算：每日耗电${coolDayRatedKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(coolDayRatedKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${coolMonthRatedKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(coolMonthRatedKwh*price).toFixed(2)}元`;
+      html += `<br><br>👉季节平均测算：每日耗电${coolDayAvgKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(coolDayAvgKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${coolMonthAvgKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(coolMonthAvgKwh*price).toFixed(2)}元`;
+    }
+
+    if(dev === "acHeatCool"){
+      let heatRatedPower = hspf>0 ? heatCap / hspf :0;
+      let heatRealPower = heatRatedPower * rate;
+      let heatAvgPower = seasonKwhHeat / heatSeasonRunHour;
+      let heatTimePerKwhRated = heatRealPower>0 ? 1000/heatRealPower:0;
+      let heatTimePerKwhAvg = heatAvgPower>0 ? 1/heatAvgPower:0;
+      let heatDayRatedKwh = hour>0 ? heatRealPower/1000*hour:0;
+      let heatMonthRatedKwh = heatDayRatedKwh*30;
+      let heatDayAvgKwh = hour>0 ? heatAvgPower*hour:0;
+      let heatMonthAvgKwh = heatDayAvgKwh*30;
+
+      html += `<br><strong>===== 制热计算 =====</strong><br>`;
+      if(hspf>0 && heatCap>0){
+        html += `✅ 压缩机满负荷额定功率：${heatRatedPower.toFixed(1)} W<br>`;
+        html += `✅ 实际平均运行功率(带启停系数)：${heatRealPower.toFixed(1)} W<br>`;
+        if(heatTimePerKwhRated>0) html += `⚡1度电可连续使用：${heatTimePerKwhRated.toFixed(2)} 小时<br>`;
+      }
+      if(seasonKwhHeat>0){
+        html += `✅ 制热季节平均功率：${(heatAvgPower*1000).toFixed(1)} W<br>`;
+        if(heatTimePerKwhAvg>0) html += `⚡1度电可连续使用：${heatTimePerKwhAvg.toFixed(2)} 小时<br>`;
+      }
+      if(hour>0){
+        html += `<br>👉满负荷测算：每日耗电${heatDayRatedKwh.toFixed(2)}度`;
+        if(price>0) html += `｜日电费${(heatDayRatedKwh*price).toFixed(2)}元`;
+        html += `<br>每月耗电${heatMonthRatedKwh.toFixed(2)}度`;
+        if(price>0) html += `｜月电费${(heatMonthRatedKwh*price).toFixed(2)}元`;
+        html += `<br><br>👉季节平均测算：每日耗电${heatDayAvgKwh.toFixed(2)}度`;
+        if(price>0) html += `｜日电费${(heatDayAvgKwh*price).toFixed(2)}元`;
+        html += `<br>每月耗电${heatMonthAvgKwh.toFixed(2)}度`;
+        if(price>0) html += `｜月电费${(heatMonthAvgKwh*price).toFixed(2)}元`;
+      }
+    }
+  }else if(dev === "fan"){
+    let fanLevel = parseFloat(document.getElementById('fanLevel').value)||0;
+    let fanEffiVal = parseFloat(document.getElementById('fanEffiVal').value)||0;
+    let fanPower = parseFloat(document.getElementById('fanPower').value)||0;
+    let realPower = fanPower * rate;
+    let timePerKwh = realPower>0 ? 1000 / realPower :0;
+    let airVolume = fanEffiVal>0 && fanPower>0 ? fanEffiVal * fanPower :0;
+    let dayKwh = hour>0 ? realPower/1000 * hour :0;
+    let monthKwh = dayKwh *30;
+    html = `【设备信息】电风扇｜能效等级：${fanLevel>0?fanLevel:"未填写"}<br><br>`;
+    if(fanPower>0){
+      html += `✅ 额定输入功率：${fanPower.toFixed(1)} W<br>`;
+      html += `✅ 实际平均运行功率：${realPower.toFixed(1)} W<br>`;
+      if(timePerKwh>0) html += `⚡1度电可连续使用：${timePerKwh.toFixed(2)} 小时<br>`;
+    }
+    if(fanEffiVal>0) html += `✅ 能效值：${fanEffiVal.toFixed(2)} m³/(min·W)<br>`;
+    if(airVolume>0) html += `✅ 风量：${airVolume.toFixed(2)} m³/min<br>`;
+    if(hour>0){
+      html += `<br>👉耗电测算：每日耗电${dayKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(dayKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${monthKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(monthKwh*price).toFixed(2)}元`;
+    }
+  }else if(dev === "fridge"){
+    let fridgeLevel = parseFloat(document.getElementById('fridgeLevel').value)||0;
+    let fridgeDayKwh = parseFloat(document.getElementById('fridgeDayKwh').value)||0;
+    let fridgeVol = parseFloat(document.getElementById('fridgeVol').value)||0;
+    let power = fridgeDayKwh *1000 /24;
+    let timePerKwh = power>0 ? 1000/power :0;
+    let monthKwh = fridgeDayKwh *30;
+    html = `【设备信息】电冰箱｜能效等级：${fridgeLevel>0?fridgeLevel:"未填写"}<br><br>`;
+    if(fridgeDayKwh>0){
+      html += `✅ 额定日耗电量：${fridgeDayKwh.toFixed(2)} kWh/24h<br>`;
+      html += `✅ 等效平均功率：${power.toFixed(1)} W<br>`;
+      if(timePerKwh>0) html += `⚡1度电可连续使用：${timePerKwh.toFixed(2)} 小时<br>`;
+      if(fridgeVol>0) html += `✅ 总容积：${fridgeVol} L<br>`;
+      html += `<br>👉耗电测算：每日耗电${fridgeDayKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(fridgeDayKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${monthKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(monthKwh*price).toFixed(2)}元`;
+    }
+  }else if(dev === "wash"){
+    let washLevel = parseFloat(document.getElementById('washLevel').value)||0;
+    let washCleanRatio = parseFloat(document.getElementById('washCleanRatio').value)||0;
+    let washKwhCycle = parseFloat(document.getElementById('washKwhCycle').value)||0;
+    let washCap = parseFloat(document.getElementById('washCap').value)||0;
+    html = `【设备信息】洗衣机｜能效等级：${washLevel>0?washLevel:"未填写"}<br><br>`;
+    if(washCleanRatio>0) html += `✅ 洗净比：${washCleanRatio.toFixed(2)}<br>`;
+    if(washKwhCycle>0) html += `✅ 标准单周期耗电量：${washKwhCycle} 度/次<br>`;
+    if(washCap>0) html += `✅ 额定洗涤容量：${washCap} kg<br>`;
+    if(hour>0){
+      let cycleCount = hour / 1.2; //单次标准洗涤约1.2小时
+      let dayKwh = washKwhCycle * cycleCount;
+      let monthKwh = dayKwh *30;
+      html += `<br>👉耗电测算：每日${cycleCount.toFixed(1)}次，每日耗电${dayKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(dayKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${monthKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(monthKwh*price).toFixed(2)}元`;
+    }
+  }else if(dev === "rangeHood"){
+    let hoodLevel = parseFloat(document.getElementById('hoodLevel').value)||0;
+    let hoodEff = parseFloat(document.getElementById('hoodEff').value)||0;
+    let hoodPower = parseFloat(document.getElementById('hoodPower').value)||0;
+    let realPower = hoodPower * rate;
+    let timePerKwh = realPower>0 ? 1000/realPower :0;
+    let dayKwh = hour>0 ? realPower/1000 * hour :0;
+    let monthKwh = dayKwh *30;
+    html = `【设备信息】吸油烟机｜能效等级：${hoodLevel>0?hoodLevel:"未填写"}<br><br>`;
+    if(hoodEff>0) html += `✅ 全压效率：${hoodEff} %<br>`;
+    if(hoodPower>0){
+      html += `✅ 额定输入功率：${hoodPower.toFixed(1)} W<br>`;
+      html += `✅ 实际运行功率：${realPower.toFixed(1)} W<br>`;
+      if(timePerKwh>0) html += `⚡1度电可连续使用：${timePerKwh.toFixed(2)} 小时<br>`;
+    }
+    if(hour>0){
+      html += `<br>👉耗电测算：每日耗电${dayKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(dayKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${monthKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(monthKwh*price).toFixed(2)}元`;
+    }
+  }else if(dev === "led"){
+    let ledLevel = parseFloat(document.getElementById('ledLevel').value)||0;
+    let ledLmW = parseFloat(document.getElementById('ledLmW').value)||0;
+    let ledPower = parseFloat(document.getElementById('ledPower').value)||0;
+    let realPower = ledPower * rate;
+    let timePerKwh = realPower>0 ? 1000/realPower :0;
+    let dayKwh = hour>0 ? realPower/1000 * hour :0;
+    let monthKwh = dayKwh *30;
+    html = `【设备信息】LED灯具｜能效等级：${ledLevel>0?ledLevel:"未填写"}<br><br>`;
+    if(ledLmW>0) html += `✅ 光效：${ledLmW} lm/W<br>`;
+    if(ledPower>0){
+      html += `✅ 额定功率：${ledPower.toFixed(1)} W<br>`;
+      html += `✅ 实际运行功率：${realPower.toFixed(1)} W<br>`;
+      if(timePerKwh>0) html += `⚡1度电可连续使用：${timePerKwh.toFixed(2)} 小时<br>`;
+    }
+    if(hour>0){
+      html += `<br>👉耗电测算：每日耗电${dayKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(dayKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${monthKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(monthKwh*price).toFixed(2)}元`;
+    }
+  }else if(dev === "microwave"){
+    let micLevel = parseFloat(document.getElementById('micLevel').value)||0;
+    let micEff = parseFloat(document.getElementById('micEff').value)||0;
+    let micPower = parseFloat(document.getElementById('micPower').value)||0;
+    let realPower = micPower * rate;
+    let timePerKwh = realPower>0 ? 1000/realPower :0;
+    let dayKwh = hour>0 ? realPower/1000 * hour :0;
+    let monthKwh = dayKwh *30;
+    html = `【设备信息】微波炉｜能效等级：${micLevel>0?micLevel:"未填写"}<br><br>`;
+    if(micEff>0) html += `✅ 微波效率：${micEff} %<br>`;
+    if(micPower>0){
+      html += `✅ 额定输入功率：${micPower.toFixed(1)} W<br>`;
+      html += `✅ 实际运行功率：${realPower.toFixed(1)} W<br>`;
+      if(timePerKwh>0) html += `⚡1度电可连续使用：${timePerKwh.toFixed(2)} 小时<br>`;
+    }
+    if(hour>0){
+      html += `<br>👉耗电测算：每日耗电${dayKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(dayKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${monthKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(monthKwh*price).toFixed(2)}元`;
+    }
+  }else if(dev === "riceCooker"){
+    let riceLevel = parseFloat(document.getElementById('riceLevel').value)||0;
+    let riceEff = parseFloat(document.getElementById('riceEff').value)||0;
+    let ricePower = parseFloat(document.getElementById('ricePower').value)||0;
+    let realPower = ricePower * rate;
+    let timePerKwh = realPower>0 ? 1000/realPower :0;
+    let dayKwh = hour>0 ? realPower/1000 * hour :0;
+    let monthKwh = dayKwh *30;
+    html = `【设备信息】电饭锅｜能效等级：${riceLevel>0?riceLevel:"未填写"}<br><br>`;
+    if(riceEff>0) html += `✅ 热效率：${riceEff} %<br>`;
+    if(ricePower>0){
+      html += `✅ 额定功率：${ricePower.toFixed(1)} W<br>`;
+      html += `✅ 实际运行功率：${realPower.toFixed(1)} W<br>`;
+      if(timePerKwh>0) html += `⚡1度电可连续使用：${timePerKwh.toFixed(2)} 小时<br>`;
+    }
+    if(hour>0){
+      html += `<br>👉耗电测算：每日耗电${dayKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(dayKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${monthKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(monthKwh*price).toFixed(2)}元`;
+    }
+  }else if(dev === "waterHeater"){
+    //热水器计算逻辑
+    let whLevel = parseFloat(document.getElementById('whLevel').value)||0;
+    let whEpsilon = parseFloat(document.getElementById('whEpsilon').value)||0;
+    let whOutputRate = parseFloat(document.getElementById('whOutputRate').value)||0;
+    let whPower = parseFloat(document.getElementById('whPower').value)||0;
+    let whVolume = parseFloat(document.getElementById('whVolume').value)||0;
+
+    let realPower = whPower * rate;
+    let timePerKwh = realPower>0 ? 1000 / realPower : 0;
+    let dayKwh = hour>0 ? realPower/1000 * hour : 0;
+    let monthKwh = dayKwh * 30;
+
+    html = `【设备信息】储水式电热水器｜能效等级：${whLevel>0?whLevel:"未填写"}<br><br>`;
+    if(whEpsilon>0) html += `✅ 24小时固有能耗系数：${whEpsilon.toFixed(3)}<br>`;
+    if(whOutputRate>0) html += `✅ 热水输出率：${whOutputRate.toFixed(1)} %<br>`;
+    if(whVolume>0) html += `✅ 水箱容积：${whVolume} L<br>`;
+    if(whPower>0){
+      html += `✅ 额定加热功率：${whPower.toFixed(1)} W<br>`;
+      html += `✅ 实际运行功率：${realPower.toFixed(1)} W<br>`;
+      if(timePerKwh>0) html += `⚡1度电可连续加热：${timePerKwh.toFixed(2)} 小时<br>`;
+    }
+    if(hour>0){
+      html += `<br>👉耗电测算：每日耗电${dayKwh.toFixed(2)}度`;
+      if(price>0) html += `｜日电费${(dayKwh*price).toFixed(2)}元`;
+      html += `<br>每月耗电${monthKwh.toFixed(2)}度`;
+      if(price>0) html += `｜月电费${(monthKwh*price).toFixed(2)}元`;
+    }
+  }
+
+  if(html.replace(/<br>/g,"").trim()=="") html = "选择电器品类，填写能效标签数据自动计算";
+  document.getElementById('res').innerHTML = html;
+}
+
+function clearAll(){
+  //空调
+  document.getElementById('level').value = "";
+  document.getElementById('sei').value = "";
+  document.getElementById('coolCapacity').value = "";
+  document.getElementById('seasonKwhCool').value = "";
+  document.getElementById('hspf').value = "";
+  document.getElementById('heatCapacity').value = "";
+  document.getElementById('seasonKwhHeat').value = "";
+  //风扇
+  document.getElementById('fanLevel').value = "";
+  document.getElementById('fanEffiVal').value = "";
+  document.getElementById('fanPower').value = "";
+  //冰箱
+  document.getElementById('fridgeLevel').value = "";
+  document.getElementById('fridgeDayKwh').value = "";
+  document.getElementById('fridgeVol').value = "";
+  //洗衣机
+  document.getElementById('washLevel').value = "";
+  document.getElementById('washCleanRatio').value = "";
+  document.getElementById('washKwhCycle').value = "";
+  document.getElementById('washCap').value = "";
+  //油烟机
+  document.getElementById('hoodLevel').value = "";
+  document.getElementById('hoodEff').value = "";
+  document.getElementById('hoodPower').value = "";
+  //LED
+  document.getElementById('ledLevel').value = "";
+  document.getElementById('ledLmW').value = "";
+  document.getElementById('ledPower').value = "";
+  //微波炉
+  document.getElementById('micLevel').value = "";
+  document.getElementById('micEff').value = "";
+  document.getElementById('micPower').value = "";
+  //电饭锅
+  document.getElementById('riceLevel').value = "";
+  document.getElementById('riceEff').value = "";
+  document.getElementById('ricePower').value = "";
+  //热水器 新增清空项
+  document.getElementById('whLevel').value = "";
+  document.getElementById('whEpsilon').value = "";
+  document.getElementById('whOutputRate').value = "";
+  document.getElementById('whPower').value = "";
+  document.getElementById('whVolume').value = "";
+  //通用
+  document.getElementById('hour').value = "";
+  document.getElementById('rate').value = "";
+  document.getElementById('price').value = "";
+  calc();
+}
+changeDevice();
+calc();
+</script>
+</body>
+</html>
