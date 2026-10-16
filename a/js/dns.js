@@ -1,7 +1,6 @@
 // ========= DNS预解析（多个域名） =========
 const dnsList = [
-  "//wangshangyonghu.github.io",
-  "//wangshangyonghu.web1337.net"
+  "//wangshangyonghu.github.io"
 ];
 dnsList.forEach(host=>{
   // 防止重复添加link标签
@@ -15,8 +14,8 @@ dnsList.forEach(host=>{
 
 // ========= 图片预加载（多张图片） =========
 const imgPreload = [
-  "/tu/jpg1/57.jpg",
-  "/tu/jpg1/1.jpg"
+  "https://wangshangyonghu.github.io/tu/jpg1/57.jpg",
+  "https://wangshangyonghu.github.io/tu/jpg1/1.jpg"
 ];
 imgPreload.forEach(href=>{
   if(!document.querySelector(`link[rel="preload"][href="${href}"][as="image"]`)){
