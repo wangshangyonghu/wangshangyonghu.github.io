@@ -71,9 +71,6 @@
 <a href="" class="download-link" download="网上用户1.jpg">
   <img id="randomJpg1" src="" alt="网上用户的图片" width="280" style="height: auto; margin: 10px;" />
 </a>
-<a href="" class="download-link" download="网上用户2.png">
-  <img id="randomPng2" src="" alt="网上用户的图片" width="280" style="height: auto; margin: 10px;" />
-</a>
 <script>
 // 1. 生成指定范围的随机数（工具函数）
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -91,32 +88,9 @@ const baseConfig = {
    '/'  ],
   folderPaths: [  // 完整保留所有原始图片目录
 '/tu/jpg1/',
-'/tu/jpg2/',
-'/tu/jpg3/',
-'/tu/jpg4/',
-'/tu/jpg5/',
-'/tu/jpg6/',
-'/tu/jpg7/',
-'/tu/jpg8/',
-'/tu/jpg9/',
-'/tu/jpg10/',
-'/tu/jpg11/',
-'/tu/jpg12/',
-'/tu/jpg13/',
-'/tu/jpg14/',
-'/tu/jpg15/',
-'/tu/jpg16/',
-'/tu/jpg17/',
-'/tu/jpg18/',
-'/tu/jpg19/',
-'/tu/jpg20/',
-'/mdczdL/mdjpg/',
-'/mdczdL/jpg/',
-'/mdczdL/1227/',
-'/tu/png/',
+'/tu/jpg/',
 '/',
 '/',
-
 '/',
  
    '/'   
@@ -228,10 +202,9 @@ function initSingleRandomImage(imgId, baseConfig, ext) {
   // 初始加载图片
   loadImage();
 }
-// 4. 批量初始化：第一张jpg，第二张png
+// 4. 只初始化这一张jpg
 const imageList = [
-  {id:'randomJpg1', ext:'jpg'},
-  {id:'randomPng2', ext:'png'}
+  {id:'randomJpg1', ext:'jpg'}
 ];
 imageList.forEach(item => {
   initSingleRandomImage(item.id, baseConfig, item.ext);

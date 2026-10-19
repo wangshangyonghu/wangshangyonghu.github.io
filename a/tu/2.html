@@ -53,44 +53,26 @@
     <!-- 页面关键词 -->
     <meta name="keywords" content="网上用户,网上用户的图片,网上用户图片">
     <!-- 页面描述 -->
-    <meta name="description" content="网上用户专属内容介绍:网上用户,网上用户的图片,网上用户图片">
-
-<!--居中--><style type="text/css">       
-      body {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 20px;
-          line-height: 1.7;
-          background-color: #f8f9fa;
-          color: #333;
-      }          
-       </style><!--居中-->
+    <meta name="description" content="网上用户专属内容介绍:网上用户的图片,网上用户图片">
 
 
 
-<h1><a href="tu1.html" target="_blank">网上用户的图片</a></h1>
+<h1><a href="tu.html" target="_blank">网上用户的图片</a></h1>
 <center><!--居中-->
 <div style="text-align: justify; max-width: 90%;">
 
-  
 
-(广告)<br/>
-<a href="tu.html" target="_blank"><img  src="/tu/jpg1/1.jpg" alt="搜索:网上用户的图片" width="350" style="height: auto; margin: 10px;" /></a>
-<hr/>
+<br/>
+
+
 
 <!--自动随机图片-->
-<!-- 第1张随机图片 -->
-<a href="" class="download-link" download="保存的图片1.png">
-  <img id="randomPng1" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
+<!-- 第1张随机图片 jpg -->
+<a href="" class="download-link" download="网上用户1.jpg">
+  <img id="randomJpg1" src="" alt="网上用户的图片" width="280" style="height: auto; margin: 10px;" />
 </a>
-<a href="" class="download-link" download="保存的图片2.png">
-  <img id="randomPng2" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
-</a>
-<a href="" class="download-link" download="保存的图片3.png">
-  <img id="randomPng3" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
-</a>
-<a href="" class="download-link" download="保存的图片4.png">
-  <img id="randomPng4" src="" alt="搜索:网上用户的图片" width="280" style="height: auto; margin: 10px;" />
+<a href="" class="download-link" download="网上用户2.png">
+  <img id="randomPng2" src="" alt="网上用户的图片" width="280" style="height: auto; margin: 10px;" />
 </a>
 <script>
 // 1. 生成指定范围的随机数（工具函数）
@@ -100,67 +82,14 @@ const baseConfig = {
  imageSources: [ // 基础域名/根目录（一级源）
     '/',    // 网站根目录（已修复，可正常使用）
 // 其他基础域名（已去除/tupian）
-'https://wangshangyonghu.github.io',
-'https://wangshangyonghu.netlify.app',
-'http://wangshangyonghu.mx33.cn',
-'http://wangshangyonghu.web1337.net/',
-'https://wangshangyonghu.web1337.net/',
-'http://wangshangyonghu.66ghz.com/',
-'https://wangshangyonghu.66ghz.com/',
-'http://wangshangyonghu.hostingem.ru/',
-'http://wangshangyonghu.totalh.net/',
-'http://wangshangyonghu.66ghz.com/BB/viewforum.php?f=2',
-'https://wangshangyonghu.github.io',
-'https://wangshangyonghu.66ghz.com',
-'https://wangshangyonghu.web1337.net',
-'http://wangshangyonghu.66ghz.com',
-'http://wangshangyonghu.web1337.net',
-'http://wangshangyonghu.mx33.cn',
-'http://wangshangyonghu.totalh.net',
-'http://wangshangyonghu.hostingem.ru',
-'http://gpc2345.ueuo.com',
-'https://gpc234.freevar.com',
-'https://mdc.freevar.com',
-'http://wangshangyonghu.7749.org',
-
-'https://wangshangyonghu.byethost7.com',
-'/',
-'/',
-'/',
-'/',
-'http://localhost',
-'http://127.0.0.1',
-'http://192.168.0.188:223',
-'http://192.168.0.188',
-'http://gpc234.w1.luyouxia.net',
    '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
-   '/',
+   'http://localhost',
+   'http://127.0.0.1',
    '/',
    '/',
    '/',
    '/'  ],
   folderPaths: [  // 完整保留所有原始图片目录
-'/tu/png/',
 '/tu/jpg/',
 '/tu/jpg1/',
 '/tu/jpg2/',
@@ -185,22 +114,10 @@ const baseConfig = {
 '/mdczdL/mdjpg/',
 '/mdczdL/jpg/',
 '/mdczdL/1227/',
+'/tu/png/',
 '/',
 '/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
-'/',
+
 '/',
  
    '/'   
@@ -214,10 +131,10 @@ const baseConfig = {
   retryDelay: 500 // 重试间隔（毫秒）
 };
 // 3. 核心逻辑：初始化单张图片的随机加载（保留原修复逻辑）
-function initSingleRandomImage(imgId, baseConfig) {
+function initSingleRandomImage(imgId, baseConfig, ext) {
   const img = document.getElementById(imgId);
   if (!img) {
-    console.error('未找到图片元素，ID:', imgId);
+    console.error('网上用户，ID:', imgId);
     return;
   }
   // 获取当前图片对应的a标签（下载链接）
@@ -251,11 +168,11 @@ function initSingleRandomImage(imgId, baseConfig) {
  const cleanedFolder = randomFolder.startsWith('/') ? randomFolder.slice(1) : randomFolder;
  let imageUrl;
  if (randomSource === '/') {
-   // 根目录场景：正确拼接为 "/目录/编号.png"
-   imageUrl = `${randomSource}${cleanedFolder}${randomNum}.png`;
+   // 根目录场景：正确拼接为 "/目录/编号.后缀"
+   imageUrl = `${randomSource}${cleanedFolder}${randomNum}.${ext}`;
  } else {
-   // 域名场景：移除域名结尾斜杠（若有），拼接为 "域名/目录/编号.png"
-   imageUrl = `${randomSource.replace(/\/$/, '')}/${cleanedFolder}${randomNum}.png`;
+   // 域名场景：移除域名结尾斜杠（若有），拼接为 "域名/目录/编号.后缀"
+   imageUrl = `${randomSource.replace(/\/$/, '')}/${cleanedFolder}${randomNum}.${ext}`;
  }
  return imageUrl;
       }
@@ -290,7 +207,7 @@ function initSingleRandomImage(imgId, baseConfig) {
   }
   // 加载成功：重置状态
   img.addEventListener('load', () => {
-    img.alt = '网上用户的图片,搜索:网上用户,公平村';
+    img.alt = '@网上用户';
     // 确保下载链接与最终加载的图片地址一致
     downloadLink.href = img.src;
     console.log('图片加载成功:', img.src);
@@ -312,24 +229,35 @@ function initSingleRandomImage(imgId, baseConfig) {
   // 初始加载图片
   loadImage();
 }
-// 4. 批量初始化所有图片（需与上方<img>标签的id对应）
-const imageIds = ['randomPng1', 'randomPng2', 'randomPng3', 'randomPng4'];
-imageIds.forEach(imgId => {
-  initSingleRandomImage(imgId, baseConfig);
+// 4. 批量初始化：第一张jpg，第二张png
+const imageList = [
+  {id:'randomJpg1', ext:'jpg'},
+  {id:'randomPng2', ext:'png'}
+];
+imageList.forEach(item => {
+  initSingleRandomImage(item.id, baseConfig, item.ext);
 });
 </script>
 <!--自动随机图片-->
 
-<hr/>
 
 
-<!-- 页脚脚本 放这里最完美 -->
-<link rel="stylesheet" href="/a/js/bj.css"><!--全局页面样式-->
+
+
 <link rel="stylesheet" href="/a/js/xhx.css"><!--无下划线-->
 <link rel="stylesheet" href="/a/js/h.css"><!--无下划线-->
 <!-- 页脚页眉 放这里最完美 --><script src="/a/js/ym.js"></script>
 <!-- 页脚脚本 放这里最完美 --><script src="/a/js/ico.js"></script>
 <!-- 页脚脚本 放这里最完美 --><script src="/a/js/yj.js"></script>
-<script src="/a/js/sxy.js"></script><!-- 上下页 -->
+<!--居中--><style type="text/css">       
+      body {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          line-height: 1.7;
+          background-color: #f8f9fa;
+          color: #333;
+      }          
+       </style><!--居中-->
 </body>
 </html>
