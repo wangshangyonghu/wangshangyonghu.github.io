@@ -29,6 +29,7 @@ const jsList = [
     "sxy.js",
     "tel.js",
     "title.js",
+    "ewm.js",
     "zd.js"
 ];
 function loadScripts(scriptArray, index = 0) {
@@ -41,29 +42,9 @@ function loadScripts(scriptArray, index = 0) {
 }
 loadScripts(jsList);
 
-// 合并事件：DOMContentLoaded 一次性执行，加载两个页脚+修改标题，比window.load更早渲染
+
+// 【3】DOMContentLoaded 修改页面标题追加 @网上用户 独立代码
 window.addEventListener('DOMContentLoaded', function() {
-    // 加载 yj.html 页脚
-    var xhr1 = new XMLHttpRequest();
-    xhr1.open('GET', '/a/js/yj.html', true);
-    xhr1.onreadystatechange = function() {
-        if (xhr1.readyState === 4 && xhr1.status === 200) {
-            document.body.insertAdjacentHTML('beforeend', xhr1.responseText);
-        }
-    };
-    xhr1.send();
-
-    // 加载 yj2.html 页脚
-    var xhr2 = new XMLHttpRequest();
-    xhr2.open('GET', '/a/js/yj2.html', true);
-    xhr2.onreadystatechange = function() {
-        if (xhr2.readyState === 4 && xhr2.status === 200) {
-            document.body.insertAdjacentHTML('beforeend', xhr2.responseText);
-        }
-    };
-    xhr2.send();
-
-    // 页面标题追加后缀 @网上用户
     setTimeout(function(){
         const suffix = '@网上用户';
         let title = document.title.trim();
@@ -72,3 +53,34 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     },100);
 });
+
+
+
+
+// 【1】DOMContentLoaded 加载 yj.html 页脚 独立代码
+window.addEventListener('DOMContentLoaded', function() {
+    var xhr1 = new XMLHttpRequest();
+    xhr1.open('GET', '/a/js/yj.html', true);
+    xhr1.onreadystatechange = function() {
+        if (xhr1.readyState === 4 && xhr1.status === 200) {
+            document.body.insertAdjacentHTML('beforeend', xhr1.responseText);
+        }
+    };
+    xhr1.send();
+});
+
+
+// 【2】DOMContentLoaded 加载 yj2.html 页脚 独立代码
+window.addEventListener('DOMContentLoaded', function() {
+    var xhr2 = new XMLHttpRequest();
+    xhr2.open('GET', '/a/js/yj2.html', true);
+    xhr2.onreadystatechange = function() {
+        if (xhr2.readyState === 4 && xhr2.status === 200) {
+            document.body.insertAdjacentHTML('beforeend', xhr2.responseText);
+        }
+    };
+    xhr2.send();
+});
+
+
+
