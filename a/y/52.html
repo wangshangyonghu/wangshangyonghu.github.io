@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秒表@网上用户</title>
+<meta name="keywords" content="网上用户,秒表,在线秒表,计时器,计次">
+<meta name="description" content="在线秒表网页版，精确到0.01秒，支持计次与复位，手机电脑都能用 @网上用户">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='13' r='8' fill='none' stroke='%232563eb' stroke-width='2'/%3E%3Cpath d='M12 13V9' stroke='%232563eb' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M10 2h4M12 2v2' stroke='%232563eb' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f2f4f7;color:#1f2937;line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:888px;margin:0 auto;padding:18px 14px 44px}
+.header{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:6px 4px 14px}
+.header h1{font-size:20px;font-weight:700}
+.tag{font-size:12px;color:#64748b;background:#eef2f7;border-radius:20px;padding:2px 10px}
+.panel{background:#0f172a;border-radius:16px;padding:30px 16px 22px;text-align:center;box-shadow:0 4px 18px rgba(15,23,42,.12)}
+#disp{font-variant-numeric:tabular-nums;color:#f8fafc;font-size:clamp(30px,9vw,64px);letter-spacing:1px;line-height:1.2;font-weight:600}
+.status{color:#94a3b8;font-size:13px;margin-top:10px}
+.status .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#94a3b8;margin-right:6px;vertical-align:1px}
+.status.running .dot{background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.8)}
+.btns{display:flex;gap:10px;margin-top:22px}
+.btns button{flex:1;min-height:52px;border:none;border-radius:12px;font-size:17px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .05s}
+.btns button:active{transform:scale(.97)}
+.btn-start{background:#2563eb;color:#fff}
+.btn-lap{background:#334155;color:#e2e8f0}
+.btn-reset{background:#e2e8f0;color:#1f2937}
+.btns button:disabled{opacity:.35;cursor:not-allowed}
+.btns button:disabled:active{transform:none}
+.btns button:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.laps{margin-top:18px;background:#fff;border-radius:12px;padding:14px 14px 8px;border:1px solid #e5e7eb}
+.laps h2{font-size:15px;font-weight:700;color:#334155;margin-bottom:8px}
+.laps-num{font-size:12px;color:#94a3b8;font-weight:400;margin-left:6px}
+#lapList{list-style:none;max-height:260px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#lapList li{display:flex;align-items:center;gap:8px;padding:9px 2px;border-bottom:1px solid #f1f5f9;font-size:14px}
+#lapList li:last-child{border-bottom:none}
+.lap-no{color:#94a3b8;width:52px;flex:none}
+.lap-diff{flex:1;text-align:right;font-variant-numeric:tabular-nums}
+.lap-total{flex:1;text-align:right;font-variant-numeric:tabular-nums;color:#475569}
+.lap-best .lap-diff{color:#16a34a;font-weight:700}
+.lap-worst .lap-diff{color:#dc2626;font-weight:700}
+.empty{color:#94a3b8;font-size:13px;padding:10px 2px;text-align:center}
+.foot{text-align:center;font-size:12px;color:#aaa;padding:20px 0 0;margin-top:26px;border-top:1px solid #e5e7eb}
+.foot a{color:#2563eb;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>秒表</h1>
+    <span class="tag">网页版</span>
+  </div>
+
+  <div class="panel">
+    <div id="disp">00:00:00.00</div>
+    <div class="status" id="status"><span class="dot"></span><span id="statusText">准备就绪</span></div>
+    <div class="btns">
+      <button class="btn-lap" id="btnLap" disabled>计次</button>
+      <button class="btn-start" id="btnStart">开始</button>
+      <button class="btn-reset" id="btnReset" disabled>复位</button>
+    </div>
+  </div>
+
+  <div class="laps">
+    <h2>计次记录<span class="laps-num" id="lapsNum"></span></h2>
+    <ul id="lapList"><li class="empty">暂无计次，计时中点"计次"记录单圈时间</li></ul>
+  </div>
+
+  <div class="foot"><a href="/">@网上用户</a></div>
+</div>
+
+
+<script>
+(function(){
+  var disp = document.getElementById('disp');
+  var statusEl = document.getElementById('status');
+  var statusText = document.getElementById('statusText');
+  var btnStart = document.getElementById('btnStart');
+  var btnLap = document.getElementById('btnLap');
+  var btnReset = document.getElementById('btnReset');
+  var lapList = document.getElementById('lapList');
+  var lapsNum = document.getElementById('lapsNum');
+
+  var running = false;
+  var base = 0;      /* 已累计的毫秒数 */
+  var lastT = 0;     /* 本次开始计时时的 performance.now() */
+  var raf = null;
+  var laps = [];     /* {total:累计毫秒, diff:单圈毫秒} */
+
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+  function fmt(ms){
+    var h = Math.floor(ms / 3600000);
+    var m = Math.floor((ms % 3600000) / 60000);
+    var s = Math.floor((ms % 60000) / 1000);
+    var c = Math.floor((ms % 1000) / 10);
+    return pad(h) + ':' + pad(m) + ':' + pad(s) + '.' + pad(c);
+  }
+  function nowTotal(){
+    return running ? base + (performance.now() - lastT) : base;
+  }
+  function render(){
+    disp.textContent = fmt(nowTotal());
+  }
+  function tick(){
+    render();
+    raf = requestAnimationFrame(tick);
+  }
+  function setUI(){
+    if(running){
+      btnStart.textContent = '暂停';
+      btnLap.disabled = false;
+      btnReset.disabled = true;
+      statusEl.className = 'status running';
+      statusText.textContent = '计时中';
+    }else if(base > 0){
+      btnStart.textContent = '继续';
+      btnLap.disabled = true;
+      btnReset.disabled = false;
+      statusEl.className = 'status';
+      statusText.textContent = '已暂停';
+    }else{
+      btnStart.textContent = '开始';
+      btnLap.disabled = true;
+      btnReset.disabled = true;
+      statusEl.className = 'status';
+      statusText.textContent = '准备就绪';
+    }
+  }
+  function start(){
+    if(running) return;
+    running = true;
+    lastT = performance.now();
+    setUI();
+    tick();
+  }
+  function pause(){
+    if(!running) return;
+    base += performance.now() - lastT;
+    running = false;
+    if(raf){ cancelAnimationFrame(raf); raf = null; }
+    setUI();
+    render();
+  }
+  function toggle(){
+    running ? pause() : start();
+  }
+  function addLap(){
+    if(!running) return;
+    var t = nowTotal();
+    var prev = laps.length ? laps[laps.length - 1].total : 0;
+    laps.push({total: t, diff: t - prev});
+    drawLaps();
+  }
+  function reset(){
+    if(running) return;
+    base = 0;
+    laps = [];
+    if(raf){ cancelAnimationFrame(raf); raf = null; }
+    setUI();
+    drawLaps();
+    render();
+  }
+  function drawLaps(){
+    lapsNum.textContent = laps.length ? '共 ' + laps.length + ' 圈' : '';
+    if(!laps.length){
+      lapList.innerHTML = '<li class="empty">暂无计次，计时中点"计次"记录单圈时间</li>';
+      return;
+    }
+    var best = null, worst = null;
+    if(laps.length > 1){
+      var i, d;
+      for(i = 0; i < laps.length; i++){
+        d = laps[i].diff;
+        if(best === null || d < laps[best].diff) best = i;
+        if(worst === null || d > laps[worst].diff) worst = i;
+      }
+    }
+    var html = '';
+    for(i = 0; i < laps.length; i++){
+      var cls = '';
+      if(laps.length > 1){
+        if(i === best) cls = ' lap-best';
+        if(i === worst) cls = ' lap-worst';
+      }
+      html += '<li class="' + cls.trim() + '"><span class="lap-no">第' + (i + 1) + '圈</span>'
+            + '<span class="lap-diff">' + fmt(laps[i].diff) + '</span>'
+            + '<span class="lap-total">累计 ' + fmt(laps[i].total) + '</span></li>';
+    }
+    lapList.innerHTML = html;
+    lapList.scrollTop = lapList.scrollHeight;
+  }
+
+  btnStart.addEventListener('click', toggle);
+  btnLap.addEventListener('click', addLap);
+  btnReset.addEventListener('click', reset);
+
+  document.addEventListener('keydown', function(e){
+    if(e.code === 'Space'){
+      e.preventDefault();
+      if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      if(!e.repeat) toggle();
+    }else if(e.code === 'KeyC' || e.code === 'KeyL'){
+      addLap();
+    }else if(e.code === 'KeyR' || e.code === 'Escape'){
+      reset();
+    }
+  });
+
+  setUI();
+  render();
+})();
+</script>
+</body>
+</html>
