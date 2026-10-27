@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>条形码生成器@网上用户</title>
+<meta name="keywords" content="条形码生成,条码生成器,Code128,Code39,EAN13,UPC,网上用户">
+<meta name="description" content="免安装免数据库在线条形码生成工具，支持 Code128、Code39、EAN-13、EAN-8、UPC-A，可下载高清PNG、直接打印。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232563eb'/%3E%3Cg fill='%23fff'%3E%3Crect x='6' y='9' width='2' height='14'/%3E%3Crect x='10' y='9' width='1' height='14'/%3E%3Crect x='13' y='9' width='3' height='14'/%3E%3Crect x='18' y='9' width='1' height='14'/%3E%3Crect x='21' y='9' width='2' height='14'/%3E%3Crect x='25' y='9' width='1' height='14'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+  body{margin:0;background:#f2f4f7;color:#1f2937;}
+  img{max-width:100%;height:auto;display:block;}
+  .wrap{max-width:888px;margin:0 auto;padding:22px 16px 40px;}
+  header{padding:10px 0 16px;}
+  header h1{margin:0 0 4px;font-size:26px;font-weight:700;color:#111827;}
+  header p{margin:0;font-size:14px;color:#6b7280;}
+  .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:20px;}
+  .ctrl{margin-bottom:18px;}
+  .row{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px;}
+  .field{flex:1 1 220px;min-width:0;}
+  .field label{display:block;font-size:13px;color:#374151;margin-bottom:6px;font-weight:600;}
+  .field select,.field input[type=text]{width:100%;box-sizing:border-box;padding:9px 10px;font-size:15px;border:1px solid #d1d5db;border-radius:8px;background:#fff;}
+  .field select:focus,.field input[type=text]:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12);}
+  .field .range-note{font-size:12px;color:#6b7280;margin-top:4px;}
+  .field input[type=range]{width:100%;}
+  .chk{display:flex;align-items:center;gap:8px;font-size:14px;color:#374151;margin-top:22px;}
+  .chk input{width:18px;height:18px;}
+  .tip{font-size:13px;color:#6b7280;background:#f8fafc;border:1px dashed #d1d5db;border-radius:8px;padding:9px 12px;}
+  .tip .err{color:#dc2626;}
+  .preview{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:22px;display:flex;flex-direction:column;align-items:center;}
+  .preview h2{margin:0 0 16px;font-size:16px;color:#374151;font-weight:600;}
+  .bc-box{background:#fff;width:100%;overflow-x:auto;text-align:center;padding:14px 0;}
+  .bc-box svg{max-width:100%;height:auto;}
+  .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;justify-content:center;}
+  .btn{border:0;border-radius:8px;padding:11px 22px;font-size:15px;cursor:pointer;font-weight:600;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:#2563eb;color:#fff;}
+  .btn-primary:hover{background:#1d4ed8;}
+  .btn-line{background:#fff;color:#374151;border:1px solid #d1d5db;}
+  .btn-line:hover{background:#f3f4f6;}
+  footer{margin-top:26px;font-size:13px;color:#9ca3af;text-align:center;}
+  @media (max-width:560px){
+    header h1{font-size:22px;}
+    .card{padding:16px;}
+    .btn{flex:1 1 45%;}
+  }
+  @media print{
+    body{background:#fff;}
+    .ctrl,header p,footer,.btns,.preview h2{display:none;}
+    .wrap{padding:0;}
+    .card,.preview{border:0;padding:0;}
+    .bc-box{padding:0;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>条形码生成器</h1>
+    <p>免安装免数据库，纯本地生成。支持 Code128 / Code39 / EAN-13 / EAN-8 / UPC-A，可下载高清 PNG 或直接打印。</p>
+  </header>
+
+  <div class="card ctrl">
+    <div class="row">
+      <div class="field">
+        <label for="kind">条码类型</label>
+        <select id="kind">
+          <option value="code128" selected>Code128（字母数字通用）</option>
+          <option value="code39">Code39（字母数字+部分符号）</option>
+          <option value="ean13">EAN-13（13 位商品码）</option>
+          <option value="ean8">EAN-8（8 位商品码）</option>
+          <option value="upca">UPC-A（12 位商品码）</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="val">内容</label>
+        <input type="text" id="val" value="A-2024-001" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="mw">条宽（模块宽度，像素）</label>
+        <input type="range" id="mw" min="1" max="4" step="0.1" value="2">
+        <div class="range-note" id="mwNote">2.0 像素</div>
+      </div>
+      <div class="field">
+        <label for="hh">条码高度（像素）</label>
+        <input type="range" id="hh" min="30" max="220" step="5" value="80">
+        <div class="range-note" id="hhNote">80 像素</div>
+      </div>
+      <div class="field chk">
+        <label><input type="checkbox" id="showText" checked> 显示下方文字</label>
+      </div>
+    </div>
+    <div class="tip" id="tip"></div>
+  </div>
+
+  <div class="preview">
+    <h2>条码预览</h2>
+    <div class="bc-box" id="bcBox"></div>
+    <div class="btns">
+      <button class="btn btn-primary" id="btnDl">下载高清 PNG</button>
+      <button class="btn btn-line" id="btnPrint">打印</button>
+    </div>
+  </div>
+
+  <footer>条形码生成器 @网上用户 · 数据不上传，本地生成</footer>
+</div>
+
+<script src="/a/js/yj.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  /* ============ Code128 编码表（value -> 条空宽度序列） ============ */
+  var C128 = [
+    "212222","222122","222221","121223","121322","131222","122213","122312","132212","221213",
+    "221312","231212","112232","122132","122231","113222","123122","123221","223211","221132",
+    "221231","213212","223112","312131","311222","321122","321221","312212","322112","322211",
+    "212123","212321","232121","111323","131123","131321","112313","132113","132311","211313",
+    "231113","231311","112133","112331","132131","113123","113321","133121","313121","211331",
+    "231131","213113","213311","213131","311123","311321","331121","312113","312311","332111",
+    "314111","221411","431111","111224","111422","121124","121421","141122","141221","112214",
+    "112412","122114","122411","142112","142211","241211","221114","413111","241112","134111",
+    "111242","121142","121241","114212","124112","124211","411212","421112","421211","212141",
+    "214121","412121","111143","111341","131141","114113","114311","411113","411311","113141",
+    "114131","311141","411131","211412","211214","211232","2331112"
+  ];
+
+  /* ============ EAN 编码表 ============ */
+  var EAN_L = ["0001101","0011001","0010011","0111101","0100011","0110001","0101111","0111011","0110111","0001011"];
+  var EAN_G = ["0100111","0110011","0011011","0100001","0011101","0111001","0000101","0010001","0001001","0010111"];
+  var EAN_R = ["1110010","1100110","1101100","1000010","1011100","1001110","1010000","1000100","1001000","1110100"];
+  var EAN_PARITY = ["AAAAAA","AABABB","AABBAB","AABBBA","ABAABB","ABBAAB","ABBBAA","ABABAB","ABABBA","ABBABA"];
+
+  /* ============ Code39 编码表（9 位，窄=0 宽=1，条空交替） ============ */
+  var C39 = {
+    "0":"000110100","1":"100100001","2":"001100001","3":"101100000","4":"000110001","5":"100110000",
+    "6":"001110000","7":"000100101","8":"100100100","9":"001100100",
+    "A":"100001001","B":"001001001","C":"101001000","D":"000011001","E":"100011000","F":"001011000",
+    "G":"000001101","H":"100001100","I":"001001100","J":"000011100",
+    "K":"100000011","L":"001000011","M":"101000010","N":"000010011","O":"100010010","P":"001010010",
+    "Q":"000000111","R":"100000110","S":"001000110","T":"000010110",
+    "U":"110000001","V":"011000001","W":"111000000","X":"010010001","Y":"110010000","Z":"011010000",
+    "-":"010000101",".":"110000100"," ":"011000100","$":"010101000","/":"010100010","+":"010001010",
+    "%":"000101010","*":"010010100"
+  };
+  var C39_VALID = /^[0-9A-Z\-. $\/+%]+$/;
+
+  var elKind=document.getElementById("kind"), elVal=document.getElementById("val"),
+      elMw=document.getElementById("mw"), elHh=document.getElementById("hh"),
+      elShow=document.getElementById("showText"), elTip=document.getElementById("tip"),
+      bcBox=document.getElementById("bcBox");
+
+  /* ============ 校验位 ============ */
+  function checkDigit(digits){
+    var sum=0;
+    for(var i=0;i<digits.length;i++){ sum += parseInt(digits.charAt(i),10) * (i%2===0?3:1); }
+    return (10 - sum%10)%10;
+  }
+
+  /* ============ Code128 编码：返回宽度序列（模块） ============ */
+  function enc128(text){
+    if(!/^[\x20-\x7e]+$/.test(text)) return null;
+    var codes=[];
+    if(/^\d+$/.test(text) && text.length%2===0){
+      codes.push(105);
+      for(var i=0;i<text.length;i+=2) codes.push(parseInt(text.substr(i,2),10));
+    }else{
+      codes.push(104);
+      for(var j=0;j<text.length;j++) codes.push(text.charCodeAt(j)-32);
+    }
+    var sum=codes[0];
+    for(var k=1;k<codes.length;k++) sum+=codes[k]*k;
+    codes.push(sum%103);
+    codes.push(106);
+    var seq=[];
+    for(var m=0;m<codes.length;m++){
+      var p=C128[codes[m]];
+      for(var n=0;n<p.length;n++) seq.push(parseInt(p.charAt(n),10));
+    }
+    return seq; // 结束于 Stop 的 bar
+  }
+
+  /* ============ EAN-13 / EAN-8 / UPC-A 编码：返回宽度序列 + 数字分组 ============ */
+  function encEAN(digits, isEAN8){
+    var bitstr;
+    var leftN = isEAN8?4:6;
+    if(isEAN8){
+      var first=digits.charAt(0);
+      bitstr="101";
+      for(var i=0;i<4;i++) bitstr+=EAN_L[parseInt(digits.charAt(i+1),10)];
+      bitstr+="01010";
+      for(var j=0;j<4;j++) bitstr+=EAN_R[parseInt(digits.charAt(j+5),10)];
+      bitstr+="101";
+    }else{
+      var parity=EAN_PARITY[parseInt(digits.charAt(0),10)];
+      bitstr="101";
+      for(var a=0;a<6;a++){
+        var d=parseInt(digits.charAt(a+1),10);
+        bitstr += (parity.charAt(a)==="A") ? EAN_L[d] : EAN_G[d];
+      }
+      bitstr+="01010";
+      for(var b=0;b<6;b++) bitstr+=EAN_R[parseInt(digits.charAt(b+7),10)];
+      bitstr+="101";
+    }
+    var seq=[];
+    for(var c=0;c<bitstr.length;c++) seq.push(parseInt(bitstr.charAt(c),10));
+    return seq;
+  }
+
+  function enc39(text){
+    var up=text.toUpperCase();
+    if(!C39_VALID.test(up)) return null;
+    var seq=[];
+    var chars="*"+up+"*";
+    for(var i=0;i<chars.length;i++){
+      var pat=C39[chars.charAt(i)];
+      if(pat===undefined) return null;
+      for(var j=0;j<pat.length;j++){
+        seq.push(pat.charAt(j)==="1"?3:1);
+      }
+      if(i<chars.length-1) seq.push(1); // 字符间窄空隙
+    }
+    return seq;
+  }
+
+  /* ============ 生成条码数据 ============ */
+  function generate(){
+    var kind=elKind.value, text=elVal.value.trim();
+    var data={kind:kind, text:text, widths:null, groups:null, center:true};
+    var err="";
+
+    if(text===""){ err="请输入条码内容。"; }
+
+    if(!err){
+      if(kind==="code128"){
+        var s=enc128(text);
+        if(!s){ err="Code128 仅支持英文字母、数字和常见半角符号，不支持中文。"; }
+        else { data.widths=s; data.center=true; data.groups=[{t:text,whole:true}]; }
+      }else if(kind==="code39"){
+        var s2=enc39(text);
+        if(!s2){ err="Code39 仅支持大写字母、数字及 - . 空格 $ / + % 等符号。"; }
+        else { data.widths=s2; data.center=true; data.groups=[{t:text.toUpperCase(),whole:true}]; }
+      }else if(kind==="ean13"){
+        if(!/^\d+$/.test(text)){ err="EAN-13 只能输入数字。"; }
+        else if(text.length===12){ text+=checkDigit(text); }
+        else if(text.length!==13){ err="EAN-13 请输入 12 位（自动补校验位）或 13 位数字。"; }
+        else {
+          // 校验第13位是否正确（可选提示）
+          var cd=checkDigit(text.slice(0,12));
+          if(parseInt(text.charAt(12),10)!==cd){ err="校验位不正确，应为 "+cd+"。"; }
+        }
+        if(!err){
+          data.text=text;
+          data.widths=[0,7].concat(encEAN(text,false)); // [0,7] = 首位凸出区（0 宽条 + 7 模块空白）
+          data.groups=[
+            {t:text.charAt(0), from:0, to:7},
+            {t:text.slice(1,7), from:10, to:52},
+            {t:text.slice(7,13), from:57, to:99}
+          ];
+          data.center=false;
+        }
+      }else if(kind==="ean8"){
+        if(!/^\d+$/.test(text)){ err="EAN-8 只能输入数字。"; }
+        else if(text.length===7){ text+=checkDigit(text); }
+        else if(text.length!==8){ err="EAN-8 请输入 7 位（自动补校验位）或 8 位数字。"; }
+        if(!err){
+          data.text=text;
+          data.widths=encEAN(text,true);
+          data.groups=[
+            {t:text.slice(0,4), from:3, to:31},
+            {t:text.slice(4,8), from:36, to:64}
+          ];
+          data.center=false;
+        }
+      }else if(kind==="upca"){
+        if(!/^\d+$/.test(text)){ err="UPC-A 只能输入数字。"; }
+        else if(text.length===11){ text="0"+text+checkDigit("0"+text); }
+        else if(text.length===12){ text=text; }
+        else { err="UPC-A 请输入 11 位（自动补 0 和校验位）或 12 位数字。"; }
+        if(!err){
+          var full="0"+text;
+          var cd2=checkDigit(full.slice(0,11));
+          if(text.length===12 && parseInt(text.charAt(11),10)!==cd2){ err="校验位不正确，应为 "+cd2+"。"; }
+        }
+        if(!err){
+          data.text=text;
+          data.widths=[0,7].concat(encEAN("0"+text,false)); // UPC-A 首位 0 凸出
+          data.groups=[
+            {t:"0", from:0, to:7},
+            {t:text.slice(0,5), from:10, to:52},
+            {t:text.slice(5,11), from:57, to:99}
+          ];
+          data.center=false;
+        }
+      }
+    }
+
+    if(err){
+      elTip.className="tip err";
+      elTip.textContent=err;
+      bcBox.innerHTML="<div style='color:#dc2626;padding:40px 0;'>"+err+"</div>";
+      return;
+    }
+    elTip.className="tip";
+    elTip.textContent=text;
+
+    render(data);
+  }
+
+  /* ============ SVG 渲染 ============ */
+  function render(data){
+    var mw=parseFloat(elMw.value), hh=parseInt(elHh.value,10),
+        showText=elShow.checked;
+    var widths=data.widths, total=0, i;
+    for(i=0;i<widths.length;i++) total+=widths[i];
+    var pad=12; // 两侧留白
+    var W=total*mw + pad*2;
+    var textH=showText?24:0;
+    var H=hh+textH+10;
+    var x=pad;
+    var ns="http://www.w3.org/2000/svg";
+    var svg=document.createElementNS(ns,"svg");
+    svg.setAttribute("viewBox","0 0 "+W+" "+H);
+    svg.setAttribute("width",W); svg.setAttribute("height",H);
+    svg.setAttribute("role","img"); svg.setAttribute("aria-label","条形码 "+data.text);
+
+    for(i=0;i<widths.length;i++){
+      var w=widths[i];
+      if(i%2===0){ // bar
+        var r=document.createElementNS(ns,"rect");
+        r.setAttribute("x",x); r.setAttribute("y",2);
+        r.setAttribute("width",w*mw); r.setAttribute("height",hh);
+        r.setAttribute("fill","#000");
+        svg.appendChild(r);
+      }
+      x+=w*mw;
+    }
+
+    if(showText && data.groups){
+      for(var g=0;g<data.groups.length;g++){
+        var gr=data.groups[g];
+        var t=document.createElementNS(ns,"text");
+        t.setAttribute("fill","#000");
+        t.setAttribute("font-size","12");
+        t.setAttribute("font-family","Arial, sans-serif");
+        var cx, textLen;
+        if(gr.whole){
+          textLen=gr.t.length;
+          cx=W/2;
+          t.setAttribute("text-anchor","middle");
+        }else{
+          var start=gr.from*mw+pad, end=gr.to*mw+pad;
+          cx=(start+end)/2;
+          textLen=gr.t.length;
+          t.setAttribute("text-anchor","middle");
+        }
+        t.setAttribute("x",cx);
+        t.setAttribute("y",hh+16);
+        t.textContent=gr.t;
+        svg.appendChild(t);
+      }
+    }
+
+    bcBox.innerHTML="";
+    bcBox.appendChild(svg);
+    bcBox._svg=svg;
+    bcBox._data=data;
+    bcBox._mw=mw; bcBox._hh=hh;
+  }
+
+  /* ============ 下载 PNG ============ */
+  function downloadPng(){
+    var svg=bcBox._svg, data=bcBox._data;
+    if(!svg){ return; }
+    var xml=new XMLSerializer().serializeToString(svg);
+    var svg64="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(xml);
+    var img=new Image();
+    var scale=4;
+    img.onload=function(){
+      var c=document.createElement("canvas");
+      c.width=img.width*scale; c.height=img.height*scale;
+      var ctx=c.getContext("2d");
+      ctx.fillStyle="#fff"; ctx.fillRect(0,0,c.width,c.height);
+      ctx.drawImage(img,0,0,c.width,c.height);
+      var a=document.createElement("a");
+      a.download=(data.text||"barcode")+".png";
+      a.href=c.toDataURL("image/png");
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    };
+    img.src=svg64;
+  }
+
+  /* ============ 切换码制时给示例 ============ */
+  function onKindChange(){
+    var k=elKind.value, ex={
+      code128:"A-2024-001", code39:"CODE-39-DEMO", ean13:"690123456789",
+      ean8:"96385074", upca:"03600029145"
+    }[k];
+    elVal.value=ex;
+    generate();
+  }
+
+  /* ============ 事件 ============ */
+  elKind.addEventListener("change",onKindChange);
+  elVal.addEventListener("input",generate);
+  elMw.addEventListener("input",function(){ document.getElementById("mwNote").textContent=parseFloat(elMw.value).toFixed(1)+" 像素"; generate(); });
+  elHh.addEventListener("input",function(){ document.getElementById("hhNote").textContent=elHh.value+" 像素"; generate(); });
+  elShow.addEventListener("change",generate);
+  document.getElementById("btnDl").addEventListener("click",downloadPng);
+  document.getElementById("btnPrint").addEventListener("click",function(){ window.print(); });
+
+  generate();
+})();
+</script>
+</body>
+</html>

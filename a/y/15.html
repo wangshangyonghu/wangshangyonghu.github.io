@@ -10,6 +10,19 @@
 <!-- 页脚脚本 放这里最完美 --><script src="/a/js/ico.js"></script>
 
 
+<!-- 输入内容自动缓存（等整页解析完再绑定，确保能找到输入框） -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var KEY='gpc234_cache_v1';
+  var ta=document.getElementById('gpc234');
+  if(!ta) return;
+  /* 打开页面时恢复上次缓存的内容 */
+  try{ var v=localStorage.getItem(KEY); if(v!==null) ta.value=v; }catch(e){}
+  /* 输入时实时保存到本地缓存 */
+  ta.addEventListener('input',function(){ try{ localStorage.setItem(KEY,ta.value); }catch(e){} });
+});
+</script>
+
 </body>
 </html>
 
