@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四大运营商短信开关上网方法@网上用户</title>
+<meta name="keywords" content="移动 联通 电信 广电 短信关闭上网 开通上网 流量开关">
+<meta name="description" content="中国移动、中国联通、中国电信、中国广电，发短信开通和关闭上网流量功能指令汇总">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{padding:15px;background:#f5f7fa;line-height:1.6;font-family:inherit}
+.container{max-width:888px;margin:0 auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 1px 4px #ddd}
+h1{text-align:center;font-size:22px;margin-bottom:16px;color:#222}
+.notice{background:#fff3cd;border:2px solid #ffc107;border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:15px;color:#856404}
+.notice b{color:#d9350c}
+.notice .main{font-size:16px;font-weight:bold;margin-bottom:6px;display:block}
+.box{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:14px}
+.box h2{font-size:18px;margin-bottom:10px}
+.item{padding:8px 0;border-bottom:1px dashed #eee}
+.item:last-child{border-bottom:none}
+.cmd{background:#f1f5f9;padding:3px 8px;border-radius:4px;font-weight:bold;color:#d33232}
+.tip{font-size:14px;color:#666;margin-top:4px}
+.other{background:#f8f9fa;border:1px solid #e2e8f0;padding:12px;border-radius:8px;margin-top:16px;font-size:14px;color:#444}
+.other b{color:#333}
+.other ol{padding-left:20px;margin-top:6px}
+.other li{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>移动/联通/电信/广电 短信开通、关闭上网功能</h1>
+
+<div class="notice">
+<span class="main">⚠️ 重要提醒</span>
+以上指令<b>仅供参考</b>，运营商短信指令可能会变更，<b>建议先拨打对应客服电话确认最新规则后，再发送短信操作</b>。
+</div>
+
+<div class="box">
+<h2>📱 中国移动</h2>
+<div class="item">
+<div>✅ 开通上网（恢复流量）：发送 <span class="cmd">KTGPRS</span> 到 10086</div>
+<div class="tip">部分地区也可以发送 KTLL</div>
+</div>
+<div class="item">
+<div>❌ 关闭上网（关闭GPRS流量）：发送 <span class="cmd">QXGPRS</span> 到 10086</div>
+<div class="tip">关闭后无法使用蜂窝流量，WiFi不受影响</div>
+</div>
+</div>
+
+<div class="box">
+<h2>📱 中国联通</h2>
+<div class="item">
+<div>✅ 开通上网：发送 <span class="cmd">KTGPRS</span> 到 10010</div>
+</div>
+<div class="item">
+<div>❌ 关闭上网：发送 <span class="cmd">QXGPRS</span> 到 10010</div>
+<div class="tip">联通部分省份指令有差异，失败可发送CXLL查询</div>
+</div>
+</div>
+
+<div class="box">
+<h2>📱 中国电信</h2>
+<div class="item">
+<div>✅ 开通上网：发送 <span class="cmd">KTLL</span> 到 10001</div>
+</div>
+<div class="item">
+<div>❌ 关闭上网：发送 <span class="cmd">QXLL</span> 到 10001</div>
+<div class="tip">电信老卡部分需要发KTGPRS/QXGPRS</div>
+</div>
+</div>
+
+<div class="box">
+<h2>📱 中国广电（192号段）</h2>
+<div class="item">
+<div>✅ 开通上网：发送 <span class="cmd">KTLL</span> 到 10099</div>
+</div>
+<div class="item">
+<div>❌ 关闭上网：发送 <span class="cmd">QXLL</span> 到 10099</div>
+<div class="tip">广电指令各地更新中，短信不行直接拨打10099人工</div>
+</div>
+</div>
+
+<div class="other">
+<b>📌 其他注意事项：</b>
+<ol>
+<li>关闭的是【蜂窝移动数据上网功能】，不影响接打电话、收短信、WiFi上网；</li>
+<li>关闭上网≠取消流量套餐，套餐月租依旧正常收取；</li>
+<li>关闭后手机依然可能产生少量计费流量（彩信、后台心跳等），需要彻底断流建议在手机系统里关闭移动数据开关；</li>
+<li>部分物联网卡、副卡、专属套餐不支持短信指令开关。</li>
+</ol>
+</div>
+
+</div>
+
+</body>
+</html>
