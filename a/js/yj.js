@@ -57,17 +57,36 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
-// 【1】DOMContentLoaded 加载 yj.html 页脚 独立代码
+// 【1】DOMContentLoaded 加载 yj.html 页脚：优先远程，失败自动切本地
 window.addEventListener('DOMContentLoaded', function() {
-    var xhr1 = new XMLHttpRequest();
-    xhr1.open('GET', '/a/js/yj.html', true);
-    xhr1.onreadystatechange = function() {
-        if (xhr1.readyState === 4 && xhr1.status === 200) {
-            document.body.insertAdjacentHTML('beforeend', xhr1.responseText);
-        }
-    };
-    xhr1.send();
+    function loadHtml(url, fallbackUrl) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        // 超时 3 秒，超时也算失败切本地
+        xhr.timeout = 3000;
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.body.insertAdjacentHTML('beforeend', xhr.responseText);
+                } else if (fallbackUrl) {
+                    // 远程失败，加载本地，不再二次 fallback
+                    loadHtml(fallbackUrl, null);
+                }
+            }
+        };
+        xhr.ontimeout = function() {
+            if (fallbackUrl) loadHtml(fallbackUrl, null);
+        };
+        xhr.onerror = function() {
+            if (fallbackUrl) loadHtml(fallbackUrl, null);
+        };
+        xhr.send();
+    }
+    // 优先远程，失败切本地
+    loadHtml('https://wangshangyonghu.github.io/a/js/yj.html', '/a/js/yj.html');
 });
+
+
 
 
 // 【2】DOMContentLoaded 加载 yj2.html 页脚 独立代码
