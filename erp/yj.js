@@ -51,7 +51,7 @@ loadScripts(jsList);
 
 window.addEventListener('DOMContentLoaded', function() {
     var xhr1 = new XMLHttpRequest();
-    xhr1.open('GET', 'https://cdn.jsdelivr.net/gh/wangshangyonghu/erp@main/yj.html', true);
+    xhr1.open('GET', 'https://wangshangyonghu.github.io/erp/yj.html', true);
     xhr1.onreadystatechange = function() {
         if (xhr1.readyState === 4 && xhr1.status === 200) {
             document.body.insertAdjacentHTML('beforeend', xhr1.responseText);
