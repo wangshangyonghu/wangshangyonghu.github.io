@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ERP@网上用户</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui, sans-serif;background:#f2f3f5;color:#333}
+.wrap{max-width:100%;margin:0 auto;display:flex;min-height:100vh}
+.side{width:220px;background:#23262E;color:#fff;padding-top:10px}
+.menu-item{display:flex;align-items:center;gap:10px;padding:12px 20px;color:#c2c2c2;text-decoration:none;transition:0.2s;cursor:pointer}
+.menu-item:hover{background:#009688;color:#fff}
+.menu-item.active{background:#009688;color:#fff}
+.menu-item .icon{width:22px;text-align:center}
+.menu-title{padding:10px 20px 6px;color:#fff;font-weight:bold;font-size:14px}
+.main{flex:1;padding:0;background:#fff;overflow:hidden}
+iframe{width:100%;height:calc(100vh);border:none;display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="side">
+        <div class="menu-title">快捷菜单</div>
+        <!-- 所有菜单href直接写完整网址，加class="iframe-link" 就自动内嵌iframe -->
+        <a class="menu-item iframe-link" href="http://192.168.0.250:8088/layuiAdmin/start/index.html#/./SalesManage/CustomerManage/?tag=网上用户">
+            <span class="icon">👥</span>
+            <span>客户资料</span>
+        </a>
+        <a class="menu-item iframe-link" href="http://192.168.0.250:8088/layuiAdmin/start/index.html#/./EngManage/ItemManage/?tag=网上用户">
+            <span class="icon">📐</span>
+            <span>图纸</span>
+        </a>
+        <a class="menu-item iframe-link" href="http://192.168.0.250:8088/layuiAdmin/start/index.html#/./SalesManage/PricingTableManage/?tag=网上用户">
+            <span class="icon">💰</span>
+            <span>定价</span>
+        </a>
+        <a class="menu-item iframe-link" href="http://192.168.0.250:8088/layuiAdmin/start/index.html#/./SalesManage/SoheadManage/?tag=网上用户">
+            <span class="icon">📋</span>
+            <span>订单</span>
+        </a>
+        <a class="menu-item iframe-link" href="http://192.168.0.250:8088/layuiAdmin/start/index.html#/./MRPManage/BillReviewManage/?tag=网上用户">
+            <span class="icon">✅</span>
+            <span>评审</span>
+        </a>
+        <a class="menu-item iframe-link" href="http://192.168.0.250:8088/layuiAdmin/start/index.html#/./MRPManage/MRPProductionPlan/?tag=网上用户">
+            <span class="icon">📊</span>
+            <span>用量</span>
+        </a>
+        <a class="menu-item iframe-link" href="http://192.168.0.250:8088/layuiAdmin/start/index.html#/./MRPManage/MRPProductionBill/?tag=网上用户">
+            <span class="icon">🖨️</span>
+            <span>打印图纸</span>
+        </a>
+        <a class="menu-item iframe-link" href="http://192.168.0.250:8088/layuiAdmin/start/index.html#/./DepotManage/SalesShipmentManage/?tag=网上用户">
+            <span class="icon">🚚</span>
+            <span>送货单</span>
+        </a>
+
+
+
+        <div style="height:15px;"></div>
+        <!-- 返回后台：不加iframe-link，直接新窗口打开 -->
+        <a class="menu-item" href="http://192.168.0.250:8088" target="_blank">
+            <span class="icon">🔙</span>
+            <span>返回原后台</span>
+        </a>
+   
+   
+    <div style="height:15px;"></div>
+        <!-- 返回后台：不加iframe-link，直接新窗口打开 -->
+        <a class="menu-item" href="3erp.html#网上用户" target="_blank">
+            <span class="icon">🔙</span>
+            <span>单重计算器</span>
+        </a>
+
+
+    <div style="height:15px;"></div>
+        <!-- 返回后台：不加iframe-link，直接新窗口打开 -->
+        <a class="menu-item" href="https://wangshangyonghu.github.io/aa/tz/tz.html#网上用户" target="_blank">
+            <span class="icon">🔙</span>
+            <span>标图纸</span>
+        </a>
+
+
+
+
+          <div style="height:15px;"></div>
+        <!-- 返回后台：不加iframe-link，直接新窗口打开 -->
+        <a class="menu-item" href="https://wangshangyonghu.github.io/a/y/20.html#网上用户" target="_blank">
+            <span class="icon">🔙</span>
+            <span>克换公斤</span>
+        </a>
+
+
+
+
+          <div style="height:15px;"></div>
+        <!-- 返回后台：不加iframe-link，直接新窗口打开 -->
+        <a class="menu-item" href="2erp.html" target="_blank">
+            <span class="icon">🔙</span>
+            <span>返回erp后台</span>
+        </a>
+
+
+
+
+    </div>
+    <div class="main">
+        <iframe id="mainIframe" src="about:blank"></iframe>
+    </div>
+</div>
+<script>
+// 所有带 iframe-link 类的菜单，点击时拦截，塞进iframe
+document.querySelectorAll('.iframe-link').forEach(function(link){
+    link.addEventListener('click', function(e){
+        // 阻止浏览器默认跳转
+        e.preventDefault();
+        // 把href网址塞进iframe
+        document.getElementById('mainIframe').src = this.href;
+        // 菜单高亮
+        document.querySelectorAll('.menu-item').forEach(function(item){
+            item.classList.remove('active');
+        });
+        this.classList.add('active');
+    });
+});
+// 默认加载第一个菜单
+document.querySelector('.iframe-link').click();
+</script>
+</body>
+</html>
