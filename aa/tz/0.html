@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>上传图纸标尺寸一图片标尺寸 @网上用户</title>
+<meta name="keywords" content="网上用户,图片标尺寸,尺寸标注,零件图">
+<meta name="description" content="在图片上随意标注尺寸、写字、涂鸦，截图后发送给客户 @网上用户">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#fff;}
+body{overflow:hidden;}
+
+/* 背景图片层：默认留空，上传后显示 */
+#bgImg{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:0;
+  max-width:92vw;
+  max-height:84vh;
+  width:auto;
+  height:auto;
+  display:none;
+  user-select:none;
+  -webkit-user-drag:none;
+  object-fit:contain;
+}
+
+/* 顶部工具栏：最多两行，居中 */
+.tool-bar{
+  position:fixed;
+  top:8px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  justify-content:center;
+  z-index:999;
+  background:rgba(30,30,30,0.75);
+  padding:6px 8px;
+  border-radius:14px;
+  align-items:center;
+  max-width:calc(100% - 12px);
+}
+.tool-btn{
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  cursor:pointer;
+  border:1px solid #fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:bold;
+  user-select:none;
+  color:#000;
+  line-height:1;
+  background:#eee;
+}
+.color-circle{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  cursor:pointer;
+  border:1px solid #fff;
+}
+.write-btn{ background:#0b0; color:#fff; }
+.draw-btn{ background:#08f; color:#fff; }
+.paint-btn{ background:#fff; color:#000; border:1px solid #888; }
+.eraser-btn{ background:#ddd; color:#000; }
+.clear-btn{ background:#f44; color:#fff; }
+.upload-btn{ background:#f90; color:#fff; }
+.size-btn{ background:#78c; color:#fff; font-size:12px; }
+.active{ box-shadow:0 0 0 2px #ff0; }
+
+/* 手写画布 */
+#drawCanvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index:1;
+  touch-action:none;
+}
+
+/* 文字输入层 */
+.text-item{
+  position:absolute;
+  background:transparent;
+  border:none;
+  font-size:24px;
+  font-weight:bold;
+  outline:none;
+  font-family:unset;
+  color:#00f;
+  z-index:2;
+  cursor:move;
+  white-space:pre-wrap;
+  word-break:break-all;
+  max-width:calc(100vw - 16px);
+}
+</style>
+</head>
+<body>
+
+<img id="bgImg" alt="">
+<input type="file" id="fileInput" accept="image/*" style="display:none">
+
+<div class="tool-bar">
+  <div class="tool-btn write-btn" id="writeBtn">字</div>
+  <div class="tool-btn draw-btn" id="drawBtn">手</div>
+  <div class="tool-btn paint-btn" id="paintBtn">涂</div>
+  <div class="color-circle" style="background:#000" data-color="#000"></div>
+  <div class="color-circle" style="background:#fff" data-color="#fff"></div>
+  <div class="color-circle" style="background:#ff0" data-color="#ff0"></div>
+  <div class="color-circle" style="background:#00f" data-color="#00f"></div>
+  <div class="color-circle" style="background:#f00" data-color="#f00"></div>
+  <div class="color-circle" style="background:#0f0" data-color="#0f0"></div>
+  <div class="tool-btn eraser-btn" id="eraserBtn">擦</div>
+  <div class="tool-btn clear-btn" id="clearBtn">清</div>
+  <span style="width:1px;height:20px;background:#fff;opacity:.4"></span>
+  <div class="tool-btn upload-btn" id="uploadBtn">传</div>
+  <div class="tool-btn size-btn" id="imgDown">图-</div>
+  <div class="tool-btn size-btn" id="imgUp">图+</div>
+  <div class="tool-btn size-btn" id="fontDown">字-</div>
+  <div class="tool-btn size-btn" id="fontUp">字+</div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+
+<script>
+let currentColor = "#00f";
+let mode;
+let fontSize = 24;
+let imgW = 460; // 图片基准宽度
+const storageKey = "bbText_6";
+const fontKey = "bbFont_6";
+
+// 判断设备：手机触屏默认手写draw；电脑非触屏默认打字write
+function isMobileTouch(){
+  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+}
+if(isMobileTouch()){
+  mode = "draw";
+}else{
+  mode = "write";
+}
+
+/* ========== 画布 ========== */
+const canvas = document.getElementById("drawCanvas");
+const ctx = canvas.getContext("2d");
+const bgImg = document.getElementById("bgImg");
+const fileInput = document.getElementById("fileInput");
+let drawing = false;
+let lastX = 0, lastY = 0;
+
+// 获取坐标：核心修复，把屏幕client坐标转为canvas内部坐标
+function getCanvasPos(e){
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  return {
+    x: (e.clientX - rect.left) * scaleX,
+    y: (e.clientY - rect.top) * scaleY
+  }
+}
+
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+/* ========== 图片大小 ========== */
+function applyImgSize(){
+  bgImg.style.width = imgW + "px";
+}
+function initImgSize(){
+  imgW = Math.min(window.innerWidth - 40, 460);
+  applyImgSize();
+}
+
+/* ========== 上传电脑本地图片（不传入网站文件夹） ========== */
+const uploadBtn = document.getElementById("uploadBtn");
+uploadBtn.addEventListener("click", function(){
+  fileInput.click();
+});
+fileInput.addEventListener("change", function(){
+  const file = this.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    bgImg.src = e.target.result;   // 只在内存里读取，不上传到网站目录
+    bgImg.style.display = "block";
+    initImgSize();
+  };
+  reader.readAsDataURL(file);
+  fileInput.value = "";
+});
+
+/* ========== 字体大小 ========== */
+function applyFontSize(){
+  document.querySelectorAll(".text-item").forEach(d=>{
+    d.style.fontSize = fontSize + "px";
+  });
+}
+function saveFont(){
+  try{ localStorage.setItem(fontKey, String(fontSize)); }catch(e){}
+}
+const savedFont = localStorage.getItem(fontKey);
+if(savedFont) fontSize = parseInt(savedFont) || 24;
+applyFontSize();
+
+/* ========== 涂改液 / 画笔 ========== */
+function getStroke(){
+  if(mode === "paint"){           // 白色涂改液：加粗白色实心笔
+    return { color:"#ffffff", width:20 };
+  }
+  return { color: currentColor, width: 6 };
+}
+
+function startDraw(e){
+  const p = getCanvasPos(e);
+  drawing = true;
+  lastX = p.x;
+  lastY = p.y;
+}
+function moveDraw(e){
+  if(!drawing) return;
+  const p = getCanvasPos(e);
+  const s = getStroke();
+  ctx.beginPath();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = s.color;
+  ctx.lineWidth = s.width;
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(p.x, p.y);
+  ctx.stroke();
+  lastX = p.x;
+  lastY = p.y;
+}
+function endDraw(){
+  drawing = false;
+}
+
+/* ========== PointerEvents ========== */
+function enableDrawEvents(){
+  canvas.style.pointerEvents = "auto";
+  canvas.addEventListener("pointerdown", onPointerDown);
+  canvas.addEventListener("pointermove", onPointerMove);
+  canvas.addEventListener("pointerup", endDraw);
+  canvas.addEventListener("pointercancel", endDraw);
+}
+function disableDrawEvents(){
+  canvas.style.pointerEvents = "none";
+  canvas.removeEventListener("pointerdown", onPointerDown);
+  canvas.removeEventListener("pointermove", onPointerMove);
+  canvas.removeEventListener("pointerup", endDraw);
+  canvas.removeEventListener("pointercancel", endDraw);
+}
+
+function onPointerDown(e){
+  if(mode !== "draw" && mode !== "paint") return;
+  e.preventDefault();
+  canvas.setPointerCapture(e.pointerId);
+  startDraw(e);
+}
+function onPointerMove(e){
+  if((mode !== "draw" && mode !== "paint") || !drawing) return;
+  e.preventDefault();
+  moveDraw(e);
+}
+
+/* ========== 文字系统 ========== */
+function saveData(){
+  const list = [];
+  document.querySelectorAll(".text-item").forEach(div=>{
+    list.push({
+      x: parseFloat(div.style.left),
+      y: parseFloat(div.style.top),
+      color: div.style.color,
+      fontSize: parseFloat(div.style.fontSize) || 24,
+      text: div.innerText
+    });
+  });
+  localStorage.setItem(storageKey, JSON.stringify(list));
+}
+
+/* 让文字可以用鼠标拖动位置 */
+function makeDraggable(div){
+  let startX=0,startY=0,startLeft=0,startTop=0,drag=false,moved=false;
+  div.addEventListener("pointerdown", function(e){
+    if(mode!=="write") return;
+    startX=e.clientX; startY=e.clientY;
+    startLeft=parseFloat(div.style.left)||0;
+    startTop=parseFloat(div.style.top)||0;
+    drag=true; moved=false;
+    div.contentEditable=false;            // 拖动时先禁止编辑，防止选中文字
+    div.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  div.addEventListener("pointermove", function(e){
+    if(!drag) return;
+    let dx=e.clientX-startX, dy=e.clientY-startY;
+    if(Math.abs(dx)>3||Math.abs(dy)>3) moved=true;
+    div.style.left=(startLeft+dx)+"px";
+    div.style.top=(startTop+dy)+"px";
+  });
+  function endDrag(e){
+    if(!drag) return;
+    drag=false;
+    div.contentEditable=true;
+    if(moved){ saveData(); }else{ div.focus(); }
+  }
+  div.addEventListener("pointerup", endDrag);
+  div.addEventListener("pointercancel", endDrag);
+}
+
+function loadData(){
+  const raw = localStorage.getItem(storageKey);
+  if(!raw) return;
+  const list = JSON.parse(raw);
+  list.forEach(item=>{
+    if(!item.text) return;
+    if(item.x > window.innerWidth - 20) item.x = window.innerWidth - 20;
+    let div = document.createElement("div");
+    div.className = "text-item";
+    div.contentEditable = true;
+    div.style.left = item.x + "px";
+    div.style.top = item.y + "px";
+    div.style.color = item.color;
+    div.style.fontSize = (item.fontSize || 24) + "px";
+    div.innerText = item.text;
+    document.body.appendChild(div);
+    makeDraggable(div);
+    div.addEventListener("input", saveData);
+    div.addEventListener("blur", function(){
+      if(this.innerText.trim() === "") this.remove();
+      saveData();
+    });
+  });
+}
+loadData();
+
+/* ========== 工具栏切换 ========== */
+const writeBtn = document.getElementById("writeBtn");
+const drawBtn = document.getElementById("drawBtn");
+const paintBtn = document.getElementById("paintBtn");
+const eraserBtn = document.getElementById("eraserBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+function setMode(newMode){
+  mode = newMode;
+  writeBtn.classList.remove("active");
+  drawBtn.classList.remove("active");
+  paintBtn.classList.remove("active");
+  eraserBtn.classList.remove("active");
+
+  if(mode === "write"){
+    writeBtn.classList.add("active");
+    disableDrawEvents();
+  }
+  if(mode === "draw"){
+    drawBtn.classList.add("active");
+    enableDrawEvents();
+  }
+  if(mode === "paint"){
+    paintBtn.classList.add("active");
+    enableDrawEvents();
+  }
+  if(mode === "eraser"){
+    eraserBtn.classList.add("active");
+    disableDrawEvents();
+  }
+}
+setMode(mode);
+
+writeBtn.addEventListener("click", ()=>setMode("write"));
+drawBtn.addEventListener("click", ()=>setMode("draw"));
+paintBtn.addEventListener("click", function(){
+  if(mode === "paint"){
+    setMode(isMobileTouch() ? "draw" : "write");
+  }else{
+    setMode("paint");
+  }
+});
+
+/* 颜色切换 */
+document.querySelectorAll(".color-circle").forEach(el=>{
+  el.addEventListener("click", function(){
+    currentColor = this.dataset.color;
+  });
+});
+
+/* 图片大小按钮 */
+document.getElementById("imgUp").addEventListener("click", function(){
+  imgW = Math.min(imgW * 1.12, window.innerWidth * 0.92);
+  applyImgSize();
+});
+document.getElementById("imgDown").addEventListener("click", function(){
+  imgW = Math.max(imgW * 0.9, 80);
+  applyImgSize();
+});
+
+/* 字体大小按钮 */
+document.getElementById("fontUp").addEventListener("click", function(){
+  fontSize = Math.min(fontSize + 2, 72);
+  applyFontSize();
+  saveFont();
+});
+document.getElementById("fontDown").addEventListener("click", function(){
+  fontSize = Math.max(fontSize - 2, 12);
+  applyFontSize();
+  saveFont();
+});
+
+/* 橡皮擦 */
+eraserBtn.addEventListener("click", function(){
+  if(mode === "eraser"){
+    setMode(isMobileTouch() ? "draw" : "write");
+  }else{
+    setMode("eraser");
+  }
+});
+
+document.body.addEventListener("click", function(e){
+  if(mode !== "eraser") return;
+  if(e.target.classList.contains("tool-btn") || e.target.classList.contains("color-circle")) return;
+  const p = getCanvasPos(e);
+  document.querySelectorAll(".text-item").forEach(item=>{
+    const r = item.getBoundingClientRect();
+    const expand = 20;
+    if(
+      e.clientX >= r.left - expand &&
+      e.clientX <= r.right + expand &&
+      e.clientY >= r.top - expand &&
+      e.clientY <= r.bottom + expand
+    ){
+      item.remove();
+      saveData();
+    }
+  });
+  const eraseSize = 40;
+  ctx.clearRect(p.x - eraseSize/2, p.y - eraseSize/2, eraseSize, eraseSize);
+});
+
+/* 清屏按钮 */
+clearBtn.onclick = function(){
+  document.querySelectorAll(".text-item").forEach(item=>item.remove());
+  localStorage.removeItem(storageKey);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+};
+
+/* 文字点击输入 */
+document.body.addEventListener("click", function(e){
+  if(mode !== "write") return;
+  if(e.target.classList.contains("text-item") || e.target.classList.contains("tool-btn") || e.target.classList.contains("color-circle")) return;
+
+  let clickX = e.clientX;
+  const maxLeft = window.innerWidth - 20;
+  if(clickX > maxLeft) clickX = maxLeft;
+
+  let div = document.createElement("div");
+  div.className = "text-item";
+  div.contentEditable = true;
+  div.style.left = clickX + "px";
+  div.style.top = e.clientY + "px";
+  div.style.color = currentColor;
+  div.style.fontSize = fontSize + "px";
+  document.body.appendChild(div);
+  makeDraggable(div);
+  div.focus();
+
+  div.addEventListener("input", saveData);
+  div.addEventListener("blur", function(){
+    if(this.innerText.trim() === "") this.remove();
+    saveData();
+  });
+});
+</script>
+
+</body>
+</html>
