@@ -1,330 +1,619 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>点击写字+手写黑板 @网上用户</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>口算闯关游戏@网上用户</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;background:#000;}
-
-/* 顶部工具栏：强制单行，缩小按钮，不换行 */
-.tool-bar{
-  position:fixed;
-  top:8px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:4px;
-  z-index:999;
-  background:rgba(30,30,30,0.5);
-  padding:4px 8px;
-  border-radius:99px;
-  align-items:center;
-  flex-wrap:nowrap;
-  max-width:calc(100% - 12px);
-}
-.tool-btn{
-  width:24px;
-  height:24px;
-  border-radius:50%;
-  cursor:pointer;
-  border:1px solid #fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:11px;
-  font-weight:bold;
-  user-select:none;
-  color:#000;
-}
-.color-circle{
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  cursor:pointer;
-  border:1px solid #fff;
-}
-.write-btn{ background:#0b0; color:#fff; }
-.draw-btn{ background:#08f; color:#fff; }
-.eraser-btn{ background:#ddd; color:#000; }
-.clear-btn{ background:#f44; color:#fff; }
-.active{ box-shadow:0 0 0 2px #ff0; }
-
-/* 手写画布 */
-#drawCanvas{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100vh;
-  z-index:1;
-  touch-action:none;
-}
-
-/* 文字输入层 */
-.text-item{
-  position:absolute;
-  background:transparent;
-  border:none;
-  font-size:24px;
-  font-weight:bold;
-  outline:none;
-  font-family:unset;
-  color:#fff;
-  z-index:2;
-  white-space:pre-wrap;
-  word-break:break-all;
-  max-width:calc(100vw - 16px);
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:inherit;font-size:16px;background:linear-gradient(135deg,#1a1a4e,#3d1e5e);color:#fff;min-height:100vh;}
+#app{max-width:888px;margin:0 auto;padding:10px;}
+.screen{display:none;animation:fadeIn .4s;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+h1{text-align:center;font-size:26px;margin:15px 0;color:#ffd700;text-shadow:2px 2px 4px #000;}
+h2{font-size:20px;margin:10px 0;color:#ffd700;}
+.btn{display:inline-block;padding:12px 24px;margin:6px;background:linear-gradient(135deg,#ff6b6b,#ee5a24);border:none;border-radius:25px;color:#fff;font-size:16px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.3);transition:transform .15s;}
+.btn:hover{transform:scale(1.05);}
+.btn:active{transform:scale(.95);}
+.btn.secondary{background:linear-gradient(135deg,#4a69bd,#1e3799);}
+.btn.gold{background:linear-gradient(135deg,#f6b93b,#e58e26);}
+.btn.small{padding:6px 14px;font-size:13px;}
+.card{background:rgba(255,255,255,.1);border-radius:15px;padding:15px;margin:10px 0;backdrop-filter:blur(5px);}
+.center{text-align:center;}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+/* 角色选择 */
+.char-pick{width:140px;padding:15px;background:rgba(255,255,255,.1);border-radius:15px;text-align:center;cursor:pointer;border:3px solid transparent;transition:.2s;}
+.char-pick:hover{transform:translateY(-5px);}
+.char-pick.selected{border-color:#ffd700;background:rgba(255,215,0,.15);}
+.char-emoji{font-size:60px;}
+.char-name{margin-top:8px;font-weight:bold;color:#ffd700;}
+.char-desc{font-size:12px;opacity:.8;margin-top:5px;}
+/* 顶部栏 */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(0,0,0,.3);border-radius:10px;margin-bottom:10px;}
+.coin{color:#ffd700;font-weight:bold;}
+/* 地图 */
+.map-wrap{overflow-x:auto;padding:20px 0;}
+.map-track{display:flex;align-items:center;gap:0;min-width:900px;position:relative;}
+.node{width:80px;height:80px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;cursor:pointer;position:relative;transition:.2s;border:4px solid #555;}
+.node.locked{filter:grayscale(1);opacity:.5;}
+.node.unlocked{border-color:#ffd700;background:rgba(255,215,0,.2);animation:pulse 1.5s infinite;}
+.node.cleared{border-color:#4cd137;background:rgba(76,209,55,.2);}
+.node.review::after{content:"复习";position:absolute;top:-10px;right:-10px;background:#e74c3c;color:#fff;font-size:10px;padding:2px 6px;border-radius:8px;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.6);}50%{box-shadow:0 0 0 15px rgba(255,215,0,0);}}
+.path-line{flex:1;height:6px;background:repeating-linear-gradient(90deg,#ffd700 0 10px,transparent 10px 20px);min-width:30px;}
+.chest{position:absolute;font-size:22px;top:-25px;left:50%;transform:translateX(-50%);}
+.stars{font-size:12px;}
+/* 战斗 */
+.battle-stage{position:relative;background:linear-gradient(180deg,#87ceeb 0%,#98d8c8 60%,#6ab04c 100%);border-radius:15px;padding:15px;min-height:340px;overflow:hidden;}
+.battle-actors{display:flex;justify-content:space-between;align-items:flex-end;height:200px;position:relative;z-index:2;}
+.actor{text-align:center;}
+.actor-emoji{font-size:70px;transition:.2s;}
+.actor-emoji.attack{animation:attack .5s;}
+.actor-emoji.hurt{animation:hurt .5s;}
+@keyframes attack{0%{transform:translateX(0);}50%{transform:translateX(30px) scale(1.2);}100%{transform:translateX(0);}}
+@keyframes hurt{0%,100%{transform:translateX(0);}25%{transform:translateX(-10px);}75%{transform:translateX(10px);}}
+.hp-bar{width:120px;height:14px;background:#333;border-radius:7px;margin:5px auto;overflow:hidden;}
+.hp-fill{height:100%;background:linear-gradient(90deg,#e74c3c,#ff6b6b);transition:width .4s;}
+.hp-text{font-size:11px;color:#000;}
+.monster-name{color:#000;font-weight:bold;font-size:14px;}
+.q-box{background:rgba(0,0,0,.6);border-radius:15px;padding:20px;text-align:center;margin-top:10px;position:relative;z-index:3;}
+.q-text{font-size:36px;font-weight:bold;color:#ffd700;margin-bottom:15px;letter-spacing:3px;}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ans-btn{padding:15px;font-size:22px;background:#fff;color:#333;border:none;border-radius:10px;cursor:pointer;font-weight:bold;}
+.ans-btn:active{transform:scale(.95);}
+.vs-sword{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);font-size:40px;z-index:1;}
+/* 特效 */
+.fx-layer{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden;}
+.particle{position:absolute;font-size:24px;animation:floatUp 1s forwards;}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1);}100%{opacity:0;transform:translateY(-100px) scale(1.5);}}
+.hit-flash{position:absolute;inset:0;background:rgba(255,255,255,.6);animation:flash .3s;}
+@keyframes flash{0%{opacity:1;}100%{opacity:0;}}
+/* 精灵导师 */
+.mentor{display:flex;gap:10px;align-items:flex-start;background:rgba(135,206,235,.2);border-radius:15px;padding:12px;margin-top:10px;}
+.mentor-emoji{font-size:50px;}
+.mentor-bubble{background:#fff;color:#333;border-radius:12px;padding:10px 14px;flex:1;position:relative;font-size:14px;}
+/* 讲解画布 */
+#teachCanvas{width:100%;background:#fff;border-radius:10px;margin-top:10px;display:block;}
+/* 商店 */
+.skin-item{width:100%;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.1);padding:10px 15px;border-radius:10px;margin:8px 0;}
+.skin-emoji{font-size:40px;}
+/* 日记 */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+.stat-box{background:rgba(255,255,255,.1);padding:12px;border-radius:10px;text-align:center;}
+.stat-num{font-size:24px;color:#ffd700;font-weight:bold;}
+canvas.chart{width:100%;background:#fff;border-radius:10px;}
+.weak-tag{display:inline-block;background:#e74c3c;padding:4px 10px;border-radius:12px;margin:3px;font-size:13px;}
+.lvl-tag{display:inline-block;background:#4a69bd;padding:4px 10px;border-radius:12px;margin:3px;font-size:13px;cursor:pointer;}
+/* 结算 */
+.result-stars{font-size:50px;letter-spacing:5px;}
+@media(max-width:600px){
+.char-pick{width:45%;}
+.q-text{font-size:28px;}
+.actor-emoji{font-size:50px;}
 }
 </style>
 </head>
 <body>
+<div id="app">
 
-<div class="tool-bar">
-  <div class="tool-btn write-btn" id="writeBtn">字</div>
-  <div class="tool-btn draw-btn" id="drawBtn">手</div>
-  <div class="color-circle" style="background:#000" data-color="#000"></div>
-  <div class="color-circle" style="background:#fff" data-color="#fff"></div>
-  <div class="color-circle" style="background:#ff0" data-color="#ff0"></div>
-  <div class="color-circle" style="background:#00f" data-color="#00f"></div>
-  <div class="color-circle" style="background:#f00" data-color="#f00"></div>
-  <div class="color-circle" style="background:#0f0" data-color="#0f0"></div>
-  <div class="tool-btn eraser-btn" id="eraserBtn">擦</div>
-  <div class="tool-btn clear-btn" id="clearBtn">清</div>
+<!-- 顶部栏（除开始页外显示） -->
+<div class="topbar" id="topbar" style="display:none;">
+  <span id="tbGold" class="coin">💰 0</span>
+  <span style="font-size:13px;opacity:.8;" id="tbInfo"></span>
+  <span>
+    <button class="btn small secondary" onclick="showScreen('map')">地图</button>
+    <button class="btn small secondary" onclick="showScreen('diary')">日记</button>
+    <button class="btn small secondary" onclick="showScreen('shop')">商店</button>
+    <button class="btn small" onclick="logout()">退出</button>
+  </span>
 </div>
 
-<canvas id="drawCanvas"></canvas>
+<!-- 开始/角色选择 -->
+<div class="screen active" id="scr-start">
+  <h1>⚔️ 数学王国 · 口算闯关 ⚔️</h1>
+  <p class="center" style="opacity:.8;margin-bottom:15px;">大魔王占领了数学王国，选择你的小勇士去拯救它！</p>
+  <h2 class="center">① 选择角色</h2>
+  <div class="row" id="charList"></div>
+  <h2 class="center" style="margin-top:15px;">② 选择年级</h2>
+  <div class="row" id="gradeList"></div>
+  <h2 class="center" style="margin-top:15px;">③ 选择难度</h2>
+  <div class="row" id="diffList"></div>
+  <div class="center" style="margin-top:20px;">
+    <button class="btn gold" style="font-size:20px;padding:14px 40px;" onclick="startGame()">🚀 出发冒险！</button>
+  </div>
+</div>
 
+<!-- 地图 -->
+<div class="screen" id="scr-map">
+  <h1 id="mapTitle">🗺️ 冒险地图</h1>
+  <div class="map-wrap">
+    <div class="map-track" id="mapTrack"></div>
+  </div>
+  <div class="card center" id="mapTip"></div>
+</div>
+
+<!-- 战斗 -->
+<div class="screen" id="scr-battle">
+  <div class="battle-stage">
+    <div class="fx-layer" id="fxLayer"></div>
+    <div class="battle-actors">
+      <div class="actor">
+        <div class="actor-emoji" id="heroEmoji">🦸</div>
+        <div style="font-weight:bold;">我的小勇士</div>
+        <div class="hp-bar"><div class="hp-fill" id="heroHp" style="width:100%;background:linear-gradient(90deg,#4cd137,#a3cb38);"></div></div>
+      </div>
+      <div class="vs-sword">⚔️</div>
+      <div class="actor">
+        <div class="monster-name" id="monName">史莱姆怪</div>
+        <div class="actor-emoji" id="monEmoji">👾</div>
+        <div class="hp-bar"><div class="hp-fill" id="monHp" style="width:100%;"></div></div>
+        <div class="hp-text" id="monHpText">100/100</div>
+      </div>
+    </div>
+    <div class="q-box">
+      <div class="q-text" id="qText">3 + 5 = ?</div>
+      <div class="answers" id="ansBox"></div>
+    </div>
+  </div>
+  <!-- 错题导师引导 -->
+  <div class="mentor" id="mentorBox" style="display:none;">
+    <div class="mentor-emoji">🦉</div>
+    <div class="mentor-bubble">
+      <b>智慧导师猫头鹰：</b> 别着急，我们一起来看看这道题为什么这样做～
+      <canvas id="teachCanvas" width="800" height="300"></canvas>
+      <div class="center" style="margin-top:8px;">
+        <button class="btn small gold" onclick="closeTeach()">我明白了，继续战斗！</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 结算 -->
+<div class="screen" id="scr-result">
+  <h1>🏁 关卡结束</h1>
+  <div class="card center">
+    <div class="result-stars" id="resStars">★★★</div>
+    <p id="resText"></p>
+    <p class="coin" style="font-size:20px;">💰 获得金币：<span id="resCoin">0</span></p>
+    <div style="margin-top:15px;">
+      <button class="btn gold" onclick="nextLevel()">下一关 →</button>
+      <button class="btn secondary" onclick="showScreen('map')">返回地图</button>
+    </div>
+  </div>
+</div>
+
+<!-- 商店 -->
+<div class="screen" id="scr-shop">
+  <h1>🛒 皮肤商店</h1>
+  <div class="card center coin" style="font-size:18px;">我的金币：💰 <span id="shopGold">0</span></div>
+  <div id="skinList"></div>
+</div>
+
+<!-- 冒险日记 -->
+<div class="screen" id="scr-diary">
+  <h1>📖 冒险日记</h1>
+  <div class="stat-grid">
+    <div class="stat-box"><div class="stat-num" id="dTotal">0</div><div>总做题数</div></div>
+    <div class="stat-box"><div class="stat-num" id="dAcc">0%</div><div>总正确率</div></div>
+    <div class="stat-box"><div class="stat-num" id="dStars">0</div><div>累计星星</div></div>
+    <div class="stat-box"><div class="stat-num" id="dCoin">0</div><div>累计金币</div></div>
+  </div>
+  <div class="card">
+    <h2>📈 近10次正确率趋势</h2>
+    <canvas id="chartCanvas" class="chart" width="800" height="250"></canvas>
+  </div>
+  <div class="card">
+    <h2>🎯 薄弱知识点（需复习）</h2>
+    <div id="weakList"></div>
+  </div>
+  <div class="card">
+    <h2>🔁 系统推荐复习关卡</h2>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+</div>
 
 <script>
-let currentColor = "#fff";
-let mode;
-const storageKey = "blackboardTextData";
+// ============ 数据 ============
+const CHARS=[
+  {id:'hero',emoji:'🦸',name:'小勇士',desc:'挥剑斩杀，勇气十足'},
+  {id:'mage',emoji:'🧙',name:'小魔法师',desc:'魔法火焰，智慧之光'},
+  {id:'dino',emoji:'🦖',name:'小恐龙',desc:'喷射火焰，超级可爱'}
+];
+const GRADES=[1,2,3,4,5,6];
+const DIFFS=[{id:'easy',name:'简单'},{id:'normal',name:'中等'},{id:'hard',name:'困难'}];
+// 每年级关卡：知识点 + 出题函数
+const LEVELS=[
+  {k:'10以内加法',mon:'史莱姆怪',emoji:'👾',gen:g2add},
+  {k:'10以内减法',mon:'蝙蝠怪',emoji:'🦇',gen:g2sub},
+  {k:'20以内进位加法',mon:'哥布林',emoji:'👺',gen:g20add},
+  {k:'20以内退位减法',mon:'骷髅兵',emoji:'💀',gen:g20sub},
+  {k:'整十数加减',mon:'石头人',emoji:'🗿',gen:tenAdd},
+  {k:'乘法口诀',mon:'妖精',emoji:'🧚',gen:mul},
+  {k:'两位数加减',mon:'狼怪',emoji:'🐺',gen:twoAdd},
+  {k:'表内除法',mon:'幽灵',emoji:'👻',gen:div},
+  {k:'混合运算',mon:'巨蟒',emoji:'🐍',gen:mix},
+  {k:'万以内加减',mon:'石头巨魔',emoji:'🧌',gen:bigAdd},
+  {k:'两位数乘一位',mon:'铁骑士',emoji:'🤺',gen:mul2},
+  {k:'大魔王！',mon:'大魔王',emoji:'😈',gen:boss}
+];
+const SKINS=[
+  {id:'hero',emoji:'🦸',name:'默认小勇士',cost:0},
+  {id:'knight',emoji:'🤴',name:'黄金骑士',cost:50},
+  {id:'ninja',emoji:'🥷',name:'暗夜忍者',cost:80},
+  {id:'angel',emoji:'👼',name:'光之天使',cost:120},
+  {id:'wizard',emoji:'🧙‍♂️',name:'大法师',cost:150},
+  {id:'dino2',emoji:'🐲',name:'东方神龙',cost:200}
+];
+// 存档
+let S=JSON.parse(localStorage.getItem('kscg_save')||'null')||{gold:0,stars:0,skins:['hero'],skin:'hero',progress:{},history:[],wrong:{},bestAcc:[]};
+function save(){localStorage.setItem('kscg_save',JSON.stringify(S));}
 
-// 判断设备：手机触屏默认手写draw；电脑非触屏默认打字write
-function isMobileTouch(){
-  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+// ============ 出题器 ============
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function makeQ(a,op,b){
+  let ans;
+  if(op==='+')ans=a+b; else if(op==='-')ans=a-b; else if(op==='×')ans=a*b; else ans=Math.floor(a/b);
+  return {text:`${a} ${op} ${b} = ?`,ans,type:op,a,b};
 }
-if(isMobileTouch()){
-  mode = "draw";
-}else{
-  mode = "write";
-}
+function g2add(){let a=rnd(1,9),b=rnd(1,9);return makeQ(a,'+',b);}
+function g2sub(){let a=rnd(2,10),b=rnd(1,a-1);return makeQ(a,'-',b);}
+function g20add(){let a=rnd(5,9),b=rnd(11-a,9);return makeQ(a,'+',b);} // 进位
+function g20sub(){const a=rnd(11,18);const units=a%10;const b=rnd(units+1,9);return makeQ(a,'-',b);}
+function tenAdd(){let a=rnd(1,9)*10,b=rnd(1,9)*10;return makeQ(a,'+',b);}
+function mul(){let a=rnd(2,9),b=rnd(2,9);return makeQ(a,'×',b);}
+function twoAdd(){let a=rnd(10,49),b=rnd(10,49);return makeQ(a,'+',b);}
+function div(){let b=rnd(2,9),q=rnd(2,9),a=b*q;return {text:`${a} ÷ ${b} = ?`,ans:q,type:'÷',a,b};}
+function mix(){let a=rnd(2,9),b=rnd(2,9),c=rnd(2,9);return {text:`${a} + ${b} × ${c} = ?`,ans:a+b*c,type:'mix',parts:[a,b,c]};}
+function bigAdd(){let a=rnd(100,900),b=rnd(100,900);return makeQ(a,'+',b);}
+function mul2(){let a=rnd(10,25),b=rnd(2,9);return makeQ(a,'×',b);}
+function boss(){const fns=[g20add,g20sub,mul,twoAdd,mix];return fns[rnd(0,fns.length-1)]();}
 
-/* ========== 画布 ========== */
-const canvas = document.getElementById("drawCanvas");
-const ctx = canvas.getContext("2d");
-let drawing = false;
-let lastX = 0, lastY = 0;
-
-// 获取坐标：核心修复，把屏幕client坐标转为canvas内部坐标
-function getCanvasPos(e){
-  const rect = canvas.getBoundingClientRect();
-  const scaleX = canvas.width / rect.width;
-  const scaleY = canvas.height / rect.height;
-  return {
-    x: (e.clientX - rect.left) * scaleX,
-    y: (e.clientY - rect.top) * scaleY
+function genAnswers(correct){
+  let set=new Set([correct]);
+  while(set.size<4){
+    let d=correct+rnd(-9,9);
+    if(d!==correct&&d>=0)set.add(d);
   }
+  let arr=[...set].sort(()=>Math.random()-0.5);
+  return arr;
 }
 
-function resizeCanvas(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+// ============ 状态 ============
+let selChar='hero',selGrade=1,selDiff='easy';
+let curLevel=0,curQ=null,qNo=0,correctCount=0,totalQ=5,monHp=100,maxHp=100;
 
-function startDraw(e){
-  const p = getCanvasPos(e);
-  drawing = true;
-  lastX = p.x;
-  lastY = p.y;
+// ============ 初始化选择界面 ============
+function initStart(){
+  document.getElementById('charList').innerHTML=CHARS.map((c,i)=>`
+    <div class="char-pick ${i===0?'selected':''}" data-id="${c.id}" onclick="pickChar('${c.id}',this)">
+      <div class="char-emoji">${c.emoji}</div><div class="char-name">${c.name}</div><div class="char-desc">${c.desc}</div>
+    </div>`).join('');
+  document.getElementById('gradeList').innerHTML=GRADES.map(g=>`<button class="btn secondary" onclick="pickGrade(${g},this)">${g}年级</button>`).join('');
+  document.getElementById('diffList').innerHTML=DIFFS.map(d=>`<button class="btn secondary" onclick="pickDiff('${d.id}',this)">${d.name}</button>`).join('');
+  document.querySelector('[data-id="hero"]').classList.add('selected');
 }
-function moveDraw(e){
-  if(!drawing) return;
-  const p = getCanvasPos(e);
-  ctx.beginPath();
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.strokeStyle = currentColor;
-  ctx.lineWidth = 6;
-  ctx.moveTo(lastX, lastY);
-  ctx.lineTo(p.x, p.y);
-  ctx.stroke();
-  lastX = p.x;
-  lastY = p.y;
-}
-function endDraw(){
-  drawing = false;
+function pickChar(id,el){selChar=id;document.querySelectorAll('.char-pick').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');}
+function pickGrade(g,el){selGrade=g;document.querySelectorAll('#gradeList .btn').forEach(e=>e.classList.remove('gold'));el.classList.add('gold');}
+function pickDiff(d,el){selDiff=d;document.querySelectorAll('#diffList .btn').forEach(e=>e.classList.remove('gold'));el.classList.add('gold');}
+
+function startGame(){
+  if(!S.skins.includes(selChar))selChar=S.skin;
+  showScreen('map');renderMap();
 }
 
-/* ========== PointerEvents ========== */
-function enableDrawEvents(){
-  canvas.style.pointerEvents = "auto";
-  canvas.addEventListener("pointerdown", onPointerDown);
-  canvas.addEventListener("pointermove", onPointerMove);
-  canvas.addEventListener("pointerup", endDraw);
-  canvas.addEventListener("pointercancel", endDraw);
-}
-function disableDrawEvents(){
-  canvas.style.pointerEvents = "none";
-  canvas.removeEventListener("pointerdown", onPointerDown);
-  canvas.removeEventListener("pointermove", onPointerMove);
-  canvas.removeEventListener("pointerup", endDraw);
-  canvas.removeEventListener("pointercancel", endDraw);
-}
-
-function onPointerDown(e){
-  if(mode !== "draw") return;
-  e.preventDefault();
-  canvas.setPointerCapture(e.pointerId);
-  startDraw(e);
-}
-function onPointerMove(e){
-  if(mode !== "draw" || !drawing) return;
-  e.preventDefault();
-  moveDraw(e);
-}
-
-/* ========== 文字系统 ========== */
-function saveData(){
-  const list = [];
-  document.querySelectorAll(".text-item").forEach(div=>{
-    list.push({
-      x: parseFloat(div.style.left),
-      y: parseFloat(div.style.top),
-      color: div.style.color,
-      text: div.innerText
-    });
+// ============ 地图 ============
+function renderMap(){
+  document.getElementById('mapTitle').textContent=`🗺️ ${selGrade}年级 · 冒险地图`;
+  const track=document.getElementById('mapTrack');
+  track.innerHTML='';
+  LEVELS.forEach((lv,i)=>{
+    const key=`${selGrade}_${i}`;
+    const st=S.progress[key]||{stars:0};
+    let cls='locked';
+    if(i===0||S.progress[`${selGrade}_${i-1}`])cls='unlocked';
+    if(st.stars>0)cls='cleared';
+    const weak=S.wrong[lv.k]&&S.wrong[lv.k].rate>0.5;
+    track.innerHTML+=`
+      <div style="position:relative;">
+        ${i<LEVELS.length-1?'<div class="chest">🎁</div>':''}
+        <div class="node ${cls} ${weak?'review':''}" onclick="enterLevel(${i})">
+          <span>${lv.emoji}</span>
+          <div class="stars">${'★'.repeat(st.stars)}${'☆'.repeat(3-st.stars)}</div>
+        </div>
+        <div style="font-size:11px;text-align:center;margin-top:4px;">${lv.k}</div>
+      </div>`;
+    if(i<LEVELS.length-1)track.innerHTML+='<div class="path-line"></div>';
   });
-  localStorage.setItem(storageKey, JSON.stringify(list));
+  const unlockedCount=Object.keys(S.progress).filter(k=>k.startsWith(selGrade+'_')).length;
+  document.getElementById('mapTip').innerHTML=`已点亮 <b>${unlockedCount}/${LEVELS.length}</b> 关 · 💰 ${S.gold} · 红色"复习"标记是你容易错的知识点`;
+  updateTopbar();
 }
 
-function loadData(){
-  const raw = localStorage.getItem(storageKey);
-  if(!raw) return;
-  const list = JSON.parse(raw);
-  list.forEach(item=>{
-    if(!item.text) return;
-    if(item.x > window.innerWidth - 20) item.x = window.innerWidth - 20;
-    let div = document.createElement("div");
-    div.className = "text-item";
-    div.contentEditable = true;
-    div.style.left = item.x + "px";
-    div.style.top = item.y + "px";
-    div.style.color = item.color;
-    div.innerText = item.text;
-    document.body.appendChild(div);
-    div.addEventListener("input", saveData);
-    div.addEventListener("blur", function(){
-      if(this.innerText.trim() === "") this.remove();
-      saveData();
-    });
-  });
+function enterLevel(i){
+  const key=`${selGrade}_${i}`;
+  if(i>0&&!S.progress[`${selGrade}_${i-1}`]){alert('请先通关前一关！');return;}
+  curLevel=i;
+  startBattle();
 }
-loadData();
 
-/* ========== 工具栏切换 ========== */
-const writeBtn = document.getElementById("writeBtn");
-const drawBtn = document.getElementById("drawBtn");
-const eraserBtn = document.getElementById("eraserBtn");
-const clearBtn = document.getElementById("clearBtn");
-
-function setMode(newMode){
-  mode = newMode;
-  writeBtn.classList.remove("active");
-  drawBtn.classList.remove("active");
-  eraserBtn.classList.remove("active");
-
-  if(mode === "write"){
-    writeBtn.classList.add("active");
-    disableDrawEvents();
-  }
-  if(mode === "draw"){
-    drawBtn.classList.add("active");
-    enableDrawEvents();
-  }
-  if(mode === "eraser"){
-    eraserBtn.classList.add("active");
-    disableDrawEvents();
-  }
+// ============ 战斗 ============
+function startBattle(){
+  qNo=0;correctCount=0;
+  maxHp=selDiff==='easy'?60:selDiff==='normal'?100:150;
+  monHp=maxHp;
+  const lv=LEVELS[curLevel];
+  document.getElementById('monName').textContent=lv.mon;
+  document.getElementById('monEmoji').textContent=lv.emoji;
+  document.getElementById('heroEmoji').textContent=(SKINS.find(s=>s.id===S.skin)||SKINS[0]).emoji;
+  updateMonHp();
+  showScreen('battle');
+  nextQ();
 }
-setMode(mode);
-
-writeBtn.addEventListener("click", ()=>setMode("write"));
-drawBtn.addEventListener("click", ()=>setMode("draw"));
-
-/* 颜色切换 */
-document.querySelectorAll(".color-circle").forEach(el=>{
-  el.addEventListener("click", function(){
-    currentColor = this.dataset.color;
-  });
-});
-
-/* 橡皮擦 */
-eraserBtn.addEventListener("click", function(){
-  if(mode === "eraser"){
-    setMode(isMobileTouch() ? "draw" : "write");
+function updateMonHp(){
+  document.getElementById('monHp').style.width=(monHp/maxHp*100)+'%';
+  document.getElementById('monHpText').textContent=`${monHp}/${maxHp}`;
+}
+function nextQ(){
+  if(qNo>=totalQ){endBattle();return;}
+  qNo++;
+  curQ=LEVELS[curLevel].gen();
+  document.getElementById('qText').textContent=`第${qNo}/${totalQ}题  `+curQ.text;
+  const ans=genAnswers(curQ.ans);
+  document.getElementById('ansBox').innerHTML=ans.map(a=>`<button class="ans-btn" onclick="answer(${a},this)">${a}</button>`).join('');
+  document.getElementById('mentorBox').style.display='none';
+}
+function answer(val,btn){
+  const btns=document.querySelectorAll('.ans-btn');
+  btns.forEach(b=>b.disabled=true);
+  if(val===curQ.ans){
+    // 答对：攻击动画 + 扣血 + 庆祝
+    correctCount++;
+    const hero=document.getElementById('heroEmoji');
+    hero.classList.add('attack');setTimeout(()=>hero.classList.remove('attack'),500);
+    flashFx();celebrate();
+    monHp=Math.max(0,monHp-25);
+    updateMonHp();
+    S.history.push({k:LEVELS[curLevel].k,ok:true,time:Date.now()});
+    recordWrong(LEVELS[curLevel].k,true);
+    setTimeout(()=>{if(monHp<=0)endBattle();else nextQ();},900);
   }else{
-    setMode("eraser");
+    // 答错：不扣血，不弹错误，精灵导师出现
+    const mon=document.getElementById('monEmoji');
+    mon.classList.add('hurt');setTimeout(()=>mon.classList.remove('hurt'),500);
+    S.history.push({k:LEVELS[curLevel].k,ok:false,time:Date.now()});
+    recordWrong(LEVELS[curLevel].k,false);
+    document.getElementById('mentorBox').style.display='flex';
+    drawTeach(curQ);
   }
-});
+  save();
+}
+function closeTeach(){nextQ();}
+function recordWrong(k,ok){
+  if(!S.wrong[k])S.wrong[k]={tot:0,bad:0};
+  S.wrong[k].tot++;
+  if(!ok)S.wrong[k].bad++;
+}
+function flashFx(){
+  const fx=document.getElementById('fxLayer');
+  const f=document.createElement('div');f.className='hit-flash';fx.appendChild(f);
+  setTimeout(()=>f.remove(),300);
+}
+function celebrate(){
+  const fx=document.getElementById('fxLayer');
+  const emojis=['✨','⭐','💥','🎉','💰'];
+  for(let i=0;i<8;i++){
+    const p=document.createElement('div');p.className='particle';
+    p.textContent=emojis[rnd(0,4)];
+    p.style.left=rnd(20,80)+'%';p.style.top=rnd(20,60)+'%';
+    fx.appendChild(p);setTimeout(()=>p.remove(),1000);
+  }
+}
 
-document.body.addEventListener("click", function(e){
-  if(mode !== "eraser") return;
-  if(e.target.classList.contains("tool-btn") || e.target.classList.contains("color-circle")) return;
-  const rect = canvas.getBoundingClientRect();
-  const p = getCanvasPos(e);
-  document.querySelectorAll(".text-item").forEach(item=>{
-    const r = item.getBoundingClientRect();
-    const expand = 20;
-    if(
-      e.clientX >= r.left - expand &&
-      e.clientX <= r.right + expand &&
-      e.clientY >= r.top - expand &&
-      e.clientY <= r.bottom + expand
-    ){
-      item.remove();
-      saveData();
+// ============ 动态讲解图（彩色小棒） ============
+function drawTeach(q){
+  const c=document.getElementById('teachCanvas');
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  // 标题
+  ctx.fillStyle='#333';ctx.font='bold 22px sans-serif';ctx.fillText('✨ 动态讲解：',20,30);
+  if(q.type==='+'&&q.a+q.b>=10&&q.a<10&&q.b<10){
+    // 进位加法：凑十法
+    teachCarry(ctx,q,c.width);
+  }else if(q.type==='-'&&q.a<20&&q.b<10&&(q.a%10)<q.b){
+    // 退位减法（个位不够减）
+    teachBorrow(ctx,q,c.width);
+  }else if(q.type==='×'){
+    teachMul(ctx,q,c.width);
+  }else{
+    teachNormal(ctx,q,c.width);
+  }
+}
+function stick(ctx,x,y,color){
+  ctx.fillStyle=color;
+  ctx.fillRect(x,y,6,30);
+}
+function teachNormal(ctx,q,W){
+  ctx.font='18px sans-serif';ctx.fillStyle='#555';
+  if(q.type==='-'){
+    // 减法：画a根棒，b根划掉（灰色+斜线），剩下ans根绿色
+    ctx.fillText(`我们用小棒拿走 ${q.b} 根，看看还剩几根：`,20,60);
+    let x=40;
+    for(let i=0;i<q.a;i++){
+      if(i<q.b){
+        // 被拿走的：灰色 + 打斜线
+        ctx.fillStyle='#bbb';ctx.fillRect(x,100,6,30);
+        ctx.strokeStyle='#e74c3c';ctx.lineWidth=2;
+        ctx.beginPath();ctx.moveTo(x-2,98);ctx.lineTo(x+8,132);ctx.stroke();
+      }else{
+        stick(ctx,x,100,'#27ae60');
+      }
+      x+=14;
     }
-  });
-  const eraseSize = 40;
-  ctx.clearRect(p.x - eraseSize/2, p.y - eraseSize/2, eraseSize, eraseSize);
-});
+    ctx.fillStyle='#27ae60';ctx.font='bold 22px sans-serif';
+    ctx.fillText(`= 剩下 ${q.ans} 根`,x+10,122);
+  }else{
+    // 加法
+    ctx.fillText(`我们用小棒来数一数：${q.a} 根 + ${q.b} 根 = ${q.ans} 根`,20,60);
+    let x=40;
+    for(let i=0;i<q.a;i++){stick(ctx,x,100,'#e74c3c');x+=14;}
+    ctx.fillStyle='#333';ctx.font='18px sans-serif';ctx.fillText('+',x+5,122);x+=30;
+    for(let i=0;i<q.b;i++){stick(ctx,x,100,'#3498db');x+=14;}
+    ctx.fillStyle='#27ae60';ctx.font='bold 20px sans-serif';
+    ctx.fillText(`= ${q.ans}`,x+10,122);
+  }
+}
+function teachCarry(ctx,q,W){
+  // 凑十法：a + b = (a + c) + (b - c)，c 凑十
+  const need=10-q.a;
+  ctx.font='18px sans-serif';ctx.fillStyle='#555';
+  ctx.fillText(`个位满十要进一！把 ${q.b} 分成 ${need} 和 ${q.b-need}`,20,60);
+  ctx.fillText(`${q.a} + ${need} = 10`,20,85);
+  ctx.fillText(`10 + ${q.b-need} = ${q.ans}`,20,110);
+  // 画：a根红 + need根蓝 = 一捆十
+  let x=40;
+  for(let i=0;i<q.a;i++){stick(ctx,x,150,'#e74c3c');x+=14;}
+  for(let i=0;i<need;i++){stick(ctx,x,150,'#3498db');x+=14;}
+  // 一捆
+  ctx.fillStyle='#f6b93b';ctx.fillRect(x,145,50,35);
+  ctx.fillStyle='#000';ctx.font='bold 16px sans-serif';ctx.fillText('1捆=10',x,168);
+  x+=60;
+  for(let i=0;i<q.b-need;i++){stick(ctx,x,150,'#9b59b6');x+=14;}
+  ctx.fillStyle='#27ae60';ctx.font='bold 22px sans-serif';
+  ctx.fillText(`= 1捆 + ${q.b-need} = ${q.ans}`,x+10,170);
+}
+function teachBorrow(ctx,q,W){
+  const units=q.a%10, tens=Math.floor(q.a/10);
+  const need=q.b%10;
+  ctx.font='18px sans-serif';ctx.fillStyle='#555';
+  ctx.fillText(`个位不够减，拆开一捆（10个一）！`,20,60);
+  ctx.fillText(`${q.a} = ${tens}个十 + ${units}个一`,20,85);
+  ctx.fillText(`个位 ${units} 不够减 ${need}，借1当10：10+${units}-${need} = ${10+units-need}`,20,110);
+  ctx.fillText(`十位变成 ${tens-1}，所以答案是 ${q.ans}`,20,135);
+  // 画一捆拆开
+  let x=40,y=180;
+  ctx.fillStyle='#f6b93b';ctx.fillRect(x,y,50,35);
+  ctx.fillStyle='#000';ctx.font='bold 14px sans-serif';ctx.fillText('1捆',x+8,y+22);
+  // 拆开箭头
+  ctx.fillStyle='#e74c3c';
+  for(let i=0;i<10;i++){stick(ctx,x+70+i*12,y,'#e74c3c');}
+}
+function teachMul(ctx,q,W){
+  ctx.font='18px sans-serif';ctx.fillStyle='#555';
+  ctx.fillText(`${q.a} × ${q.b} 就是 ${q.b} 个 ${q.a} 相加`,20,60);
+  let y=100;
+  for(let r=0;r<q.b;r++){
+    for(let c=0;c<q.a;c++){
+      ctx.fillStyle=['#e74c3c','#3498db','#2ecc71','#f39c12'][r%4];
+      ctx.beginPath();ctx.arc(50+c*25,y,9,0,Math.PI*2);ctx.fill();
+    }
+    y+=25;
+  }
+  ctx.fillStyle='#27ae60';ctx.font='bold 22px sans-serif';
+  ctx.fillText(`一共 ${q.ans} 个！`,300,y-15);
+}
 
-/* 清屏按钮 */
-clearBtn.onclick = function(){
-  document.querySelectorAll(".text-item").forEach(item=>item.remove());
-  localStorage.removeItem(storageKey);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-};
+// ============ 结算 ============
+function endBattle(){
+  const stars=correctCount===totalQ?3:correctCount>=totalQ-1?2:correctCount>=totalQ-2?1:0;
+  const key=`${selGrade}_${curLevel}`;
+  const old=S.progress[key]||{stars:0};
+  S.progress[key]={stars:Math.max(old.stars,stars)};
+  const coin=stars*10+rnd(0,5);
+  S.gold+=coin;S.stars+=stars;
+  S.bestAcc.push(Math.round(correctCount/totalQ*100));
+  if(S.bestAcc.length>10)S.bestAcc.shift();
+  save();
+  document.getElementById('resStars').textContent=stars===3?'⭐⭐⭐':stars===2?'⭐⭐☆':stars===1?'⭐☆☆':'☆☆☆';
+  document.getElementById('resText').textContent=`答对 ${correctCount}/${totalQ} 题${stars===3?'，完美通关！':'，继续加油！'}`;
+  document.getElementById('resCoin').textContent=coin;
+  showScreen('result');
+}
+function nextLevel(){
+  if(curLevel<LEVELS.length-1){curLevel++;startBattle();}
+  else showScreen('map');
+}
 
-/* 文字点击输入 */
-document.body.addEventListener("click", function(e){
-  if(mode !== "write") return;
-  if(e.target.classList.contains("text-item") || e.target.classList.contains("tool-btn") || e.target.classList.contains("color-circle")) return;
+// ============ 商店 ============
+function renderShop(){
+  document.getElementById('shopGold').textContent=S.gold;
+  document.getElementById('skinList').innerHTML=SKINS.map(s=>{
+    const owned=S.skins.includes(s.id);
+    const using=S.skin===s.id;
+    return `<div class="skin-item">
+      <span class="skin-emoji">${s.emoji}</span>
+      <span style="flex:1;margin-left:10px;">${s.name}</span>
+      ${using?'<span style="color:#4cd137;">使用中</span>':owned?`<button class="btn small secondary" onclick="useSkin('${s.id}')">使用</button>`:`<button class="btn small gold" onclick="buySkin('${s.id}')">💰 ${s.cost}</button>`}
+    </div>`;
+  }).join('');
+}
+function buySkin(id){
+  const s=SKINS.find(x=>x.id===id);
+  if(S.gold<s.cost){alert('金币不够，多打怪赚金币吧！');return;}
+  S.gold-=s.cost;S.skins.push(id);S.skin=id;save();renderShop();
+}
+function useSkin(id){S.skin=id;save();renderShop();}
 
-  let clickX = e.clientX;
-  const maxLeft = window.innerWidth - 20;
-  if(clickX > maxLeft) clickX = maxLeft;
+// ============ 日记 ============
+function renderDiary(){
+  const total=S.history.length;
+  const ok=S.history.filter(h=>h.ok).length;
+  document.getElementById('dTotal').textContent=total;
+  document.getElementById('dAcc').textContent=total?Math.round(ok/total*100)+'%':'0%';
+  document.getElementById('dStars').textContent=S.stars;
+  document.getElementById('dCoin').textContent=S.gold;
+  // 趋势图
+  const c=document.getElementById('chartCanvas'),ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#ddd';ctx.strokeRect(0,0,c.width,c.height);
+  const data=S.bestAcc;
+  if(data.length){
+    ctx.strokeStyle='#e74c3c';ctx.lineWidth=3;ctx.beginPath();
+    data.forEach((v,i)=>{
+      const x=40+i*(c.width-80)/Math.max(1,data.length-1);
+      const y=c.height-30-v/100*(c.height-60);
+      i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+      ctx.fillStyle='#3498db';ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#333';ctx.font='12px sans-serif';ctx.fillText(v+'%',x-15,y-10);
+    });
+    ctx.stroke();
+  }
+  ctx.fillStyle='#999';ctx.font='14px sans-serif';ctx.fillText('正确率(%)',10,20);
+  // 薄弱点
+  const weak=Object.entries(S.wrong).filter(([k,v])=>v.tot>=2&&v.bad/v.tot>0.4).sort((a,b)=>b[1].bad/b[1].tot-a[1].bad/a[1].tot);
+  document.getElementById('weakList').innerHTML=weak.length?weak.map(([k,v])=>`<span class="weak-tag">${k} ${Math.round(v.bad/v.tot*100)}%错</span>`).join(''):'<span style="opacity:.6;">暂无明显薄弱点，继续保持！</span>';
+  // 推荐复习关卡
+  document.getElementById('reviewList').innerHTML=weak.length?weak.map(([k])=>{
+    const idx=LEVELS.findIndex(l=>l.k===k);
+    return `<span class="lvl-tag" onclick="gotoReview(${idx})">🔁 ${k} (点击去复习)</span>`;
+  }).join(''):'<span style="opacity:.6;">系统暂未推荐复习关卡</span>';
+}
+function gotoReview(i){
+  curLevel=i;startBattle();
+}
 
-  let div = document.createElement("div");
-  div.className = "text-item";
-  div.contentEditable = true;
-  div.style.left = clickX + "px";
-  div.style.top = e.clientY + "px";
-  div.style.color = currentColor;
-  document.body.appendChild(div);
-  div.focus();
-
-  div.addEventListener("input", saveData);
-  div.addEventListener("blur", function(){
-    if(this.innerText.trim() === "") this.remove();
-    saveData();
-  });
-});
+// ============ 通用 ============
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('scr-'+name).classList.add('active');
+  document.getElementById('topbar').style.display=name==='start'?'none':'flex';
+  if(name==='map')renderMap();
+  if(name==='shop')renderShop();
+  if(name==='diary')renderDiary();
+  updateTopbar();
+}
+function updateTopbar(){
+  document.getElementById('tbGold').textContent='💰 '+S.gold;
+  document.getElementById('tbInfo').textContent=`${selGrade}年级 · ${selChar}`;
+}
+function logout(){
+  if(confirm('确定退出本次冒险？进度已自动保存。')){
+    showScreen('start');
+  }
+}
+initStart();
 </script>
 </body>
 </html>
