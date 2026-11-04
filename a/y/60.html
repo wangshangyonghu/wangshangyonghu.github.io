@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>贴纸制作@网上用户</title>
+<meta name="keywords" content="贴纸制作,图片贴纸,贴图,照片加贴纸">
+<meta name="description" content="上传一张主图，再上传图片做贴纸，可随意移动、缩放、旋转，合成保存">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:inherit;background:#f2f3f5;color:#333;padding:12px;}
+.wrap{max-width:888px;margin:0 auto;}
+h1{font-size:19px;text-align:center;margin-bottom:8px;}
+.tip{font-size:12px;color:#888;text-align:center;margin-bottom:10px;line-height:1.6;}
+.stageBox{background:#fff;border-radius:6px;padding:8px;}
+.stage{position:relative;margin:0 auto;background:#222;border-radius:4px;overflow:hidden;min-height:300px;}
+.stage .bg{width:100%;display:block;}
+.stage .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#888;font-size:14px;}
+.sticker{position:absolute;cursor:move;touch-action:none;}
+.sticker img{max-width:100%;height:auto;display:block;pointer-events:none;}
+.sticker.sel{outline:2px solid #2196f3;}
+.sticker .hd{position:absolute;width:22px;height:22px;border-radius:50%;background:#2196f3;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;pointer-events:auto;}
+.sticker .scale{right:-12px;bottom:-12px;cursor:nwse-resize;}
+.sticker .rotate{left:50%;top:-34px;transform:translateX(-50%);cursor:grab;font-size:12px;}
+.sticker .del{right:-12px;top:-12px;background:#f44336;cursor:pointer;font-size:13px;}
+.btns{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+button{border:0;border-radius:5px;padding:10px 14px;font-size:14px;cursor:pointer;}
+.primary{background:#388e3c;color:#fff;}
+.blue{background:#1976d2;color:#fff;}
+.gray{background:#607d8b;color:#fff;}
+.red{background:#d32f2f;color:#fff;}
+.how{margin-top:12px;background:#fff;border-radius:6px;padding:12px 14px;font-size:12px;line-height:1.8;color:#666;}
+.mask{display:none;position:fixed;left:0;top:0;right:0;bottom:0;width:100vw;height:100vh;background:rgba(0,0,0,.9);z-index:9999;overflow:auto;padding:16px;}
+.mask.on{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.mask img{max-width:100%;max-height:65vh;height:auto;width:auto;display:block;background:#fff;}
+.mask .tip2{color:#fff;font-size:14px;margin:0 0 10px;text-align:center;line-height:1.6;}
+.mask .close{margin-top:12px;background:#d32f2f;}
+.mask .dl{background:#1976d2;}
+@media(max-width:480px){h1{font-size:16px;}button{padding:9px 11px;font-size:13px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>贴纸制作</h1>
+  <div class="tip">先传一张主图做底图 · 再传的图都当贴纸 · 贴纸可拖动/缩放/旋转</div>
+  <div class="stageBox">
+    <div class="stage" id="stage">
+      <div class="empty" id="empty">点下面「上传主图」开始</div>
+    </div>
+  </div>
+  <div class="btns">
+    <button class="blue" id="btnBg">上传主图</button>
+    <button class="primary" id="btnSticker">上传贴纸</button>
+    <button class="gray" id="btnSave">合成保存</button>
+    <button class="red" id="btnClear">清空</button>
+  </div>
+  <div class="how">
+    <b>用法：</b><br>
+    1. 先点「上传主图」传一张底图；<br>
+    2. 再点「上传贴纸」传图片，每传一张就出现在中间；<br>
+    3. 点一下贴纸选中（蓝框）：按住中间拖动位置；拖右下角圆点缩放；拖顶部圆点旋转；右上角红叉删除；<br>
+    4. 排好点「合成保存」，弹窗后长按图保存到相册。
+  </div>
+</div>
+<input type="file" id="fileBg" accept="image/*" hidden>
+<input type="file" id="fileSticker" accept="image/*" hidden>
+<div class="mask" id="mask">
+  <div class="tip2">长按下面这张图 → 保存到手机相册<br>（电脑上：右键 → 图片另存为）</div>
+  <img id="resultImg" alt="结果">
+  <div style="margin-top:12px;">
+    <button class="dl" id="btnDl">直接下载</button>
+    <button class="close" id="btnClose">关闭</button>
+  </div>
+</div>
+<script src="/a/js/yj.js"></script>
+<script>
+var stage = document.getElementById('stage');
+var bgImg = null; // 底图元素
+var stickers = []; // {el, img, cx%, cy%, w%, rotDeg}
+var sel = null;
+
+document.getElementById('btnBg').addEventListener('click', function(){ document.getElementById('fileBg').click(); });
+document.getElementById('btnSticker').addEventListener('click', function(){ document.getElementById('fileSticker').click(); });
+
+document.getElementById('fileBg').addEventListener('change', function(){
+  if(!this.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    if (bgImg) bgImg.remove();
+    bgImg = new Image();
+    bgImg.className = 'bg';
+    bgImg.onload = function(){
+      stage.innerHTML = '';
+      stage.appendChild(bgImg);
+      // 按底图实际比例撑满宽度，高度自适应
+      stage.style.height = 'auto';
+    };
+    bgImg.src = e.target.result;
+  };
+  reader.readAsDataURL(this.files[0]);
+});
+
+document.getElementById('fileSticker').addEventListener('change', function(){
+  var fs = Array.prototype.slice.call(this.files||[]);
+  fs.forEach(addSticker);
+  this.value = '';
+});
+
+function addSticker(file){
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var wrap = document.createElement('div');
+    wrap.className = 'sticker';
+    var im = new Image();
+    im.onload = function(){
+      wrap.appendChild(im);
+      wrap.innerHTML += '<div class="hd scale">⤡</div><div class="hd rotate">⟳</div><div class="hd del">×</div>';
+      // 初始：中间，宽度占舞台30%
+      var wPct = 30;
+      var hPx = im.naturalHeight / im.naturalWidth * (stage.clientWidth * wPct/100);
+      var hPct = hPx / stage.clientHeight * 100;
+      var st = { el:wrap, img:im, cx:50, cy:50, w:wPct, h:hPct, rot:0 };
+      stickers.push(st);
+      applySticker(st);
+      stage.appendChild(wrap);
+      selectSticker(st);
+      bindSticker(st);
+    };
+    im.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function applySticker(st){
+  // 中心点 cx%,cy%；宽 w%（相对舞台宽）；高按比例
+  st.el.style.left = 'calc(' + st.cx + '% - ' + (st.w/2) + '%)';
+  st.el.style.top  = 'calc(' + st.cy + '% - ' + (st.h/2) + '%)';
+  st.el.style.width = st.w + '%';
+  st.el.style.transform = 'rotate(' + st.rot + 'deg)';
+}
+
+function selectSticker(st){
+  stickers.forEach(function(s){ s.el.classList.remove('sel'); });
+  sel = st;
+  if (st) st.el.classList.add('sel');
+}
+
+stage.addEventListener('pointerdown', function(e){
+  if (e.target === stage || e.target === bgImg) selectSticker(null);
+});
+
+function bindSticker(st){
+  var el = st.el;
+  // 拖动整体移动
+  el.addEventListener('pointerdown', function(e){
+    if (e.target.classList.contains('scale') || e.target.classList.contains('rotate') || e.target.classList.contains('del')) return;
+    e.preventDefault();
+    selectSticker(st);
+    var sx = e.clientX, sy = e.clientY;
+    var cx0 = st.cx, cy0 = st.cy;
+    var sw = stage.clientWidth, sh = stage.clientHeight;
+    function mv(ev){
+      st.cx = cx0 + (ev.clientX - sx)/sw*100;
+      st.cy = cy0 + (ev.clientY - sy)/sh*100;
+      applySticker(st);
+    }
+    function up(){ document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',up); }
+    document.addEventListener('pointermove', mv);
+    document.addEventListener('pointerup', up);
+  });
+  // 缩放
+  el.querySelector('.scale').addEventListener('pointerdown', function(e){
+    e.preventDefault(); e.stopPropagation();
+    selectSticker(st);
+    var sx = e.clientX; var w0 = st.w;
+    var sw = stage.clientWidth;
+    var ratio = st.img.naturalHeight / st.img.naturalWidth;
+    function mv(ev){
+      var dw = (ev.clientX - sx)/sw*100;
+      st.w = Math.max(5, w0 + dw*2);
+      st.h = st.w * ratio;
+      applySticker(st);
+    }
+    function up(){ document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',up); }
+    document.addEventListener('pointermove', mv);
+    document.addEventListener('pointerup', up);
+  });
+  // 旋转
+  el.querySelector('.rotate').addEventListener('pointerdown', function(e){
+    e.preventDefault(); e.stopPropagation();
+    selectSticker(st);
+    var rect = stage.getBoundingClientRect();
+    var cx = rect.left + rect.width * st.cx/100;
+    var cy = rect.top + rect.height * st.cy/100;
+    var a0 = Math.atan2(e.clientY - cy, e.clientX - cx) * 180/Math.PI;
+    var r0 = st.rot;
+    function mv(ev){
+      var a1 = Math.atan2(ev.clientY - cy, ev.clientX - cx) * 180/Math.PI;
+      st.rot = r0 + (a1 - a0);
+      applySticker(st);
+    }
+    function up(){ document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',up); }
+    document.addEventListener('pointermove', mv);
+    document.addEventListener('pointerup', up);
+  });
+  // 删除
+  el.querySelector('.del').addEventListener('pointerdown', function(e){
+    e.preventDefault(); e.stopPropagation();
+    el.remove();
+    stickers = stickers.filter(function(s){ return s!==st; });
+    sel = null;
+  });
+}
+
+document.getElementById('btnClear').addEventListener('click', function(){
+  if (!confirm('清空主图和所有贴纸？')) return;
+  stage.innerHTML = '<div class="empty">点下面「上传主图」开始</div>';
+  bgImg = null; stickers = []; sel = null;
+  stage.style.height = '';
+});
+
+// 合成导出
+document.getElementById('btnSave').addEventListener('click', function(){
+  if (!bgImg){ alert('请先上传主图'); return; }
+  var maxSide = 1200;
+  var iw = bgImg.naturalWidth, ih = bgImg.naturalHeight;
+  var sc = Math.min(1, maxSide/Math.max(iw,ih));
+  var W = Math.round(iw*sc), H = Math.round(ih*sc);
+  var canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(bgImg, 0, 0, W, H);
+  stickers.forEach(function(st){
+    var px = W * st.cx/100;
+    var py = H * st.cy/100;
+    var pw = W * st.w/100;
+    var ph = pw * st.img.naturalHeight / st.img.naturalWidth;
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(st.rot * Math.PI/180);
+    ctx.drawImage(st.img, -pw/2, -ph/2, pw, ph);
+    ctx.restore();
+  });
+  var dataURL = canvas.toDataURL('image/png');
+  document.getElementById('resultImg').src = dataURL;
+  document.getElementById('mask').classList.add('on');
+  document.getElementById('btnDl').onclick = function(){
+    var a = document.createElement('a');
+    a.href = dataURL; a.download = '贴纸作品.png';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ a.remove(); }, 500);
+  };
+});
+document.getElementById('btnClose').addEventListener('click', function(){
+  document.getElementById('mask').classList.remove('on');
+});
+</script>
+</body>
+</html>

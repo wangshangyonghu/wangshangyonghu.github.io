@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>贴纸水印@网上用户</title>
+<meta name="keywords" content="贴纸,水印,图片加文字,照片贴纸">
+<meta name="description" content="主图上加贴纸、文字水印和手写笔迹，拖动缩放旋转，合成保存">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:inherit;background:#f2f3f5;color:#333;padding:12px;}
+.wrap{max-width:888px;margin:0 auto;}
+h1{font-size:19px;text-align:center;margin-bottom:8px;}
+.tip{font-size:12px;color:#888;text-align:center;margin-bottom:10px;}
+.stageBox{background:#fff;border-radius:6px;padding:8px;}
+.stage{position:relative;margin:0 auto;background:#222;border-radius:4px;overflow:hidden;min-height:300px;}
+.stage>img.bg{width:100%;display:block;}
+.stage .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#888;font-size:14px;z-index:0;}
+#drawCv{position:absolute;left:0;top:0;width:100%;height:100%;z-index:40;touch-action:none;display:block;pointer-events:none;}
+#drawCv.penOn{cursor:crosshair;pointer-events:auto;}
+.obj{position:absolute;z-index:20;touch-action:none;cursor:move;}
+.obj img{max-width:100%;height:auto;display:block;pointer-events:none;}
+.obj .t{pointer-events:none;white-space:nowrap;font-weight:bold;line-height:1;}
+.obj.sel{outline:2px solid #2196f3;}
+.obj .h{position:absolute;width:22px;height:22px;border-radius:50%;background:#2196f3;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;pointer-events:auto;}
+.obj .s{right:-12px;bottom:-12px;cursor:nwse-resize;}
+.obj .r{left:50%;top:-34px;transform:translateX(-50%);cursor:grab;font-size:12px;}
+.obj .d{right:-12px;top:-12px;background:#f44336;cursor:pointer;}
+.pbar{display:none;justify-content:center;gap:6px;margin-top:8px;align-items:center;flex-wrap:wrap;}
+.pbar.on{display:flex;}
+.pbar button{padding:5px 10px;font-size:12px;background:#eceff1;color:#333;border:1px solid #ccc;border-radius:4px;}
+.pbar i{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 2px #999;cursor:pointer;display:inline-block;}
+.cbar{display:none;justify-content:center;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.cbar.on{display:flex;}
+.cbar i{width:24px;height:24px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 2px #999;cursor:pointer;display:inline-block;}
+.btns{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+button{border:0;border-radius:5px;padding:10px 14px;font-size:14px;cursor:pointer;}
+.b1{background:#1976d2;color:#fff;}
+.b2{background:#388e3c;color:#fff;}
+.b3{background:#7b1fa2;color:#fff;}
+.b4{background:#607d8b;color:#fff;}
+.b5{background:#d32f2f;color:#fff;}
+.how{margin-top:12px;background:#fff;border-radius:6px;padding:12px 14px;font-size:12px;line-height:1.8;color:#666;}
+.mask{display:none;position:fixed;inset:0;width:100vw;height:100vh;background:rgba(0,0,0,.9);z-index:9999;overflow:auto;padding:16px;}
+.mask.on{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.mask img{max-width:100%;max-height:65vh;height:auto;width:auto;background:#fff;}
+.mask .t2{color:#fff;font-size:14px;margin-bottom:10px;text-align:center;}
+.mask button{margin-top:12px;}
+@media(max-width:480px){h1{font-size:16px;}button{padding:9px 11px;font-size:13px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>贴纸水印</h1>
+  <div class="tip">上传主图 → 加贴纸/文字/手写 → 合成保存</div>
+  <div class="stageBox"><div class="stage" id="stage"><div class="empty">点「上传主图」开始</div><canvas id="drawCv"></canvas></div></div>
+  <div class="cbar" id="cbar">
+    <i style="background:#fff" data-c="#fff"></i>
+    <i style="background:#000" data-c="#000"></i>
+    <i style="background:#f44336" data-c="#f44336"></i>
+    <i style="background:#ffeb3b" data-c="#ffeb3b"></i>
+    <i style="background:#2196f3" data-c="#2196f3"></i>
+    <i style="background:#4caf50" data-c="#4caf50"></i>
+  </div>
+  <div class="pbar" id="pbar">
+    <i style="background:#000" data-c="#000"></i>
+    <i style="background:#f44336" data-c="#f44336"></i>
+    <i style="background:#ffeb3b" data-c="#ffeb3b"></i>
+    <i style="background:#fff" data-c="#fff"></i>
+    <button data-w="4">细</button>
+    <button data-w="8" class="on">中</button>
+    <button data-w="16">粗</button>
+    <button id="btnUndo">撤销</button>
+    <button id="btnClrDraw">清空手写</button>
+  </div>
+  <div class="btns">
+    <button class="b1" id="btnBg">上传主图</button>
+    <button class="b2" id="btnSt">上传贴纸</button>
+    <button class="b3" id="btnTx">加文字</button>
+    <button class="b4" id="btnPen">手写</button>
+    <button class="b4" id="btnSave">合成保存</button>
+    <button class="b5" id="btnClear">清空</button>
+  </div>
+  <div class="how">贴纸/文字：点中后拖动、右下角缩放、顶部旋转、红叉删除；文字选中后上方换色，双击改内容。手写：点「手写」后直接在图上画。<br><b style="color:#d32f2f">⚠ 文字使用系统默认字体，商用前请自行确认字体授权。</b></div>
+</div>
+<input type="file" id="fBg" accept="image/*" hidden>
+<input type="file" id="fSt" accept="image/*" multiple hidden>
+<div class="mask" id="mask">
+  <div class="t2">长按下图保存到相册<br>（电脑：右键另存为）</div>
+  <img id="rImg">
+  <div><button class="b4" id="btnDl">直接下载</button> <button class="b5" id="btnClose">关闭</button></div>
+</div>
+
+<script>
+function $(id){return document.getElementById(id);}
+var stage=$('stage'), bg=null, list=[], sel=null, FONT=28;
+var cv=$('drawCv'), ctx=cv.getContext('2d');
+
+// ===== 上传主图 =====
+$('btnBg').onclick=function(){$('fBg').click();};
+$('fBg').onchange=function(){
+  if(!this.files[0])return;
+  var r=new FileReader();
+  r.onload=function(e){
+    bg=new Image(); bg.className='bg';
+    bg.onload=function(){
+      var oldE=stage.querySelector('.empty'); if(oldE)oldE.remove();
+      var oldBg=stage.querySelector('img.bg'); if(oldBg)oldBg.remove();
+      stage.insertBefore(bg, stage.firstChild);
+      resizeCv();
+    };
+    bg.src=e.target.result;
+  };
+  r.readAsDataURL(this.files[0]);
+};
+
+// ===== 手写canvas =====
+var penOn=false, penColor='#000', penW=8, drawing=false, lastX=0, lastY=0;
+var strokes=[];
+function resizeCv(){
+  cv.width=stage.clientWidth; cv.height=stage.clientHeight;
+  redraw();
+}
+function drawSeg(x1,y1,x2,y2,c,w){
+  ctx.strokeStyle=c;ctx.lineWidth=w;ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+}
+function redraw(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  strokes.forEach(function(s){
+    for(var i=1;i<s.pts.length;i++)drawSeg(s.pts[i-1][0],s.pts[i-1][1],s.pts[i][0],s.pts[i][1],s.c,s.w);
+  });
+}
+cv.addEventListener('pointerdown',function(e){
+  if(!penOn)return;
+  e.preventDefault();e.stopPropagation();
+  drawing=true;
+  var r=cv.getBoundingClientRect();
+  var x=(e.clientX-r.left)*cv.width/r.width, y=(e.clientY-r.top)*cv.height/r.height;
+  lastX=x;lastY=y;
+  strokes.push({c:penColor,w:penW,pts:[[x,y]]});
+  cv.setPointerCapture(e.pointerId);
+});
+cv.addEventListener('pointermove',function(e){
+  if(!drawing||!penOn)return;
+  e.preventDefault();
+  var r=cv.getBoundingClientRect();
+  var x=(e.clientX-r.left)*cv.width/r.width, y=(e.clientY-r.top)*cv.height/r.height;
+  strokes[strokes.length-1].pts.push([x,y]);
+  drawSeg(lastX,lastY,x,y,penColor,penW);
+  lastX=x;lastY=y;
+});
+function upPen(){drawing=false;}
+cv.addEventListener('pointerup',upPen);cv.addEventListener('pointercancel',upPen);
+
+$('btnPen').onclick=function(){
+  penOn=!penOn;
+  cv.classList.toggle('penOn',penOn);
+  $('pbar').classList.toggle('on',penOn);
+  this.textContent=penOn?'退出手写':'手写';
+};
+$('pbar').onclick=function(e){
+  var i=e.target.closest('i');
+  if(i){penColor=i.dataset.c;return;}
+  var b=e.target.closest('button'); if(!b)return;
+  if(b.id==='btnUndo'){strokes.pop();redraw();return;}
+  if(b.id==='btnClrDraw'){strokes=[];redraw();return;}
+  if(b.dataset.w){
+    penW=parseInt(b.dataset.w,10);
+    this.querySelectorAll('button[data-w]').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+  }
+};
+
+// ===== 贴纸 =====
+$('btnSt').onclick=function(){$('fSt').click();};
+$('fSt').onchange=function(){
+  Array.prototype.slice.call(this.files||[]).forEach(addSticker);
+  this.value='';
+};
+function addSticker(file){
+  var r=new FileReader();
+  r.onload=function(e){
+    var im=new Image();
+    im.onload=function(){
+      var el=document.createElement('div');el.className='obj';
+      el.appendChild(im);
+      el.insertAdjacentHTML('beforeend','<div class="h s">⤡</div><div class="h r">⟳</div><div class="h d">×</div>');
+      var o={type:'img',el:el,img:im,cx:50,cy:50,w:30,h:30*im.naturalHeight/im.naturalWidth,rot:0};
+      list.push(o);place(o);stage.appendChild(el);pick(o);drag(o);
+    };
+    im.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+// ===== 文字 =====
+$('btnTx').onclick=function(){
+  var t=prompt('输入文字（系统默认字体，商用前请确认字体授权）：','水印文字');
+  if(t===null)return;t=t.trim()||'水印文字';
+  var el=document.createElement('div');el.className='obj';
+  el.innerHTML='<div class="t"></div><div class="h s">⤡</div><div class="h r">⟳</div><div class="h d">×</div>';
+  var o={type:'tx',el:el,td:el.querySelector('.t'),cx:50,cy:50,s:1,rot:0,color:'#fff',text:t};
+  list.push(o);place(o);stage.appendChild(el);pick(o);drag(o);
+  el.querySelector('.t').ondblclick=function(){
+    var nt=prompt('修改文字：',o.text);
+    if(nt!==null&&nt.trim())o.text=nt;
+  };
+};
+
+function place(o){
+  if(o.type==='img'){
+    o.el.style.left='calc('+o.cx+'% - '+o.w/2+'%)';
+    o.el.style.top='calc('+o.cy+'% - '+o.h/2+'%)';
+    o.el.style.width=o.w+'%';
+    o.el.style.transform='rotate('+o.rot+'deg)';
+  }else{
+    o.td.style.fontSize=FONT*o.s+'px';
+    o.td.style.color=o.color;o.td.textContent=o.text;
+    o.el.style.left=o.cx+'%';o.el.style.top=o.cy+'%';
+    o.el.style.transform='translate(-50%,-50%) rotate('+o.rot+'deg)';
+  }
+}
+function pick(o){
+  list.forEach(function(x){x.el.classList.remove('sel');});
+  sel=o;if(o)o.el.classList.add('sel');
+  $('cbar').classList.toggle('on',o&&o.type==='tx');
+}
+stage.addEventListener('pointerdown',function(e){
+  if(e.target===stage||e.target===bg)pick(null);
+});
+$('cbar').onclick=function(e){
+  var i=e.target.closest('i');
+  if(!i||!sel||sel.type!=='tx')return;
+  sel.color=i.dataset.c;place(sel);
+};
+
+function drag(o){
+  var el=o.el;
+  el.addEventListener('pointerdown',function(e){
+    if(e.target.classList.contains('s')||e.target.classList.contains('r')||e.target.classList.contains('d'))return;
+    e.preventDefault();pick(o);
+    var sx=e.clientX,sy=e.clientY,cx=o.cx,cy=o.cy,sw=stage.clientWidth,sh=stage.clientHeight;
+    var mv=function(ev){
+      o.cx=cx+(ev.clientX-sx)/sw*100;o.cy=cy+(ev.clientY-sy)/sh*100;place(o);
+    };
+    var up=function(){document.removeEventListener('pointermove',mv);document.removeEventListener('pointerup',up);};
+    document.addEventListener('pointermove',mv);document.addEventListener('pointerup',up);
+  });
+  el.querySelector('.s').onpointerdown=function(e){
+    e.preventDefault();e.stopPropagation();pick(o);
+    var sx=e.clientX;
+    if(o.type==='img'){
+      var w0=o.w,sw=stage.clientWidth,rt=o.img.naturalHeight/o.img.naturalWidth;
+      var mv=function(ev){o.w=Math.max(5,w0+(ev.clientX-sx)/sw*200);o.h=o.w*rt;place(o);};
+    }else{
+      var s0=o.s;
+      var mv=function(ev){o.s=Math.max(.3,s0+(ev.clientX-sx)/200);place(o);};
+    }
+    var up=function(){document.removeEventListener('pointermove',mv);document.removeEventListener('pointerup',up);};
+    document.addEventListener('pointermove',mv);document.addEventListener('pointerup',up);
+  };
+  el.querySelector('.r').onpointerdown=function(e){
+    e.preventDefault();e.stopPropagation();pick(o);
+    var rc=stage.getBoundingClientRect();
+    var cx=rc.left+rc.width*o.cx/100,cy=rc.top+rc.height*o.cy/100;
+    var a0=Math.atan2(e.clientY-cy,e.clientX-cx)*180/Math.PI,r0=o.rot;
+    var mv=function(ev){
+      var a1=Math.atan2(ev.clientY-cy,ev.clientX-cx)*180/Math.PI;
+      o.rot=r0+(a1-a0);place(o);
+    };
+    var up=function(){document.removeEventListener('pointermove',mv);document.removeEventListener('pointerup',up);};
+    document.addEventListener('pointermove',mv);document.addEventListener('pointerup',up);
+  };
+  el.querySelector('.d').onpointerdown=function(e){
+    e.preventDefault();e.stopPropagation();
+    el.remove();list=list.filter(function(x){return x!==o;});sel=null;
+    $('cbar').classList.remove('on');
+  };
+}
+
+// ===== 清空 =====
+$('btnClear').onclick=function(){
+  if(!confirm('清空全部？'))return;
+  if(bg){bg.remove();bg=null;}
+  list.forEach(function(o){o.el.remove();});list=[];sel=null;strokes=[];
+  ctx.clearRect(0,0,cv.width,cv.height);
+  $('cbar').classList.remove('on');$('pbar').classList.remove('on');
+  penOn=false;$('btnPen').textContent='手写';
+  if(!stage.querySelector('.empty')){
+    var e=document.createElement('div');e.className='empty';e.textContent='点「上传主图」开始';
+    stage.insertBefore(e,stage.firstChild);
+  }
+};
+
+// ===== 合成保存 =====
+$('btnSave').onclick=function(){
+  if(!bg){alert('先上传主图');return;}
+  try{
+    var mx=1200,iw=bg.naturalWidth,ih=bg.naturalHeight,sc=Math.min(1,mx/Math.max(iw,ih));
+    var W=Math.round(iw*sc),H=Math.round(ih*sc);
+    var c=document.createElement('canvas');c.width=W;c.height=H;
+    var x=c.getContext('2d');
+    x.drawImage(bg,0,0,W,H);
+    if(cv.width>0 && cv.height>0){ try{ x.drawImage(cv,0,0,W,H); }catch(e){} }
+    list.forEach(function(o){
+      var px=W*o.cx/100,py=H*o.cy/100;
+      x.save();x.translate(px,py);x.rotate(o.rot*Math.PI/180);
+      if(o.type==='img'){
+        var pw=W*o.w/100,ph=pw*o.img.naturalHeight/o.img.naturalWidth;
+        x.drawImage(o.img,-pw/2,-ph/2,pw,ph);
+      }else{
+        x.font='bold '+FONT*o.s*sc+'px sans-serif';
+        x.fillStyle=o.color;x.textAlign='center';x.textBaseline='middle';
+        x.fillText(o.text,0,0);
+      }
+      x.restore();
+    });
+    var du=c.toDataURL('image/png');
+    // 电脑端直接下载
+    var a=document.createElement('a');a.href=du;a.download='贴纸水印_'+Date.now()+'.png';
+    document.body.appendChild(a);a.click();a.remove();
+    // 手机/微信端弹预览层长按保存
+    $('rImg').src=du;$('mask').classList.add('on');
+    $('btnDl').onclick=function(){
+      var a2=document.createElement('a');a2.href=du;a2.download='贴纸水印.png';
+      document.body.appendChild(a2);a2.click();a2.remove();
+    };
+  }catch(e){alert('出错了：'+e.message);}
+};
+$('btnClose').onclick=function(){$('mask').classList.remove('on');};
+
+resizeCv();
+</script>
+</body>
+</html>
