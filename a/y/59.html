@@ -31,6 +31,12 @@ button{border:0;border-radius:5px;padding:10px 16px;font-size:14px;cursor:pointe
 .gray{background:#607d8b;color:#fff;}
 .red{background:#d32f2f;color:#fff;}
 .how{margin-top:16px;background:#fff;border-radius:6px;padding:12px 16px;font-size:13px;line-height:1.8;color:#555;}
+.mask{display:none;position:fixed;left:0;top:0;right:0;bottom:0;width:100vw;height:100vh;background:rgba(0,0,0,.9);z-index:9999;overflow:auto;padding:16px;}
+.mask.on{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.mask img{max-width:100%;max-height:65vh;height:auto;width:auto;display:block;background:#fff;box-shadow:0 0 20px rgba(0,0,0,.5);}
+.mask .tip2{color:#fff;font-size:14px;margin:0 0 10px;text-align:center;line-height:1.6;}
+.mask .close{margin-top:12px;background:#d32f2f;}
+.mask .dl{background:#1976d2;}
 @media(max-width:480px){h1{font-size:17px;}.tip{font-size:12px;}button{padding:9px 12px;font-size:13px;}}
 </style>
 </head>
@@ -62,7 +68,14 @@ button{border:0;border-radius:5px;padding:10px 16px;font-size:14px;cursor:pointe
 </div>
 <input type="file" id="fileSingle" accept="image/*" hidden>
 <input type="file" id="fileMulti" accept="image/*" multiple hidden>
-
+<div class="mask" id="mask">
+  <div class="tip2">长按下面这张图 → 保存到手机相册<br>（电脑上：右键 → 图片另存为）</div>
+  <img id="resultImg" alt="拼图结果">
+  <div style="margin-top:12px;">
+    <button class="dl" id="btnDl">直接下载</button>
+    <button class="close" id="btnClose">关闭预览</button>
+  </div>
+</div>
 <script>
 // 横排时：格数 -> [行, 列]
 var LAYOUT_H = {2:[1,2], 3:[1,3], 4:[2,2], 6:[2,3], 9:[3,3], 12:[3,4]};
@@ -221,13 +234,22 @@ document.getElementById('btnSave').addEventListener('click', function(){
     var dw = sw*sc, dh = sh*sc;
     ctx.drawImage(im, ox+(inner-dw)/2, oy+(inner-dh)/2, dw, dh);
   });
-  canvas.toBlob(function(blob){
+  // 用 toDataURL 转 base64，微信里长按才能保存成功
+  var dataURL = canvas.toDataURL('image/png');
+  var img = document.getElementById('resultImg');
+  img.src = dataURL;
+  document.getElementById('mask').classList.add('on');
+  // 直接下载按钮（电脑浏览器可用）
+  document.getElementById('btnDl').onclick = function(){
     var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = dataURL;
     a.download = curN+'宫格拼图.png';
     document.body.appendChild(a); a.click();
-    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
-  }, 'image/png');
+    setTimeout(function(){ a.remove(); }, 500);
+  };
+});
+document.getElementById('btnClose').addEventListener('click', function(){
+  document.getElementById('mask').classList.remove('on');
 });
 
 calcRC(); buildGrid();
