@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多宫格拼图裁剪版@网上用户</title>
+<meta name="keywords" content="多宫格拼图,九宫格拼图,两宫格,图片拼接,上传图片拼图,图片裁剪">
+<meta name="description" content="上传2-9张图片，横排竖排自由切换，交换位置，每张图可先裁剪，一键合成保存">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:inherit;background:#f2f3f5;color:#333;padding:16px;}
+.wrap{max-width:888px;margin:0 auto;}
+h1{font-size:20px;text-align:center;margin-bottom:6px;}
+.tip{font-size:13px;color:#888;text-align:center;margin-bottom:12px;line-height:1.6;}
+.bar2{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:8px;}
+.bar2 button{padding:6px 12px;font-size:13px;background:#eceff1;color:#455a64;border:1px solid #cfd8dc;}
+.bar2 button.on{background:#1976d2;color:#fff;border-color:#1976d2;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:#fff;padding:4px;border-radius:6px;}
+.grid.cols1{grid-template-columns:repeat(1,1fr);}
+.grid.cols2{grid-template-columns:repeat(2,1fr);}
+.grid.cols3{grid-template-columns:repeat(3,1fr);}
+.grid.cols4{grid-template-columns:repeat(4,1fr);}
+.cell{position:relative;aspect-ratio:1/1;background:#fafafa;border:1px solid #e0e0e0;border-radius:3px;overflow:hidden;cursor:pointer;user-select:none;-webkit-user-select:none;}
+.cell img{max-width:100%;height:auto;display:block;width:100%;height:100%;object-fit:cover;border:4px solid #fff;box-sizing:border-box;position:relative;z-index:1;}
+.cell.sel{outline:3px solid #ff5722;outline-offset:-3px;}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:#bbb;pointer-events:none;z-index:0;}
+.num{position:absolute;left:3px;top:3px;background:rgba(0,0,0,.5);color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;pointer-events:none;z-index:2;}
+.btns{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+button{border:0;border-radius:5px;padding:10px 16px;font-size:14px;cursor:pointer;}
+.primary{background:#388e3c;color:#fff;}
+.gray{background:#607d8b;color:#fff;}
+.red{background:#d32f2f;color:#fff;}
+.how{margin-top:16px;background:#fff;border-radius:6px;padding:12px 16px;font-size:13px;line-height:1.8;color:#555;}
+.mask{display:none;position:fixed;left:0;top:0;right:0;bottom:0;width:100vw;height:100vh;background:rgba(0,0,0,.9);z-index:9999;overflow:auto;padding:16px;}
+.mask.on{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.mask img{max-width:100%;max-height:65vh;height:auto;width:auto;display:block;background:#fff;box-shadow:0 0 20px rgba(0,0,0,.5);}
+.mask .tip2{color:#fff;font-size:14px;margin:0 0 10px;text-align:center;line-height:1.6;}
+.mask .close{margin-top:12px;background:#d32f2f;}
+.mask .dl{background:#1976d2;}
+/* 裁剪框样式 */
+.cropwrap{position:relative;background:#111;border-radius:6px;overflow:hidden;touch-action:none;box-shadow:0 0 20px rgba(0,0,0,.5);}
+.cropimg{position:absolute;left:0;top:0;display:block;max-width:none;max-height:none;width:auto;height:auto;pointer-events:none;}
+.cropbox{position:absolute;border:1px solid #fff;box-shadow:0 0 0 9999px rgba(0,0,0,.55);cursor:move;user-select:none;-webkit-user-select:none;}
+.cropbox .h{position:absolute;width:20px;height:20px;border:2px solid #fff;background:rgba(0,0,0,.35);}
+.h.tl{left:-2px;top:-2px;cursor:nwse-resize;}
+.h.tr{right:-2px;top:-2px;cursor:nesw-resize;}
+.h.bl{left:-2px;bottom:-2px;cursor:nesw-resize;}
+.h.br{right:-2px;bottom:-2px;cursor:nwse-resize;}
+.cropbtns{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+@media(max-width:480px){h1{font-size:17px;}.tip{font-size:12px;}button{padding:9px 12px;font-size:13px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>多宫格拼图</h1>
+  <div class="tip">选格数和横/竖方向 · 上传图片 · 点一张选中、再点另一格交换 · 需要裁图可开自动裁或手动裁</div>
+  <div class="bar2" id="layout">
+    <button data-n="2">2张</button>
+    <button data-n="3">3张</button>
+    <button data-n="4">4张</button>
+    <button data-n="6">6张</button>
+    <button data-n="9" class="on">9张</button>
+    <button data-n="12">12张</button>
+  </div>
+  <div class="bar2" id="orient">
+    <button data-o="h" class="on">左右拼（横排）</button>
+    <button data-o="v">上下拼（竖排）</button>
+  </div>
+  <div class="grid cols3" id="grid"></div>
+  <div class="btns">
+    <button class="primary" id="btnSave">合成并保存大图</button>
+    <button class="gray" id="btnAdd">批量上传</button>
+    <button class="gray" id="btnAuto">自动裁正方形：关（保留原图）</button>
+    <button class="gray" id="btnCrop">裁剪选中图</button>
+    <button class="red" id="btnClear">清空</button>
+  </div>
+  <div class="how">
+    <b>使用说明（一看就会）</b><br>
+    <br>
+    <b>① 选布局：</b>点上方数字选张数（2/3/4/6/9/12），再点「左右拼」或「上下拼」。<br>
+    <b>② 上传图片：</b>点任意空格子选一张图，或点「批量上传」一次选多张。<br>
+    <b>③ 自动裁正方形：</b>默认「关（保留原图）」，上传图片不裁剪直接拼。需要自动裁方就点这个按钮切到「开」。<br>
+    <b>④ 手动裁一张：</b>先点一下那张图，边框变红＝选中 → 点「裁剪选中图」→ 拖动白框选位置、拖四角改大小 → 点「应用裁剪」。<br>
+    <b>⑤ 手动裁剪一张：</b>先点一下那张图，边框变红＝选中 → 点「裁剪选中图」→ 拖动白框选位置、拖四角改大小 → 点「应用裁剪」→ 再点这张图取消红框 → 换下一张重复。<br>
+    <b>⑥ 交换位置：</b>先点一张图（红框选中），再点另一张图即互换；电脑上也能直接拖拽。<br>
+    <b>⑦ 合成保存：</b>排好后点「合成并保存大图」，自动下载成品图。<br>
+    <b>⑧ 温馨提示：</b>所有图片只在本机浏览器里处理，关闭页面即清除，不会上传泄露。
+  </div>
+</div>
+<input type="file" id="fileSingle" accept="image/*" hidden>
+<input type="file" id="fileMulti" accept="image/*" multiple hidden>
+<div class="mask" id="mask">
+  <div class="tip2">长按下面这张图 → 保存到手机相册<br>（电脑上：右键 → 图片另存为）</div>
+  <img id="resultImg" alt="拼图结果">
+  <div style="margin-top:12px;">
+    <button class="dl" id="btnDl">直接下载</button>
+    <button class="close" id="btnClose">关闭预览</button>
+  </div>
+</div>
+<div class="mask" id="cropMask">
+  <div class="tip2">拖动方框选位置 · 拖四角改大小 · 应用后该格图片即被裁成方形</div>
+  <div class="cropwrap" id="cropWrap">
+    <img class="cropimg" id="cropImg" alt="">
+    <div class="cropbox" id="cropBox">
+      <span class="h tl"></span><span class="h tr"></span><span class="h bl"></span><span class="h br"></span>
+    </div>
+  </div>
+  <div class="cropbtns">
+    <button class="dl" id="cropReset">还原</button>
+    <button class="dl" id="cropApply">应用裁剪</button>
+    <button class="close" id="cropCancel">取消</button>
+  </div>
+</div>
+
+<script>
+// 横排时：格数 -> [行, 列]
+var LAYOUT_H = {2:[1,2], 3:[1,3], 4:[2,2], 6:[2,3], 9:[3,3], 12:[3,4]};
+var curN = 9, curO = 'h';
+var curR = 3, curC = 3;
+var savedData = {};
+var grid = document.getElementById('grid');
+var cells = [];
+var selIndex = -1, pendingIndex = -1;
+var CELL = 400;
+
+function calcRC(){
+  var rc = LAYOUT_H[curN];
+  if (curO === 'v'){ curR = rc[1]; curC = rc[0]; } // 竖排=行列互换
+  else { curR = rc[0]; curC = rc[1]; }
+}
+
+function buildGrid(){
+  grid.innerHTML = '';
+  cells = [];
+  grid.className = 'grid cols' + curC;
+  for (var i=0;i<curN;i++){
+    var c = document.createElement('div');
+    c.className = 'cell';
+    c.innerHTML = '<span class="num">'+(i+1)+'</span><span class="ph">点击上传</span>';
+    bindCell(c, i);
+    grid.appendChild(c);
+    cells.push(c);
+    if (savedData[i]) setImgData(c, savedData[i]);
+  }
+  selIndex = -1;
+}
+
+function bindCell(c, idx){
+  c.addEventListener('click', function(){
+    var hasImg = !!c.querySelector('img');
+    if (selIndex === -1){
+      if (!hasImg){
+        pendingIndex = idx;
+        document.getElementById('fileSingle').value = '';
+        document.getElementById('fileSingle').click();
+      } else { selIndex = idx; refreshSel(); }
+    } else {
+      if (selIndex === idx){ selIndex = -1; refreshSel(); }
+      else { swapCells(selIndex, idx); selIndex = -1; refreshSel(); }
+    }
+  });
+  c.setAttribute('draggable','true');
+  c.addEventListener('dragstart', function(e){ e.dataTransfer.setData('text/plain', idx); });
+  c.addEventListener('dragover', function(e){ e.preventDefault(); });
+  c.addEventListener('drop', function(e){
+    e.preventDefault();
+    var f = parseInt(e.dataTransfer.getData('text/plain'),10);
+    if (!isNaN(f) && f !== idx){ swapCells(f, idx); }
+  });
+}
+
+function refreshSel(){ cells.forEach(function(c,i){ c.classList.toggle('sel', i===selIndex); }); }
+
+function swapCells(a,b){
+  var ia = cells[a].querySelector('img');
+  var ib = cells[b].querySelector('img');
+  if (ia) cells[a].removeChild(ia);
+  if (ib) cells[b].removeChild(ib);
+  if (ib) cells[a].appendChild(ib);
+  if (ia) cells[b].appendChild(ia);
+}
+
+function setImgData(cellEl, dataUrl){
+  var old = cellEl.querySelector('img');
+  if (old) cellEl.removeChild(old);
+  var ph = cellEl.querySelector('.ph');
+  if (ph) ph.style.display = 'none';
+  var im = new Image();
+  im.onload = function(){ cellEl.appendChild(im); };
+  im.src = dataUrl;
+}
+
+var autoCrop = false; // true=上传自动裁正方形；false=保留原图，手动裁剪
+
+function loadImageInto(file, idx){
+  var reader = new FileReader();
+  reader.onload = function(e){
+    if (!autoCrop){
+      // 关闭自动裁剪：保留原图，由用户自己手动逐张裁剪
+      savedData[idx] = e.target.result;
+      setImgData(cells[idx], e.target.result);
+      return;
+    }
+    var img = new Image();
+    img.onload = function(){
+      // 上传即自动居中裁成正方形，无需手动点裁剪
+      var side = Math.min(img.naturalWidth, img.naturalHeight);
+      var sx = (img.naturalWidth - side)/2;
+      var sy = (img.naturalHeight - side)/2;
+      var c = document.createElement('canvas');
+      var out = 600;
+      c.width = out; c.height = out;
+      var ctx = c.getContext('2d');
+      ctx.drawImage(img, sx, sy, side, side, 0, 0, out, out);
+      var url = c.toDataURL('image/jpeg', 0.92);
+      savedData[idx] = url;
+      setImgData(cells[idx], url);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+document.getElementById('btnAuto').addEventListener('click', function(){
+  autoCrop = !autoCrop;
+  var btn = document.getElementById('btnAuto');
+  if (autoCrop){
+    btn.textContent = '自动裁正方形：开';
+    btn.style.background = '#1976d2';
+    btn.style.color = '#fff';
+  } else {
+    btn.textContent = '自动裁正方形：关（保留原图）';
+    btn.style.background = '#ff9800';
+    btn.style.color = '#fff';
+  }
+  alert('已切换到：' + (autoCrop ? '自动裁正方形' : '保留原图（上传不裁剪，需自己逐张手动裁剪）') + '。此开关只影响之后上传的图片，已上传的图需清空重传或逐张手动裁剪。');
+});
+
+document.getElementById('fileSingle').addEventListener('change', function(){
+  if (this.files && this.files[0]) loadImageInto(this.files[0], pendingIndex);
+});
+document.getElementById('btnAdd').addEventListener('click', function(){
+  var f = document.getElementById('fileMulti');
+  f.value = ''; f.click();
+});
+document.getElementById('fileMulti').addEventListener('change', function(){
+  var fs = Array.prototype.slice.call(this.files||[]);
+  var fi = 0;
+  for (var i=0; i<cells.length && fi<fs.length; i++){
+    if (!cells[i].querySelector('img')){
+      loadImageInto(fs[fi], i);
+      fi++;
+    }
+  }
+});
+
+document.getElementById('btnClear').addEventListener('click', function(){
+  if (!confirm('确定清空全部图片？')) return;
+  savedData = {};
+  cells.forEach(function(c){
+    var im = c.querySelector('img'); if (im) c.removeChild(im);
+    var ph = c.querySelector('.ph'); if (ph) ph.style.display = '';
+  });
+  selIndex = -1; refreshSel();
+});
+
+function saveCurrentImgs(){
+  cells.forEach(function(c,i){
+    var im = c.querySelector('img');
+    if (im) savedData[i] = im.src;
+  });
+}
+
+document.getElementById('layout').addEventListener('click', function(e){
+  var btn = e.target.closest('button'); if (!btn) return;
+  saveCurrentImgs();
+  curN = parseInt(btn.dataset.n,10);
+  document.querySelectorAll('#layout button').forEach(function(b){ b.classList.toggle('on', b===btn); });
+  calcRC(); buildGrid();
+});
+document.getElementById('orient').addEventListener('click', function(e){
+  var btn = e.target.closest('button'); if (!btn) return;
+  saveCurrentImgs();
+  curO = btn.dataset.o;
+  document.querySelectorAll('#orient button').forEach(function(b){ b.classList.toggle('on', b===btn); });
+  calcRC(); buildGrid();
+});
+
+document.getElementById('btnSave').addEventListener('click', function(){
+  var missing = [];
+  cells.forEach(function(c,i){ if(!c.querySelector('img')) missing.push(i+1); });
+  if (missing.length){ alert('还有 '+missing.length+' 格是空的（第 '+missing.join('、')+' 格），补全后再保存。'); return; }
+  var canvas = document.createElement('canvas');
+  canvas.width = CELL * curC;
+  canvas.height = CELL * curR;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  var pad = 6;
+  cells.forEach(function(c,i){
+    var im = c.querySelector('img');
+    var row = Math.floor(i/curC), col = i%curC;
+    var inner = CELL - pad*2;
+    var ox = col*CELL + pad, oy = row*CELL + pad;
+    var sw = im.naturalWidth, sh = im.naturalHeight;
+    var sc = Math.max(inner/sw, inner/sh);
+    var dw = sw*sc, dh = sh*sc;
+    ctx.drawImage(im, ox+(inner-dw)/2, oy+(inner-dh)/2, dw, dh);
+  });
+  // 用 toDataURL 转 base64，微信里长按才能保存成功
+  var dataURL = canvas.toDataURL('image/png');
+  var img = document.getElementById('resultImg');
+  img.src = dataURL;
+  document.getElementById('mask').classList.add('on');
+  // 直接下载按钮（电脑浏览器可用）
+  document.getElementById('btnDl').onclick = function(){
+    var a = document.createElement('a');
+    a.href = dataURL;
+    a.download = curN+'宫格拼图.png';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ a.remove(); }, 500);
+  };
+});
+document.getElementById('btnClose').addEventListener('click', function(){
+  document.getElementById('mask').classList.remove('on');
+});
+
+// ============ 新增：每张图可先裁剪 ============
+var cropState = null;
+var CROP_OUT = 600;
+
+function openCrop(idx){
+  var im = cells[idx].querySelector('img');
+  if (!im) return;
+  var img = new Image();
+  img.onload = function(){
+    var S = Math.min(window.innerWidth-40, 520);
+    var wrap = document.getElementById('cropWrap');
+    wrap.style.width = S+'px';
+    wrap.style.height = S+'px';
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    var sc = Math.min(S/iw, S/ih);
+    var dw = iw*sc, dh = ih*sc;
+    var dx = (S-dw)/2, dy = (S-dh)/2;
+    var disp = {x:dx, y:dy, w:dw, h:dh};
+    var cimg = document.getElementById('cropImg');
+    cimg.src = img.src;
+    cimg.style.left = dx+'px';
+    cimg.style.top = dy+'px';
+    cimg.style.width = dw+'px';
+    cimg.style.height = dh+'px';
+    // 初始裁剪框：居中的最大方形
+    var side = Math.min(dw, dh);
+    var bx = dx+(dw-side)/2, by = dy+(dh-side)/2;
+    cropState = {idx:idx, img:img, iw:iw, ih:ih, S:S, disp:disp, box:{x:bx,y:by,w:side,h:side}, mode:null};
+    renderBox();
+    document.getElementById('cropMask').classList.add('on');
+  };
+  img.src = im.src;
+}
+
+function renderBox(){
+  var b = cropState.box;
+  var el = document.getElementById('cropBox');
+  el.style.left = b.x+'px';
+  el.style.top = b.y+'px';
+  el.style.width = b.w+'px';
+  el.style.height = b.h+'px';
+}
+
+function clampBox(){
+  var b = cropState.box, d = cropState.disp;
+  var min = Math.min(20, Math.min(d.w, d.h));
+  if (b.w < min) b.w = min;
+  b.h = b.w;
+  if (b.x < d.x) b.x = d.x;
+  if (b.y < d.y) b.y = d.y;
+  if (b.x + b.w > d.x + d.w) b.x = d.x + d.w - b.w;
+  if (b.y + b.h > d.y + d.h) b.y = d.y + d.h - b.h;
+}
+
+function boxHit(px, py){
+  var b = cropState.box, r = 14;
+  if (Math.abs(px-(b.x+b.w))<=r && Math.abs(py-(b.y+b.h))<=r) return 'br';
+  if (Math.abs(px-b.x)<=r && Math.abs(py-b.y)<=r) return 'tl';
+  if (Math.abs(px-(b.x+b.w))<=r && Math.abs(py-b.y)<=r) return 'tr';
+  if (Math.abs(px-b.x)<=r && Math.abs(py-(b.y+b.h))<=r) return 'bl';
+  if (px>=b.x && px<=b.x+b.w && py>=b.y && py<=b.y+b.h) return 'move';
+  return null;
+}
+
+var cropWrapEl = document.getElementById('cropWrap');
+var cropStart = null;
+cropWrapEl.addEventListener('pointerdown', function(e){
+  if (!cropState) return;
+  e.preventDefault();
+  var S = cropState.S;
+  var rect = cropWrapEl.getBoundingClientRect();
+  var px = (e.clientX-rect.left)/rect.width*S;
+  var py = (e.clientY-rect.top)/rect.height*S;
+  var m = boxHit(px, py);
+  if (!m) return;
+  cropState.mode = m;
+  cropStart = {x:px, y:py, bx:cropState.box.x, by:cropState.box.y, bw:cropState.box.w};
+  try { cropWrapEl.setPointerCapture(e.pointerId); } catch(err){}
+});
+cropWrapEl.addEventListener('pointermove', function(e){
+  if (!cropState || !cropState.mode) return;
+  var S = cropState.S;
+  var rect = cropWrapEl.getBoundingClientRect();
+  var px = (e.clientX-rect.left)/rect.width*S;
+  var py = (e.clientY-rect.top)/rect.height*S;
+  var b = cropState.box, st = cropStart;
+  var dx = px-st.x, dy = py-st.y;
+  if (cropState.mode === 'move'){
+    b.x = st.bx+dx; b.y = st.by+dy;
+  } else if (cropState.mode === 'br'){
+    b.w = st.bw+dx; b.h = b.w;
+  } else if (cropState.mode === 'bl'){
+    b.w = st.bw-dx; b.h = b.w; b.x = st.bx+st.bw-b.w;
+  } else if (cropState.mode === 'tr'){
+    b.w = st.bw+dx; b.h = b.w; b.y = st.by+st.bw-b.w;
+  } else if (cropState.mode === 'tl'){
+    b.w = st.bw-dx; b.h = b.w; b.x = st.bx+st.bw-b.w; b.y = st.by+st.bw-b.w;
+  }
+  clampBox(); renderBox();
+});
+cropWrapEl.addEventListener('pointerup', function(){ if (cropState) cropState.mode = null; });
+cropWrapEl.addEventListener('pointercancel', function(){ if (cropState) cropState.mode = null; });
+
+document.getElementById('cropReset').addEventListener('click', function(){
+  if (!cropState) return;
+  var d = cropState.disp, side = Math.min(d.w, d.h);
+  cropState.box = {x:d.x+(d.w-side)/2, y:d.y+(d.h-side)/2, w:side, h:side};
+  renderBox();
+});
+document.getElementById('cropCancel').addEventListener('click', function(){
+  document.getElementById('cropMask').classList.remove('on');
+  cropState = null;
+});
+document.getElementById('cropApply').addEventListener('click', function(){
+  if (!cropState) return;
+  var st = cropState, d = st.disp, b = st.box;
+  var srcX = (b.x-d.x)/d.w*st.iw;
+  var srcY = (b.y-d.y)/d.h*st.ih;
+  var srcW = b.w/d.w*st.iw;
+  var srcH = b.h/d.h*st.ih;
+  var c = document.createElement('canvas');
+  c.width = CROP_OUT; c.height = CROP_OUT;
+  var ctx = c.getContext('2d');
+  ctx.drawImage(st.img, srcX, srcY, srcW, srcH, 0, 0, CROP_OUT, CROP_OUT);
+  var url = c.toDataURL('image/jpeg', 0.92);
+  savedData[st.idx] = url;
+  setImgData(cells[st.idx], url);
+  document.getElementById('cropMask').classList.remove('on');
+  cropState = null;
+});
+
+document.getElementById('btnCrop').addEventListener('click', function(){
+  if (selIndex === -1){ alert('请先点选一张要裁剪的图（出现红框即选中）'); return; }
+  if (!cells[selIndex].querySelector('img')){ alert('该格还没有图片，先上传'); return; }
+  openCrop(selIndex);
+});
+
+calcRC(); buildGrid();
+</script>
+</body>
+</html>
