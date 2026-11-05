@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图片正方形裁剪工具@网上用户</title>
+<meta name="keywords" content="图片裁剪,正方形裁剪,手机照片裁剪,800px正方形,在线裁剪工具">
+<meta name="description" content="上传手机照片，拖动正方形裁剪框截取画面，默认导出 800×800 像素正方形图片，可自定义边长。全部在本机浏览器完成，图片不上传服务器。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231c7a5e'/%3E%3Cpath d='M9 13V9h4M23 19v4h-4' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Crect x='12' y='12' width='8' height='8' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+ 
+<style>
+  * { box-sizing: border-box; }
+  img { max-width: 100%; height: auto; display: block; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #f2f3f1;
+    color: #1c1e1b;
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 888px; margin: 0 auto; padding: 22px 16px 56px; }
+
+  .hdr { margin-bottom: 18px; }
+  .hdr h1 {
+    font-size: 24px;
+    line-height: 1.35;
+    margin: 0 0 6px;
+    letter-spacing: .3px;
+  }
+  .hdr p { margin: 0; color: #6c706a; font-size: 14px; }
+
+  .panel {
+    background: #fff;
+    border: 1px solid #d8dad5;
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  /* ===== 工作区 ===== */
+  .stage {
+    background: #16181a;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    overflow: hidden;
+  }
+  .drop {
+    width: 100%;
+    border: 1px dashed #4b5155;
+    border-radius: 10px;
+    padding: 34px 16px;
+    text-align: center;
+    color: #cfd4d2;
+    cursor: pointer;
+    transition: border-color .18s, background .18s;
+  }
+  .drop:hover, .drop:focus-visible { border-color: #35d0a1; background: #1b1f21; outline: none; }
+  .drop svg { width: 44px; height: 44px; margin: 0 auto 12px; display: block; }
+  .drop .t1 { font-size: 15px; color: #f2f5f4; }
+  .drop .t2 { font-size: 13px; color: #8f9895; margin-top: 4px; }
+  .drop .pick {
+    display: inline-block; margin-top: 14px; padding: 9px 20px;
+    border-radius: 999px; background: #1c7a5e; color: #fff; font-size: 14px;
+  }
+  #canvasBox { display: none; position: relative; line-height: 0; }
+  #stage { display: block; touch-action: none; cursor: move; }
+
+  .hintbar {
+    display: flex; flex-wrap: wrap; gap: 6px 16px;
+    font-size: 13px; color: #6c706a;
+    margin: 10px 2px 0;
+  }
+  .hintbar span::before { content: "· "; color: #9ba09a; }
+
+  /* ===== 控制区 ===== */
+  .ctrl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 14px;
+    align-items: end;
+  }
+  .field label {
+    display: block; font-size: 13px; color: #6c706a; margin-bottom: 6px;
+  }
+  .sizeRow { display: flex; align-items: center; gap: 8px; }
+  .sizeRow input {
+    width: 110px; padding: 9px 12px; font-size: 16px;
+    border: 1px solid #d8dad5; border-radius: 8px; background: #fff; color: #1c1e1b;
+    font-family: inherit;
+  }
+  .sizeRow input:focus { outline: none; border-color: #1c7a5e; }
+  .sizeRow .unit { font-size: 13px; color: #6c706a; }
+  .chips { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .chips button {
+    font-family: inherit; font-size: 13px; padding: 5px 12px; border-radius: 999px;
+    border: 1px solid #d8dad5; background: #f7f8f6; color: #3a3e3a; cursor: pointer;
+  }
+  .chips button:hover { border-color: #1c7a5e; color: #1c7a5e; }
+  .chips button.on { background: #e9f4ef; border-color: #1c7a5e; color: #1c7a5e; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  .btn {
+    font-family: inherit; font-size: 15px; padding: 11px 18px; border-radius: 9px;
+    border: 1px solid transparent; cursor: pointer; min-height: 44px;
+    transition: background .15s, border-color .15s;
+  }
+  .btn.primary { background: #1c7a5e; color: #fff; }
+  .btn.primary:hover { background: #18654d; }
+  .btn.primary:disabled { background: #b9c6c0; cursor: not-allowed; }
+  .btn.ghost { background: #fff; border-color: #d8dad5; color: #3a3e3a; }
+  .btn.ghost:hover { border-color: #1c7a5e; color: #1c7a5e; }
+
+  .info {
+    margin-top: 12px; font-size: 14px; color: #3a3e3a;
+    background: #f7f8f6; border: 1px solid #e6e8e2; border-radius: 9px;
+    padding: 10px 12px;
+    word-break: break-all;
+  }
+  .info em { font-style: normal; color: #1c7a5e; font-weight: 600; }
+  .info .warn { display: block; color: #a05b22; font-size: 13px; margin-top: 4px; }
+
+  /* ===== 结果预览 ===== */
+  #resultBox {
+    display: none; margin-top: 14px; padding-top: 14px; border-top: 1px dashed #dfe1db;
+  }
+  #resultBox .rhead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  #resultBox .rhead strong { font-size: 15px; }
+  #resultBox .rhead span { font-size: 13px; color: #6c706a; }
+  .rbody { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  #preview { display: block; width: 150px; height: 150px; border-radius: 8px; border: 1px solid #e6e8e2; background: #f2f3f1; }
+  .rtip { font-size: 13px; color: #6c706a; flex: 1; min-width: 180px; }
+
+  .foot { margin-top: 18px; font-size: 13px; color: #8f938d; }
+  a { color: #1c7a5e; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: 32px; transform: translate(-50%, 12px);
+    background: #16181a; color: #fff; font-size: 14px; padding: 10px 18px;
+    border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+    z-index: 20; max-width: 80vw;
+  }
+  #toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 16px 12px 44px; }
+    .hdr h1 { font-size: 20px; }
+    .ctrl { grid-template-columns: 1fr; gap: 14px; }
+    .actions { justify-content: stretch; }
+    .actions .btn { flex: 1 1 100%; }
+    .stage { padding: 8px; min-height: 180px; }
+    #preview { width: 120px; height: 120px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <h1>图片正方形裁剪</h1>
+    <p>手机拍的照片裁成正方形，默认导出 800 × 800 像素，可自改边长。图片只在你本机浏览器里处理，不上传。</p>
+  </div>
+
+  <div class="panel">
+    <div class="stage" id="stageWrap">
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="选择图片">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#35d0a1" stroke-width="1.6" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+          <rect x="8" y="8" width="8" height="8" stroke="#f2f5f4" stroke-width="1.4"></rect>
+        </svg>
+        <div class="t1">点击这里选择图片</div>
+        <div class="t2">也可以把图片直接拖进来，或从相册选</div>
+        <div class="pick">选择图片</div>
+      </div>
+      <div id="canvasBox"><canvas id="stage"></canvas></div>
+    </div>
+
+    <div class="hintbar" id="hintbar" style="display:none">
+      <span>拖动裁剪框移动</span><span>拖四角缩放</span><span>滚轮微调大小</span>
+    </div>
+
+    <div class="ctrl">
+      <div class="field">
+        <label for="outSize">导出边长（正方形，像素）</label>
+        <div class="sizeRow">
+          <input id="outSize" type="number" min="100" max="4000" step="1" value="800" inputmode="numeric">
+          <span class="unit">px × px</span>
+        </div>
+        <div class="chips" id="chips">
+          <button type="button" data-size="500">500</button>
+          <button type="button" data-size="800" class="on">800</button>
+          <button type="button" data-size="1080">1080</button>
+          <button type="button" data-size="1600">1600</button>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="btnExport" disabled>导出正方形图片</button>
+        <button class="btn ghost" id="btnReset" disabled>重置裁剪框</button>
+        <button class="btn ghost" id="btnChange" disabled>换一张图</button>
+      </div>
+    </div>
+
+    <div class="info" id="info">
+      还没有图片。选一张照片后，画面中央会出现一个正方形裁剪框，位置和大小随意调。
+    </div>
+
+    <div id="resultBox">
+      <div class="rhead"><strong>已生成</strong><span id="rname"></span></div>
+      <div class="rbody">
+        <canvas id="preview" width="150" height="150"></canvas>
+        <div class="rtip" id="rtip"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">提示：导出边长大于原图裁出的像素时会放大，清晰度会下降，建议不大于原图能提供的尺寸。</div>
+</div>
+
+<input type="file" id="fileInput" accept="image/*" style="display:none">
+<div id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var stage = document.getElementById('stage');
+  var ctx = stage.getContext('2d');
+  var stageWrap = document.getElementById('stageWrap');
+  var drop = document.getElementById('drop');
+  var canvasBox = document.getElementById('canvasBox');
+  var fileInput = document.getElementById('fileInput');
+  var outSizeEl = document.getElementById('outSize');
+  var chips = document.getElementById('chips');
+  var btnExport = document.getElementById('btnExport');
+  var btnReset = document.getElementById('btnReset');
+  var btnChange = document.getElementById('btnChange');
+  var infoEl = document.getElementById('info');
+  var hintbar = document.getElementById('hintbar');
+  var resultBox = document.getElementById('resultBox');
+  var preview = document.getElementById('preview');
+  var rname = document.getElementById('rname');
+  var rtip = document.getElementById('rtip');
+  var toastEl = document.getElementById('toast');
+
+  var state = {
+    img: null,
+    objectUrl: null,
+    dispW: 0,
+    dispH: 0,
+    crop: { x: 0, y: 0, size: 0 },
+    outSize: 800,
+    drag: null,
+    lastBlobUrl: null
+  };
+
+  var toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('on'); }, 2200);
+  }
+
+  function clamp(v, min, max) {
+    return v < min ? min : (v > max ? max : v);
+  }
+
+  function isWeChat() {
+    return /MicroMessenger/i.test(navigator.userAgent);
+  }
+
+  /* ---------------- 载入图片 ---------------- */
+  function pickFile() { fileInput.value = ''; fileInput.click(); }
+
+  function loadFile(file) {
+    if (!file) return;
+    if (!/^image\//.test(file.type)) { toast('请选择图片文件'); return; }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      if (state.objectUrl) URL.revokeObjectURL(state.objectUrl);
+      state.objectUrl = url;
+      state.img = img;
+      if (!img.naturalWidth) { toast('图片读取失败，换一张试试'); return; }
+      drop.style.display = 'none';
+      canvasBox.style.display = 'block';
+      hintbar.style.display = 'flex';
+      btnExport.disabled = false;
+      btnReset.disabled = false;
+      btnChange.disabled = false;
+      layout(true);
+    };
+    img.onerror = function () {
+      URL.revokeObjectURL(url);
+      toast('图片读取失败，换一张试试');
+    };
+    img.src = url;
+  }
+
+  /* ---------------- 布局：图片等比放进工作区 ---------------- */
+  function layout(resetCrop) {
+    if (!state.img) return;
+    var pad = 24;
+    if (window.innerWidth <= 640) pad = 16;
+    var availW = Math.max(120, stageWrap.clientWidth - pad);
+    var maxH = clamp(window.innerHeight * 0.52, 260, 560);
+    var ratio = state.img.naturalHeight / state.img.naturalWidth;
+
+    var w = availW;
+    var h = w * ratio;
+    if (h > maxH) { h = maxH; w = h / ratio; }
+
+    var oldW = state.dispW, oldH = state.dispH;
+    state.dispW = Math.max(80, Math.floor(w));
+    state.dispH = Math.max(80, Math.floor(h));
+
+    var dw = state.dispW, dh = state.dispH;
+    if (resetCrop || !oldW || !state.crop.size) {
+      var side = Math.min(dw, dh) * 0.86;
+      state.crop = { x: (dw - side) / 2, y: (dh - side) / 2, size: side };
+    } else {
+      // 按比例还原裁剪框
+      var rx = state.crop.x / oldW, ry = state.crop.y / oldH;
+      var rs = state.crop.size / Math.min(oldW, oldH);
+      var side2 = clamp(rs * Math.min(dw, dh), 20, Math.min(dw, dh));
+      state.crop = {
+        x: clamp(rx * dw, 0, dw - side2),
+        y: clamp(ry * dh, 0, dh - side2),
+        size: side2
+      };
+    }
+    render();
+    updateInfo();
+  }
+
+  /* ---------------- 绘制 ---------------- */
+  function drawHandle(x, y, dx, dy) {
+    // dx/dy 为 ±1，表示角朝内延伸方向
+    var len = clamp(state.crop.size * 0.18, 12, 26);
+    ctx.beginPath();
+    ctx.moveTo(x, y + dy * len);
+    ctx.lineTo(x, y);
+    ctx.lineTo(x + dx * len, y);
+    ctx.stroke();
+  }
+
+  function render() {
+    if (!state.img) return;
+    var dw = state.dispW, dh = state.dispH;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    var bw = Math.round(dw * dpr), bh = Math.round(dh * dpr);
+    if (stage.width !== bw || stage.height !== bh) { stage.width = bw; stage.height = bh; }
+    stage.style.width = dw + 'px';
+    stage.style.height = dh + 'px';
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, dw, dh);
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(state.img, 0, 0, dw, dh);
+
+    var c = state.crop;
+    // 遮罩
+    ctx.fillStyle = 'rgba(12,14,16,0.68)';
+    ctx.fillRect(0, 0, dw, c.y);
+    ctx.fillRect(0, c.y + c.size, dw, Math.max(0, dh - c.y - c.size));
+    ctx.fillRect(0, c.y, c.x, c.size);
+    ctx.fillRect(c.x + c.size, c.y, Math.max(0, dw - c.x - c.size), c.size);
+
+    // 三分线
+    ctx.strokeStyle = 'rgba(255,255,255,0.26)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (var i = 1; i <= 2; i++) {
+      var gx = c.x + (c.size * i) / 3;
+      var gy = c.y + (c.size * i) / 3;
+      ctx.moveTo(Math.round(gx) + 0.5, c.y);
+      ctx.lineTo(Math.round(gx) + 0.5, c.y + c.size);
+      ctx.moveTo(c.x, Math.round(gy) + 0.5);
+      ctx.lineTo(c.x + c.size, Math.round(gy) + 0.5);
+    }
+    ctx.stroke();
+
+    // 边框
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(c.x, c.y, c.size, c.size);
+
+    // 四角手柄
+    ctx.strokeStyle = '#35d0a1';
+    ctx.lineWidth = 3;
+    drawHandle(c.x, c.y, 1, 1);
+    drawHandle(c.x + c.size, c.y, -1, 1);
+    drawHandle(c.x, c.y + c.size, 1, -1);
+    drawHandle(c.x + c.size, c.y + c.size, -1, -1);
+  }
+
+  /* ---------------- 信息 ---------------- */
+  function updateInfo() {
+    if (!state.img) return;
+    var scale = state.img.naturalWidth / state.dispW;
+    var px = Math.max(1, Math.round(state.crop.size * scale));
+    var out = state.outSize;
+    var html = '原图 ' + state.img.naturalWidth + ' × ' + state.img.naturalHeight + ' px，' +
+      '当前裁出 <em>' + px + ' × ' + px + '</em> px，导出 <em>' + out + ' × ' + out + '</em> px。';
+    if (out > px) {
+      html += '<span class="warn">导出尺寸大于原图能提供的 ' + px + ' px，会被放大，清晰度会下降。</span>';
+    }
+    infoEl.innerHTML = html;
+  }
+
+  /* ---------------- 指针交互 ---------------- */
+  var HIT = 26;
+
+  function localPoint(e) {
+    var r = stage.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+
+  function cornerAt(p) {
+    var c = state.crop, s = c.size;
+    var pts = [
+      { k: 'nw', x: c.x, y: c.y },
+      { k: 'ne', x: c.x + s, y: c.y },
+      { k: 'sw', x: c.x, y: c.y + s },
+      { k: 'se', x: c.x + s, y: c.y + s }
+    ];
+    for (var i = 0; i < pts.length; i++) {
+      var d = Math.max(Math.abs(p.x - pts[i].x), Math.abs(p.y - pts[i].y));
+      if (d <= HIT) return pts[i].k;
+    }
+    return null;
+  }
+
+  function insideCrop(p) {
+    var c = state.crop;
+    return p.x >= c.x && p.x <= c.x + c.size && p.y >= c.y && p.y <= c.y + c.size;
+  }
+
+  function anchorOf(k) {
+    var c = state.crop, s = c.size;
+    if (k === 'nw') return { x: c.x + s, y: c.y + s };
+    if (k === 'ne') return { x: c.x, y: c.y + s };
+    if (k === 'sw') return { x: c.x + s, y: c.y };
+    return { x: c.x, y: c.y };
+  }
+
+  stage.addEventListener('pointerdown', function (e) {
+    if (!state.img) return;
+    e.preventDefault();
+    var p = localPoint(e);
+    var k = cornerAt(p);
+    if (k) {
+      state.drag = { mode: 'resize', corner: k, anchor: anchorOf(k) };
+    } else if (insideCrop(p)) {
+      state.drag = { mode: 'move', dx: p.x - state.crop.x, dy: p.y - state.crop.y };
+    } else {
+      // 框外点击：把裁剪框挪到该点居中
+      var s = state.crop.size;
+      state.crop.x = clamp(p.x - s / 2, 0, state.dispW - s);
+      state.crop.y = clamp(p.y - s / 2, 0, state.dispH - s);
+      render(); updateInfo();
+      state.drag = { mode: 'move', dx: s / 2, dy: s / 2 };
+    }
+    if (stage.setPointerCapture) {
+      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+  });
+
+  stage.addEventListener('pointermove', function (e) {
+    if (!state.img) return;
+    var p = localPoint(e);
+    if (!state.drag) {
+      var k = cornerAt(p);
+      stage.style.cursor = k ? 'nwse-resize' : (insideCrop(p) ? 'move' : 'pointer');
+      return;
+    }
+    e.preventDefault();
+    var c = state.crop;
+    if (state.drag.mode === 'move') {
+      c.x = clamp(p.x - state.drag.dx, 0, state.dispW - c.size);
+      c.y = clamp(p.y - state.drag.dy, 0, state.dispH - c.size);
+    } else {
+      var a = state.drag.anchor;
+      var dx = Math.abs(p.x - a.x), dy = Math.abs(p.y - a.y);
+      var side = Math.max(dx, dy);
+      var maxW = p.x >= a.x ? state.dispW - a.x : a.x;
+      var maxH = p.y >= a.y ? state.dispH - a.y : a.y;
+      var minSide = Math.max(24, Math.min(state.dispW, state.dispH) * 0.1);
+      var avail = Math.min(maxW, maxH);
+      if (avail < minSide) { updateInfo(); return; }  // 该方向已无空间，保持原框不退化
+      side = clamp(side, minSide, avail);
+      c.size = side;
+      c.x = p.x >= a.x ? a.x : a.x - side;
+      c.y = p.y >= a.y ? a.y : a.y - side;
+    }
+    render(); updateInfo();
+  });
+
+  function endDrag(e) {
+    if (!state.drag) return;
+    state.drag = null;
+    if (stage.releasePointerCapture && e && e.pointerId != null) {
+      try { stage.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+    updateInfo();
+  }
+  stage.addEventListener('pointerup', endDrag);
+  stage.addEventListener('pointercancel', endDrag);
+
+  stage.addEventListener('wheel', function (e) {
+    if (!state.img) return;
+    e.preventDefault();
+    var c = state.crop;
+    var cx = c.x + c.size / 2, cy = c.y + c.size / 2;
+    var step = e.deltaY > 0 ? -1 : 1;
+    var minSide = Math.max(24, Math.min(state.dispW, state.dispH) * 0.1);
+    var maxSide = Math.min(state.dispW, state.dispH);
+    var next = clamp(c.size + step * c.size * 0.06, minSide, maxSide);
+    c.size = next;
+    c.x = clamp(cx - next / 2, 0, state.dispW - next);
+    c.y = clamp(cy - next / 2, 0, state.dispH - next);
+    render(); updateInfo();
+  }, { passive: false });
+
+  /* ---------------- 文件选择与拖放 ---------------- */
+  drop.addEventListener('click', pickFile);
+  drop.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickFile(); }
+  });
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files && fileInput.files[0]) loadFile(fileInput.files[0]);
+  });
+  btnChange.addEventListener('click', pickFile);
+
+  ['dragenter', 'dragover'].forEach(function (t) {
+    drop.addEventListener(t, function (e) { e.preventDefault(); drop.style.borderColor = '#35d0a1'; });
+  });
+  ['dragleave', 'drop'].forEach(function (t) {
+    drop.addEventListener(t, function (e) { e.preventDefault(); drop.style.borderColor = ''; });
+  });
+  drop.addEventListener('drop', function (e) {
+    e.preventDefault();
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) loadFile(f);
+  });
+  // 拖到整个工作区也能接收（换图时）
+  stageWrap.addEventListener('dragover', function (e) { e.preventDefault(); });
+  stageWrap.addEventListener('drop', function (e) {
+    e.preventDefault();
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) loadFile(f);
+  });
+
+  /* ---------------- 导出尺寸 ---------------- */
+  function setOutSize(v, fromInput) {
+    var n = parseInt(v, 10);
+    if (!isFinite(n)) n = 800;
+    n = clamp(n, 100, 4000);
+    state.outSize = n;
+    if (!fromInput) outSizeEl.value = n;
+    var btns = chips.querySelectorAll('button');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('on', parseInt(btns[i].getAttribute('data-size'), 10) === n);
+    }
+    updateInfo();
+  }
+
+  outSizeEl.addEventListener('change', function () { setOutSize(outSizeEl.value, false); });
+  outSizeEl.addEventListener('blur', function () { setOutSize(outSizeEl.value, false); });
+  chips.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('button[data-size]') : null;
+    if (!b) return;
+    setOutSize(b.getAttribute('data-size'), false);
+  });
+
+  /* ---------------- 重置 ---------------- */
+  btnReset.addEventListener('click', function () {
+    if (!state.img) return;
+    layout(true);
+    toast('裁剪框已重置');
+  });
+
+  /* ---------------- 导出 ---------------- */
+  function exportImage() {
+    if (!state.img) return;
+    var scale = state.img.naturalWidth / state.dispW;
+    var c = state.crop;
+    var out = state.outSize;
+
+    var cv = document.createElement('canvas');
+    cv.width = out;
+    cv.height = out;
+    var g = cv.getContext('2d');
+    g.fillStyle = '#ffffff';
+    g.fillRect(0, 0, out, out);
+    g.imageSmoothingEnabled = true;
+    g.imageSmoothingQuality = 'high';
+    g.drawImage(state.img,
+      c.x * scale, c.y * scale, c.size * scale, c.size * scale,
+      0, 0, out, out);
+
+    // 预览
+    preview.width = out;
+    preview.height = out;
+    var pg = preview.getContext('2d');
+    pg.drawImage(cv, 0, 0);
+    resultBox.style.display = 'block';
+
+    var name = 'square-' + out + 'x' + out + '.jpg';
+    rname.textContent = name;
+
+    cv.toBlob(function (blob) {
+      if (!blob) { toast('导出失败，请换一张图片试试'); return; }
+      if (state.lastBlobUrl) URL.revokeObjectURL(state.lastBlobUrl);
+      state.lastBlobUrl = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = state.lastBlobUrl;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      rtip.innerHTML = isWeChat()
+        ? '文件已生成。微信里若没有自动保存，请长按上面的图片选择「保存图片」。'
+        : '文件已开始下载（' + name + '，' + Math.round(blob.size / 1024) + ' KB）。若没弹出保存框，长按上面的图片保存。';
+      toast('已生成 ' + out + ' × ' + out + ' 正方形图片');
+    }, 'image/jpeg', 0.94);
+  }
+
+  btnExport.addEventListener('click', exportImage);
+
+  /* ---------------- 窗口尺寸变化 ---------------- */
+  var rt = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { layout(false); }, 160);
+  });
+
+  setOutSize(800, false);
+})();
+</script>
+</body>
+</html>
