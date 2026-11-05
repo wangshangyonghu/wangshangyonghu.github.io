@@ -1,0 +1,26 @@
+<?php
+header('Content-Type: text/html; charset=utf-8');
+?>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>@网上用户</title>
+    <meta name="keywords" content="网上用户,wangshangyonghu,上网用户,客家人,真实工厂">
+    <meta name="description" content="网上用户专属内容介绍:网上用户,wangshangyonghu,上网用户,客家人,真实工厂">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+iframe{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+}
+</style>
+</head>
+<body>
+<iframe src="/wangshangyonghu/1.html"></iframe>
+</body>
+</html>
