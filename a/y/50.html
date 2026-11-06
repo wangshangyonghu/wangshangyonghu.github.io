@@ -37,19 +37,41 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
   font-weight:bold;
   user-select:none;
   color:#000;
+  flex:0 0 auto;
 }
 .color-circle{
-  width:20px;
-  height:20px;
+  width:18px;
+  height:18px;
   border-radius:50%;
   cursor:pointer;
   border:1px solid #fff;
+  flex:0 0 auto;
 }
 .write-btn{ background:#0b0; color:#fff; }
 .draw-btn{ background:#08f; color:#fff; }
+.line-btn{ background:#f90; color:#fff; }
 .eraser-btn{ background:#ddd; color:#000; }
 .clear-btn{ background:#f44; color:#fff; }
 .active{ box-shadow:0 0 0 2px #ff0; }
+
+/* 模式提示条 */
+#hint{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:999;
+  background:rgba(0,0,0,0.72);
+  color:#fff;
+  font-size:12px;
+  line-height:1;
+  padding:7px 12px;
+  border-radius:99px;
+  opacity:0;
+  transition:opacity .2s;
+  pointer-events:none;
+  white-space:nowrap;
+}
 
 /* 手写画布 */
 #drawCanvas{
@@ -59,6 +81,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
   width:100vw;
   height:100vh;
   z-index:1;
+  touch-action:none;
+}
+
+/* 直线预览层（只显示拖动中的预览线，不干扰点击） */
+#lineCanvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index:3;
+  pointer-events:none;
   touch-action:none;
 }
 
@@ -84,6 +118,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 <div class="tool-bar">
   <div class="tool-btn write-btn" id="writeBtn">字</div>
   <div class="tool-btn draw-btn" id="drawBtn">手</div>
+  <div class="tool-btn line-btn" id="lineBtn">线</div>
   <div class="color-circle" style="background:#000" data-color="#000"></div>
   <div class="color-circle" style="background:#fff" data-color="#fff"></div>
   <div class="color-circle" style="background:#ff0" data-color="#ff0"></div>
@@ -94,7 +129,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
   <div class="tool-btn clear-btn" id="clearBtn">清</div>
 </div>
 
+<div id="hint">拖动=直线　点两下=点对点直线</div>
+
 <canvas id="drawCanvas"></canvas>
+<canvas id="lineCanvas"></canvas>
 
 
 <script>
@@ -112,11 +150,28 @@ if(isMobileTouch()){
   mode = "write";
 }
 
+/* ========== 模式提示条 ========== */
+const hintEl = document.getElementById("hint");
+let hintTimer = null;
+function showHint(text){
+  hintEl.textContent = text;
+  hintEl.style.opacity = "1";
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(function(){ hintEl.style.opacity = "0"; }, 2200);
+}
+
 /* ========== 画布 ========== */
 const canvas = document.getElementById("drawCanvas");
 const ctx = canvas.getContext("2d");
+const lineCanvas = document.getElementById("lineCanvas");
+const lctx = lineCanvas.getContext("2d");
 let drawing = false;
 let lastX = 0, lastY = 0;
+let lineStart = null;   // 直线的起点，null 表示没在画直线
+
+// 线宽、橡皮擦大小（橡皮擦改小了）
+const PEN_WIDTH = 6;
+const ERASE_SIZE = 16;
 
 // 获取坐标：核心修复，把屏幕client坐标转为canvas内部坐标
 function getCanvasPos(e){
@@ -132,6 +187,8 @@ function getCanvasPos(e){
 function resizeCanvas(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  lineCanvas.width = window.innerWidth;
+  lineCanvas.height = window.innerHeight;
 }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
@@ -141,6 +198,15 @@ function startDraw(e){
   drawing = true;
   lastX = p.x;
   lastY = p.y;
+  // 点一下也留一个点
+  ctx.beginPath();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = currentColor;
+  ctx.lineWidth = PEN_WIDTH;
+  ctx.moveTo(p.x, p.y);
+  ctx.lineTo(p.x, p.y);
+  ctx.stroke();
 }
 function moveDraw(e){
   if(!drawing) return;
@@ -149,7 +215,7 @@ function moveDraw(e){
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
   ctx.strokeStyle = currentColor;
-  ctx.lineWidth = 6;
+  ctx.lineWidth = PEN_WIDTH;
   ctx.moveTo(lastX, lastY);
   ctx.lineTo(p.x, p.y);
   ctx.stroke();
@@ -160,32 +226,142 @@ function endDraw(){
   drawing = false;
 }
 
+/* ========== 直线 ==========
+   两种用法：
+   1）按住拖动 → 松手就是一条直线（拖动时能看到预览）
+   2）点一下定起点（出现小圆点），再点第二下 → 点对点画直线
+*/
+let lineDragging = false;   // 是否正在按住拖
+let lineAnchor = null;      // 点对点模式下的第一个点
+let linePressPos = null;    // 这次按下的位置，用来判断是“拖”还是“点”
+
+function previewLine(a, b){
+  lctx.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
+  lctx.beginPath();
+  lctx.lineCap = "round";
+  lctx.lineJoin = "round";
+  lctx.strokeStyle = currentColor;
+  lctx.lineWidth = PEN_WIDTH;
+  lctx.moveTo(a.x, a.y);
+  lctx.lineTo(b.x, b.y);
+  lctx.stroke();
+  // 起点画个小圆点，提醒第二下点哪里
+  lctx.beginPath();
+  lctx.arc(a.x, a.y, 5, 0, Math.PI * 2);
+  lctx.fillStyle = currentColor;
+  lctx.fill();
+  lctx.beginPath();
+  lctx.arc(b.x, b.y, 3, 0, Math.PI * 2);
+  lctx.fill();
+}
+function clearPreview(){
+  lctx.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
+}
+function drawLine(a, b){
+  ctx.beginPath();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = currentColor;
+  ctx.lineWidth = PEN_WIDTH;
+  ctx.moveTo(a.x, a.y);
+  ctx.lineTo(b.x, b.y);
+  ctx.stroke();
+}
+
+// 按下
+function startLine(e){
+  const p = getCanvasPos(e);
+  if(lineAnchor){
+    // 已经有第一点 → 这一下就是终点，直接画成直线
+    drawLine(lineAnchor, p);
+    lineAnchor = null;
+    linePressPos = null;
+    clearPreview();
+    return;
+  }
+  lineDragging = true;
+  lineStart = p;
+  linePressPos = p;
+  previewLine(p, p);
+}
+
+// 移动（按着拖 或 已定起点后移动预览）
+function moveLine(e){
+  const p = getCanvasPos(e);
+  if(lineDragging && lineStart){
+    previewLine(lineStart, p);
+  }else if(lineAnchor){
+    previewLine(lineAnchor, p);
+  }
+}
+
+// 松手
+function finishLine(e){
+  if(!lineDragging) return;
+  lineDragging = false;
+  const p = getCanvasPos(e);
+  const from = lineStart;
+  lineStart = null;
+  if(!from) return;
+
+  const dist = Math.hypot(p.x - from.x, p.y - from.y);
+  if(dist < 6){
+    // 只是点了一下，没拖 → 把它当点对点的第一个点，等第二下
+    lineAnchor = from;
+    previewLine(from, from);
+    showHint("第一点已定，再点一下就是终点");
+  }else{
+    drawLine(from, p);
+    lineAnchor = null;
+    clearPreview();
+  }
+  linePressPos = null;
+}
+
+function cancelLine(){
+  lineDragging = false;
+  lineStart = null;
+  lineAnchor = null;
+  linePressPos = null;
+  clearPreview();
+}
+
 /* ========== PointerEvents ========== */
 function enableDrawEvents(){
   canvas.style.pointerEvents = "auto";
   canvas.addEventListener("pointerdown", onPointerDown);
   canvas.addEventListener("pointermove", onPointerMove);
-  canvas.addEventListener("pointerup", endDraw);
-  canvas.addEventListener("pointercancel", endDraw);
+  canvas.addEventListener("pointerup", onPointerUp);
+  canvas.addEventListener("pointercancel", onPointerCancel);
 }
 function disableDrawEvents(){
   canvas.style.pointerEvents = "none";
   canvas.removeEventListener("pointerdown", onPointerDown);
   canvas.removeEventListener("pointermove", onPointerMove);
-  canvas.removeEventListener("pointerup", endDraw);
-  canvas.removeEventListener("pointercancel", endDraw);
+  canvas.removeEventListener("pointerup", onPointerUp);
+  canvas.removeEventListener("pointercancel", onPointerCancel);
 }
 
 function onPointerDown(e){
-  if(mode !== "draw") return;
+  if(mode !== "draw" && mode !== "line") return;
   e.preventDefault();
   canvas.setPointerCapture(e.pointerId);
-  startDraw(e);
+  if(mode === "draw"){ startDraw(e); }
+  else { startLine(e); }
 }
 function onPointerMove(e){
-  if(mode !== "draw" || !drawing) return;
+  if(mode !== "draw" && mode !== "line") return;
   e.preventDefault();
-  moveDraw(e);
+  if(mode === "draw"){ if(drawing) moveDraw(e); }
+  else { moveLine(e); }
+}
+function onPointerUp(e){
+  if(mode === "draw"){ endDraw(); }
+  else if(mode === "line"){ finishLine(e); }
+}
+function onPointerCancel(){
+  endDraw();
+  cancelLine();
 }
 
 /* ========== 文字系统 ========== */
@@ -260,6 +436,7 @@ loadData();
 /* ========== 工具栏切换 ========== */
 const writeBtn = document.getElementById("writeBtn");
 const drawBtn = document.getElementById("drawBtn");
+const lineBtn = document.getElementById("lineBtn");
 const eraserBtn = document.getElementById("eraserBtn");
 const clearBtn = document.getElementById("clearBtn");
 
@@ -267,7 +444,9 @@ function setMode(newMode){
   mode = newMode;
   writeBtn.classList.remove("active");
   drawBtn.classList.remove("active");
+  lineBtn.classList.remove("active");
   eraserBtn.classList.remove("active");
+  cancelLine();
 
   if(mode === "write"){
     writeBtn.classList.add("active");
@@ -277,15 +456,22 @@ function setMode(newMode){
     drawBtn.classList.add("active");
     enableDrawEvents();
   }
+  if(mode === "line"){
+    lineBtn.classList.add("active");
+    enableDrawEvents();
+    showHint("直线：拖动一笔画完　或　点两下定两点");
+  }
   if(mode === "eraser"){
     eraserBtn.classList.add("active");
     disableDrawEvents();
+    showHint("橡皮擦已调小，按住拖动可以连续擦");
   }
 }
 setMode(mode);
 
 writeBtn.addEventListener("click", ()=>setMode("write"));
 drawBtn.addEventListener("click", ()=>setMode("draw"));
+lineBtn.addEventListener("click", ()=>setMode("line"));
 
 /* 颜色切换 */
 document.querySelectorAll(".color-circle").forEach(el=>{
@@ -294,7 +480,46 @@ document.querySelectorAll(".color-circle").forEach(el=>{
   });
 });
 
-/* 橡皮擦 */
+/* 橡皮擦：小尺寸 16px，按住还能拖着连续擦 */
+let erasing = false;
+let lastEraseX = null, lastEraseY = null;
+
+function eraseDot(clientX, clientY){
+  const p = getCanvasPos({clientX, clientY});
+  const half = ERASE_SIZE / 2;
+  ctx.clearRect(p.x - half, p.y - half, ERASE_SIZE, ERASE_SIZE);
+
+  // 擦到文字就一并删掉（判定范围跟着橡皮擦走，不夸张）
+  document.querySelectorAll(".text-item").forEach(item=>{
+    const r = item.getBoundingClientRect();
+    if(
+      clientX >= r.left - half &&
+      clientX <= r.right + half &&
+      clientY >= r.top - half &&
+      clientY <= r.bottom + half
+    ){
+      item.remove();
+      saveData();
+    }
+  });
+}
+
+function eraseAt(clientX, clientY){
+  if(lastEraseX !== null){
+    // 拖快了中间会留缺口，按间距补点
+    const dist = Math.hypot(clientX - lastEraseX, clientY - lastEraseY);
+    const step = ERASE_SIZE / 3;
+    const n = Math.floor(dist / step);
+    for(let i = 1; i <= n; i++){
+      const t = i / (n + 1);
+      eraseDot(lastEraseX + (clientX - lastEraseX) * t, lastEraseY + (clientY - lastEraseY) * t);
+    }
+  }
+  eraseDot(clientX, clientY);
+  lastEraseX = clientX;
+  lastEraseY = clientY;
+}
+
 eraserBtn.addEventListener("click", function(){
   if(mode === "eraser"){
     setMode(isMobileTouch() ? "draw" : "write");
@@ -303,33 +528,27 @@ eraserBtn.addEventListener("click", function(){
   }
 });
 
-document.body.addEventListener("click", function(e){
+document.body.addEventListener("pointerdown", function(e){
   if(mode !== "eraser") return;
   if(e.target.classList.contains("tool-btn") || e.target.classList.contains("color-circle")) return;
-  const rect = canvas.getBoundingClientRect();
-  const p = getCanvasPos(e);
-  document.querySelectorAll(".text-item").forEach(item=>{
-    const r = item.getBoundingClientRect();
-    const expand = 20;
-    if(
-      e.clientX >= r.left - expand &&
-      e.clientX <= r.right + expand &&
-      e.clientY >= r.top - expand &&
-      e.clientY <= r.bottom + expand
-    ){
-      item.remove();
-      saveData();
-    }
-  });
-  const eraseSize = 40;
-  ctx.clearRect(p.x - eraseSize/2, p.y - eraseSize/2, eraseSize, eraseSize);
+  erasing = true;
+  lastEraseX = null;
+  lastEraseY = null;
+  eraseAt(e.clientX, e.clientY);
 });
+document.body.addEventListener("pointermove", function(e){
+  if(mode !== "eraser" || !erasing) return;
+  eraseAt(e.clientX, e.clientY);
+});
+document.body.addEventListener("pointerup", function(){ erasing = false; lastEraseX = null; lastEraseY = null; });
+document.body.addEventListener("pointercancel", function(){ erasing = false; lastEraseX = null; lastEraseY = null; });
 
 /* 清屏按钮 */
 clearBtn.onclick = function(){
   document.querySelectorAll(".text-item").forEach(item=>item.remove());
   localStorage.removeItem(storageKey);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  cancelLine();
 };
 
 /* 文字点击输入 */

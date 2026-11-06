@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工资加班费计算器@网上用户</title>
+<meta name="keywords" content="工资计算器,加班费计算器,最低工资标准,工作日加班,休息日加班,法定节假日加班,社保公积金,个税,实发工资">
+<meta name="description" content="输入当地最低工资标准、工作日加班小时、周六日加班小时、法定节假日加班小时和公司福利，自动算出正常工资、加班费、社保、公积金、个税与实发工资。">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f2f5f4;color:#1f2937;padding:14px;}
+.wrap{max-width:888px;margin:0 auto;}
+img{max-width:100%;height:auto;display:block;}
+
+.hd{background:linear-gradient(135deg,#0f766e 0%,#115e59 55%,#134e4a 100%);color:#fff;border-radius:14px;padding:22px 20px 18px;margin-bottom:12px;}
+.hd h1{font-size:22px;letter-spacing:1px;margin-bottom:8px;}
+.hd p{font-size:13px;line-height:1.7;color:#ccfbf1;}
+
+.card{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(15,23,42,.08);}
+.card h2{font-size:15px;color:#0f766e;border-left:4px solid #0f766e;padding-left:8px;margin-bottom:12px;line-height:1;}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 14px;}
+.item label{display:block;font-size:12px;color:#64748b;margin-bottom:4px;line-height:1.4;}
+.item input,.item select{width:100%;height:34px;border:1px solid #d5dee0;border-radius:7px;padding:0 9px;font-size:14px;color:#111827;background:#fff;outline:none;}
+.item input:focus,.item select:focus{border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,.12);}
+.item input[type=checkbox]{width:16px;height:16px;vertical-align:middle;}
+.unit{font-size:11px;color:#94a3b8;margin-left:4px;}
+
+.tip{font-size:12px;color:#94a3b8;line-height:1.7;margin-top:8px;}
+.hint{background:#f0fdfa;border:1px dashed #99f6e4;color:#0f766e;font-size:12px;line-height:1.7;border-radius:8px;padding:8px 10px;margin-top:10px;}
+
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;color:#334155;padding:6px 0;}
+.row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed #eef2f1;flex-wrap:wrap;}
+.row label{flex:0 0 auto;min-width:104px;font-size:13.5px;color:#334155;}
+.row input[type=number],.fx input[type=number]{width:82px;height:32px;border:1px solid #d5dee0;border-radius:7px;padding:0 6px;font-size:14px;text-align:center;color:#111827;}
+.row input[type=number]:focus,.fx input[type=number]:focus{border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,.12);outline:none;}
+.row em{font-style:normal;font-size:12px;color:#94a3b8;}
+input::placeholder{color:#b9c3c6;}
+.fx{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:13px;color:#475569;}
+details.adv{margin-top:10px;background:#f8faf9;border:1px solid #e6eeec;border-radius:9px;padding:10px 12px;}
+details.adv summary{cursor:pointer;font-size:13px;color:#0f766e;padding:2px 0;outline:none;}
+details.adv .grid3{margin-top:10px;grid-template-columns:repeat(3,1fr);}
+details.adv .item label{font-size:12px;}
+.flist .fitem{padding:10px 0;border-bottom:1px dashed #eef2f1;}
+.flist .fitem:last-child{border-bottom:0;}
+.fitem .fname{font-size:12px;color:#94a3b8;margin-bottom:4px;}
+.fitem .fexp{font-size:13.5px;color:#334155;line-height:1.8;word-break:break-word;}
+.fitem .fres{font-size:13.5px;font-weight:700;color:#0f766e;margin-top:4px;}
+
+.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+.dcell{background:#f8faf9;border:1px solid #e6eeec;border-radius:9px;padding:7px 6px 8px;text-align:center;}
+.dcell span{display:block;font-size:12px;color:#64748b;margin-bottom:5px;white-space:nowrap;}
+.dcell input{width:100%;height:32px;border:1px solid #d5dee0;border-radius:7px;text-align:center;font-size:14px;color:#111827;padding:0 2px;}
+.dcell input:focus{border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,.12);outline:none;}
+.dcell.w{background:#fffbf3;border-color:#fde68a;}
+.dcell.w input{border-color:#fde68a;}
+@media (max-width:640px){.dgrid{grid-template-columns:repeat(4,1fr);}}
+@media (max-width:420px){.dgrid{grid-template-columns:repeat(3,1fr);}}
+
+
+.result{background:linear-gradient(135deg,#ecfdf8 0%,#eef6ff 100%);border:1px solid #d7ece7;}
+.totals{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.total{background:#fff;border-radius:10px;padding:12px 10px;text-align:center;border:1px solid #e6eeec;}
+.total .t{font-size:12px;color:#64748b;margin-bottom:6px;}
+.total .v{font-size:20px;font-weight:700;color:#0f766e;word-break:break-all;}
+.total .v.b{color:#b45309;}
+.total .v.c{color:#1d4ed8;}
+.total .s{font-size:11px;color:#94a3b8;margin-top:4px;}
+
+.stack{display:flex;height:22px;border-radius:6px;overflow:hidden;background:#e2e8f0;margin:6px 0 8px;}
+.stack i{display:block;height:100%;}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:#475569;}
+.legend span{display:flex;align-items:center;gap:5px;}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+table{width:100%;border-collapse:collapse;font-size:13px;}
+table th,table td{padding:8px 6px;border-bottom:1px solid #eef2f1;text-align:left;}
+table th{background:#f8faf9;color:#475569;font-size:12px;font-weight:600;}
+table td.r,table th.r{text-align:right;}
+tr.sum td{font-weight:700;color:#0f766e;background:#f6fdfb;}
+tr.net td{font-weight:700;color:#b45309;background:#fffbeb;}
+
+.rates{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.rate{background:#f8faf9;border-radius:8px;padding:10px;text-align:center;}
+.rate .rt{font-size:12px;color:#64748b;}
+.rate .rv{font-size:16px;font-weight:700;color:#134e4a;margin-top:4px;}
+
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px;}
+.btn{flex:1 1 140px;height:40px;border:0;border-radius:9px;font-size:14px;cursor:pointer;}
+.btn.p{background:#0f766e;color:#fff;}
+.btn.g{background:#e2e8f0;color:#334155;}
+.btn:active{opacity:.85;}
+
+.warn{margin-top:10px;font-size:12px;line-height:1.8;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 10px;}
+
+.law{font-size:12.5px;line-height:1.95;color:#475569;}
+.law b{color:#0f766e;}
+.foot{text-align:center;font-size:12px;color:#94a3b8;padding:10px 0 20px;line-height:1.8;}
+
+@media (max-width:640px){
+  .grid,.grid3,.totals,.rates{grid-template-columns:1fr 1fr;}
+  .totals{gap:8px;}
+  .total .v{font-size:18px;}
+  .hd h1{font-size:19px;}
+  .card{padding:13px 12px;}
+}
+@media (max-width:420px){
+  .grid,.grid3,.rates{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <h1>工资 / 加班费计算器</h1>
+    <p>填最低工资标准 + 每天加班小时 + 节假日加班，自动算出加班费、应发工资和实发工资（法定节假日带薪休息，上班另加 3 倍；个人缴费由你自己填）。数据只在本机计算，不上传服务器。</p>
+  </div>
+
+  <!-- 一、最低工资 -->
+  <div class="card">
+    <h2>一、本市最低工资标准</h2>
+    <div class="row">
+      <label for="minwage">最低工资标准</label>
+      <input type="number" id="minwage" min="0" step="1" value="" placeholder="自己填，如 2700"><em>元/月</em>
+    </div>
+    <div class="hint">这一格留空给你自己填——每家厂、每个城市都不一样。参考：<b>深圳 2026 年 9 月 1 日起</b>为 2700 元/月（非全日制 25.4 元/小时），其他城市按当地人社局公布的数字填。</div>
+  </div>
+
+  <!-- 二、每天加班小时 -->
+  <div class="card">
+    <h2>二、每天加班几小时（超过 8 小时的部分）</h2>
+    <div class="dgrid">
+      <div class="dcell"><span>星期一</span><input type="number" id="d1" min="0" step="0.5" value="" placeholder="0" data-follow="0"></div>
+      <div class="dcell f"><span>星期二</span><input type="number" id="d2" min="0" step="0.5" value="" placeholder="0"></div>
+      <div class="dcell f"><span>星期三</span><input type="number" id="d3" min="0" step="0.5" value="" placeholder="0"></div>
+      <div class="dcell f"><span>星期四</span><input type="number" id="d4" min="0" step="0.5" value="" placeholder="0"></div>
+      <div class="dcell f"><span>星期五</span><input type="number" id="d5" min="0" step="0.5" value="" placeholder="0"></div>
+      <div class="dcell w"><span>星期六</span><input type="number" id="d6" min="0" step="0.5" value="" placeholder="0"></div>
+      <div class="dcell w"><span>星期日</span><input type="number" id="d7" min="0" step="0.5" value="" placeholder="0"></div>
+    </div>
+    <div class="tip">填每天<b>超过 8 小时</b>的那部分，当天没加班填 0。改“星期一”的数字，星期二至星期五会<b>自动跟着变</b>；某天要单独改，直接改那天的框，之后就以你填的为准（改了星期一也不会再覆盖它）。</div>
+  </div>
+
+  <!-- 三、节假日 -->
+  <div class="card">
+    <h2>三、本月节假日总加班小时</h2>
+    <div class="row">
+      <label for="holHours">法定节假日加班</label>
+      <input type="number" id="holHours" min="0" step="0.5" value="" placeholder="没有就留空"><em>小时（本月合计，没有填 0）</em>
+    </div>
+    <div class="tip"><b>法定节假日是带薪休息</b>：那一天不上班，工资也照发，这份钱已经含在“底薪＝最低工资标准”里（月计薪天数 21.75 天本来就含法定节假日），<b>不在这里重复加</b>。只有被安排上班的小时数才填这里，在当天工资之外<b>另按 3 倍</b>加加班费；法定节假日不能用调休替代。</div>
+    <div class="hint">依据：《劳动法》第五十一条规定，劳动者在法定休假日期间，用人单位应当依法支付工资；人社部发〔2025〕2 号《关于职工全年月平均工作时间和工资折算问题的通知》明确，折算日工资、小时工资时<b>不剔除</b>国家规定的 13 天法定节假日，所以月计薪天数仍是 21.75 天——<b>法定节假日的工资本来就含在月薪里，不上班不扣底薪</b>。</div>
+  </div>
+
+  <!-- 四、福利 -->
+  <div class="card">
+    <h2>四、公司福利</h2>
+    <div class="grid3">
+      <div class="item"><label>全勤奖（元/月）</label><input type="number" id="full" min="0" step="50" value="" placeholder="0"></div>
+      <div class="item"><label>绩效奖金（元/月）</label><input type="number" id="perf" min="0" step="50" value="" placeholder="0"></div>
+      <div class="item"><label>餐补（元/月）</label><input type="number" id="meal" min="0" step="50" value="" placeholder="0"></div>
+      <div class="item"><label>住房补贴（元/月）</label><input type="number" id="house" min="0" step="50" value="" placeholder="0"></div>
+      <div class="item"><label>夜班津贴（元/月）</label><input type="number" id="night" min="0" step="50" value="" placeholder="0"></div>
+      <div class="item"><label>高温津贴（元/月）</label><input type="number" id="heat" min="0" step="50" value="" placeholder="0"></div>
+    </div>
+    <div class="tip">每一项单独填，默认 0。<b>填 0 或留空就不加</b>，填了多少钱就加进当月收入多少。这里只算应发，社保、公积金、个税不参与计算。</div>
+  </div>
+
+  <!-- 五、个人缴费 -->
+  <div class="card">
+    <h2>五、个人缴费（可选）</h2>
+    <div class="row">
+      <label for="personalPay">自己填个人扣款</label>
+      <input type="number" id="personalPay" min="0" step="10" value="" placeholder="不填就不扣"><em>元/月</em>
+    </div>
+    <div class="tip">把工资条上扣你自己的那部分加起来填（社保 + 公积金 + 个税）。填了就从收入里减掉算实发；填 0 或留空，就只算应发、不扣款。</div>
+  </div>
+
+<!-- 六、结果 -->
+  <div class="card result">
+    <h2>六、计算结果</h2>
+    <div class="totals">
+      <div class="total">
+        <div class="t">月收入合计（应发）</div>
+        <div class="v" id="grossV">￥0.00</div>
+        <div class="s">底薪 + 加班费 + 福利</div>
+      </div>
+      <div class="total">
+        <div class="t">个人缴费（你填的）</div>
+        <div class="v c" id="payV">￥0.00</div>
+        <div class="s">社保 + 公积金 + 个税</div>
+      </div>
+      <div class="total">
+        <div class="t">实发到手</div>
+        <div class="v b" id="netV">￥0.00</div>
+        <div class="s">应发 － 个人缴费</div>
+      </div>
+      <div class="total">
+        <div class="t">加班费合计</div>
+        <div class="v" id="otV">￥0.00</div>
+        <div class="s" id="otS">共 0 小时</div>
+      </div>
+    </div>
+
+    <div style="font-size:12px;color:#64748b;margin:14px 0 0;">工资构成占比</div>
+    <div class="stack" id="stack"></div>
+    <div class="legend" id="legend"></div>
+
+    <div class="rates" style="margin-top:14px;">
+      <div class="rate"><div class="rt">小时工资</div><div class="rv" id="hourV">0</div></div>
+      <div class="rate"><div class="rt">日工资</div><div class="rv" id="dayV">0</div></div>
+      <div class="rate"><div class="rt">折合实际时薪</div><div class="rv" id="realV">0</div></div>
+    </div>
+
+    <div class="tip" style="margin-top:10px;">「月收入合计」是<b>应发</b>（税前）；「个人缴费」完全按你自己填的数字扣，不填就是 0，所以实发 = 应发 － 你填的个人缴费。社保各地缴费基数不同，本工具不替你估算，只认你填的数。法定节假日不上班也照发工资（已含在底薪里），上班的时段另按 3 倍加钱。</div>
+
+    <div class="warn" id="warnBox" style="display:none;"></div>
+
+    <div class="btns">
+      <button class="btn p" id="btnCopy" type="button">一键复制工资条</button>
+      <button class="btn g" id="btnReset" type="button">清空全部</button>
+      <button class="btn g" id="btnPrint" type="button">打印 / 存成 PDF</button>
+    </div>
+  </div>
+
+  <!-- 七、明细 -->
+  <div class="card">
+    <h2>七、工资明细表</h2>
+    <table>
+      <thead><tr><th>项目</th><th class="r">计算方式</th><th class="r">金额（元）</th></tr></thead>
+      <tbody id="tbIn"></tbody>
+    </table>
+  </div>
+
+  <!-- 八、计算公式 -->
+  <div class="card">
+    <h2>八、计算过程（把你的数字代进去）</h2>
+    <div class="flist" id="formulaBox"></div>
+      <div class="tip" style="margin-top:10px;"><b>为什么节假日只加 3 倍、不再加一份当天工资：</b>法定节假日属于<b>带薪休息日</b>，不上班也照发工资。本页的“底薪＝最低工资标准”是按 21.75 天计薪天数发的整月工资（人社部折算规则不剔除法定节假日），已经包含法定节假日的带薪部分，所以当天不上班<b>不扣底薪</b>；被安排上班的时段再按 3 倍另付加班费，两份不冲突也不重复。</div>
+    <div class="tip">每一行就是一条公式，数字全部来自上面你填的框，改任何一个输入，这里会跟着重算。</div>
+  </div>
+
+  <!-- 七、加班单价 -->
+  <div class="card">
+    <h2>九、各类加班每小时值多少钱</h2>
+    <div class="rates" id="otRateList"></div>
+    <div class="tip">按法定倍率算：工作日 1.5 倍、周六周日 2 倍、法定节假日 3 倍。同样加班 1 小时，法定节假日最值钱，优先争取节假日的排班。</div>
+  </div>
+
+  <!-- 八、法律提示 -->
+  <div class="card">
+    <h2>十、算完之后值得核对的几点</h2>
+    <div class="law">
+      <b>1. 底薪不能低于最低工资。</b>正常出勤的工资不得低于当地月最低工资标准，低于的部分属违法，可向劳动监察投诉。<br>
+      <b>2. 加班有上限。</b>《劳动法》规定一般每日不超过 1 小时，特殊原因每日不超过 3 小时、每月累计不超过 36 小时。<br>
+      <b>3. 加班费基数不能随意压低。</b>以最低工资作为加班费基数只在劳动合同明确约定、且不低于最低工资时成立，多数地方按正常工作时间工资计算。<br>
+      <b>4. 休息日与法定节假日待遇不同。</b>休息日加班可以先安排调休，调休后不付 2 倍；法定节假日是<b>带薪休息</b>，不上班也照发当天工资，被安排上班的即使后面调休也必须在当天工资之外另付 3 倍加班费。<br>
+      <b>5. 社保不能"自愿放弃"。</b>单位让员工签放弃社保的协议无效，可要求补缴。<br>
+      <b>6. 留存证据。</b>考勤记录、排班表、工资条、转账记录都要留，出现欠付加班费时先申请劳动仲裁（时效一般为 1 年，欠付劳动报酬在劳动关系存续期间不受此限）。<br>
+      <b>7. 深圳的发薪日最迟不能超过次月 7 日。</b>
+      <div class="hint" style="margin-top:6px;padding:0;">原文（《深圳市员工工资支付条例》2025 年修订版）：<br>
+<b>第十一条</b>：“工资支付周期不超过一个月的，约定的工资支付日不得超过支付周期期满后第七日；……工资支付日遇法定休假节日或者休息日的，应当在之前的工作日支付。”<br>
+<b>第十二条</b>：“用人单位因故不能在约定的工资支付日支付工资的，可以延期五日；因生产经营困难，需延期超过五日的，应当征得本单位工会或者员工本人书面同意，但是最长不得超过十五日。”<br>
+<b>第五十八条（四）</b>：“无故拖欠工资，是指用人单位非因不可抗力，超过本条例规定或者认可的工资支付最后期限，未支付或者未全额支付员工工资的行为。”<br>
+白话：月薪制的约定发薪日<b>最晚次月 7 日</b>，遇到法定节假日或休息日<b>提前到之前的工作日</b>发，不能顺延；因故延期最多 5 日（到 12 日），经营困难经<b>书面同意</b>延期最长 15 日，所以个别月份<b>极限是次月 22 日</b>。把发薪日直接约定在 7 日之后，本身就违反第十一条，不是“办个延期手续就合法”；<b>超过次月 22 日还没发，就属于“无故拖欠”</b>（司法实践中有公司约定每月 28 日发薪、被判决支付经济补偿的案例）。<br>
+      <b>要把工资拖到次月 22 日，下面五条必须同时成立，缺一条都不行：</b><br>
+      ① <b>约定的发薪日本身就在次月 7 日之前</b>——合同或制度里写的是“每月 20 日、22 日发上月工资”，直接违反第十一条，“延”得再合规也没用；<br>
+      ② 只是<b>该月偶发</b>的“因故”不能按期发（资金周转、银行系统故障、不可抗力等），不是长期固定这么发；<br>
+      ③ 延期在 5 日以内（最多到 12 日）不需要书面同意；<b>超过 5 日的，必须征得工会或员工本人书面同意</b>，口头答应、“开会说了”都不算；<br>
+      ④ 延期合计<b>不得超过 15 日</b>，从约定发薪日起算，所以“7 日 + 15 日 = 22 日”就是天花板，不是可以随便挑的日子；<br>
+      ⑤ 同意必须是<b>针对这一次</b>的；一次性签“以后每月都延到 22 日发”的协议，属于变相修改约定的发薪日，仍然违反第十一条。<br>
+      五条缺任何一条，22 日发上个月工资就是违法：可以按第四十五条向人社部门投诉；也可以按《劳动合同法》第三十八条以“未及时足额支付劳动报酬”解除劳动合同，并按第四十六条主张经济补偿。</div>
+    </div>
+    <div class="tip">本工具只是按公开口径做估算，不同城市的加班费基数口径、餐补住宿等折算方式都会影响最终数字，实际以单位工资条和当地政策为准。社保、公积金、个税不在本工具计算范围内，实发只按你自己填的“个人缴费”扣减。</div>
+  </div>
+
+  <div class="foot">
+    工资加班费计算器 · 数据仅在本机浏览器计算，不会上传<br>
+    请以当地人社局公布的最低工资标准和社保政策为准
+  </div>
+
+</div>
+<script src="/a/js/yj.js"></script>
+<style>
+@media print{
+  body{background:#fff;padding:0;}
+  .hd{background:#0f766e !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .btns,.foot{display:none;}
+  .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid;}
+}
+</style>
+<script>(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var JX = 21.75, DH = 8, WF = 4.35, RW = 1.5, RR = 2, RH = 3;
+  var IDS = ['minwage','d1','d2','d3','d4','d5','d6','d7','holHours','personalPay',
+    'full','perf','meal','house','night','heat'];
+  var DEF = {minwage:'',d1:'',d2:'',d3:'',d4:'',d5:'',d6:'',d7:'',
+    holHours:'',personalPay:'',full:'',perf:'',meal:'',house:'',night:'',heat:''};
+  var KEY = 'gzjsq_v5';
+  var COLORS = ['#0f766e','#0ea5e9','#f59e0b','#ef4444','#94a3b8'];
+  var follow = {2:1, 3:1, 4:1, 5:1};
+
+  function n(id){ var v = parseFloat($(id).value); return (isFinite(v) && v > 0) ? v : 0; }
+  function money(v){
+    if(!isFinite(v)) v = 0;
+    var neg = v < 0 ? '-' : '';
+    v = Math.abs(v);
+    var s = (Math.round(v * 100) / 100).toFixed(2);
+    var p = s.split('.');
+    p[0] = p[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    return neg + p.join('.');
+  }
+  function yuan(v){ return '￥' + money(v); }
+  function money4(v){
+    if(!isFinite(v)) v = 0;
+    var neg = v < 0 ? '-' : '';
+    v = Math.abs(v);
+    var s = (Math.round(v * 10000) / 10000).toFixed(4);
+    var p = s.split('.');
+    p[0] = p[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    return neg + p.join('.');
+  }
+  function hh(v){ return (Math.round(v * 100) / 100).toFixed(2); }
+
+  function collect(){
+    var o = {};
+    IDS.forEach(function(k){ o[k] = $(k).value; });
+    return o;
+  }
+  function apply(o){
+    if(!o) return;
+    IDS.forEach(function(k){ if(o[k] !== undefined && o[k] !== null) $(k).value = o[k]; });
+  }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(e){} }
+
+  function calc(){
+    var minw = n('minwage');
+    var pp = n('personalPay');
+    var alwItems = [['全勤奖', n('full')], ['绩效奖金', n('perf')], ['餐补', n('meal')],
+                    ['住房补贴', n('house')], ['夜班津贴', n('night')], ['高温津贴', n('heat')]];
+    var alw = 0;
+    alwItems.forEach(function(it){ alw += it[1]; });
+    var hourly = minw / JX / DH;
+
+    var d = [n('d1'), n('d2'), n('d3'), n('d4'), n('d5'), n('d6'), n('d7')];
+    var wdPerDay = d[0] + d[1] + d[2] + d[3] + d[4];
+    var restPerDay = d[5] + d[6];
+    var holH = n('holHours');
+
+    var wdHours = wdPerDay * WF;
+    var restHours = restPerDay * WF;
+    var wdOT = wdHours * hourly * RW;
+    var restOT = restHours * hourly * RR;
+    var holOT = holH * hourly * RH;
+    var otHours = wdHours + restHours + holH;
+    var gross = minw + wdOT + restOT + holOT + alw;
+    var net = gross - pp;
+    var workHours = JX * DH + otHours;
+    var realHourly = workHours > 0 ? net / workHours : 0;
+
+    $('grossV').textContent = yuan(gross);
+    $('payV').textContent = yuan(pp);
+    $('netV').textContent = yuan(net);
+    $('otV').textContent = yuan(wdOT + restOT + holOT);
+    $('otS').textContent = '共 ' + hh(otHours) + ' 小时';
+    $('hourV').textContent = money4(hourly) + ' 元/时';
+    $('dayV').textContent = money4(minw / JX) + ' 元/天';
+    $('realV').textContent = money4(realHourly) + ' 元/时';
+
+    /* 工资构成条 */
+    var seg = [['底薪', minw], ['工作日加班', wdOT], ['休息日加班', restOT], ['节假日加班', holOT], ['福利补贴', alw]];
+    var tot = 0;
+    seg.forEach(function(s){ tot += s[1]; });
+    if(tot <= 0) tot = 1;
+    var stackHtml = '', legendHtml = '';
+    seg.forEach(function(s, i){
+      var w = s[1] / tot * 100;
+      if(w <= 0) return;
+      stackHtml += '<i style="width:' + w.toFixed(2) + '%;background:' + COLORS[i] + '"></i>';
+      legendHtml += '<span><i class="dot" style="background:' + COLORS[i] + '"></i>' + s[0] + ' ' + yuan(s[1]) + '（' + w.toFixed(1) + '%）</span>';
+    });
+    $('stack').innerHTML = stackHtml;
+    $('legend').innerHTML = legendHtml;
+
+    /* 计算过程 */
+    var f = [];
+    f.push(['小时工资', '最低工资 ' + money(minw) + ' ÷ 月计薪天数 ' + JX + ' ÷ 每日标准工时 ' + DH, money4(hourly) + ' 元/时']);
+    f.push(['工作日加班工时', '（周一 ' + d[0] + ' + 周二 ' + d[1] + ' + 周三 ' + d[2] + ' + 周四 ' + d[3] + ' + 周五 ' + d[4] + '）小时/天 × ' + WF + ' 天', hh(wdHours) + ' 时']);
+    f.push(['工作日加班费', hh(wdHours) + ' 时 × ' + money4(hourly) + ' 元 × ' + RW + ' 倍', money(wdOT) + ' 元']);
+    f.push(['周六周日加班工时', '（周六 ' + d[5] + ' + 周日 ' + d[6] + '）小时/天 × ' + WF + ' 天', hh(restHours) + ' 时']);
+    f.push(['周六周日加班费', hh(restHours) + ' 时 × ' + money4(hourly) + ' 元 × ' + RR + ' 倍', money(restOT) + ' 元']);
+    f.push(['法定节假日加班费（当天工资照发，另加 3 倍）', hh(holH) + ' 时 × ' + money4(hourly) + ' 元 × ' + RH + ' 倍', money(holOT) + ' 元']);
+    f.push(['加班费合计', money(wdOT) + ' + ' + money(restOT) + ' + ' + money(holOT), money(wdOT + restOT + holOT) + ' 元']);
+    f.push(['月收入合计', '底薪 ' + money(minw) + ' + 加班费 ' + money(wdOT + restOT + holOT) + ' + 福利 ' + money(alw), money(gross) + ' 元']);
+    f.push(['实发到手', money(gross) + ' － 个人缴费 ' + money(pp), money(net) + ' 元']);
+    f.push(['折合实际时薪', money(net) + ' ÷ （' + JX + ' × ' + DH + ' + ' + hh(otHours) + '）', money4(realHourly) + ' 元/时']);
+
+    var fh = '';
+    f.forEach(function(it){
+      fh += '<div class="fitem"><div class="fname">' + it[0] + '</div>' +
+            '<div class="fexp">' + it[1] + '</div>' +
+            '<div class="fres">= ' + it[2] + '</div></div>';
+    });
+    $('formulaBox').innerHTML = fh;
+
+    window.__sheet = {
+      minw: minw, hourly: hourly, wdOT: wdOT, restOT: restOT, holOT: holOT, alw: alw,
+      alwItems: alwItems,
+      gross: gross, otHours: otHours, wdHours: wdHours, restHours: restHours, holH: holH,
+      pp: pp, net: net, realHourly: realHourly
+    };
+
+    /* 工资明细 */
+    var rowsIn = '';
+    rowsIn += '<tr><td>底薪（＝最低工资标准）</td><td class="r">正常出勤工资</td><td class="r">' + money(minw) + '</td></tr>';
+    rowsIn += '<tr><td>工作日加班费</td><td class="r">' + hh(wdHours) + ' 时 × ' + money4(hourly) + ' × ' + RW + ' 倍</td><td class="r">' + money(wdOT) + '</td></tr>';
+    rowsIn += '<tr><td>周六周日加班费</td><td class="r">' + hh(restHours) + ' 时 × ' + money4(hourly) + ' × ' + RR + ' 倍</td><td class="r">' + money(restOT) + '</td></tr>';
+    rowsIn += '<tr><td>法定节假日加班费（带薪假，另加 3 倍）</td><td class="r">' + hh(holH) + ' 时 × ' + money4(hourly) + ' × ' + RH + ' 倍</td><td class="r">' + money(holOT) + '</td></tr>';
+    alwItems.forEach(function(it){
+      if(it[1] > 0) rowsIn += '<tr><td>' + it[0] + '</td><td class="r">按月计</td><td class="r">' + money(it[1]) + '</td></tr>';
+    });
+    rowsIn += '<tr class="sum"><td>月收入合计（应发）</td><td class="r">收入合计</td><td class="r">' + money(gross) + '</td></tr>';
+    if(pp > 0) rowsIn += '<tr><td>个人缴费（自己填的）</td><td class="r">社保 + 公积金 + 个税</td><td class="r">－ ' + money(pp) + '</td></tr>';
+    rowsIn += '<tr class="net"><td>实发到手</td><td class="r">应发 － 个人缴费</td><td class="r">' + money(net) + '</td></tr>';
+    $('tbIn').innerHTML = rowsIn;
+
+    /* 加班单价 */
+    $('otRateList').innerHTML =
+      '<div class="rate"><div class="rt">工作日加班（' + RW + ' 倍）</div><div class="rv">' + money4(hourly * RW) + ' 元/时</div></div>' +
+      '<div class="rate"><div class="rt">周六周日（' + RR + ' 倍）</div><div class="rv">' + money4(hourly * RR) + ' 元/时</div></div>' +
+      '<div class="rate"><div class="rt">法定节假日（' + RH + ' 倍）</div><div class="rv">' + money4(hourly * RH) + ' 元/时</div></div>';
+
+    /* 提示 */
+    var w = [];
+    if(minw <= 0){
+      w.push('先在上面填“本市最低工资标准”，填完立刻出结果。');
+    }
+    if(wdHours + restHours > 36){
+      w.push('工作日 + 周六周日加班合计 ' + hh(wdHours + restHours) + ' 小时，超过《劳动法》每月 36 小时上限，超出部分存在争议风险。');
+    }
+    if(Math.max(d[0], d[1], d[2], d[3], d[4]) > 3){
+      w.push('工作日每天加班超过 3 小时，超出《劳动法》每日加班不超过 3 小时的规定。');
+    }
+    if(holH > 0){
+      w.push('法定节假日加班不能用调休替代，必须另付 ' + yuan(holOT) + ' 的 3 倍工资。');
+    }
+    if(pp > gross){
+      w.push('个人缴费比月收入还高，实发为负数，请检查填的数字。');
+    }
+    if(w.length){
+      $('warnBox').style.display = 'block';
+      $('warnBox').innerHTML = w.map(function(s, i){ return (i + 1) + '. ' + s; }).join('<br>');
+    } else {
+      $('warnBox').style.display = 'none';
+      $('warnBox').innerHTML = '';
+    }
+
+    save();
+  }
+
+  function copyText(){
+    var s = window.__sheet || {};
+    var L = [];
+    L.push('【工资条】');
+    L.push('最低工资标准：' + money(s.minw) + ' 元/月');
+    L.push('小时工资：' + money4(s.hourly) + ' 元    日工资：' + money4(s.minw / JX) + ' 元');
+    L.push('--- 加班共 ' + hh(s.otHours || 0) + ' 小时 ---');
+    L.push('工作日加班：' + hh(s.wdHours || 0) + ' 时，' + money(s.wdOT) + ' 元');
+    L.push('周六周日加班：' + hh(s.restHours || 0) + ' 时，' + money(s.restOT) + ' 元');
+    L.push('法定节假日加班：' + hh(s.holH || 0) + ' 时，' + money(s.holOT) + ' 元');
+    if(s.alw > 0){
+      L.push('--- 福利 ' + money(s.alw) + ' 元 ---');
+      (s.alwItems || []).forEach(function(it){ if(it[1] > 0) L.push(it[0] + '：' + money(it[1]) + ' 元'); });
+    }
+    L.push('--- 合计 ---');
+    L.push('应发工资：' + money(s.gross) + ' 元');
+    L.push('个人缴费：' + money(s.pp) + ' 元');
+    L.push('实发到手：' + money(s.net) + ' 元');
+    L.push('折合实际时薪：' + money(s.realHourly) + ' 元/时');
+    var txt = L.join('\n');
+    var done = function(){
+      var b = $('btnCopy');
+      b.textContent = '已复制 ✓';
+      setTimeout(function(){ b.textContent = '一键复制工资条'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt, done); });
+    } else {
+      fallback(txt, done);
+    }
+  }
+  function fallback(txt, cb){
+    var ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+    cb();
+  }
+
+  /* 事件 */
+  IDS.forEach(function(k){
+    var el = $(k);
+    if(!el) return;
+    el.addEventListener('input', function(){
+      if(k === 'd2' || k === 'd3' || k === 'd4' || k === 'd5'){ follow[parseInt(k.charAt(1), 10)] = 0; }
+      if(k === 'd1'){ syncWeek(); }
+      calc();
+    });
+  });
+
+  function syncWeek(){
+    var v = $('d1').value;
+    [2, 3, 4, 5].forEach(function(i){
+      if(follow[i]) $('d' + i).value = v;
+    });
+  }
+
+  $('btnCopy').addEventListener('click', copyText);
+  $('btnPrint').addEventListener('click', function(){ window.print(); });
+  $('btnReset').addEventListener('click', function(){
+    if(!confirm('确定清空所有输入吗？')) return;
+    IDS.forEach(function(k){ $(k).value = DEF[k]; });
+    follow = {2:1, 3:1, 4:1, 5:1};
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    calc();
+  });
+
+  /* 初始化 */
+  var saved = null;
+  try{ saved = JSON.parse(localStorage.getItem(KEY) || 'null'); }catch(e){ saved = null; }
+  if(saved){
+    apply(saved);
+    [2, 3, 4, 5].forEach(function(i){
+      if(String($('d' + i).value) !== String($('d1').value)) follow[i] = 0;
+    });
+  }
+  calc();
+})();
+</script>
+</body>
+</html>
