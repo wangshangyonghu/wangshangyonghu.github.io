@@ -74,6 +74,7 @@ body{overflow:hidden;}
 .eraser-btn{ background:#ddd; color:#000; }
 .clear-btn{ background:#f44; color:#fff; }
 .upload-btn{ background:#f90; color:#fff; }
+.paste-btn{ background:#0aa; color:#fff; }
 .size-btn{ background:#78c; color:#fff; font-size:12px; }
 .active{ box-shadow:0 0 0 2px #ff0; }
 
@@ -85,6 +86,17 @@ body{overflow:hidden;}
   width:100vw;
   height:100vh;
   z-index:1;
+  touch-action:none;
+}
+/* 涂改液预览层：透明，只显示当次要画的直线，松手后才叠到主画布 */
+#previewCanvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index:1;
+  pointer-events:none;
   touch-action:none;
 }
 
@@ -125,6 +137,7 @@ body{overflow:hidden;}
   <div class="tool-btn clear-btn" id="clearBtn">清</div>
   <span style="width:1px;height:20px;background:#fff;opacity:.4"></span>
   <div class="tool-btn upload-btn" id="uploadBtn">传</div>
+  <div class="tool-btn paste-btn" id="pasteBtn" title="粘贴剪贴板里的图纸（微信右键复制后点这里，或直接 Ctrl+V）">粘</div>
   <div class="tool-btn size-btn" id="imgDown">图-</div>
   <div class="tool-btn size-btn" id="imgUp">图+</div>
   <div class="tool-btn size-btn" id="fontDown">字-</div>
@@ -132,6 +145,7 @@ body{overflow:hidden;}
 </div>
 
 <canvas id="drawCanvas"></canvas>
+<canvas id="previewCanvas"></canvas>
 
 <script>
 let currentColor = "#00f";
@@ -154,6 +168,8 @@ if(isMobileTouch()){
 /* ========== 画布 ========== */
 const canvas = document.getElementById("drawCanvas");
 const ctx = canvas.getContext("2d");
+const previewCanvas = document.getElementById("previewCanvas");
+const previewCtx = previewCanvas.getContext("2d");
 const bgImg = document.getElementById("bgImg");
 const fileInput = document.getElementById("fileInput");
 let drawing = false;
@@ -173,6 +189,8 @@ function getCanvasPos(e){
 function resizeCanvas(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  previewCanvas.width = canvas.width;
+  previewCanvas.height = canvas.height;
 }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
@@ -191,17 +209,71 @@ const uploadBtn = document.getElementById("uploadBtn");
 uploadBtn.addEventListener("click", function(){
   fileInput.click();
 });
+
+/* 统一入口：把一张图片显示为底图（只在内存里读取，不上传到网站目录） */
+function showImage(src){
+  bgImg.src = src;
+  bgImg.style.display = "block";
+  initImgSize();
+}
+function showImageFromBlob(blob){
+  if(!blob) return;
+  const reader = new FileReader();
+  reader.onload = function(e){ showImage(e.target.result); };
+  reader.readAsDataURL(blob);
+}
+
 fileInput.addEventListener("change", function(){
   const file = this.files[0];
   if(!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e){
-    bgImg.src = e.target.result;   // 只在内存里读取，不上传到网站目录
-    bgImg.style.display = "block";
-    initImgSize();
-  };
-  reader.readAsDataURL(file);
+  showImageFromBlob(file);
   fileInput.value = "";
+});
+
+/* ========== 粘贴图纸（微信里右键复制 → 回到这里 Ctrl+V） ========== */
+const pasteBtn = document.getElementById("pasteBtn");
+
+// 1) 页面任意位置按 Ctrl+V / Command+V 直接粘贴图片当作底图
+document.addEventListener("paste", function(e){
+  // 正在某段文字里打字时，不抢它的粘贴
+  const ac = document.activeElement;
+  if(ac && ac.classList && ac.classList.contains("text-item")) return;
+
+  const cd = e.clipboardData;
+  if(!cd || !cd.items) return;
+  for(let i = 0; i < cd.items.length; i++){
+    const it = cd.items[i];
+    if(it.kind === "file" && it.type && it.type.indexOf("image") === 0){
+      const blob = it.getAsFile();
+      if(!blob) continue;
+      e.preventDefault();
+      showImageFromBlob(blob);
+      return;
+    }
+  }
+});
+
+// 2) 点“粘”按钮：尝试直接读剪贴板
+pasteBtn.addEventListener("click", function(){
+  if(!(navigator.clipboard && navigator.clipboard.read)){
+    alert("这个环境不允许按钮直接读剪贴板。\n\n请用键盘粘贴：Windows 按 Ctrl+V，Mac 按 Command+V。\n（先在微信里对图纸右键→复制）");
+    return;
+  }
+  navigator.clipboard.read().then(function(items){
+    for(let i = 0; i < items.length; i++){
+      const types = items[i].types || [];
+      const imgType = types.filter(function(t){ return t.indexOf("image") === 0; })[0];
+      if(imgType){
+        items[i].getType(imgType).then(function(blob){
+          showImageFromBlob(blob);
+        });
+        return;
+      }
+    }
+    alert("剪贴板里没找到图片。\n请先在微信里对图纸右键→复制，再点“粘”。");
+  }).catch(function(){
+    alert("浏览器没给读取剪贴板的权限。\n\n请改用键盘粘贴：Windows 按 Ctrl+V，Mac 按 Command+V。");
+  });
 });
 
 /* ========== 字体大小 ========== */
@@ -223,6 +295,77 @@ function getStroke(){
     return { color:"#ffffff", width:20 };
   }
   return { color: currentColor, width: 6 };
+}
+
+/* 涂改液/橡皮擦直线相关状态 */
+let lineStart = null;     // 起笔点
+let paintMoved = false;   // 涂改液是否拖动了
+let eraseMoved = false;   // 橡皮擦是否拖动了
+let lastEnd = null;       // 橡皮擦上一次吸附终点
+let eraseSize = 20;       // 橡皮擦宽度（像素）
+let curErase = false;     // 当前是否在直线擦除中（橡皮擦拖动）
+let eraserSnap = false;   // 是否强制横竖吸附（擦按钮模式为 true）
+let eraseAnchor = null;   // Ctrl/Alt 两点擦的第一点（PS 钢笔式锚点）
+
+// 两点之间擦一条直线（任意角度）
+function eraseLine(a, b){
+  ctx.save();
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.beginPath();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = "rgba(0,0,0,1)";
+  ctx.lineWidth = eraseSize;
+  ctx.moveTo(a.x, a.y);
+  ctx.lineTo(b.x, b.y);
+  ctx.stroke();
+  ctx.restore();
+}
+// 在预览层画两点连线（红色半透明提示）
+function previewLine(a, b){
+  previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+  previewCtx.beginPath();
+  previewCtx.lineCap = "round";
+  previewCtx.lineJoin = "round";
+  previewCtx.strokeStyle = "rgba(255,0,0,0.45)";
+  previewCtx.lineWidth = eraseSize;
+  previewCtx.moveTo(a.x, a.y);
+  previewCtx.lineTo(b.x, b.y);
+  previewCtx.stroke();
+}
+// 在预览层画锚点小圆点
+function drawAnchorDot(p){
+  previewCtx.beginPath();
+  previewCtx.fillStyle = "rgba(0,0,255,0.8)";
+  previewCtx.arc(p.x, p.y, 4, 0, Math.PI*2);
+  previewCtx.fill();
+}
+// 按当前工具执行"两点连直线"（Ctrl/Alt 点对点）
+function pointLine(a, b){
+  if(mode === "eraser"){
+    eraseLine(a, b);                       // 擦模式：擦一条直线
+  }else if(mode === "paint"){
+    // 涂模式：画一条白色直线
+    const s = getStroke();
+    ctx.beginPath();
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = s.color;
+    ctx.lineWidth = s.width;
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+  }else if(mode === "draw"){
+    // 手模式：画一条当前颜色的直线
+    ctx.beginPath();
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = 6;
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+  }
 }
 
 function startDraw(e){
@@ -247,7 +390,46 @@ function moveDraw(e){
   lastY = p.y;
 }
 function endDraw(){
+  if(curErase && lineStart){
+    if(eraseMoved){
+      // 直线擦除：用 destination-out 把一条直条擦成透明（露出下面的原图）
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = "rgba(0,0,0,1)";
+      ctx.lineWidth = eraseSize;
+      ctx.moveTo(lineStart.x, lineStart.y);
+      ctx.lineTo(lastEnd ? lastEnd.x : lineStart.x, lastEnd ? lastEnd.y : lineStart.y);
+      ctx.stroke();
+      ctx.restore();
+    }else{
+      // 单击没拖动：擦掉一个方块
+      ctx.clearRect(lineStart.x - eraseSize/2, lineStart.y - eraseSize/2, eraseSize, eraseSize);
+    }
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    curErase = false;
+    drawing = false;
+    lineStart = null;
+    lastEnd = null;
+    return;
+  }
+  if(mode === "paint" && lineStart){
+    if(!paintMoved){                  // 单击没拖动：主画布盖一个白色圆点
+      const s = getStroke();
+      ctx.beginPath();
+      ctx.fillStyle = s.color;
+      ctx.arc(lineStart.x, lineStart.y, s.width/2, 0, Math.PI*2);
+      ctx.fill();
+    }else{                            // 拖动了：把预览直线叠到主画布，绝不擦除已有内容
+      ctx.drawImage(previewCanvas, 0, 0);
+    }
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+  }
   drawing = false;
+  lineStart = null;
+  lastEnd = null;
 }
 
 /* ========== PointerEvents ========== */
@@ -267,15 +449,99 @@ function disableDrawEvents(){
 }
 
 function onPointerDown(e){
+  const modErase = (e.ctrlKey || e.altKey);   // 按住 Ctrl 或 Alt = 钢笔式两点擦
+  if(modErase){
+    // PS 钢笔式：点一下设起点，再点另一点，按当前工具连真实直线（涂=白线，擦=擦除，手=彩色线）
+    e.preventDefault();
+    const p = getCanvasPos(e);
+    if(eraseAnchor){
+      previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      pointLine(eraseAnchor, p);   // 两点连直线
+      eraseAnchor = null;
+    }else{
+      eraseAnchor = p;             // 记下第一点
+      previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      drawAnchorDot(p);
+    }
+    return;
+  }
+  if(mode === "eraser"){
+    e.preventDefault();
+    canvas.setPointerCapture(e.pointerId);
+    // 擦按钮模式：按住拖动，横竖直线擦除
+    lineStart = getCanvasPos(e);
+    eraseMoved = false;
+    curErase = true;
+    eraserSnap = true;
+    drawing = true;
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    return;
+  }
   if(mode !== "draw" && mode !== "paint") return;
   e.preventDefault();
   canvas.setPointerCapture(e.pointerId);
-  startDraw(e);
+  drawing = true;
+  if(mode === "paint"){
+    const p = getCanvasPos(e);
+    lineStart = { x:p.x, y:p.y };
+    paintMoved = false;
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+  }else{
+    startDraw(e);
+  }
 }
 function onPointerMove(e){
-  if((mode !== "draw" && mode !== "paint") || !drawing) return;
+  if(!drawing) return;
   e.preventDefault();
-  moveDraw(e);
+  if(curErase && lineStart){
+    const p = getCanvasPos(e);
+    let end;
+    if(eraserSnap){
+      // 横竖吸附：横着拖擦水平，竖着拖擦竖直
+      end = (Math.abs(p.x-lineStart.x) >= Math.abs(p.y-lineStart.y))
+        ? { x:p.x, y:lineStart.y }
+        : { x:lineStart.x, y:p.y };
+    }else{
+      // 任意角度：两点连真实直线（可擦斜线）
+      end = { x:p.x, y:p.y };
+    }
+    if(Math.abs(p.x-lineStart.x) > 2 || Math.abs(p.y-lineStart.y) > 2) eraseMoved = true;
+    lastEnd = end;
+    // 在预览层用半透明红色显示要擦的直条，松手时才真正擦除
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    previewCtx.beginPath();
+    previewCtx.lineCap = "round";
+    previewCtx.lineJoin = "round";
+    previewCtx.strokeStyle = "rgba(255,0,0,0.45)";
+    previewCtx.lineWidth = eraseSize;
+    previewCtx.moveTo(lineStart.x, lineStart.y);
+    previewCtx.lineTo(end.x, end.y);
+    previewCtx.stroke();
+    return;
+  }
+  if(mode === "paint" && lineStart){
+    const p = getCanvasPos(e);
+    const s = getStroke();
+    // 吸附：横着拖变水平线，竖着拖变垂直线
+    const end = (Math.abs(p.x-lineStart.x) >= Math.abs(p.y-lineStart.y))
+      ? { x:p.x, y:lineStart.y }
+      : { x:lineStart.x, y:p.y };
+    if(Math.abs(p.x-lineStart.x) > 2 || Math.abs(p.y-lineStart.y) > 2) paintMoved = true;
+    // 只在预览层重画，不碰主画布 → 重复涂往上叠加，像真涂改液多涂几遍
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    previewCtx.beginPath();
+    previewCtx.lineCap = "round";
+    previewCtx.lineJoin = "round";
+    previewCtx.strokeStyle = s.color;
+    previewCtx.lineWidth = s.width;
+    previewCtx.moveTo(lineStart.x, lineStart.y);
+    previewCtx.lineTo(end.x, end.y);
+    previewCtx.stroke();
+    return;
+  }
+  if(mode === "draw"){
+    moveDraw(e);
+  }
 }
 
 /* ========== 文字系统 ========== */
@@ -362,6 +628,9 @@ function setMode(newMode){
   drawBtn.classList.remove("active");
   paintBtn.classList.remove("active");
   eraserBtn.classList.remove("active");
+  // 切换工具时清掉预览层残留和两点锚点
+  eraseAnchor = null;
+  previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
 
   if(mode === "write"){
     writeBtn.classList.add("active");
@@ -377,7 +646,7 @@ function setMode(newMode){
   }
   if(mode === "eraser"){
     eraserBtn.classList.add("active");
-    disableDrawEvents();
+    enableDrawEvents();   // 橡皮擦也要支持拖拽画直线
   }
 }
 setMode(mode);
@@ -433,7 +702,6 @@ eraserBtn.addEventListener("click", function(){
 document.body.addEventListener("click", function(e){
   if(mode !== "eraser") return;
   if(e.target.classList.contains("tool-btn") || e.target.classList.contains("color-circle")) return;
-  const p = getCanvasPos(e);
   document.querySelectorAll(".text-item").forEach(item=>{
     const r = item.getBoundingClientRect();
     const expand = 20;
@@ -447,8 +715,6 @@ document.body.addEventListener("click", function(e){
       saveData();
     }
   });
-  const eraseSize = 40;
-  ctx.clearRect(p.x - eraseSize/2, p.y - eraseSize/2, eraseSize, eraseSize);
 });
 
 /* 清屏按钮 */
@@ -483,6 +749,19 @@ document.body.addEventListener("click", function(e){
     if(this.innerText.trim() === "") this.remove();
     saveData();
   });
+});
+
+/* 按住 Ctrl/Alt 时：实时预览"第一点到光标"的擦除连线 */
+document.addEventListener("pointermove", function(e){
+  if(!eraseAnchor) return;
+  if(!(e.ctrlKey || e.altKey)){
+    previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    return;
+  }
+  const p = getCanvasPos(e);
+  previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+  drawAnchorDot(eraseAnchor);
+  previewLine(eraseAnchor, p);
 });
 </script>
 

@@ -18,6 +18,10 @@ body{
   body{ background-size:60% auto; }
 }
 
+@media (max-width:360px){
+  body .tool-bar{ flex-wrap:wrap; justify-content:center; border-radius:14px; }
+}
+
 /* 顶部工具栏：强制单行，缩小按钮，不换行 */
 .tool-bar{
   position:fixed;
@@ -59,6 +63,7 @@ body{
 .draw-btn{ background:#08f; color:#fff; }
 .eraser-btn{ background:#ddd; color:#000; }
 .clear-btn{ background:#f44; color:#fff; }
+.size-btn{ background:#78c; color:#fff; }
 .active{ box-shadow:0 0 0 2px #ff0; }
 
 /* 手写画布 */
@@ -103,6 +108,8 @@ body{
   <div class="color-circle" style="background:#0f0" data-color="#0f0"></div>
   <div class="tool-btn eraser-btn" id="eraserBtn">擦</div>
   <div class="tool-btn clear-btn" id="clearBtn">清</div>
+  <div class="tool-btn size-btn" id="fontDown">字-</div>
+  <div class="tool-btn size-btn" id="fontUp">字+</div>
 </div>
 
 <canvas id="drawCanvas"></canvas>
@@ -111,7 +118,9 @@ body{
 <script>
 let currentColor = "#00f";
 let mode;
+let fontSize = 24;
 const storageKey = "bbText_6";
+const fontKey = "bbFont_6";
 
 // 判断设备：手机触屏默认手写draw；电脑非触屏默认打字write
 function isMobileTouch(){
@@ -199,7 +208,20 @@ function onPointerMove(e){
   moveDraw(e);
 }
 
+/* ========== 字体大小 ========== */
 /* ========== 文字系统 ========== */
+function applyFontSize(){
+  document.querySelectorAll(".text-item").forEach(d=>{
+    d.style.fontSize = fontSize + "px";
+  });
+}
+function saveFont(){
+  try{ localStorage.setItem(fontKey, String(fontSize)); }catch(e){}
+}
+let savedFont = null;
+try{ savedFont = localStorage.getItem(fontKey); }catch(e){}
+if(savedFont) fontSize = parseInt(savedFont) || 24;
+
 function saveData(){
   const list = [];
   document.querySelectorAll(".text-item").forEach(div=>{
@@ -207,6 +229,7 @@ function saveData(){
       x: parseFloat(div.style.left),
       y: parseFloat(div.style.top),
       color: div.style.color,
+      fontSize: parseFloat(div.style.fontSize) || fontSize,
       text: div.innerText
     });
   });
@@ -256,6 +279,7 @@ function loadData(){
     div.style.left = item.x + "px";
     div.style.top = item.y + "px";
     div.style.color = item.color;
+    div.style.fontSize = (item.fontSize || fontSize) + "px";
     div.innerText = item.text;
     document.body.appendChild(div);
     makeDraggable(div);
@@ -305,7 +329,19 @@ document.querySelectorAll(".color-circle").forEach(el=>{
   });
 });
 
+/* 字体大小按钮 */
 /* 橡皮擦 */
+document.getElementById("fontUp").addEventListener("click", function(){
+  fontSize = Math.min(fontSize + 2, 72);
+  applyFontSize();
+  saveFont();
+});
+document.getElementById("fontDown").addEventListener("click", function(){
+  fontSize = Math.max(fontSize - 2, 12);
+  applyFontSize();
+  saveFont();
+});
+
 eraserBtn.addEventListener("click", function(){
   if(mode === "eraser"){
     setMode(isMobileTouch() ? "draw" : "write");
@@ -358,6 +394,7 @@ document.body.addEventListener("click", function(e){
   div.style.left = clickX + "px";
   div.style.top = e.clientY + "px";
   div.style.color = currentColor;
+  div.style.fontSize = fontSize + "px";
   document.body.appendChild(div);
   makeDraggable(div);
   div.focus();
