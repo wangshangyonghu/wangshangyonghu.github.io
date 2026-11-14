@@ -30,6 +30,7 @@ const jsList = [
     "tel.js",
     "title.js",
     "ewm.js",
+    "a1.js",
     "zd.js"
 ];
 function loadScripts(scriptArray, index = 0) {
@@ -101,5 +102,28 @@ window.addEventListener('DOMContentLoaded', function() {
     xhr2.send();
 });
 
+
+
+
+
+
+
+
+
+
+
+// 等待页面DOM结构加载完成后再执行，防止找不到a标签
+document.addEventListener('DOMContentLoaded', function () {
+    // 选中页面上所有 target="_blank" 的超链接
+    document.querySelectorAll('a[target="_blank"]').forEach(el => {
+        // 获取a标签现有的rel属性，没有就设为空字符串
+        const rel = el.getAttribute('rel') || '';
+        // 判断rel里面还没有 noopener，避免重复添加
+        if (!rel.includes('noopener')) {
+            // 在原有rel基础上追加 noopener noreferrer 安全属性
+            el.setAttribute('rel', rel + ' noopener noreferrer');
+        }
+    });
+});
 
 
