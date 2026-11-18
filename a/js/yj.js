@@ -1,14 +1,6 @@
 // 批量加载所有css
 const cssList = [
-    "reset.css",
-    "style.css",
-    "mobile.css",
-    "hr.css",
-    "h.css",
-    "xhx.css",
-    "img.css",
-    "zd.css",
-    "bj2.css",
+    "css.css",
     "p.css"
 ];
 cssList.forEach(href=>{
@@ -127,3 +119,56 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+
+// 创建style标签，用于注入全局css样式
+const style = document.createElement('style');
+
+// 注意：包裹样式的模板字符串 ` 不能丢，丢了代码直接报错
+style
+.textContent = `
+
+/* 去掉所有链接下划线 */
+a {
+  text-decoration: none;
+}
+
+/* 统一h1~h6标题字号为12px */
+h1 { font-size: 12px; }
+h2 { font-size: 12px; }
+h3 { font-size: 12px; }
+h4 { font-size: 12px; }
+h5 { font-size: 12px; }
+h6 { font-size: 12px; }
+
+/* 统一所有标题上下外边距1px */
+h1,h2,h3,h4,h5,h6 {
+    margin:1px 0;
+}
+
+hr {
+    margin:1px 0;        /* 分割线上下外边距1px，左右外边距0，左右贴边 */
+    border: none;        /* 清除hr标签浏览器默认自带边框 */
+    height:1px;          /* 线条高度1px */
+    background-color:#000000; /* 背景填充纯黑，比border更黑 */
+}
+
+/*图片自适应，不超出容器不变形，不强制单独一行*/
+img{
+  max-width:100%; /* 最大宽度不超过父容器，大图自动缩小 */
+  height:auto;    /* 高度随宽度自动缩放，防止图片变形 */
+  vertical-align: middle; /* 消除图片底部自带的基线空白缝隙 */
+}
+
+p {
+  margin: 0; /* 清除p标签默认上下外边距，取消段落之间自带空白 */
+  padding: 0; /* 清除p标签默认内边距，文字与p边框之间不留空隙 */
+}
+
+body {
+  padding: 10px 10px; /* 页面整体内边距，上下10px，左右10px，内容不靠贴浏览器边缘 */
+}
+`;
+// 将style标签追加到页面head，样式生效
+document
+.head.appendChild(style);
