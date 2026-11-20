@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>加法表@网上用户</title>
+<meta name="keywords" content="加法表,加法口诀表,10以内加法,20以内加法,小学生加法">
+<meta name="description" content="电脑满屏显示的加法表（加法口诀表），台阶式排版：第一行1格、第二行2格，依次递增到9格，铺满整个屏幕，自动适配手机屏幕。">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;background:#eef1f7;}
+#wrap{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(9,1fr);
+  grid-template-rows:repeat(9,minmax(46px,auto));
+  gap:5px;
+  padding:16px 8px;
+}
+.cell{
+  display:flex;align-items:center;justify-content:center;
+  white-space:nowrap;overflow:hidden;line-height:1;
+  background:#fff;border-radius:8px;
+  box-shadow:0 1px 3px rgba(20,40,90,.09);
+  color:#222836;font-size:inherit;
+  user-select:none;
+}
+.cell span{opacity:.85;}
+.cell b{margin-left:.08em;font-weight:700;color:hsl(var(--h) 58% 40%);}
+@media (max-width:600px){
+  #wrap{gap:3px;padding:12px 8px;}
+  .cell{border-radius:5px;min-height:38px;}
+}
+@media (min-width:601px){
+  html,body{height:100%;overflow:hidden;}
+  #wrap{
+    height:100vh;height:100dvh;
+    grid-template-rows:repeat(9,1fr);
+    padding:20px;
+  }
+}
+</style>
+</head>
+<body>
+<div id="wrap"></div>
+<script>
+(function(){
+  var wrap=document.getElementById('wrap');
+  for(var i=1;i<=9;i++){
+    for(var j=1;j<=i;j++){
+      var c=document.createElement('div');
+      c.className='cell';
+      c.style.gridRow=i;
+      c.style.gridColumn=j;
+      c.style.setProperty('--h',110+(i-1)*24);
+      c.innerHTML='<span>'+j+'+'+i+'=</span><b>'+(j+i)+'</b>';
+      wrap.appendChild(c);
+    }
+  }
+  function fit(){
+    var w=wrap.clientWidth,h=wrap.clientHeight;
+    var fs=Math.min((w/9)/4.2,(h/9)*0.44);
+    fs=Math.max(fs,7);
+    wrap.style.fontSize=fs.toFixed(1)+'px';
+  }
+  fit();
+  window.addEventListener('resize',fit);
+  window.addEventListener('orientationchange',function(){setTimeout(fit,120);});
+})();
+</script>
+</body>
+</html>
