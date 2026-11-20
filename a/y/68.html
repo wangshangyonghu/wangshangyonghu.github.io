@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>书签脚本拖拽安装版（一键回到顶部等）@网上用户</title>
+<meta name="keywords" content="书签脚本,bookmarklet,拖拽添加书签,回到顶部,深色模式,解除复制限制,提取链接,教程">
+<meta name="description" content="十九个浏览器书签小脚本，全部做成可拖拽按钮：按住按钮拖到收藏栏松手即完成安装，不用填名称和网址。含回到顶部、深色护眼、纯文本阅读、解除复制限制、提取链接等。">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;padding:0;background:#f2f4f8;color:#24292f;font-size:16px;line-height:1.8;-webkit-text-size-adjust:100%;}
+.wrap{max-width:888px;margin:0 auto;padding:24px 18px 60px;}
+.hd{background:#fff;border-radius:14px;padding:26px 22px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:18px;}
+.hd h1{font-size:24px;margin:0 0 10px;letter-spacing:.5px;}
+.hd p{margin:0 0 14px;color:#5b6472;font-size:15px;}
+.hd .btns{display:flex;flex-wrap:wrap;gap:10px;}
+.bigbtn{background:#2f7cf6;color:#fff;border:0;border-radius:8px;padding:9px 18px;font-size:14px;cursor:pointer;font-family:inherit;}
+.bigbtn.ghost{background:#eaf1fe;color:#2f7cf6;}
+.bigbtn:hover{opacity:.92;}
+.bigbtn:active{transform:scale(.97);}
+.card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:18px;}
+.card h2{font-size:18px;margin:0 0 14px;padding-left:11px;border-left:4px solid #2f7cf6;line-height:1.4;}
+.card p{margin:0 0 12px;}
+.card ul,.card ol{margin:0 0 12px;padding-left:22px;}
+.card li{margin-bottom:7px;}
+.tip{background:#fff8e6;border-left:4px solid #f5a623;padding:12px 14px;border-radius:6px;font-size:14px;color:#7a5200;margin-bottom:12px;}
+.warn{background:#fdeeee;border-left:4px solid #e04848;padding:12px 14px;border-radius:6px;font-size:14px;color:#8c2020;margin-bottom:12px;}
+.ok{background:#eef7ee;border-left:4px solid #35a14e;padding:12px 14px;border-radius:6px;font-size:14px;color:#1f5e30;margin-bottom:12px;}
+.dragzone{background:#fdfaf3;border:2px dashed #f5a623;border-radius:10px;padding:16px;margin-bottom:14px;}
+.dragzone .zt{font-size:15px;font-weight:bold;color:#8a5e00;margin-bottom:4px;}
+.dragzone .hint{font-size:13px;color:#9a6b00;margin-bottom:12px;}
+.items{display:flex;flex-wrap:wrap;gap:12px;}
+.item{display:flex;flex-direction:column;align-items:flex-start;gap:4px;}
+.dragme{display:inline-block;background:linear-gradient(180deg,#ffb230,#f59a16);color:#fff;padding:9px 18px;border-radius:9px;font-size:14.5px;text-decoration:none;cursor:grab;user-select:none;box-shadow:0 2px 6px rgba(245,166,35,.38);white-space:nowrap;}
+.dragme:hover{background:linear-gradient(180deg,#ffc04d,#ee9512);}
+.dragme:active{cursor:grabbing;transform:scale(.97);}
+.mini{background:none;border:0;color:#98a1ae;font-size:12px;cursor:pointer;padding:0 2px;font-family:inherit;text-decoration:underline;}
+.mini:hover{color:#2f7cf6;}
+.badge{display:inline-block;background:#eaf1fe;color:#2f7cf6;border-radius:4px;padding:1px 8px;font-size:13px;margin-right:6px;}
+.foot{text-align:center;color:#98a1ae;font-size:13px;padding:18px 0 0;}
+#toTop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:#2f7cf6;color:#fff;border:0;font-size:19px;cursor:pointer;box-shadow:0 3px 10px rgba(47,124,246,.4);display:none;z-index:99;}
+@media (max-width:920px){
+  .wrap{padding:16px 12px 40px;}
+  .hd{padding:20px 16px;}
+  .hd h1{font-size:20px;}
+  .card{padding:17px 15px;}
+  .card h2{font-size:17px;}
+  .dragzone{padding:13px;}
+  .items{gap:9px;}
+  .dragme{padding:8px 14px;font-size:13.5px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <h1>书签脚本 · 拖拽安装版</h1>
+    <p>19 个脚本全部做成可拖拽按钮。<strong>按住按钮拖到收藏栏松手</strong>，就自动存成书签，不用填名称、不用贴网址。</p>
+    <div class="btns">
+      <button class="bigbtn" onclick="copyAll(this)">复制全部脚本</button>
+      <button class="bigbtn ghost" onclick="downloadAll()">下载全部脚本(TXT)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>一、怎么用（三步）</h2>
+    <ol>
+      <li>按 <strong>Ctrl + Shift + B</strong>，让收藏栏（书签栏）显示出来。</li>
+      <li>按住下面任意一个橙色按钮，<strong>拖到收藏栏空白处松手</strong> —— 就装好了。</li>
+      <li>以后在任何网页点这条书签，脚本立即执行；点错了按 <strong>F5</strong> 刷新即可恢复。</li>
+    </ol>
+    <div class="ok">Edge 更方便：对着按钮<strong>右键 → 添加到收藏夹</strong>，两次点击完成。Chrome 右键没有这项，只能拖。</div>
+    <div class="tip"><strong>注意区分：</strong>把按钮<strong>拖到收藏栏</strong> = 安装；在按钮上<strong>直接单击</strong> = 马上在本页执行（可用来预览效果）。</div>
+  </div>
+
+  <div class="card">
+    <h2>二、滚动类（4 条）</h2>
+    <div class="dragzone">
+      <div class="zt">滚动类</div>
+      <div class="hint">①按 Ctrl+Shift+B 显示收藏栏　②按住按钮拖到收藏栏松手</div>
+      <div class="items">
+        <div class="item">
+          <a class="dragme" href="javascript:window.scrollTo({top:0,behavior:'smooth'});">↑ 回顶部（平滑）</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:window.scrollTo(0,0);">↑ 瞬间跳顶</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});">↓ 滚到底部</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:window.scrollBy({top:window.innerHeight*0.9,behavior:'smooth'});">↓ 下翻一屏</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>三、阅读类（6 条）</h2>
+    <div class="dragzone">
+      <div class="zt">护眼 · 放大 · 朗读</div>
+      <div class="hint">深色、黑白、白底这三条都是"再点一次恢复"</div>
+      <div class="items">
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var d=document.documentElement;d.style.filter=d.style.filter?'':'invert(1) hue-rotate(180deg)';})();">🌙 深色护眼</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var d=document.documentElement;d.style.filter=d.style.filter?'':'grayscale(1)';})();">◐ 变黑白</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var s=parseFloat(document.body.style.zoom||1);document.body.style.zoom=(s>=1.6?1:s+0.2);})();">A+ 放大字体</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var t=document.body.innerText;var w=document.createElement('div');w.style.cssText='max-width:888px;margin:0 auto;padding:20px 16px;font-size:17px;line-height:1.9;white-space:pre-wrap';w.textContent=t;document.body.innerHTML='';document.body.appendChild(w);})();">📄 纯文本阅读</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var t=document.body.innerText.slice(0,2000);speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t));})();">🔊 语音朗读</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:speechSynthesis.cancel();document.querySelectorAll('audio,video').forEach(function(a){try{a.pause();}catch(e){}});void 0;">⏹ 停止音频</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>四、内容获取类（6 条）</h2>
+    <div class="dragzone">
+      <div class="zt">复制 · 链接 · 密码</div>
+      <div class="hint">提取链接、抓图片地址会新开一个窗口列清单</div>
+      <div class="items">
+        <div class="item">
+          <a class="dragme" href="javascript:document.oncopy=null;document.onselectstart=null;document.oncontextmenu=null;document.body.style.userSelect='auto';void 0;">✂ 解除复制限制</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var r=document.createRange();r.selectNodeContents(document.body);var s=window.getSelection();s.removeAllRanges();s.addRange(r);})();">▣ 全选文字</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var a=document.querySelectorAll('a[href]'),w=window.open('','_blank'),n=0;if(!w){alert('请在浏览器允许本页弹出窗口');return;}w.document.title='本页全部链接';var b=w.document.body;b.style.cssText='font:14px/1.9 sans-serif;padding:16px;word-break:break-all';for(var i=0;i&lt;a.length&amp;&amp;n&lt;300;i++){var u=a[i].href;if(/^javascript:/i.test(u))continue;var d=w.document.createElement('p');d.textContent=u;b.appendChild(d);n++;}})();">🔗 提取全部链接</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var t=document.title+'\n'+location.href;if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){alert('已复制：\n'+t);},function(){prompt('请手动复制：',t);});}else{prompt('请手动复制：',t);}})();">📋 复制标题+网址</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:document.querySelectorAll('input[type=password]').forEach(function(i){i.type='text';});void 0;">🔑 密码显示明文</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var a=document.images,w=window.open('','_blank');if(!w){alert('请允许本页弹出窗口');return;}var b=w.document.body;b.style.cssText='font:13px/1.9 monospace;padding:16px;word-break:break-all';for(var i=0;i&lt;a.length&amp;&amp;i&lt;200;i++){var d=w.document.createElement('p');d.textContent=a[i].currentSrc||a[i].src;b.appendChild(d);}})();">🖼 提取图片地址</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>五、清爽类（3 条）</h2>
+    <div class="dragzone">
+      <div class="zt">去图 · 去动画 · 纯白底</div>
+      <div class="hint">白底黑字再点一次可恢复</div>
+      <div class="items">
+        <div class="item">
+          <a class="dragme" href="javascript:document.querySelectorAll('img,picture,svg').forEach(function(i){i.style.display='none';});void 0;">🚫 隐藏全部图片</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var s=document.createElement('style');s.textContent='*{animation:none!important;transition:none!important}';document.head.appendChild(s);})();">💤 停止动画</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+        <div class="item">
+          <a class="dragme" href="javascript:(function(){var d=document.documentElement;if(d.getAttribute('data-hddb')){d.removeAttribute('data-hddb');d.style.background='';d.style.color='';}else{d.setAttribute('data-hddb','1');d.style.background='#fff';d.style.color='#222';}})();">☀ 白底黑字</a>
+          <button class="mini" onclick="copyThis(this)">复制代码</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>六、注意事项</h2>
+    <div class="warn">
+      <p><strong>1. 拖不进收藏栏？</strong>先按 Ctrl+Shift+B 把收藏栏显示出来，再拖；仍不行就用按钮下面「复制代码」，手动新建书签粘贴。</p>
+      <p><strong>2. 部分网站点了没反应：</strong>启用 CSP 安全策略的网站会禁止执行书签脚本，属正常现象，不是代码坏了。</p>
+      <p><strong>3. 前缀不能丢：</strong>手动粘贴时必须整行带 <span class="badge">javascript:</span> 开头，不要被浏览器补成 https://。</p>
+      <p><strong>4. 只存自己确认过的：</strong>别人发来的 javascript: 链接可能是恶意脚本，不要随便加。</p>
+      <p><strong>5. 手机上不支持拖拽：</strong>只能复制代码，到浏览器"书签管理"里新建网址书签粘贴进去。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>七、常见问题</h2>
+    <ul>
+      <li><strong>网页能不能点一下就自动进收藏夹？</strong>不能，浏览器不给网页写书签的权限。拖拽或右键"添加到收藏夹"就是最省事的做法。</li>
+      <li><strong>拖的时候按钮变成了打开网页？</strong>那是拖到了标签栏/地址栏，重新拖到<strong>收藏栏</strong>位置。</li>
+      <li><strong>装好后显示一串代码？</strong>说明保存时少了 <span class="badge">javascript:</span>，删掉重新拖一次。</li>
+      <li><strong>误点后页面变样了？</strong>直接按 F5 刷新，网站本身没被改动。</li>
+    </ul>
+  </div>
+
+  <div class="foot">网页由「网上用户」制作 · 拖拽安装，点一下即生效</div>
+
+</div>
+
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+
+<script>
+function copyThis(btn){
+  var a = btn.parentNode.querySelector('.dragme');
+  var txt = a.getAttribute('href');
+  function done(){ btn.textContent='已复制'; setTimeout(function(){ btn.textContent='复制代码'; },1400); }
+  function fallback(){
+    var ta=document.createElement('textarea');
+    ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }catch(e){ alert('请手动长按选中复制'); }
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, fallback);
+  }else{ fallback(); }
+}
+
+function collectAll(){
+  var a = document.querySelectorAll('.dragme'), out = [];
+  for(var i=0;i<a.length;i++){
+    out.push('【'+(i+1)+'. '+a[i].textContent.trim()+'】');
+    out.push(a[i].getAttribute('href'));
+    out.push('');
+  }
+  return out.join('\n');
+}
+
+function copyAll(btn){
+  var txt = collectAll();
+  function done(){ btn.textContent='已复制全部'; setTimeout(function(){ btn.textContent='复制全部脚本'; },1800); }
+  function fallback(){
+    var ta=document.createElement('textarea');
+    ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }catch(e){ alert('复制失败，请用“下载全部脚本”'); }
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, fallback);
+  }else{ fallback(); }
+}
+
+function downloadAll(){
+  var blob = new Blob([collectAll()], {type:'text/plain;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '书签脚本拖拽版.txt';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 200);
+}
+
+window.addEventListener('scroll', function(){
+  var b = document.getElementById('toTop');
+  b.style.display = (window.pageYOffset > 400) ? 'block' : 'none';
+});
+</script>
+<script src="/a/js/yj.js"></script>
+</body>
+</html>

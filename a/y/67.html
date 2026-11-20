@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>常用书签脚本大全（一键回到顶部等）@网上用户</title>
+<meta name="keywords" content="书签脚本,bookmarklet,回到顶部,解除复制限制,深色模式,网页变黑,提取链接,显示密码,教程">
+<meta name="description" content="不用装插件的浏览器书签小脚本合集：一键回到顶部、滚到底部、深色护眼、放大字体、纯文本阅读、语音朗读、解除复制限制、显示密码、提取全部链接、复制标题网址、全选文字、隐藏图片、暂停视频等，附添加步骤与注意事项。">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;padding:0;background:#f2f4f8;color:#24292f;font-size:16px;line-height:1.8;-webkit-text-size-adjust:100%;}
+.wrap{max-width:888px;margin:0 auto;padding:24px 18px 60px;}
+.hd{background:#fff;border-radius:14px;padding:26px 22px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:18px;}
+.hd h1{font-size:24px;margin:0 0 10px;letter-spacing:.5px;}
+.hd p{margin:0 0 16px;color:#5b6472;font-size:15px;}
+.hd .btns{display:flex;flex-wrap:wrap;gap:10px;}
+.bigbtn{background:#2f7cf6;color:#fff;border:0;border-radius:8px;padding:9px 18px;font-size:14px;cursor:pointer;font-family:inherit;}
+.bigbtn.ghost{background:#eaf1fe;color:#2f7cf6;}
+.bigbtn:hover{opacity:.9;}
+.bigbtn:active{transform:scale(.97);}
+.card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:18px;}
+.card h2{font-size:18px;margin:0 0 14px;padding-left:11px;border-left:4px solid #2f7cf6;line-height:1.4;}
+.card h3{font-size:15px;margin:0 0 6px;color:#1b4fa8;}
+.card p{margin:0 0 12px;}
+.card ul,.card ol{margin:0 0 12px;padding-left:22px;}
+.card li{margin-bottom:7px;}
+.tip{background:#fff8e6;border-left:4px solid #f5a623;padding:12px 14px;border-radius:6px;font-size:14px;color:#7a5200;margin-bottom:12px;}
+.warn{background:#fdeeee;border-left:4px solid #e04848;padding:12px 14px;border-radius:6px;font-size:14px;color:#8c2020;margin-bottom:12px;}
+.ok{background:#eef7ee;border-left:4px solid #35a14e;padding:12px 14px;border-radius:6px;font-size:14px;color:#1f5e30;margin-bottom:12px;}
+.codebox{position:relative;margin-bottom:18px;}
+.codebox .label{font-size:14px;color:#5b6472;margin-bottom:6px;display:block;}
+.codebox .label b{color:#24292f;font-size:15px;}
+pre{background:#1e2233;color:#c9f0c9;padding:14px 16px;padding-right:82px;border-radius:8px;margin:0;overflow-x:auto;font-family:monospace;font-size:13.5px;line-height:1.7;white-space:pre-wrap;word-break:break-all;}
+.copy{position:absolute;right:9px;top:27px;background:#3b7ff6;color:#fff;border:0;border-radius:6px;padding:6px 11px;font-size:13px;cursor:pointer;font-family:inherit;}
+.copy:hover{background:#2e6ce0;}
+.copy:active{transform:scale(.96);}
+.badge{display:inline-block;background:#eaf1fe;color:#2f7cf6;border-radius:4px;padding:1px 8px;font-size:13px;margin-right:6px;}
+.anchor{display:block;text-align:right;color:#8b95a3;font-size:12px;text-decoration:none;margin-top:-6px;}
+.foot{text-align:center;color:#98a1ae;font-size:13px;padding:18px 0 0;}
+#toTop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:#2f7cf6;color:#fff;border:0;font-size:19px;cursor:pointer;box-shadow:0 3px 10px rgba(47,124,246,.4);display:none;z-index:99;}
+@media (max-width:920px){
+  .wrap{padding:16px 12px 40px;}
+  .hd{padding:20px 16px;}
+  .hd h1{font-size:20px;}
+  .card{padding:17px 15px;}
+  .card h2{font-size:17px;}
+  pre{font-size:12.5px;padding:12px;padding-right:72px;}
+  .copy{top:25px;padding:5px 9px;font-size:12px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <h1>常用书签脚本大全</h1>
+    <p>不用装任何插件，在浏览器收藏夹存一条 <strong>javascript:</strong> 开头的链接，点一下就在当前网页上执行。下面按用途分好类，需要哪个复制哪个。</p>
+    <div class="btns">
+      <button class="bigbtn" onclick="copyAll(this)">复制全部脚本</button>
+      <button class="bigbtn ghost" onclick="downloadAll()">下载全部脚本(TXT)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>一、这是什么</h2>
+    <p>这种写法叫 <strong>书签小脚本（Bookmarklet）</strong>：把一段 JavaScript 代码存成书签，点书签时浏览器会在<strong>当前页面</strong>执行这段代码。它不依赖网站本身，所以任何网页都能用。</p>
+    <div class="ok">免安装、免插件、不占内存；换浏览器或换电脑，只需重新存一遍书签。<br>误操作破坏了页面，<strong>按 F5 刷新即可恢复</strong>。</div>
+  </div>
+
+  <div class="card">
+    <h2>二、添加方法（Chrome / Edge 通用）</h2>
+    <ol>
+      <li>在<strong>收藏栏</strong>空白处右键 → 选择【添加网页…】/【添加书签】。</li>
+      <li>名称填：<strong>回到顶部</strong>（写自己看得懂的名字）。</li>
+      <li>网址 / URL 一栏，粘贴下面<strong>完整的一行代码</strong>（以 <span class="badge">javascript:</span> 开头，一个字符都不能少）。</li>
+      <li>点【保存】，收藏栏就多了一条，点它即生效。</li>
+    </ol>
+    <p>快捷键 <strong>Ctrl + Shift + B</strong> 显示/隐藏收藏栏。手机浏览器（夸克、UC、Chrome 移动版）在"书签管理"里也能新建网址书签，写法完全一样。</p>
+    <a class="anchor" href="#toTop" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ 返回顶部</a>
+  </div>
+
+  <div class="card">
+    <h2>三、滚动类</h2>
+
+    <div class="codebox">
+      <span class="label"><b>1. 平滑回到顶部</b>（推荐，有滚动动画）</span>
+      <pre id="code1">javascript:window.scrollTo({top:0,behavior:'smooth'});</pre>
+      <button class="copy" onclick="copyCode('code1',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>2. 瞬间跳回顶部</b>（无动画，一秒到位）</span>
+      <pre id="code2">javascript:window.scrollTo(0,0);</pre>
+      <button class="copy" onclick="copyCode('code2',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>3. 平滑滚到页面最底部</b></span>
+      <pre id="code3">javascript:window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});</pre>
+      <button class="copy" onclick="copyCode('code3',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>4. 上下跳 90% 屏</b>（长文快速浏览）</span>
+      <pre id="code4">javascript:window.scrollBy({top:window.innerHeight*0.9,behavior:'smooth'});</pre>
+      <button class="copy" onclick="copyCode('code4',this)">复制</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>四、阅读类（护眼 / 放大 / 朗读）</h2>
+
+    <div class="codebox">
+      <span class="label"><b>5. 深色护眼模式</b>（点一次变暗，再点一次恢复）</span>
+      <pre id="code5">javascript:(function(){var d=document.documentElement;d.style.filter=d.style.filter?'':'invert(1) hue-rotate(180deg)';})();</pre>
+      <button class="copy" onclick="copyCode('code5',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>6. 网页变黑白</b>（省眼，再点一次恢复）</span>
+      <pre id="code6">javascript:(function(){var d=document.documentElement;d.style.filter=d.style.filter?'':'grayscale(1)';})();</pre>
+      <button class="copy" onclick="copyCode('code6',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>7. 放大字体</b>（每点一次放大 20%，到 160% 后回到原始大小）</span>
+      <pre id="code7">javascript:(function(){var s=parseFloat(document.body.style.zoom||1);document.body.style.zoom=(s>=1.6?1:s+0.2);})();</pre>
+      <button class="copy" onclick="copyCode('code7',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>8. 纯文本阅读模式</b>（去掉广告、导航、弹窗，只留文字；刷新恢复）</span>
+      <pre id="code8">javascript:(function(){var t=document.body.innerText;var w=document.createElement('div');w.style.cssText='max-width:888px;margin:0 auto;padding:20px 16px;font-size:17px;line-height:1.9;white-space:pre-wrap';w.textContent=t;document.body.innerHTML='';document.body.appendChild(w);})();</pre>
+      <button class="copy" onclick="copyCode('code8',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>9. 语音朗读当前网页</b>（浏览器自带发声，再点一次从头重读）</span>
+      <pre id="code9">javascript:(function(){var t=document.body.innerText.slice(0,2000);speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t));})();</pre>
+      <button class="copy" onclick="copyCode('code9',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>10. 停止朗读 / 停止所有音频</b></span>
+      <pre id="code10">javascript:speechSynthesis.cancel();document.querySelectorAll('audio,video').forEach(function(a){try{a.pause();}catch(e){}});void 0;</pre>
+      <button class="copy" onclick="copyCode('code10',this)">复制</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>五、内容获取类（复制 / 链接 / 密码）</h2>
+
+    <div class="codebox">
+      <span class="label"><b>11. 解除禁止复制、禁止右键</b>（复制受限制的网页）</span>
+      <pre id="code11">javascript:document.oncopy=null;document.onselectstart=null;document.oncontextmenu=null;document.body.style.userSelect='auto';void 0;</pre>
+      <button class="copy" onclick="copyCode('code11',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>12. 选中网页全部文字</b>（再按 Ctrl+C 复制）</span>
+      <pre id="code12">javascript:(function(){var r=document.createRange();r.selectNodeContents(document.body);var s=window.getSelection();s.removeAllRanges();s.addRange(r);})();</pre>
+      <button class="copy" onclick="copyCode('code12',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>13. 提取本页全部链接</b>（新开窗口列出，可全选复制）</span>
+      <pre id="code13">javascript:(function(){var a=document.querySelectorAll('a[href]'),w=window.open('','_blank'),n=0;if(!w){alert('请在浏览器允许本页弹出窗口');return;}w.document.title='本页全部链接';var b=w.document.body;b.style.cssText='font:14px/1.9 sans-serif;padding:16px;word-break:break-all';for(var i=0;i<a.length&&n<300;i++){var u=a[i].href;if(/^javascript:/i.test(u))continue;var d=w.document.createElement('p');d.textContent=u;b.appendChild(d);n++;}})();</pre>
+      <button class="copy" onclick="copyCode('code13',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>14. 复制本页标题 + 网址</b>（引用、收藏、发人都方便）</span>
+      <pre id="code14">javascript:(function(){var t=document.title+'\n'+location.href;if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){alert('已复制：\n'+t);},function(){prompt('请手动复制：',t);});}else{prompt('请手动复制：',t);}})();</pre>
+      <button class="copy" onclick="copyCode('code14',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>15. 密码框显示明文</b>（自己检查输错了没，公共电脑慎用）</span>
+      <pre id="code15">javascript:document.querySelectorAll('input[type=password]').forEach(function(i){i.type='text';});void 0;</pre>
+      <button class="copy" onclick="copyCode('code15',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>16. 取得当前页面所有图片地址</b>（新窗口列出，方便保存）</span>
+      <pre id="code16">javascript:(function(){var a=document.images,w=window.open('','_blank'),n=0;if(!w){alert('请允许本页弹出窗口');return;}var b=w.document.body;b.style.cssText='font:13px/1.9 monospace;padding:16px;word-break:break-all';for(var i=0;i<a.length&&i<200;i++){var d=w.document.createElement('p');d.textContent=a[i].currentSrc||a[i].src;b.appendChild(d);n++;}})();</pre>
+      <button class="copy" onclick="copyCode('code16',this)">复制</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>六、清爽类（去图 / 去动画 / 只看字）</h2>
+
+    <div class="codebox">
+      <span class="label"><b>17. 隐藏全部图片</b>（慢网省流量、看纯文字）</span>
+      <pre id="code17">javascript:document.querySelectorAll('img,picture,svg').forEach(function(i){i.style.display='none';});void 0;</pre>
+      <button class="copy" onclick="copyCode('code17',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>18. 停止页面所有动画</b>（关掉花哨动效，老电脑更顺畅）</span>
+      <pre id="code18">javascript:(function(){var s=document.createElement('style');s.textContent='*{animation:none!important;transition:none!important}';document.head.appendChild(s);})();</pre>
+      <button class="copy" onclick="copyCode('code18',this)">复制</button>
+    </div>
+
+    <div class="codebox">
+      <span class="label"><b>19. 页面变成白底黑字</b>（强制统一阅读底色，再点一次恢复）</span>
+      <pre id="code19">javascript:(function(){var d=document.documentElement;if(d.getAttribute('data-hddb')){d.removeAttribute('data-hddb');d.style.background='';d.style.color='';}else{d.setAttribute('data-hddb','1');d.style.background='#fff';d.style.color='#222';}})();</pre>
+      <button class="copy" onclick="copyCode('code19',this)">复制</button>
+    </div>
+
+    <a class="anchor" href="#toTop" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ 返回顶部</a>
+  </div>
+
+  <div class="card">
+    <h2>七、注意事项（重要）</h2>
+    <div class="warn">
+      <p><strong>1. 前缀不能丢：</strong>必须以 <span class="badge">javascript:</span> 开头，整行一次性粘贴，不要带换行和多余空格，不要被浏览器自动补成 https://。</p>
+      <p><strong>2. 部分网站会失效：</strong>启用 CSP 安全策略的网站会禁止执行书签脚本，点了没反应属正常现象，不是代码错。</p>
+      <p><strong>3. 只能在网页里点：</strong>空白新标签页、浏览器设置页等非网页界面点了无效。</p>
+      <p><strong>4. 别点陌生人的脚本：</strong>别人发来的 javascript: 链接可能是恶意代码，只存你自己确认过的。</p>
+      <p><strong>5. 破坏页面就刷新：</strong>执行后排版乱、文字没了，按 F5 刷新即恢复原样，不会改坏网站。</p>
+    </div>
+    <div class="tip">手机浏览器若长按书签只出现"打开/编辑"，请先存好书签后再从收藏夹点选；iOS Safari 需在"书签"里新建，粘贴时注意不要粘贴成两个书签。</div>
+  </div>
+
+  <div class="card">
+    <h2>八、常见问题</h2>
+    <ul>
+      <li><strong>点了完全没反应？</strong>先看网址栏里是不是少了 <span class="badge">javascript:</span>；再确认这个网站是否限制了脚本。</li>
+      <li><strong>浏览器把代码变成了搜索？</strong>说明前缀被吞了，删掉书签重新整行粘贴一次。</li>
+      <li><strong>想放到手机用？</strong>手机 Chrome / 夸克添加书签时，把整行代码粘贴到"网址"栏即可，用法和电脑一样。</li>
+      <li><strong>想恢复原样？</strong>除了刷新，深色、黑白、白底这三条都是"再点一次"切换回去。</li>
+    </ul>
+  </div>
+
+  <div class="foot">网页由「网上用户」制作 · 复制时请连同 javascript: 前缀一起复制</div>
+
+</div>
+
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+
+<script>
+function copyCode(id, btn){
+  var el = document.getElementById(id);
+  var txt = el.textContent.replace(/\s+$/,'');
+  function done(){ btn.textContent='已复制'; setTimeout(function(){ btn.textContent='复制'; },1500); }
+  function fallback(){
+    var ta=document.createElement('textarea');
+    ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }catch(e){ alert('请手动长按选中代码后复制'); }
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, fallback);
+  }else{ fallback(); }
+}
+
+function collectAll(){
+  var pres = document.querySelectorAll('pre'),
+      out = [];
+  for(var i=0;i<pres.length;i++){
+    var lb = pres[i].parentNode.querySelector('.label');
+    var title = lb ? lb.textContent.replace(/\s+/g,' ').trim() : '';
+    out.push('【'+title+'】');
+    out.push(pres[i].textContent.replace(/\s+$/,''));
+    out.push('');
+  }
+  return out.join('\n');
+}
+
+function copyAll(btn){
+  var txt = collectAll();
+  function done(){ btn.textContent='已复制全部'; setTimeout(function(){ btn.textContent='复制全部脚本'; },1800); }
+  function fallback(){
+    var ta=document.createElement('textarea');
+    ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }catch(e){ alert('复制失败，请用“下载全部脚本”'); }
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, fallback);
+  }else{ fallback(); }
+}
+
+function downloadAll(){
+  var txt = collectAll(),
+      blob = new Blob([txt], {type:'text/plain;charset=utf-8'}),
+      a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '书签脚本大全.txt';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 200);
+}
+
+window.addEventListener('scroll', function(){
+  var b = document.getElementById('toTop');
+  b.style.display = (window.pageYOffset > 400) ? 'block' : 'none';
+});
+</script>
+<script src="/a/js/yj.js"></script>
+</body>
+</html>
